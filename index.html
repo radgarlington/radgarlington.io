@@ -26,8 +26,17 @@
     }
     p { margin: 0 0 10px; }
 
-    /* HERO */
-    .hero { text-align: center; padding: 6vh 5vw 2vh; }
+    /* HERO — boxed in shaded blue */
+    .hero {
+      text-align: center;
+      padding: 6vh 5vw 2vh;
+      background: #eaf3ff;          /* light blue shaded background */
+      border: 2px solid #d7e7ff;    /* soft blue border */
+      border-radius: 12px;          /* rounded corners */
+      max-width: 960px;             /* contained width */
+      margin: 20px auto;            /* center and spacing */
+      box-shadow: 0 6px 20px rgba(2,32,71,.08); /* subtle shadow */
+    }
     .hero-img {
       width: 55%;
       max-width: 320px;
@@ -39,8 +48,17 @@
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom: 4px; padding: 0 10px; }
     .subtag { font-size: clamp(0.95rem, 3.5vw, 1.1rem); color: #6b7280; margin-bottom: 10px; }
 
-    /* UTILITY */
-    .utility { text-align: center; padding: 2vh 5vw 6vh; }
+    /* UTILITY — boxed in shaded blue */
+    .utility {
+      text-align: center;
+      padding: 4vh 5vw 6vh;
+      background: #f0f7ff;          /* shaded blue */
+      border: 2px solid #d0e3ff;
+      border-radius: 12px;
+      max-width: 960px;
+      margin: 20px auto;
+      box-shadow: 0 6px 20px rgba(2,32,71,.08);
+    }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 15px; color: var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin: 6px 0; }
 
@@ -269,12 +287,12 @@
       </div>
 
       <!-- DISCLAIMER -->
-      <p class="disclaimer" style="font-size: 0.72rem; color: #0A74D0; font-weight: bold; text-align: center; max-width: 600px; margin: 24px auto 0;">
+      <p class="disclaimer">
         🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.
       </p>
 
       <!-- COUNTDOWN WARNING -->
-      <p class="countdown-warning" style="margin-top:12px; text-align:center; color:#222; font-size:0.9rem;">
+      <p class="countdown-warning">
         Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.
       </p>
     </div>
@@ -284,7 +302,7 @@
   <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;"> 𝕏 @radgarlington</a>
     |
     <a href="https://t.me/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
   </div>
