@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>RAD GARLINGTON — $RAD</title>
+  <meta name="description" content="$RAD — The meme coin with a ledger. Powered by XRPL." />
+  <link rel="icon" href="favicon.ico" />
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#111827;
+      --muted:#475569;
+      --blue:#0A74D0;
+      --ring:rgba(10,116,208,.18);
+      --card:#f4f7fb;
+      --radius:16px;
+      --shadow:0 8px 26px rgba(2,32,71,.08);
+      --safe-top: env(safe-area-inset-top);
+      --safe-bottom: env(safe-area-inset-bottom);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:640px;margin:0 auto;padding:calc(10px + var(--safe-top)) 16px calc(90px + var(--safe-bottom))}
+    .badge{display:inline-block;background:var(--card);border:1px solid var(--ring);color:var(--blue);padding:8px 12px;border-radius:999px;font-weight:700;letter-spacing:.02em}
+    h1{font-size:clamp(1.9rem,8vw,2.4rem);line-height:1.1;margin:12px 0 8px}
+    .sub{color:var(--muted);font-size:1rem;margin:0 0 16px}
+    .frame{background:#fff;border:1px solid var(--ring);border-radius:20px;box-shadow:var(--shadow);padding:14px}
+    .hero-img{width:100%;height:auto;object-fit:contain}
+    section{padding:18px 0}
+    .section-title{font-size:1.15rem;margin:0 0 10px}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+    .list{margin:0;padding-left:18px}
+    .list li{margin:.35rem 0}
+    .field{display:flex;gap:10px;align-items:center;margin-top:8px}
+    .unit{min-width:64px;text-align:center;font-weight:800;color:var(--blue)}
+    input{width:100%;padding:14px;border-radius:12px;border:1px solid var(--ring);background:#fff;font:600 1rem/1.2 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    .note{color:var(--muted);font-size:.92rem;margin-top:8px}
+    .otc-box{position:relative}
+    .otc-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.8);border:1px dashed var(--blue);border-radius:var(--radius);font-weight:900;letter-spacing:.04em}
+    .cta-bar{position:fixed;left:0;right:0;bottom:0;padding:12px 14px calc(12px + var(--safe-bottom));background:#fff;border-top:1px solid var(--ring);box-shadow:0 -6px 20px rgba(2,32,71,.06);display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:12px;font-weight:800;border:1px solid transparent;touch-action:manipulation}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{background:var(--blue);color:#fff}
+    .btn-ghost{background:#fff;border-color:var(--ring);color:var(--ink)}
+    .hint{font-size:.88rem;color:var(--muted);text-align:center;margin-top:8px}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <!-- HERO -->
+    <section>
+      <!-- Your hosted RAD GARLINGTON image -->
+      <div class="frame">
+        <img class="hero-img" src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true" alt="Rad Garlington — $RAD" />
+      </div>
+      <span class="badge">Dropping Soon</span>
+      <h1>RAD GARLINGTON</h1>
+      <p class="sub"><strong>$RAD</strong> — The meme coin with a ledger. Powered by XRPL.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section>
+      <h2 class="section-title">About $RAD</h2>
+      <div class="card">
+        <p>RAD Garlington is the Protocol’s most loyal believer on XRPL. Simple structure. Clean brand. Fast execution.</p>
+        <ul class="list">
+          <li><strong>70% Treasury</strong> — OTC, growth, ops</li>
+          <li><strong>20% Reserve</strong> — Principal wallet</li>
+          <li><strong>10% Liquidity</strong> — Public pool at launch</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- OTC PREVIEW (visual only) -->
+    <section>
+      <h2 class="section-title">$RAD OTC Preview</h2>
+      <div class="card otc-box">
+        <label class="field">
+          <span class="unit">USD</span>
+          <input type="text" placeholder="Amount" disabled />
+        </label>
+        <label class="field">
+          <span class="unit">XRP</span>
+          <input type="text" placeholder="Auto-calculated" disabled />
+        </label>
+        <label class="field">
+          <span class="unit">$RAD</span>
+          <input type="text" placeholder="Auto-calculated" disabled />
+        </label>
+        <div class="note">Visual preview only. No wallet connection. No processing.</div>
+        <div class="otc-overlay">OTC COMING SOON</div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section>
+      <h2 class="section-title">Contact</h2>
+      <div class="card">
+        <p>Email <a href="mailto:contact@radgarlington.io" style="color:var(--blue);font-weight:800">contact@radgarlington.io</a></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Sticky mobile CTA bar -->
+  <div class="cta-bar">
+    <a class="btn btn-primary" href="#">Follow on X</a>
+    <a class="btn btn-ghost" href="#">Join Telegram</a>
+  </div>
+</body>
+</html>
