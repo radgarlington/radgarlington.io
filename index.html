@@ -51,24 +51,25 @@
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-    /* Disclaimer (ledger blue alert style) */
-    .disclaimer {
-      font-size: 0.72rem;
-      color: var(--blue);
-      font-weight: bold;
-      text-align: center;
-      max-width: 600px;
-      margin: 24px auto 0;
-    }
+<style>
+/* Disclaimer (ledger blue alert style) */
+.disclaimer {
+  font-size: 0.72rem;
+  color: #0A74D0;
+  font-weight: bold;
+  text-align: center;
+  max-width: 600px;
+  margin: 24px auto 0;
+}
 
-    /* Countdown (subtle neutral style) */
-    .countdown-warning {
-      margin-top: 12px;
-      text-align: center;
-      color: #222;
-      font-size: 0.9rem;
-      font-weight: normal;
-    }
+/* Countdown (subtle neutral style) */
+.countdown-warning {
+  margin-top: 12px;
+  text-align: center;
+  color: #222;
+  font-size: 0.9rem;
+}
+</style>
 
     .footer { text-align: center; padding: 40px 10px; font-size: 0.85rem; color: var(--muted); }
 
@@ -270,14 +271,14 @@
       </div>
 
       <!-- DISCLAIMER -->
-      <p class="disclaimer">
-        🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.
-      </p>
+<p class="disclaimer" style="font-size: 0.72rem; color: #0A74D0; font-weight: bold; text-align: center; max-width: 600px; margin: 24px auto 0;">
+  🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.
+</p>
 
-      <!-- COUNTDOWN WARNING -->
-      <p class="countdown-warning">
-        Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.
-      </p>
+<!-- COUNTDOWN WARNING -->
+<p class="countdown-warning" style="margin-top:12px; text-align:center; color:#222; font-size:0.9rem;">
+  Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.
+</p>
     </div>
   </div>
 
