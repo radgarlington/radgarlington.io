@@ -30,12 +30,12 @@
     .hero {
       text-align: center;
       padding: 6vh 5vw 2vh;
-      background: #eaf3ff;          /* light blue shaded background */
-      border: 2px solid #d7e7ff;    /* soft blue border */
-      border-radius: 12px;          /* rounded corners */
-      max-width: 960px;             /* contained width */
-      margin: 20px auto;            /* center and spacing */
-      box-shadow: 0 6px 20px rgba(2,32,71,.08); /* subtle shadow */
+      background: #eaf3ff;
+      border: 2px solid #d7e7ff;
+      border-radius: 12px;
+      max-width: 960px;
+      margin: 20px auto;
+      box-shadow: 0 6px 20px rgba(2,32,71,.08);
     }
     .hero-img {
       width: 55%;
@@ -52,7 +52,7 @@
     .utility {
       text-align: center;
       padding: 4vh 5vw 6vh;
-      background: #f0f7ff;          /* shaded blue */
+      background: #f0f7ff;
       border: 2px solid #d0e3ff;
       border-radius: 12px;
       max-width: 960px;
@@ -69,9 +69,9 @@
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-    /* Disclaimer (ledger blue alert style) — your exact sizes */
+    /* Disclaimer — match note size */
     .disclaimer {
-      font-size: 0.72rem;
+      font-size: 0.82rem;   /* same as the note */
       color: #0A74D0;
       font-weight: bold;
       text-align: center;
@@ -79,7 +79,7 @@
       margin: 24px auto 0;
     }
 
-    /* Countdown (subtle neutral style) — your exact sizes */
+    /* Countdown */
     .countdown-warning {
       margin-top: 12px;
       text-align: center;
@@ -135,7 +135,7 @@
     .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; }
     .social img{ width:28px; height:28px; vertical-align:middle; display:block; }
 
-    /* High-contrast price line — blue */
+    /* High-contrast price line */
     .price-line{
       display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
       padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
@@ -179,10 +179,8 @@
       alt="$RAD Logo"
       class="hero-img"
     />
-
     <h1>RAD GARLINGTON — $RAD</h1>
     <p class="tagline">The Protocol’s most loyal believer</p>
-
     <p style="text-align:center; margin-top:8px;">
       <strong>Token:</strong>
       <span style="color:var(--blue); font-size:1.2em; font-weight:bold;">$RAD</span>
@@ -242,12 +240,10 @@
         border: 3px solid var(--blue); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,32,71,0.08);
         padding: 20px; text-align: center; color: var(--ink);
       ">
-        <!-- CONNECT (warning only) -->
         <div style="display:flex; justify-content:center; margin-bottom:12px;">
           <button id="btnConnect" class="btn btn-secondary" aria-label="Connect wallet">🔗 CONNECT</button>
         </div>
 
-        <!-- TRUSTLINE -->
         <a class="btn-trustline"
            href="#"
            target="_blank" rel="noopener"
@@ -265,12 +261,10 @@
         <div id="xrpConversion" style="margin-top: 20px; font-size: 1rem;">🔁 XRP Required: 0</div>
         <div id="bagAmount" style="margin-top: 10px; font-size: 1.1rem; font-weight: bold;">🪙 You’ll receive: 0 $RAD</div>
 
-        <!-- BUY button (warning only) -->
         <div style="margin-top:14px;">
           <button id="btnBuy" class="btn btn-primary" aria-label="Buy $RAD" disabled>🛒 BUY</button>
         </div>
 
-        <!-- TOKENOMICS -->
         <div style="
           margin-top: 30px; font-size: 0.95rem; color: var(--ink);
           background: #f7faff; border: 2px solid #d7e7ff; padding: 16px; border-radius: 10px;
@@ -302,7 +296,8 @@
   <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;"> 𝕏 @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" style="
+          <a href="https://x.com/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
     |
     <a href="https://t.me/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
   </div>
