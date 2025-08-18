@@ -30,7 +30,7 @@
     .hero { text-align: center; padding: 6vh 5vw 2vh; }
     .hero-img {
       width: 55%;
-      max-width: 320px;   /* larger */
+      max-width: 320px;
       height: auto;
       margin: 0 auto 14px;
       display: block;
@@ -44,30 +44,30 @@
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 15px; color: var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin: 6px 0; }
 
-    /* OTC SECTION — blue variant */
+    /* OTC SECTION */
     .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; }
     .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-  /* Disclaimer super small + bold */
-  .disclaimer {
-    font-size: 10px !important;   /* tiny */
-    color: #0b3d78;
-    font-weight: bold;
-    text-align: center;
-    max-width: 600px;
-    margin: 16px auto 0;
-  }
-
-    /* Countdown larger + not bold */
-    .countdown {
-      font-size: 1.25rem;
-      font-weight: normal;
+    /* Disclaimer (ledger blue alert style) */
+    .disclaimer {
+      font-size: 0.72rem;
+      color: var(--blue);
+      font-weight: bold;
       text-align: center;
-      color: var(--muted);
+      max-width: 600px;
+      margin: 24px auto 0;
+    }
+
+    /* Countdown (subtle neutral style) */
+    .countdown-warning {
       margin-top: 12px;
+      text-align: center;
+      color: #222;
+      font-size: 0.9rem;
+      font-weight: normal;
     }
 
     .footer { text-align: center; padding: 40px 10px; font-size: 0.85rem; color: var(--muted); }
@@ -269,12 +269,14 @@
         </p>
       </div>
 
+      <!-- DISCLAIMER -->
       <p class="disclaimer">
-        🔒 $RAD OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during presale
+        🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.
       </p>
 
-      <p class="countdown">
-        Countdown to public launch begins once 500B $RAD are sold — early OTC holders lock in 3× value at launch
+      <!-- COUNTDOWN WARNING -->
+      <p class="countdown-warning">
+        Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.
       </p>
     </div>
   </div>
