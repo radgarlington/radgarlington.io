@@ -28,17 +28,12 @@
 
     /* HERO */
     .hero { text-align: center; padding: 6vh 5vw 2vh; }
-    /* Smaller image by default */
     .hero-img {
-      width: 40%;
-      max-width: 220px;   /* was 340px */
+      width: 55%;
+      max-width: 320px;   /* larger */
       height: auto;
       margin: 0 auto 14px;
       display: block;
-      background:#fff;
-      border:1px solid var(--ring);
-      border-radius: 14px;
-      padding: 8px;
     }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom: 10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom: 4px; padding: 0 10px; }
@@ -64,7 +59,7 @@
     .footer { text-align: center; padding: 40px 10px; font-size: 0.85rem; color: var(--muted); }
 
     @media (max-width: 480px) {
-      .hero-img { width: 50%; max-width: 160px; } /* even smaller on phones */
+      .hero-img { width: 65%; max-width: 220px; }
     }
 
     /* LIVE badge */
@@ -127,7 +122,7 @@
       font-weight: 700; z-index: 9999; display: none;
     }
 
-    /* Launch section kept but neutral blue */
+    /* Launch section */
     .launch-section { padding: 6vh 5vw; background: #f7faff; color: var(--ink); border-top: 1px solid #e6eefb; border-bottom: 1px solid #e6eefb; }
     .launch-wrap { max-width: 960px; margin: 0 auto; }
     .launch-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0 0 14px; }
@@ -148,7 +143,6 @@
 
   <!-- HERO -->
   <div class="hero">
-    <!-- Use your hosted image -->
     <img
       src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true"
       alt="$RAD Logo"
@@ -284,12 +278,10 @@
 
   <!-- SCRIPT -->
   <script>
-    // --- CoinGecko config
-    const COINGECKO_API_KEY = ""; // optional Pro key
+    const COINGECKO_API_KEY = "";
     const CG_HEADERS = COINGECKO_API_KEY ? { "x-cg-pro-api-key": COINGECKO_API_KEY } : {};
     const CG_BASE = "https://api.coingecko.com/api/v3";
 
-    // --- LIVE badge (kept simple: OTC stays OFFLINE)
     function setBadge(state, text) {
       const el = document.getElementById("liveStatus");
       const tx = document.getElementById("liveText");
@@ -300,7 +292,6 @@
     }
     setBadge("down", "OFFLINE");
 
-    // --- Toast helper
     const toast = document.getElementById('toast');
     function showToast(msg) {
       toast.textContent = msg;
@@ -309,7 +300,6 @@
       showToast._t = setTimeout(() => toast.style.display = 'none', 2200);
     }
 
-    // --- Pricing: XRP fetch for conversion
     async function fetchXRPPrice() {
       try {
         const res = await fetch(`${CG_BASE}/simple/price?ids=ripple&vs_currencies=usd`, {
@@ -329,17 +319,14 @@
     const btnBuy = document.getElementById('btnBuy');
     let lastPrice = null;
 
-    // CONNECT → warning only
     btnConnect.addEventListener('click', () => {
       showToast('OTC OPENS SOON');
     });
 
-    // BUY → warning only
     btnBuy.addEventListener('click', () => {
       showToast('OTC OPENS SOON');
     });
 
-    // Handle input & enable BUY without wallet dependency
     async function handleUSDInput() {
       const usd = parseFloat(usdInput.value);
       xrpConversion.textContent = '';
@@ -359,7 +346,7 @@
         return;
       }
       const xrpNeeded = (usd / livePrice).toFixed(2);
-      const radAmt = (usd * 1000000).toLocaleString(); // 1 USD = 1,000,000 RAD
+      const radAmt = (usd * 1000000).toLocaleString();
       xrpConversion.textContent = `🔁 XRP Required: ${xrpNeeded} XRP`;
       bagAmount.textContent = `🪙 You’ll receive: ${radAmt} $RAD`;
       btnBuy.disabled = false;
