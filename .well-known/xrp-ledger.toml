@@ -1,0 +1,79 @@
+# XRPL Token TOML for $RAD
+# Path: /.well-known/xrp-ledger.toml
+
+# --- Original XRPL-style blocks (keep)
+[[CURRENCIES]]
+code             = "RAD"
+currency_hex     = "5241440000000000000000000000000000000000"
+issuer           = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V"
+network          = "main"
+name             = "RAD"
+desc             = "$RAD – The meme coin with a ledger | The Protocol’s most loyal believer | Powered by XRPL"
+icon             = "https://radgarlington.io/logo.png"
+display_decimals = 6
+
+[[CURRENCIES.urls]]
+type  = "website"
+title = "Official Website"
+url   = "https://radgarlington.io"
+
+[[CURRENCIES.urls]]
+type  = "social"
+title = "X Social"
+url   = "https://x.com/radgarlington"
+
+[[CURRENCIES.urls]]
+type  = "social"
+title = "Telegram"
+url   = "https://t.me/radgarlington"
+
+[[ACCOUNTS]]
+address = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V"
+network = "main"
+role    = "issuer"
+desc    = "Official $RAD token issuer"
+domain  = "radgarlington.io"
+
+[[ACCOUNTS]]
+address = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu"
+network = "main"
+role    = "treasury"
+desc    = "Treasury / OTC"
+
+[[ACCOUNTS]]
+address = "r4KjwHXpcWAym8mo2tiqzHnU3xcaYiyaLm"
+network = "main"
+role    = "liquidity"
+desc    = "DEX / pools"
+
+[[ACCOUNTS]]
+address = "rB8CJAWoHAeNmi5JibzMHeFLM1zv3gWL5D"
+network = "main"
+role    = "reserve"
+desc    = "Principal wallet"
+
+
+# --- XRPLMETA-preferred blocks (add)
+[[ISSUERS]]
+address = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V"
+name    = "$RAD"
+# Tip: set the on-ledger Domain for this account to radgarlington.io
+
+[[TOKENS]]
+issuer   = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V"
+currency = "RAD"
+name     = "RAD"
+desc     = "$RAD – The meme coin with a ledger | The Protocol’s most loyal believer | Powered by XRPL"
+icon     = "https://radgarlington.io/logo.png"
+
+[[TOKENS.URLS]]
+type = "website"
+url  = "https://radgarlington.io"
+
+[[TOKENS.URLS]]
+type = "social"
+url  = "https://x.com/radgarlington"
+
+[[TOKENS.URLS]]
+type = "social"
+url  = "https://t.me/radgarlington"
