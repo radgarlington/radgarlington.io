@@ -1,6 +1,13 @@
 {
   "redirects": [
-    { "source": "/(.*)", "has": [{ "type": "host", "value": "www.radgarlington.io" }], "destination": "https://radgarlington.io/:1", "permanent": true }
+    {
+      "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "www.radgarlington.io" }
+      ],
+      "destination": "https://radgarlington.io/$1",
+      "permanent": true
+    }
   ],
   "headers": [
     {
