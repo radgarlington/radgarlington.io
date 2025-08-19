@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true" alt="$RAD Logo" width="220">
+</p>
+
 # RAD GARLINGTON — $RAD
 
 **$RAD – The meme coin with a ledger | The Protocol’s most loyal believer | Powered by XRPL**
