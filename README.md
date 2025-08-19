@@ -6,6 +6,8 @@
 
 **$RAD – The meme coin with a ledger | The Protocol’s most loyal believer | Powered by XRPL**
 
+[![Website radgarlington.io](https://img.shields.io/website?url=https%3A%2F%2Fradgarlington.io&label=radgarlington.io&color=0A74D0&style=for-the-badge)](https://radgarlington.io)
+
 Website: **https://radgarlington.io**  
 X: **https://x.com/radgarlington**  
 Telegram: **https://t.me/radgarlington**
@@ -57,4 +59,4 @@ Telegram: **https://t.me/radgarlington**
 
 Set the trustline with **Xaman**.
 
-- Quick link  
+- Quick link
