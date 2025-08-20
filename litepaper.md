@@ -13,8 +13,8 @@ Forget lectures. Forget boring decks. $RAD exists to flex on the feed and domina
 ---
 
 ## Purpose
-Where $BAG is weight, $RAD is attitude.  
-It’s a character. A culture stamp. A living meme that runs louder than the charts.
+$RAD is pure attitude.  
+It’s a character. A culture stamp. A living meme that runs louder than the charts.  
 
 ---
 
