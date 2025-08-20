@@ -1,9 +1,18 @@
-# $RAD — The Cockiest Meme on XRPL
+# $RAD — The Meme Coin With a Ledger  
 
-## Overview
-$RAD isn’t humble. It’s bold, brash, and unapologetically XRPL.  
-Forget lectures. Forget boring decks. $RAD exists to flex on the feed and dominate the timeline.  
+📖 The Protocol’s most loyal believer  
+⚡ Powered by XRPL  
 
+---
+
+## Identity
+$RAD isn’t just another meme.  
+It’s a statement carved into the ledger — loyalty to XRPL, broadcast as culture.  
+A believer’s coin. A chain-born brand. A signal of conviction that won’t bend.  
+
+---
+
+## Core Stats
 - **Name:** RAD  
 - **Ticker:** $RAD  
 - **Chain:** XRPL  
@@ -12,9 +21,10 @@ Forget lectures. Forget boring decks. $RAD exists to flex on the feed and domina
 
 ---
 
-## Purpose
-$RAD is pure attitude.  
-It’s a character. A culture stamp. A living meme that runs louder than the charts.  
+## Belief
+The market shifts. Trends fade.  
+The ledger remains.  
+$RAD stands on protocol — fast, cheap, final.  
 
 ---
 
@@ -27,19 +37,19 @@ It’s a character. A culture stamp. A living meme that runs louder than the cha
 
 ## OTC Sale
 - **Entry Rate:** $1 = 1,000,000 $RAD  
-- **Public Launch Target:** 3× OTC rate  
+- **Launch Target:** 3× OTC  
+
+Early conviction = early advantage.  
 
 ---
 
-## Meme Ethos
-- Cocky.  
-- Confident.  
-- RAD.  
+## Ethos
+- Believe in protocol.  
+- Move with the ledger.  
+- $RAD is not noise — it’s proof of faith.  
 
 ---
 
 ## Links
-- 🌐 Website: (Insert RAD site here)  
 - 𝕏: [x.com/radgarlington](https://x.com/radgarlington)  
-
----
+- Website: (Insert RAD site here)  
