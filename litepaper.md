@@ -52,4 +52,4 @@ Early conviction = early advantage.
 
 ## Links
 - 𝕏: [x.com/radgarlington](https://x.com/radgarlington)  
-- Website: (Insert RAD site here)  
+- 🌐 Website: [radgarlington.io](https://radgarlington.io)  
