@@ -55,5 +55,6 @@ Early conviction = early advantage.
 ---
 
 ## Links
-- 𝕏: [x.com/radgarlington](https://x.com/radgarlington)  
+- 𝕏: [x.com/radgarlington](https://x.com/radgarlington)
+- Telegram: [t.me/radgarlington](https://t.me/radgarlington)
 - 🌐 Website: [radgarlington.io](https://radgarlington.io) 
