@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true" alt="$RAD Logo" width="180"/>
+  <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" width="180"/>
 </p>
 
 # $RAD — The Meme Coin With a Ledger  
