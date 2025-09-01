@@ -24,93 +24,48 @@
   <style>
     * { box-sizing: border-box; }
 
-    /* THEME: White + Ledger Blue */
     :root{
       --bg:#ffffff;
-      --ink:#0f172a;        /* dark slate */
-      --muted:#475569;      /* slate */
-      --blue:#0A74D0;       /* ledger blue */
+      --ink:#0f172a;
+      --muted:#475569;
+      --blue:#0A74D0;
       --blue-ink:#ffffff;
-      --card:#f4f7fb;       /* soft blue card */
+      --card:#f4f7fb;
       --ring:rgba(10,116,208,.22);
-      --gold:#0A74D0;       /* repurpose accents to blue */
+      --gold:#0A74D0;
     }
 
-    body {
-      margin: 0; background: var(--bg); color: var(--ink);
-      font-family: Arial, sans-serif; line-height: 1.5; overflow-x: hidden;
-    }
-    p { margin: 0 0 10px; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Arial, sans-serif; line-height:1.5; overflow-x:hidden; }
+    p { margin:0 0 10px; }
 
-    /* HERO — boxed in shaded blue */
     .hero {
-      text-align: center;
-      padding: 6vh 5vw 2vh;
-      background: #eaf3ff;
-      border: 2px solid #d7e7ff;
-      border-radius: 12px;
-      max-width: 960px;
-      margin: 20px auto;
-      box-shadow: 0 6px 20px rgba(2,32,71,.08);
+      text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px;
+      max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08);
     }
-    .hero-img {
-      width: 55%;
-      max-width: 320px;
-      height: auto;
-      margin: 0 auto 14px;
-      display: block;
-    }
-    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom: 10px; }
-    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom: 4px; padding: 0 10px; }
-    .subtag { font-size: clamp(0.95rem, 3.5vw, 1.1rem); color: #6b7280; margin-bottom: 10px; }
+    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
+    h1 { font-size:clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
+    .tagline { font-size:clamp(1rem, 4vw, 1.3rem); color:var(--muted); margin-bottom:4px; padding:0 10px; }
 
-    /* UTILITY — boxed in shaded blue */
     .utility {
-      text-align: center;
-      padding: 4vh 5vw 6vh;
-      background: #f0f7ff;
-      border: 2px solid #d0e3ff;
-      border-radius: 12px;
-      max-width: 960px;
-      margin: 20px auto;
-      box-shadow: 0 6px 20px rgba(2,32,71,.08);
+      text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px;
+      max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08);
     }
-    .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 15px; color: var(--ink); }
-    .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin: 6px 0; }
+    .utility h2 { font-size:clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
+    .utility p { font-size:clamp(1rem, 4vw, 1.2rem); color:var(--muted); margin:6px 0; }
 
-    /* OTC SECTION */
-    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; }
-    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
+    .otc-section { background:var(--card); color:var(--ink); padding:6vh 5vw; }
+    .otc-wrap { max-width:900px; margin:0 auto; text-align:center; }
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
-    .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
-    .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
+    .otc-section h2 { font-size:clamp(1.5rem, 5vw, 2rem); margin:0; color:var(--ink); }
+    .otc-section p { font-size:clamp(1rem, 4vw, 1.1rem); margin-bottom:20px; color:var(--muted); }
 
-    /* Disclaimer — make smaller than note and win cascade */
-    .disclaimer {
-      font-size: 0.72rem !important;  /* smaller than 0.82rem */
-      line-height: 1.35;
-      color: #0A74D0;
-      font-weight: bold;
-      text-align: center;
-      max-width: 600px;
-      margin: 24px auto 0;
-    }
+    .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:24px auto 0; }
+    .countdown-warning { margin-top:12px; text-align:center; color:#222; font-size:0.9rem; }
 
-    /* Countdown */
-    .countdown-warning {
-      margin-top: 12px;
-      text-align: center;
-      color: #222;
-      font-size: 0.9rem;
-    }
+    .footer { text-align:center; padding:40px 10px; font-size:0.85rem; color:var(--muted); }
 
-    .footer { text-align: center; padding: 40px 10px; font-size: 0.85rem; color: var(--muted); }
+    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
-    @media (max-width: 480px) {
-      .hero-img { width: 65%; max-width: 220px; }
-    }
-
-    /* LIVE badge */
     .status-badge {
       display:inline-flex; align-items:center; gap:.5rem;
       font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -118,11 +73,9 @@
       background:#fff; color:#0b3d78; user-select:none;
     }
     .status-dot{width:.5rem;height:.5rem;border-radius:50%;background:#6aa1ea;}
-    .status-badge.live  { color:#0b3d78; background:#e8f2ff; }
-    .status-badge.warn  { color:#3a4c66; background:#f0f6ff; }
-    .status-badge.down  { color:#3a4c66; background:#f0f6ff; }
+    .status-badge.live { color:#0b3d78; background:#e8f2ff; }
+    .status-badge.warn, .status-badge.down { color:#3a4c66; background:#f0f6ff; }
 
-    /* Buttons */
     .btn {
       display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
       padding:12px 18px; border-radius:10px; text-decoration:none;
@@ -135,11 +88,7 @@
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); }
 
-    .btn-primary   { background: var(--blue); color:#fff; }
-    .btn-secondary { background:#ffffff; color:var(--blue); border:2px solid var(--blue); }
-    .btn-ghost     { background:#fff; color:var(--ink); border:2px dashed var(--ring); }
-
-    /* Trustline button */
+    .btn-primary { background:var(--blue); color:#fff; }
     .btn-trustline{
       display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff;
       text-decoration:none; font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -148,42 +97,33 @@
     .btn-trustline:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.18); }
     .btn-trustline:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.12); }
 
-    /* Social row */
     .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; }
     .social img{ width:28px; height:28px; vertical-align:middle; display:block; }
 
-    /* High-contrast price line */
     .price-line{
       display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
       padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem);
-      letter-spacing:.2px; box-shadow: 0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin: 6px 0 18px; white-space: nowrap;
+      border:2px solid var(--blue); font-weight:800; font-size:clamp(1rem, 3.6vw, 1.2rem);
+      letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px 0 18px; white-space:nowrap;
     }
     .price-line .sep{ opacity:.6 }
 
-    /* Toast */
-    .toast {
-      position: fixed; left: 50%; transform: translateX(-50%); bottom: 26px;
-      background: #fff; color: var(--blue); border: 2px solid var(--blue);
-      padding: 12px 16px; border-radius: 10px; box-shadow: 0 10px 26px rgba(2,32,71,.16);
-      font-weight: 700; z-index: 9999; display: none;
-    }
+    .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16);
+      font-weight:700; z-index:9999; display:none; }
 
-    /* Launch section */
-    .launch-section { padding: 6vh 5vw; background: #f7faff; color: var(--ink); border-top: 1px solid #e6eefb; border-bottom: 1px solid #e6eefb; }
-    .launch-wrap { max-width: 960px; margin: 0 auto; }
-    .launch-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0 0 14px; }
-    .launch-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(240px, 1fr)); }
-    .launch-card { background: #ffffff; border: 1px solid #e6eefb; border-radius: 12px; padding: 16px; box-shadow: 0 6px 20px rgba(2,32,71,.08); }
-    .launch-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: var(--blue); }
-    .launch-card p { margin: 6px 0; color: var(--muted); }
-    @media (max-width: 720px) { .launch-grid { grid-template-columns: 1fr; } }
+    .launch-section { padding:6vh 5vw; background:#f7faff; color:var(--ink); border-top:1px solid #e6eefb; border-bottom:1px solid #e6eefb; }
+    .launch-wrap { max-width:960px; margin:0 auto; }
+    .launch-section h2 { font-size:clamp(1.5rem, 5vw, 2rem); margin:0 0 14px; }
+    .launch-grid { display:grid; gap:14px; grid-template-columns:repeat(2, minmax(240px, 1fr)); }
+    .launch-card { background:#ffffff; border:1px solid #e6eefb; border-radius:12px; padding:16px; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .launch-card h3 { margin:0 0 8px; font-size:1.05rem; color:var(--blue); }
+    .launch-card p { margin:6px 0; color:var(--muted); }
+    @media (max-width:720px){ .launch-grid{ grid-template-columns:1fr; } }
 
-    .early-note{
-      text-align:center; font-size:.92rem; color:#0b3d78; background:#eaf3ff;
-      border:1px solid #d7e7ff; border-radius:10px; padding:12px 14px; max-width:860px; margin:18px auto 0;
-    }
+    .early-note{ text-align:center; font-size:.92rem; color:#0b3d78; background:#eaf3ff; border:1px solid #d7e7ff;
+      border-radius:10px; padding:12px 14px; max-width:860px; margin:18px auto 0; }
     .early-note b{ color:var(--blue); }
   </style>
 </head>
@@ -191,11 +131,7 @@
 
   <!-- HERO -->
   <div class="hero">
-    <img
-      src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true"
-      alt="$RAD Logo"
-      class="hero-img"
-    />
+    <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img"/>
     <h1>RAD GARLINGTON — $RAD</h1>
     <p class="tagline">The Protocol’s most loyal believer</p>
     <p style="text-align:center; margin-top:8px;">
@@ -234,15 +170,10 @@
   <!-- OTC -->
   <div class="otc-section">
     <div class="otc-wrap">
-      <p style="margin-bottom: 14px; font-size: 0.95rem; color: var(--muted); font-weight: bold;">
-        🚧 OTC not live. Follow on 𝕏 for the drop
-      </p>
-
       <div class="otc-head">
         <h2>$RAD — OTC PRE-SALE</h2>
         <div id="liveStatus" class="status-badge down" title="OTC connectivity">
-          <span class="status-dot"></span>
-          <span id="liveText">OFFLINE</span>
+          <span class="status-dot"></span><span id="liveText">OFFLINE</span>
         </div>
       </div>
 
@@ -252,83 +183,52 @@
         <span>Powered by XRP</span>
       </div>
 
-      <div style="
-        width: 100%; max-width: 520px; margin: 0 auto; background: #fff;
-        border: 3px solid var(--blue); border-radius: 12px; box-shadow: 0 6px 20px rgba(2,32,71,0.08);
-        padding: 20px; text-align: center; color: var(--ink);
-      ">
-        <div style="display:flex; justify-content:center; margin-bottom:12px;">
-          <button id="btnConnect" class="btn btn-secondary" aria-label="Connect wallet">🔗 CONNECT</button>
-        </div>
+      <div style="width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink);">
+        <!-- CONNECT button removed -->
 
-        <a class="btn-trustline"
-           href="#"
-           target="_blank" rel="noopener"
-           aria-label="Set the $RAD trustline in Xaman"
-           style="margin: 12px 0 16px; display:inline-block;">
-           Set $RAD Trustline
+        <a id="btnTrustline" class="btn-trustline" href="#" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman" style="margin: 12px 0 16px; display:inline-block;">
+          Set $RAD Trustline
         </a>
 
-        <label for="usdInput" style="font-weight: bold; display: block; margin-bottom: 10px; margin-top: 10px;">
-          Enter amount in USD
-        </label>
+        <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:10px;">Enter amount in USD</label>
         <input id="usdInput" type="number" min="1" step="0.01" placeholder="1.00 USD"
-               style="padding: 10px; font-size: 1rem; width: 100%; max-width: 320px; border: 2px solid #cbd5e1; border-radius: 8px;" />
+               style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
-        <div id="xrpConversion" style="margin-top: 20px; font-size: 1rem;">🔁 XRP Required: 0</div>
-        <div id="bagAmount" style="margin-top: 10px; font-size: 1.1rem; font-weight: bold;">🪙 You’ll receive: 0 $RAD</div>
+        <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
+        <div id="bagAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
         <div style="margin-top:14px;">
           <button id="btnBuy" class="btn btn-primary" aria-label="Buy $RAD" disabled>🛒 BUY</button>
         </div>
 
-        <div style="
-          margin-top: 30px; font-size: 0.95rem; color: var(--ink);
-          background: #f7faff; border: 2px solid #d7e7ff; padding: 16px; border-radius: 10px;
-          text-align: center; box-shadow: 0 4px 12px rgba(2,32,71,0.06);
-        ">
-          <p style="margin: 0 0 8px;">🎯 <strong>OTC Rate:</strong> $0.000001 per $RAD</p>
-          <p style="margin: 0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
-          <p style="margin: 0;">✅ OTC buyers in early — 3× value at launch</p>
+        <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
+          <p style="margin:0 0 8px;">🎯 <strong>OTC Rate:</strong> $0.000001 per $RAD</p>
+          <p style="margin:0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
+          <p style="margin:0;">✅ OTC buyers in early — 3× value at launch</p>
         </div>
 
-        <p style="margin-top: 12px; font-size: 0.82rem; color: var(--muted);">
+        <p style="margin-top:12px; font-size:0.82rem; color:var(--muted);">
           $RAD is a meme token on XRPL. This is not financial advice. Plans may change based on treasury, market, or protocol decisions
         </p>
       </div>
 
-      <!-- DISCLAIMER -->
-      <p class="disclaimer">
-        🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.
-      </p>
-
-      <!-- COUNTDOWN WARNING -->
-      <p class="countdown-warning">
-        Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.
-      </p>
+      <p class="disclaimer">🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.</p>
+      <p class="countdown-warning">Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.</p>
     </div>
   </div>
 
-  <!-- LITE PAPER BUTTON -->
   <div class="litepaper-cta" style="text-align:center; margin: 16px 0 6px;">
-    <a
-      class="btn btn-primary"
-      href="https://github.com/radgarlington/radgarlington.io/blob/451f0f177e8b8cef5deb146473c04ccd24c99747/litepaper.md"
-      target="_blank"
-      rel="noopener"
-      aria-label="Open the $RAD Lite Paper on GitHub"
-    >📄 Read the Lite Paper</a>
+    <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/451f0f177e8b8cef5deb146473c04ccd24c99747/litepaper.md" target="_blank" rel="noopener" aria-label="Open the $RAD Lite Paper on GitHub">📄 Read the Lite Paper</a>
   </div>
-  
-<!-- LEGAL DISCLAIMER -->
-<p class="disclaimer">
-  🛡 Legal Disclaimer<br><br>
-  $RAD is an independent community-driven token built on the XRP Ledger (XRPL).  
-  It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
-  All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
-</p>
 
-  <!-- FOOTER -->
+  <!-- LEGAL DISCLAIMER -->
+  <p class="disclaimer">
+    🛡 Legal Disclaimer<br><br>
+    $RAD is an independent community-driven token built on the XRP Ledger (XRPL).  
+    It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
+    All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
+  </p>
+
   <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
@@ -339,162 +239,120 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- SCRIPT -->
   <script>
-    const COINGECKO_API_KEY = "";
-    const CG_HEADERS = COINGECKO_API_KEY ? { "x-cg-pro-api-key": COINGECKO_API_KEY } : {};
-    const CG_BASE = "https://api.coingecko.com/api/v3";
+    // --- helpers ---
+    const toast = document.getElementById('toast');
+    function showToast(msg){ toast.textContent = msg; toast.style.display = 'block'; clearTimeout(showToast._t); showToast._t = setTimeout(()=>toast.style.display='none', 2200); }
 
-    function setBadge(state, text) {
+    function setBadge(state, text){
       const el = document.getElementById("liveStatus");
       const tx = document.getElementById("liveText");
-      if (!el || !tx) return;
+      if(!el||!tx) return;
       el.classList.remove("live","warn","down");
       el.classList.add(state);
       tx.textContent = text;
-    }
-    setBadge("down", "OFFLINE");
-
-    const toast = document.getElementById('toast');
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.style.display = 'block';
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.style.display = 'none', 2200);
-    }
-
-    async function fetchXRPPrice() {
-      try {
-        const res = await fetch(`${CG_BASE}/simple/price?ids=ripple&vs_currencies=usd`, {
-          headers: CG_HEADERS, cache: "no-store"
-        });
-        const data = await res.json();
-        return data && data.ripple && data.ripple.usd ? Number(data.ripple.usd) : null;
-      } catch {
-        return null;
-      }
     }
 
     const usdInput = document.getElementById('usdInput');
     const xrpConversion = document.getElementById('xrpConversion');
     const bagAmount = document.getElementById('bagAmount');
-    const btnConnect = document.getElementById('btnConnect');
     const btnBuy = document.getElementById('btnBuy');
-    const trustBtn = document.querySelector('.btn-trustline');
-    let lastPrice = null;
+    const trustBtn = document.getElementById('btnTrustline');
 
-    btnConnect.addEventListener('click', () => {
-      showToast('OTC OPENS SOON');
-    });
+    let lastQuote = null; // { usd, xrp, rad, xrp_usd }
 
-    // BUY: quote -> paylink (tag-less), then deep-link
-    btnBuy.addEventListener('click', async () => {
-      const usd = parseFloat(usdInput.value);
-      if (isNaN(usd) || usd < 1) { showToast('Minimum $1'); return; }
+    async function initLive(){
+      try{
+        // If backend responds, mark LIVE and set trustline deeplink
+        const infoRes = await fetch('/api/info', {cache:'no-store'});
+        if(!infoRes.ok) throw new Error('info fail');
+        setBadge('live', 'LIVE');
 
-      btnBuy.disabled = true;
-      try {
-        const qRes = await fetch(`/api/quote?usd=${encodeURIComponent(usd)}`, { cache: 'no-store' });
-        const quote = await qRes.json();
-        if (!quote || !quote.xrp) throw new Error('Quote unavailable');
-
-        const pRes = await fetch(`/api/paylink?xrp=${encodeURIComponent(quote.xrp)}`, { cache: 'no-store' });
-        const pay = await pRes.json();
-        if (!pay || !pay.uri) throw new Error('Payment link unavailable');
-
-        // Deep-link to Xaman
-        window.location.href = pay.uri;
-
-        // Visible fallback link (desktop)
-        let a = document.getElementById('pay-fallback-link');
-        if (!a) {
-          a = document.createElement('a');
-          a.id = 'pay-fallback-link';
-          a.className = 'btn btn-secondary';
-          a.style.display = 'inline-block';
-          a.style.marginTop = '10px';
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.textContent = '🧾 Open Xaman to Pay';
-          btnBuy.insertAdjacentElement('afterend', a);
-        }
-        a.href = pay.uri;
-
-        showToast('Opening wallet…');
-      } catch (e) {
-        console.error(e);
-        showToast('Could not build pay link');
-      } finally {
-        btnBuy.disabled = false;
-      }
-    });
-
-    // Trustline deeplink from backend
-    async function setupTrustline() {
-      if (!trustBtn) return;
-      try {
-        const resp = await fetch('/api/deeplink', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ limit: '100000000' })
-        });
-        const data = await resp.json();
-        if (data && data.trustline_url) {
-          trustBtn.href = data.trustline_url;
-          trustBtn.addEventListener('click', () => showToast('Opening trustline…'));
+        // get trustline deeplink
+        const tlRes = await fetch('/api/deeplink', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ limit: "100000000" })});
+        if(tlRes.ok){
+          const tl = await tlRes.json();
+          if(tl && tl.trustline_url && trustBtn){
+            trustBtn.href = tl.trustline_url;
+          }
         } else {
-          console.warn('deeplink missing trustline_url');
+          // fallback static deeplink (still works)
+          trustBtn.href = "https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=100000000";
         }
-      } catch (e) {
-        console.error('deeplink error', e);
+      }catch{
+        setBadge('warn', 'PARTIAL');
+        // still set a static trustline link
+        if(trustBtn){
+          trustBtn.href = "https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=100000000";
+        }
       }
     }
 
-    // LIVE badge based on backend reachability
-    async function initOTCStatus() {
-      try {
-        const r = await fetch('/api/info', { cache: 'no-store' });
-        const j = await r.json();
-        if (j && j.pricing && j.pricing.xrp_usd) {
-          setBadge('live', 'LIVE');
-        } else {
-          setBadge('warn', 'LIMITED');
-        }
-      } catch {
-        setBadge('down', 'OFFLINE');
-      }
+    async function quoteFromUSD(usd){
+      const res = await fetch(`/api/quote?usd=${encodeURIComponent(usd)}`, {cache:'no-store'});
+      if(!res.ok) throw new Error('quote failed');
+      const q = await res.json();
+      // expect: { in:"usd", xrp:"…", usd:"…", rad:"…", xrp_usd:"…" }
+      return q;
     }
 
-    async function handleUSDInput() {
+    async function handleUSDInput(){
       const usd = parseFloat(usdInput.value);
+      lastQuote = null;
       xrpConversion.textContent = '';
       bagAmount.textContent = '';
-      if (isNaN(usd) || usd < 1) {
+
+      if(isNaN(usd) || usd < 1){
         xrpConversion.textContent = usd > 0 ? 'Minimum $1' : '🔁 XRP Required: 0';
         bagAmount.textContent = '🪙 You’ll receive: 0 $RAD';
         btnBuy.disabled = true;
         return;
       }
-      const livePrice = lastPrice ?? await fetchXRPPrice();
-      lastPrice = livePrice;
-      if (!livePrice) {
-        xrpConversion.textContent = 'Could not fetch XRP price';
+
+      try{
+        const q = await quoteFromUSD(usd.toFixed(2));
+        lastQuote = q;
+        const xrpNeeded = q.xrp ?? '0';
+        const radAmt = q.rad ?? '0';
+        xrpConversion.textContent = `🔁 XRP Required: ${Number(xrpNeeded).toFixed(2)} XRP`;
+        bagAmount.textContent = `🪙 You’ll receive: ${Number(radAmt).toLocaleString()} $RAD`;
+        btnBuy.disabled = false;
+      }catch(e){
+        xrpConversion.textContent = 'Could not fetch quote';
         bagAmount.textContent = '🪙 You’ll receive: 0 $RAD';
         btnBuy.disabled = true;
+      }
+    }
+
+    async function onBuy(){
+      const usd = parseFloat(usdInput.value);
+      if(isNaN(usd) || usd < 1){
+        showToast('Minimum $1');
         return;
       }
-      const xrpNeeded = (usd / livePrice).toFixed(2);
-      const radAmt = (usd * 1000000).toLocaleString();
-      xrpConversion.textContent = `🔁 XRP Required: ${xrpNeeded} XRP`;
-      bagAmount.textContent = `🪙 You’ll receive: ${radAmt} $RAD`;
-      btnBuy.disabled = false;
+      try{
+        // ensure we have a quote (keeps UX consistent with worker pricing)
+        if(!lastQuote) lastQuote = await quoteFromUSD(usd.toFixed(2));
+        const xrp = lastQuote.xrp || (usd / (lastQuote.xrp_usd || 3.00));
+        const payRes = await fetch(`/api/paylink?xrp=${encodeURIComponent(xrp)}`, {cache:'no-store'});
+        if(!payRes.ok) throw new Error('paylink failed');
+        const pay = await payRes.json();
+        if(pay && pay.uri){
+          window.location.href = pay.uri; // opens Xaman/URI handler with NO destination tag
+        }else{
+          throw new Error('no uri');
+        }
+      }catch(e){
+        showToast('Could not create payment link');
+      }
     }
-    usdInput.addEventListener('input', handleUSDInput);
-    handleUSDInput();
 
-    // Initialize trustline + status
-    setupTrustline();
-    initOTCStatus();
+    document.addEventListener('DOMContentLoaded', () => {
+      initLive();
+      usdInput.addEventListener('input', handleUSDInput);
+      btnBuy.addEventListener('click', onBuy);
+      handleUSDInput();
+    });
   </script>
 </body>
 </html>
