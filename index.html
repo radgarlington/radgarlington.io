@@ -214,7 +214,7 @@
     const API_BASE =
       (location.hostname === "localhost" || location.hostname === "127.0.0.1")
         ? "http://127.0.0.1:8000"
-        : "http://api.radgarlington.io";
+        : "https://api.radgarlington.io";
 
     const MIN_USD = 1;
 
@@ -264,10 +264,10 @@
         const px = Number(info?.pricing?.xrp_usd);
         serverPrice = Number.isFinite(px) && px > 0 ? px : null;
 
-        // Trustline deeplink
-        // API returns: { "uri": "https://xumm.app/detect/request?txjson=..." }
+        // Trustline deeplink (support both {trustline_url} and {uri})
         const deeplink = await apiPost("/api/deeplink", { limit: "100000000" });
-        if (deeplink?.uri) trustlineLink.href = deeplink.uri;
+        const tl = deeplink?.trustline_url || deeplink?.uri || "#";
+        trustlineLink.href = tl;
 
         setBadge("live","LIVE");
       }catch(e){
@@ -312,10 +312,11 @@
       if (isNaN(usd) || usd < MIN_USD) { showToast("Minimum $1"); return; }
 
       try{
-        // Use USD directly (your API supports ?usd=… and returns { uri, xrp, to })
+        // Use USD directly (API returns { uri, xrp, to })
         const pay = await apiGet(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
-        if (pay?.uri){
-          window.location.href = pay.uri; // opens Xaman / xrpl: deeplink
+        const uri = pay?.uri;
+        if (uri){
+          window.location.href = uri; // opens Xaman / xrpl: deeplink
         }else{
           showToast("Could not build payment link.");
         }
