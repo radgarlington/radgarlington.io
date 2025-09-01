@@ -23,30 +23,16 @@
 
   <style>
     * { box-sizing: border-box; }
-    :root{
-      --bg:#ffffff;
-      --ink:#0f172a;
-      --muted:#475569;
-      --blue:#0A74D0;
-      --blue-ink:#ffffff;
-      --card:#f4f7fb;
-      --ring:rgba(10,116,208,.22);
-      --gold:#0A74D0;
-    }
+    :root{ --bg:#ffffff; --ink:#0f172a; --muted:#475569; --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22); --gold:#0A74D0; }
     body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden; }
     p { margin:0 0 10px; }
-    .hero {
-      text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px;
-      max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08);
-    }
+
+    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
 
-    .utility {
-      text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px;
-      max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08);
-    }
+    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
 
@@ -111,11 +97,7 @@
 
   <!-- HERO -->
   <div class="hero">
-    <img
-      src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true"
-      alt="$RAD Logo"
-      class="hero-img"
-    />
+    <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
     <h1>RAD GARLINGTON — $RAD</h1>
     <p class="tagline">The Protocol’s most loyal believer</p>
     <p style="text-align:center; margin-top:8px;">
@@ -168,25 +150,17 @@
         <span>Powered by XRP</span>
       </div>
 
-      <div style="
-        width:100%; max-width:520px; margin:0 auto; background:#fff;
-        border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08);
-        padding:20px; text-align:center; color:var(--ink);">
+      <div style="width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink);">
 
         <!-- Trustline -->
-        <a id="trustlineLink" class="btn-trustline"
-           href="#"
-           target="_blank" rel="noopener"
-           aria-label="Set the $RAD trustline in Xaman"
-           style="margin: 12px 0 16px; display:inline-block;">
-           Set $RAD Trustline
+        <a id="trustlineLink" class="btn-trustline" href="#" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman" style="margin: 12px 0 16px; display:inline-block;">
+          Set $RAD Trustline
         </a>
 
         <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:10px;">
           Enter amount in USD
         </label>
-        <input id="usdInput" type="number" min="1" step="0.01" placeholder="1.00 USD"
-               style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
+        <input id="usdInput" type="number" min="1" step="0.01" placeholder="1.00 USD" style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
         <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
         <div id="bagAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
@@ -195,10 +169,7 @@
           <button id="btnBuy" class="btn btn-primary" aria-label="Buy $RAD" disabled>🛒 BUY</button>
         </div>
 
-        <div style="
-          margin-top:30px; font-size:0.95rem; color:var(--ink);
-          background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px;
-          text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
+        <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
           <p style="margin:0 0 8px;">🎯 <strong>OTC Rate:</strong> $0.000001 per $RAD</p>
           <p style="margin:0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
           <p style="margin:0;">✅ OTC buyers in early — 3× value at launch</p>
@@ -209,22 +180,14 @@
         </p>
       </div>
 
-      <p class="disclaimer">
-        🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.
-      </p>
-
-      <p class="countdown-warning">
-        Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.
-      </p>
+      <p class="disclaimer">🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.</p>
+      <p class="countdown-warning">Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.</p>
     </div>
   </div>
 
   <!-- LITE PAPER BUTTON -->
   <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
-    <a class="btn btn-primary"
-       href="https://github.com/radgarlington/radgarlington.io/blob/451f0f177e8b8cef5deb146473c04ccd24c99747/litepaper.md"
-       target="_blank" rel="noopener"
-       aria-label="Open the $RAD Lite Paper on GitHub">📄 Read the Lite Paper</a>
+    <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/451f0f177e8b8cef5deb146473c04ccd24c99747/litepaper.md" target="_blank" rel="noopener" aria-label="Open the $RAD Lite Paper on GitHub">📄 Read the Lite Paper</a>
   </div>
 
   <!-- LEGAL DISCLAIMER -->
@@ -247,100 +210,96 @@
 
   <!-- SCRIPT -->
   <script>
-    // ==== CONFIG: point to your Flask API ====
-    // Example: const API_BASE = "http://172.30.205.84:8000";
-    const API_BASE = "http://127.0.0.1:8000";
+    // === API base (public when on site, local when testing) ===
+    const API_BASE =
+      (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+        ? "http://127.0.0.1:8000"
+        : "http://api.radgarlington.io";
 
+    const MIN_USD = 1;
+
+    // Elements
     const usdInput = document.getElementById('usdInput');
     const xrpConversion = document.getElementById('xrpConversion');
     const bagAmount = document.getElementById('bagAmount');
     const btnBuy = document.getElementById('btnBuy');
     const trustlineLink = document.getElementById('trustlineLink');
-
-    function setBadge(state, text) {
-      const el = document.getElementById("liveStatus");
-      const tx = document.getElementById("liveText");
-      if (!el || !tx) return;
-      el.classList.remove("live","warn","down");
-      el.classList.add(state);
-      tx.textContent = text;
-    }
-
+    const liveBadge = document.getElementById("liveStatus");
+    const liveText = document.getElementById("liveText");
     const toast = document.getElementById('toast');
-    function showToast(msg) {
+
+    function setBadge(state, text){
+      liveBadge.classList.remove("live","warn","down");
+      liveBadge.classList.add(state);
+      liveText.textContent = text;
+    }
+    function showToast(msg){
       toast.textContent = msg;
       toast.style.display = 'block';
       clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.style.display = 'none', 2200);
+      showToast._t = setTimeout(()=>toast.style.display='none', 2200);
     }
 
-    async function apiGet(path) {
-      const res = await fetch(`${API_BASE}${path}`, {cache: "no-store"});
-      if (!res.ok) throw new Error(`GET ${path} ${res.status}`);
-      return res.json();
+    async function apiGet(path){
+      const r = await fetch(`${API_BASE}${path}`, { cache: "no-store" });
+      if(!r.ok) throw new Error(`GET ${path} ${r.status}`);
+      return r.json();
     }
-    async function apiPost(path, body) {
-      const res = await fetch(`${API_BASE}${path}`, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify(body || {})
+    async function apiPost(path, body){
+      const r = await fetch(`${API_BASE}${path}`, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify(body||{})
       });
-      if (!res.ok) throw new Error(`POST ${path} ${res.status}`);
-      return res.json();
+      if(!r.ok) throw new Error(`POST ${path} ${r.status}`);
+      return r.json();
     }
 
-    let lastXrpUsd = null;
+    let serverPrice = null;
 
-    async function boot() {
-      try {
-        // 1) Health + price → LIVE badge
+    async function boot(){
+      try{
+        // Info → price + LIVE badge
         const info = await apiGet("/api/info");
-        lastXrpUsd = Number(info?.pricing?.xrp_usd || NaN);
-        if (!Number.isFinite(lastXrpUsd)) throw new Error("No xrp_usd");
-        setBadge("live", "LIVE");
+        const px = Number(info?.pricing?.xrp_usd);
+        serverPrice = Number.isFinite(px) && px > 0 ? px : null;
 
-        // 2) Trustline deeplink
-        const deeplink = await apiPost("/api/deeplink", {limit: "100000000"});
-        if (deeplink?.trustline_url) {
-          trustlineLink.href = deeplink.trustline_url;
-        } else {
-          throw new Error("No trustline_url");
-        }
+        // Trustline deeplink
+        // API returns: { "uri": "https://xumm.app/detect/request?txjson=..." }
+        const deeplink = await apiPost("/api/deeplink", { limit: "100000000" });
+        if (deeplink?.uri) trustlineLink.href = deeplink.uri;
 
-        // 3) Prime conversion display
-        handleUSDInput();
-      } catch (e) {
+        setBadge("live","LIVE");
+      }catch(e){
         console.error(e);
-        setBadge("down", "OFFLINE");
-        // leave buttons disabled when offline
+        setBadge("down","OFFLINE");
       }
+      handleUSDInput();
     }
 
-    async function handleUSDInput() {
+    async function handleUSDInput(){
       const usd = parseFloat(usdInput.value);
       xrpConversion.textContent = '';
       bagAmount.textContent = '';
 
-      if (isNaN(usd) || usd < 1) {
+      if (isNaN(usd) || usd < MIN_USD){
         xrpConversion.textContent = usd > 0 ? 'Minimum $1' : '🔁 XRP Required: 0';
         bagAmount.textContent = '🪙 You’ll receive: 0 $RAD';
         btnBuy.disabled = true;
         return;
       }
 
-      try {
-        // Ask backend to do the math (uses live CG price or last-known)
-        const quote = await apiGet(`/api/quote?usd=${encodeURIComponent(usd)}`);
-        const xrp = Number(quote?.xrp || 0);
-        const rad = Number(quote?.rad || 0);
-        const px  = Number(quote?.xrp_usd || lastXrpUsd || 0);
+      try{
+        // Let backend compute quote (keeps RAD = $1 per 1M and uses its XRP price)
+        const q = await apiGet(`/api/quote?usd=${encodeURIComponent(usd)}`);
+        const xrp = Number(q?.xrp || 0);
+        const rad = Number(q?.rad || 0);
+        if (!xrp || !rad) throw new Error("bad quote");
 
-        if (!xrp || !rad || !px) throw new Error("bad quote");
-
-        xrpConversion.textContent = `🔁 XRP Required: ${Number(xrp).toFixed(2)} XRP`;
+        xrpConversion.textContent = `🔁 XRP Required: ${xrp.toFixed(2)} XRP`;
         bagAmount.textContent = `🪙 You’ll receive: ${Math.trunc(rad).toLocaleString()} $RAD`;
         btnBuy.disabled = false;
-      } catch (e) {
+      }catch(e){
         console.error(e);
         xrpConversion.textContent = 'Could not fetch quote';
         bagAmount.textContent = '🪙 You’ll receive: 0 $RAD';
@@ -348,31 +307,37 @@
       }
     }
 
-    async function handleBuy() {
+    async function handleBuy(){
       const usd = parseFloat(usdInput.value || "0");
-      if (isNaN(usd) || usd < 1) return;
+      if (isNaN(usd) || usd < MIN_USD) { showToast("Minimum $1"); return; }
 
-      try {
-        const quote = await apiGet(`/api/quote?usd=${encodeURIComponent(+usd)}`);
-        const xrp = Number(quote?.xrp || 0);
-        if (!xrp) throw new Error("no xrp for paylink");
-
-        const pay = await apiGet(`/api/paylink?xrp=${encodeURIComponent(xrp)}`);
-        const uri = pay?.uri;
-        if (!uri) throw new Error("no pay uri");
-
-        // Open Xaman / xrpl: link like BAG
-        window.location.href = uri;
-      } catch (e) {
+      try{
+        // Use USD directly (your API supports ?usd=… and returns { uri, xrp, to })
+        const pay = await apiGet(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
+        if (pay?.uri){
+          window.location.href = pay.uri; // opens Xaman / xrpl: deeplink
+        }else{
+          showToast("Could not build payment link.");
+        }
+      }catch(e){
         console.error(e);
-        showToast('Payment link unavailable. Try again.');
+        showToast("Payment link error.");
       }
     }
 
-    usdInput.addEventListener('input', handleUSDInput);
-    document.getElementById('btnBuy').addEventListener('click', handleBuy);
+    // Trustline safety: if deeplink not ready, keep user informed
+    trustlineLink.addEventListener('click', (e) => {
+      const href = trustlineLink.getAttribute('href') || '#';
+      if (href === '#'){
+        e.preventDefault();
+        showToast("Trustline link not ready. Try again.");
+      }
+    });
 
-    boot(); // start
+    usdInput.addEventListener('input', handleUSDInput);
+    btnBuy.addEventListener('click', handleBuy);
+
+    boot();
   </script>
 </body>
 </html>
