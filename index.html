@@ -380,15 +380,90 @@
     const bagAmount = document.getElementById('bagAmount');
     const btnConnect = document.getElementById('btnConnect');
     const btnBuy = document.getElementById('btnBuy');
+    const trustBtn = document.querySelector('.btn-trustline');
     let lastPrice = null;
 
     btnConnect.addEventListener('click', () => {
       showToast('OTC OPENS SOON');
     });
 
-    btnBuy.addEventListener('click', () => {
-      showToast('OTC OPENS SOON');
+    // BUY: quote -> paylink (tag-less), then deep-link
+    btnBuy.addEventListener('click', async () => {
+      const usd = parseFloat(usdInput.value);
+      if (isNaN(usd) || usd < 1) { showToast('Minimum $1'); return; }
+
+      btnBuy.disabled = true;
+      try {
+        const qRes = await fetch(`/api/quote?usd=${encodeURIComponent(usd)}`, { cache: 'no-store' });
+        const quote = await qRes.json();
+        if (!quote || !quote.xrp) throw new Error('Quote unavailable');
+
+        const pRes = await fetch(`/api/paylink?xrp=${encodeURIComponent(quote.xrp)}`, { cache: 'no-store' });
+        const pay = await pRes.json();
+        if (!pay || !pay.uri) throw new Error('Payment link unavailable');
+
+        // Deep-link to Xaman
+        window.location.href = pay.uri;
+
+        // Visible fallback link (desktop)
+        let a = document.getElementById('pay-fallback-link');
+        if (!a) {
+          a = document.createElement('a');
+          a.id = 'pay-fallback-link';
+          a.className = 'btn btn-secondary';
+          a.style.display = 'inline-block';
+          a.style.marginTop = '10px';
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.textContent = '🧾 Open Xaman to Pay';
+          btnBuy.insertAdjacentElement('afterend', a);
+        }
+        a.href = pay.uri;
+
+        showToast('Opening wallet…');
+      } catch (e) {
+        console.error(e);
+        showToast('Could not build pay link');
+      } finally {
+        btnBuy.disabled = false;
+      }
     });
+
+    // Trustline deeplink from backend
+    async function setupTrustline() {
+      if (!trustBtn) return;
+      try {
+        const resp = await fetch('/api/deeplink', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ limit: '100000000' })
+        });
+        const data = await resp.json();
+        if (data && data.trustline_url) {
+          trustBtn.href = data.trustline_url;
+          trustBtn.addEventListener('click', () => showToast('Opening trustline…'));
+        } else {
+          console.warn('deeplink missing trustline_url');
+        }
+      } catch (e) {
+        console.error('deeplink error', e);
+      }
+    }
+
+    // LIVE badge based on backend reachability
+    async function initOTCStatus() {
+      try {
+        const r = await fetch('/api/info', { cache: 'no-store' });
+        const j = await r.json();
+        if (j && j.pricing && j.pricing.xrp_usd) {
+          setBadge('live', 'LIVE');
+        } else {
+          setBadge('warn', 'LIMITED');
+        }
+      } catch {
+        setBadge('down', 'OFFLINE');
+      }
+    }
 
     async function handleUSDInput() {
       const usd = parseFloat(usdInput.value);
@@ -416,6 +491,10 @@
     }
     usdInput.addEventListener('input', handleUSDInput);
     handleUSDInput();
+
+    // Initialize trustline + status
+    setupTrustline();
+    initOTCStatus();
   </script>
 </body>
 </html>
