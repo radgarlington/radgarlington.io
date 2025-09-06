@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Thanks!</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:2rem;line-height:1.4}code{background:#f5f5f5;padding:.15rem .35rem;border-radius:.25rem}</style>
+</head>
+<body>
+  <h1>Thanks for your payment</h1>
+  <p>If you came from Xaman, we’ll deliver your RAD automatically.</p>
+  <p id="uuidWrap" style="display:none">Payload UUID: <code id="uuid"></code></p>
+  <script>
+    const p = new URLSearchParams(location.search).get("payload") || new URLSearchParams(location.search).get("uuid");
+    if (p) { document.getElementById("uuid").textContent = p; document.getElementById("uuidWrap").style.display='block'; }
+  </script>
+  <p>Open your wallet and check Assets for <strong>RAD</strong>. If you don’t see it, add the trust line first.</p>
+</body>
+</html>
