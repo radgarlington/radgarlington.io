@@ -11,13 +11,12 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/assets/site.webmanifest">
-  <meta name="theme-color" content="#C9A227">
+  <meta name="theme-color" content="#0A74D0">
   <meta name="application-name" content="$RAD">
   <meta name="apple-mobile-web-app-title" content="$RAD">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="msapplication-TileColor" content="#C9A227">
-  <meta name="msapplication-config" content="/assets/browserconfig.xml">
+  <meta name="msapplication-TileColor" content="#0A74D0">
 
   <!-- SEO -->
   <meta name="description" content="$RAD – The meme coin with a ledger. Rad Garlington is the Protocol’s most loyal believer. Built on XRPL with 1 trillion supply.">
@@ -38,8 +37,15 @@
   <style>
     * { box-sizing: border-box; }
     html, body { height: 100%; }
-    :root{ --bg:#ffffff; --ink:#0f172a; --muted:#475569; --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22); --gold:#0A74D0; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+    :root{
+      --bg:#ffffff; --ink:#0f172a; --muted:#475569;
+      --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22);
+    }
+    body {
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
+      min-height:100vh; display:flex; flex-direction:column;
+    }
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
 
@@ -58,17 +64,15 @@
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-    .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
-    .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
-
-    .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
-    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
+    .price-line{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px 0 18px; white-space:nowrap; }
+    .price-line .sep{ opacity:.6 }
 
     .status-badge { display:inline-flex; align-items:center; gap:.5rem; font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
       padding:.35rem .6rem; border-radius:999px; border:1px solid var(--ring); background:#fff; color:#0b3d78; user-select:none; }
     .status-dot{ width:.5rem; height:.5rem; border-radius:50%; background:#6aa1ea; }
     .status-badge.live  { color:#0b3d78; background:#e8f2ff; }
-    .status-badge.warn  { color:#3a4c66; background:#f0f6ff; }
     .status-badge.down  { color:#3a4c66; background:#f0f6ff; }
 
     .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:12px 18px; border-radius:10px; text-decoration:none;
@@ -78,21 +82,17 @@
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
     .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); }
     .btn-primary{ background:var(--blue); color:#fff; }
-    .btn-secondary{ background:#ffffff; color:var(--blue); border:2px solid var(--blue); }
-    .btn-ghost{ background:#fff; color:var(--ink); border:2px dashed var(--ring); }
-
     .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
       font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; margin-top:4px; }
     .btn-trustline:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.18); }
-    .btn-trustline:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.12); }
 
-    .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; }
-    .social img{ width:28px; height:28px; vertical-align:middle; display:block; }
+    .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
+    .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
 
-    .price-line{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px 0 18px; white-space:nowrap; }
-    .price-line .sep{ opacity:.6 }
+    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
+
+    .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
+    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
     .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:#0A74D0; border:2px solid var(--blue);
       padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16); font-weight:700; z-index:9999; display:none; }
@@ -115,10 +115,10 @@
       </p>
     </div>
 
-    <!-- Social Links Row -->
+    <!-- Social -->
     <div class="social" style="margin-top:14px; text-align:center;">
-      <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
-      <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
+      <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X" style="width:28px;height:28px;"></a>
+      <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram" style="width:28px;height:28px;"></a>
     </div>
 
     <div style="margin-top:8px; font-size:0.95rem; text-align:center;">
@@ -156,23 +156,17 @@
           <span>Powered by XRP</span>
         </div>
 
-        <div style="width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink);">
-
+        <div class="card">
           <!-- Trustline -->
-          <a id="trustlineLink" class="btn-trustline" href="#" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman" style="margin: 12px 0 16px; display:inline-block;">
+          <a id="trustlineLink" class="btn-trustline" href="#" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
             Set $RAD Trustline
           </a>
 
-          <!-- XRPL address (required for payouts) -->
-          <label for="addrInput" style="font-weight:bold; display:block; margin:8px 0 6px;">
-            Your XRPL address (starts with “r”)
-          </label>
-          <input id="addrInput" type="text" placeholder="r..." style="padding:10px; font-size:1rem; width:100%; max-width:520px; border:2px solid #cbd5e1; border-radius:8px;" />
-
-          <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:10px;">
+          <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:14px;">
             Enter amount in USD
           </label>
-          <input id="usdInput" type="number" min="1" step="0.01" placeholder="1.00 USD" style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
+          <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
+                 autocomplete="off" style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
           <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
@@ -221,23 +215,17 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- SCRIPT -->
 <script>
-  // === API base ===
+  // === API base (public when on site, local when testing) ===
   const API_BASE =
     (location.hostname === "localhost" || location.hostname === "127.0.0.1")
-      ? "http://127.0.0.1:8080"  // change if you run the API locally on a different port
+      ? "http://127.0.0.1:8080"   // local dev: reverse to your API if needed
       : "https://api.radgarlington.io";
 
   const MIN_USD = 1;
-  const XRPL_RE = /^r[1-9A-HJ-NP-Za-km-z]{24,}$/i;
-
-  // $1 → 1,000,000 RAD
-  const RAD_PER_USD = 1_000_000;
 
   // Elements
   const usdInput = document.getElementById('usdInput');
-  const addrInput = document.getElementById('addrInput');
   const xrpConversion = document.getElementById('xrpConversion');
   const radAmount = document.getElementById('radAmount');
   const btnBuy = document.getElementById('btnBuy');
@@ -247,7 +235,7 @@
   const toast = document.getElementById('toast');
 
   function setBadge(state, text){
-    liveBadge.classList.remove("live","warn","down");
+    liveBadge.classList.remove("live","down");
     liveBadge.classList.add(state);
     liveText.textContent = text;
   }
@@ -257,90 +245,89 @@
     clearTimeout(showToast._t);
     showToast._t = setTimeout(()=>toast.style.display='none', 2200);
   }
-  async function fetchJSON(url){
-    const r = await fetch(url, { mode: "cors", cache: "no-store" });
-    const j = await r.json().catch(()=> ({}));
-    if (!r.ok) throw Object.assign(new Error(`HTTP ${r.status}`), { j, status: r.status });
-    return j;
+
+  async function apiGet(path){
+    const r = await fetch(`${API_BASE}${path}`, { cache: "no-store", headers: { "Accept":"application/json" } });
+    if(!r.ok) throw new Error(`GET ${path} ${r.status}`);
+    return r.json();
   }
 
-  // Price from your API
-  let serverPrice = null;   // USD per XRP
-  async function loadStatus(){
-    try {
-      const st = await fetchJSON(`${API_BASE}/api/status`);
-      const p = parseFloat(st?.xrp_usd);
-      serverPrice = Number.isFinite(p) && p > 0 ? p : null;
-      setBadge(serverPrice ? (st.price_live ? "live" : "warn") : "down",
-               serverPrice ? (st.price_live ? "LIVE" : "FALLBACK") : "OFFLINE");
-    } catch {
-      serverPrice = null;
-      setBadge("down","OFFLINE");
-    }
-  }
-
-  // Trustline link (static fallback)
-  function setTrustlineLink(){
+  // Always-works trustline link (static)
+  function buildTrustlineURL(){
     const ISSUER = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V";
     const CURRENCY = "RAD";
-    const LIMIT = "100000000";
-    trustlineLink.href = `https://xrpl.services/?issuer=${ISSUER}&currency=${CURRENCY}&limit=${LIMIT}`;
+    const LIMIT = "100000000"; // 100M RAD
+    return `https://xrpl.services/?issuer=${ISSUER}&currency=${CURRENCY}&limit=${LIMIT}`;
   }
 
-  function updatePreview(){
-    const usd = parseFloat(usdInput.value);
-    btnBuy.disabled = true;
+  async function boot(){
+    try{
+      // Ping API to set badge
+      try {
+        const info = await apiGet("/api/info");
+        if (info?.pricing?.xrp_usd) setBadge("live","LIVE");
+        else setBadge("down","OFFLINE");
+      } catch { setBadge("down","OFFLINE"); }
 
-    if (!Number.isFinite(usd) || usd < MIN_USD){
+      // Trustline deeplink
+      trustlineLink.href = buildTrustlineURL();
+    }catch(e){
+      console.error(e);
+      setBadge("down","OFFLINE");
+    }
+    handleUSDInput();
+  }
+
+  async function handleUSDInput(){
+    const usd = parseFloat(usdInput.value);
+    xrpConversion.textContent = '';
+    radAmount.textContent = '';
+
+    if (isNaN(usd) || usd < MIN_USD){
       xrpConversion.textContent = usd > 0 ? 'Minimum $1' : '🔁 XRP Required: 0';
       radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+      btnBuy.disabled = true;
       return;
     }
 
-    // If we have a server price, preview XRP due (ceil to drops so you never undercharge)
-    if (serverPrice){
-      const drops = Math.ceil((usd / serverPrice) * 1e6);
-      const xrp = drops / 1e6;
+    try{
+      const q = await apiGet(`/api/quote?usd=${encodeURIComponent(usd)}`);
+      const xrp = Number(q?.xrp || q?.xrp_due || 0);
+      const rad = Number(q?.rad || q?.rad_out || 0);
+      if (!xrp || !rad) throw new Error("bad quote");
+
       xrpConversion.textContent = `🔁 XRP Required: ${xrp.toFixed(6)} XRP`;
-    } else {
-      xrpConversion.textContent = `🔁 XRP Required: —`;
+      radAmount.textContent  = `🪙 You’ll receive: ${Math.trunc(rad).toLocaleString()} $RAD`;
+      btnBuy.disabled = false;
+    }catch(e){
+      console.error(e);
+      xrpConversion.textContent = 'Could not fetch quote';
+      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+      btnBuy.disabled = true;
     }
-
-    // RAD preview from configured rate (display only)
-    const rad = Math.trunc(usd * RAD_PER_USD);
-    radAmount.textContent = `🪙 You’ll receive: ${rad.toLocaleString()} $RAD`;
-
-    btnBuy.disabled = false;
   }
 
   async function handleBuy(){
     const usd = parseFloat(usdInput.value || "0");
-    const addr = (addrInput?.value || "").trim();
-
-    if (!Number.isFinite(usd) || usd < MIN_USD) return showToast("Minimum $1");
-    if (!XRPL_RE.test(addr)) return showToast('Enter a valid XRPL address (starts with "r").');
+    if (isNaN(usd) || usd < MIN_USD) { showToast("Minimum $1"); return; }
 
     try{
-      btnBuy.disabled = true;
-      // Authoritative quote + deeplink
-      const q = await fetchJSON(`${API_BASE}/api/quote?usd=${encodeURIComponent(usd)}&addr=${encodeURIComponent(addr)}`);
-      if (q?.ok === false) {
-        if (q.error === 'below_min_usd') return showToast("Minimum is $1.");
-        return showToast(q.error || "Quote failed.");
+      // API returns { ok, uri, xrp, to, dt, order_id }
+      const pay = await apiGet(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
+      const uri = pay?.uri;
+      if (uri){
+        // Open the wallet deep link (Xaman / xrpl:)
+        window.location.href = uri;
+      }else{
+        showToast("Could not build payment link.");
       }
-      if (!q?.deeplink) return showToast("Quote OK but no deeplink.");
-
-      // Navigate to payment (Xaman/xrpl.services). Same-tab avoids popup blockers.
-      window.location.href = q.deeplink;
-    } catch (e){
+    }catch(e){
       console.error(e);
-      showToast("Network or API error.");
-    } finally {
-      setTimeout(()=> (btnBuy.disabled = false), 800);
+      showToast("Payment link error.");
     }
   }
 
-  // Safety: if trustline link didn't build, keep user informed
+  // Trustline safety: if deeplink not ready, keep user informed
   trustlineLink.addEventListener('click', (e) => {
     const href = trustlineLink.getAttribute('href') || '#';
     if (href === '#'){
@@ -349,12 +336,10 @@
     }
   });
 
-  usdInput.addEventListener('input', updatePreview);
+  usdInput.addEventListener('input', handleUSDInput);
   btnBuy.addEventListener('click', handleBuy);
 
-  // Boot
-  setTrustlineLink();
-  loadStatus().then(updatePreview);
+  boot();
 </script>
 </body>
 </html>
