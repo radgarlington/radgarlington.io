@@ -216,24 +216,21 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-  // === API base (public when on site, local when testing) ===
-  const API_BASE =
-    (location.hostname === "localhost" || location.hostname === "127.0.0.1")
-      ? "http://127.0.0.1:8080"   // local dev: reverse to your API if needed
-      : "https://api.radgarlington.io";
+  // ======= CONFIG =======
+  const API_BASE = "https://api.radgarlington.io";  // hardcode prod API
+  const MIN_USD  = 1;
 
-  const MIN_USD = 1;
-
-  // Elements
-  const usdInput = document.getElementById('usdInput');
+  // ======= DOM =======
+  const usdInput      = document.getElementById('usdInput');
   const xrpConversion = document.getElementById('xrpConversion');
-  const radAmount = document.getElementById('radAmount');
-  const btnBuy = document.getElementById('btnBuy');
+  const radAmount     = document.getElementById('radAmount');
+  const btnBuy        = document.getElementById('btnBuy');
   const trustlineLink = document.getElementById('trustlineLink');
-  const liveBadge = document.getElementById("liveStatus");
-  const liveText = document.getElementById("liveText");
-  const toast = document.getElementById('toast');
+  const liveBadge     = document.getElementById('liveStatus');
+  const liveText      = document.getElementById('liveText');
+  const toast         = document.getElementById('toast');
 
+  // ======= UI helpers =======
   function setBadge(state, text){
     liveBadge.classList.remove("live","down");
     liveBadge.classList.add(state);
@@ -243,91 +240,126 @@
     toast.textContent = msg;
     toast.style.display = 'block';
     clearTimeout(showToast._t);
-    showToast._t = setTimeout(()=>toast.style.display='none', 2200);
+    showToast._t = setTimeout(()=>toast.style.display='none', 2400);
   }
 
-  async function apiGet(path){
-    const r = await fetch(`${API_BASE}${path}`, { cache: "no-store", headers: { "Accept":"application/json" } });
-    if(!r.ok) throw new Error(`GET ${path} ${r.status}`);
+  // ======= HTTP helpers =======
+  async function getJSON(path){
+    const url = `${API_BASE}${path}${path.includes('?') ? '&' : '?'}t=${Date.now()}`;
+    const r = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+      redirect: "follow",
+      headers: { "Accept": "application/json" },
+      // mode: "cors" is default in browsers; CORS headers must come from server.
+    });
+    // If Cloudflare served HTML/challenge, content-type won't be JSON.
+    const ct = r.headers.get("content-type") || "";
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    if (!ct.includes("application/json")) {
+      // try to peek for debugging
+      const text = await r.text();
+      throw new Error(`Non-JSON from API (ct="${ct}"): ${text.slice(0,120)}…`);
+    }
     return r.json();
   }
 
-  // Always-works trustline link (static)
+  // ======= Trustline link (static, always works) =======
   function buildTrustlineURL(){
     const ISSUER = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V";
     const CURRENCY = "RAD";
-    const LIMIT = "100000000"; // 100M RAD
+    const LIMIT = "100000000"; // 100M
     return `https://xrpl.services/?issuer=${ISSUER}&currency=${CURRENCY}&limit=${LIMIT}`;
   }
 
-  async function boot(){
-    try{
-      // Ping API to set badge
-      try {
-        const info = await apiGet("/api/info");
-        if (info?.pricing?.xrp_usd) setBadge("live","LIVE");
-        else setBadge("down","OFFLINE");
-      } catch { setBadge("down","OFFLINE"); }
+  // ======= State =======
+  let xrpUsdFallback = null; // from /api/status, used only if /api/quote fails
 
-      // Trustline deeplink
+  // ======= Boot =======
+  async function boot(){
+    try {
       trustlineLink.href = buildTrustlineURL();
-    }catch(e){
+
+      // Ping API and get a fallback price
+      try {
+        const info = await getJSON("/api/status");
+        const px = Number(info?.xrp_usd);
+        if (Number.isFinite(px) && px > 0) xrpUsdFallback = px;
+        setBadge("live", "LIVE");
+      } catch (e) {
+        console.error("status fail:", e);
+        setBadge("down", "OFFLINE");
+      }
+    } catch (e) {
       console.error(e);
-      setBadge("down","OFFLINE");
+      setBadge("down", "OFFLINE");
     }
     handleUSDInput();
   }
 
+  // ======= Quote & Render =======
   async function handleUSDInput(){
     const usd = parseFloat(usdInput.value);
     xrpConversion.textContent = '';
-    radAmount.textContent = '';
+    radAmount.textContent     = '';
 
     if (isNaN(usd) || usd < MIN_USD){
       xrpConversion.textContent = usd > 0 ? 'Minimum $1' : '🔁 XRP Required: 0';
-      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+      radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
       btnBuy.disabled = true;
       return;
     }
 
+    // Primary: ask backend to compute and create an order skeleton
     try{
-      const q = await apiGet(`/api/quote?usd=${encodeURIComponent(usd)}`);
-      const xrp = Number(q?.xrp || q?.xrp_due || 0);
-      const rad = Number(q?.rad || q?.rad_out || 0);
-      if (!xrp || !rad) throw new Error("bad quote");
+      const q = await getJSON(`/api/quote?usd=${encodeURIComponent(usd)}`);
+      const xrp = Number(q?.xrp ?? q?.xrp_due ?? 0);
+      const rad = Number(q?.rad ?? q?.rad_out ?? 0);
+      if (!xrp || !rad) throw new Error("bad quote payload");
 
       xrpConversion.textContent = `🔁 XRP Required: ${xrp.toFixed(6)} XRP`;
-      radAmount.textContent  = `🪙 You’ll receive: ${Math.trunc(rad).toLocaleString()} $RAD`;
+      radAmount.textContent     = `🪙 You’ll receive: ${Math.trunc(rad).toLocaleString()} $RAD`;
       btnBuy.disabled = false;
+      return;
     }catch(e){
-      console.error(e);
-      xrpConversion.textContent = 'Could not fetch quote';
-      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-      btnBuy.disabled = true;
+      console.warn("quote fail, falling back:", e);
+      // Fallback: client-side math only for UI feedback (BUY still requires the API)
+      if (xrpUsdFallback && xrpUsdFallback > 0){
+        const rad = usd * 1_000_000; // $1 → 1,000,000 RAD
+        const xrp = usd / xrpUsdFallback;
+        xrpConversion.textContent = `🔁 XRP Required (est): ${xrp.toFixed(6)} XRP`;
+        radAmount.textContent     = `🪙 You’ll receive (est): ${Math.trunc(rad).toLocaleString()} $RAD`;
+        // We still keep BUY enabled; click will try /api/paylink.
+        btnBuy.disabled = false;
+      } else {
+        xrpConversion.textContent = 'Could not fetch quote';
+        radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
+        btnBuy.disabled = true;
+        showToast("API blocked: check Cloudflare/CORS");
+      }
     }
   }
 
+  // ======= Paylink (opens wallet) =======
   async function handleBuy(){
     const usd = parseFloat(usdInput.value || "0");
     if (isNaN(usd) || usd < MIN_USD) { showToast("Minimum $1"); return; }
 
     try{
-      // API returns { ok, uri, xrp, to, dt, order_id }
-      const pay = await apiGet(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
+      const pay = await getJSON(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
       const uri = pay?.uri;
       if (uri){
-        // Open the wallet deep link (Xaman / xrpl:)
-        window.location.href = uri;
-      }else{
-        showToast("Could not build payment link.");
+        window.location.href = uri; // opens Xaman / xrpl: deeplink
+      } else {
+        throw new Error("missing uri");
       }
     }catch(e){
-      console.error(e);
-      showToast("Payment link error.");
+      console.error("paylink error:", e);
+      showToast("Payment link error. If this persists, disable CF challenge for /api/*.");
     }
   }
 
-  // Trustline safety: if deeplink not ready, keep user informed
+  // ======= Wire up =======
   trustlineLink.addEventListener('click', (e) => {
     const href = trustlineLink.getAttribute('href') || '#';
     if (href === '#'){
@@ -335,11 +367,10 @@
       showToast("Trustline link not ready. Try again.");
     }
   });
-
   usdInput.addEventListener('input', handleUSDInput);
   btnBuy.addEventListener('click', handleBuy);
-
   boot();
 </script>
+
 </body>
 </html>
