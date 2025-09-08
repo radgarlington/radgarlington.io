@@ -37,13 +37,9 @@
 
   <style>
     * { box-sizing: border-box; }
-    html, body { height: 100%; } /* enable sticky footer */
+    html, body { height: 100%; }
     :root{ --bg:#ffffff; --ink:#0f172a; --muted:#475569; --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22); --gold:#0A74D0; }
-    body {
-      margin:0; background:var(--bg); color:var(--ink);
-      font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
-      min-height:100vh; display:flex; flex-direction:column;
-    }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
 
@@ -167,13 +163,19 @@
             Set $RAD Trustline
           </a>
 
+          <!-- XRPL address (required for payouts) -->
+          <label for="addrInput" style="font-weight:bold; display:block; margin:8px 0 6px;">
+            Your XRPL address (starts with “r”)
+          </label>
+          <input id="addrInput" type="text" placeholder="r..." style="padding:10px; font-size:1rem; width:100%; max-width:520px; border:2px solid #cbd5e1; border-radius:8px;" />
+
           <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:10px;">
             Enter amount in USD
           </label>
           <input id="usdInput" type="number" min="1" step="0.01" placeholder="1.00 USD" style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
           <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
-          <div id="bagAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
+          <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
             <button id="btnBuy" class="btn btn-primary" aria-label="Buy $RAD" disabled>🛒 BUY</button>
@@ -221,18 +223,23 @@
 
   <!-- SCRIPT -->
 <script>
-  // === API base (public when on site, local when testing) ===
+  // === API base ===
   const API_BASE =
     (location.hostname === "localhost" || location.hostname === "127.0.0.1")
-      ? "http://127.0.0.1:8080"      // <- RAD runs on 8080 locally
+      ? "http://127.0.0.1:8080"  // change if you run the API locally on a different port
       : "https://api.radgarlington.io";
 
   const MIN_USD = 1;
+  const XRPL_RE = /^r[1-9A-HJ-NP-Za-km-z]{24,}$/i;
+
+  // $1 → 1,000,000 RAD
+  const RAD_PER_USD = 1_000_000;
 
   // Elements
   const usdInput = document.getElementById('usdInput');
+  const addrInput = document.getElementById('addrInput');
   const xrpConversion = document.getElementById('xrpConversion');
-  const bagAmount = document.getElementById('bagAmount'); // label kept for now
+  const radAmount = document.getElementById('radAmount');
   const btnBuy = document.getElementById('btnBuy');
   const trustlineLink = document.getElementById('trustlineLink');
   const liveBadge = document.getElementById("liveStatus");
@@ -250,119 +257,90 @@
     clearTimeout(showToast._t);
     showToast._t = setTimeout(()=>toast.style.display='none', 2200);
   }
-
-  async function apiGet(path){
-    const r = await fetch(`${API_BASE}${path}`, { cache: "no-store" });
-    if(!r.ok) throw new Error(`GET ${path} ${r.status}`);
-    return r.json();
-  }
-  async function apiPost(path, body){
-    const r = await fetch(`${API_BASE}${path}`, {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify(body||{})
-    });
-    if(!r.ok) throw new Error(`POST ${path} ${r.status}`);
-    return r.json();
+  async function fetchJSON(url){
+    const r = await fetch(url, { mode: "cors", cache: "no-store" });
+    const j = await r.json().catch(()=> ({}));
+    if (!r.ok) throw Object.assign(new Error(`HTTP ${r.status}`), { j, status: r.status });
+    return j;
   }
 
-  // Fallback helpers
-  async function getInfoOrStatus(){
+  // Price from your API
+  let serverPrice = null;   // USD per XRP
+  async function loadStatus(){
     try {
-      const info = await apiGet("/api/info");
-      return { xrp_usd: Number(info?.pricing?.xrp_usd) || null };
+      const st = await fetchJSON(`${API_BASE}/api/status`);
+      const p = parseFloat(st?.xrp_usd);
+      serverPrice = Number.isFinite(p) && p > 0 ? p : null;
+      setBadge(serverPrice ? (st.price_live ? "live" : "warn") : "down",
+               serverPrice ? (st.price_live ? "LIVE" : "FALLBACK") : "OFFLINE");
     } catch {
-      try {
-        const st = await apiGet("/api/status");
-        return { xrp_usd: Number(st?.xrp_usd) || null };
-      } catch {
-        return { xrp_usd: null };
-      }
+      serverPrice = null;
+      setBadge("down","OFFLINE");
     }
   }
-  async function getTrustlineDeeplink(){
-    // Try backend
-    try {
-      const deeplink = await apiPost("/api/deeplink", { limit: "100000000" });
-      return deeplink?.trustline_url || deeplink?.uri || null;
-    } catch {}
-    // Fallback: static xrpl.services URL composed from known issuer + currency
+
+  // Trustline link (static fallback)
+  function setTrustlineLink(){
     const ISSUER = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V";
     const CURRENCY = "RAD";
     const LIMIT = "100000000";
-    return `https://xrpl.services/?issuer=${ISSUER}&currency=${CURRENCY}&limit=${LIMIT}`;
+    trustlineLink.href = `https://xrpl.services/?issuer=${ISSUER}&currency=${CURRENCY}&limit=${LIMIT}`;
   }
 
-  let serverPrice = null;
-
-  async function boot(){
-    try{
-      // Price + LIVE badge
-      const meta = await getInfoOrStatus();
-      serverPrice = Number.isFinite(meta.xrp_usd) && meta.xrp_usd > 0 ? meta.xrp_usd : null;
-
-      // Trustline deeplink (backend or fallback)
-      const tl = await getTrustlineDeeplink();
-      trustlineLink.href = tl || "#";
-
-      setBadge("live","LIVE");
-    }catch(e){
-      console.error(e);
-      setBadge("down","OFFLINE");
-    }
-    handleUSDInput();
-  }
-
-  async function handleUSDInput(){
+  function updatePreview(){
     const usd = parseFloat(usdInput.value);
-    xrpConversion.textContent = '';
-    bagAmount.textContent = '';
+    btnBuy.disabled = true;
 
-    if (isNaN(usd) || usd < MIN_USD){
+    if (!Number.isFinite(usd) || usd < MIN_USD){
       xrpConversion.textContent = usd > 0 ? 'Minimum $1' : '🔁 XRP Required: 0';
-      bagAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-      btnBuy.disabled = true;
+      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
       return;
     }
 
-    try{
-      // Let backend compute exact XRP + RAD (keeps RAD = $1 per 1M with its price feed)
-      const q = await apiGet(`/api/quote?usd=${encodeURIComponent(usd)}`);
-      const xrp = Number(q?.xrp || 0);
-      const rad = Number(q?.rad || 0);
-      if (!xrp || !rad) throw new Error("bad quote");
-
-      xrpConversion.textContent = `🔁 XRP Required: ${xrp.toFixed(2)} XRP`;
-      bagAmount.textContent  = `🪙 You’ll receive: ${Math.trunc(rad).toLocaleString()} $RAD`;
-      btnBuy.disabled = false;
-    }catch(e){
-      console.error(e);
-      xrpConversion.textContent = 'Could not fetch quote';
-      bagAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-      btnBuy.disabled = true;
+    // If we have a server price, preview XRP due (ceil to drops so you never undercharge)
+    if (serverPrice){
+      const drops = Math.ceil((usd / serverPrice) * 1e6);
+      const xrp = drops / 1e6;
+      xrpConversion.textContent = `🔁 XRP Required: ${xrp.toFixed(6)} XRP`;
+    } else {
+      xrpConversion.textContent = `🔁 XRP Required: —`;
     }
+
+    // RAD preview from configured rate (display only)
+    const rad = Math.trunc(usd * RAD_PER_USD);
+    radAmount.textContent = `🪙 You’ll receive: ${rad.toLocaleString()} $RAD`;
+
+    btnBuy.disabled = false;
   }
 
   async function handleBuy(){
     const usd = parseFloat(usdInput.value || "0");
-    if (isNaN(usd) || usd < MIN_USD) { showToast("Minimum $1"); return; }
+    const addr = (addrInput?.value || "").trim();
+
+    if (!Number.isFinite(usd) || usd < MIN_USD) return showToast("Minimum $1");
+    if (!XRPL_RE.test(addr)) return showToast('Enter a valid XRPL address (starts with "r").');
 
     try{
-      // API returns { uri, xrp, to }
-      const pay = await apiGet(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
-      const uri = pay?.uri;
-      if (uri){
-        window.location.href = uri; // opens Xaman / xrpl: deeplink
-      }else{
-        showToast("Could not build payment link.");
+      btnBuy.disabled = true;
+      // Authoritative quote + deeplink
+      const q = await fetchJSON(`${API_BASE}/api/quote?usd=${encodeURIComponent(usd)}&addr=${encodeURIComponent(addr)}`);
+      if (q?.ok === false) {
+        if (q.error === 'below_min_usd') return showToast("Minimum is $1.");
+        return showToast(q.error || "Quote failed.");
       }
-    }catch(e){
+      if (!q?.deeplink) return showToast("Quote OK but no deeplink.");
+
+      // Navigate to payment (Xaman/xrpl.services). Same-tab avoids popup blockers.
+      window.location.href = q.deeplink;
+    } catch (e){
       console.error(e);
-      showToast("Payment link error.");
+      showToast("Network or API error.");
+    } finally {
+      setTimeout(()=> (btnBuy.disabled = false), 800);
     }
   }
 
-  // Trustline safety: if deeplink not ready, keep user informed
+  // Safety: if trustline link didn't build, keep user informed
   trustlineLink.addEventListener('click', (e) => {
     const href = trustlineLink.getAttribute('href') || '#';
     if (href === '#'){
@@ -371,10 +349,12 @@
     }
   });
 
-  usdInput.addEventListener('input', handleUSDInput);
+  usdInput.addEventListener('input', updatePreview);
   btnBuy.addEventListener('click', handleBuy);
 
-  boot();
+  // Boot
+  setTrustlineLink();
+  loadStatus().then(updatePreview);
 </script>
 </body>
 </html>
