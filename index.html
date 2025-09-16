@@ -41,13 +41,17 @@
       --bg:#ffffff; --ink:#0f172a; --muted:#475569;
       --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22);
     }
+    /* robust centering + no horizontal drift */
+    html, body { width: 100%; overflow-x: hidden; }
     body {
       margin:0; background:var(--bg); color:var(--ink);
-      font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
+      font-family: Arial, sans-serif; line-height:1.5;
       min-height:100vh; display:flex; flex-direction:column;
     }
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
 
     .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
@@ -65,26 +69,10 @@
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-    /* Price bar: allow wrapping on small screens and prevent overflow */
     .price-line{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:center;
-      gap:.5rem;
-      padding:10px 14px;
-      border-radius:14px;
-      background:#fff;
-      color:var(--blue);
-      border:2px solid var(--blue);
-      font-weight:800;
-      font-size: clamp(1rem, 3.6vw, 1.2rem);
-      letter-spacing:.2px;
-      box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px auto 18px;
-      max-width:100%;
-      white-space:normal;
-      word-break:break-word;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px 0 18px; white-space:nowrap;
     }
     .price-line .sep{ opacity:.6 }
 
@@ -99,7 +87,7 @@
       transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
-    .btn:disabled{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); }
+    .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); pointer-events:none; }
     .btn-primary{ background:var(--blue); color:#fff; }
     .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
       font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; margin-top:4px; }
@@ -108,21 +96,7 @@
     .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
     .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
 
-    .card {
-      width:100%;
-      max-width:520px;
-      margin:0 auto;
-      background:#fff;
-      border:3px solid var(--blue);
-      border-radius:12px;
-      box-shadow:0 6px 20px rgba(2,32,71,0.08);
-      padding:20px;
-      text-align:center;
-      color:var(--ink);
-    }
-    @media (max-width:520px){
-      .card{ max-width:100%; }
-    }
+    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
@@ -132,7 +106,7 @@
 </head>
 <body>
 
-  <main>
+  <main class="wrap">
     <!-- HERO -->
     <div class="hero">
       <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
@@ -285,34 +259,19 @@
     showToast._t = setTimeout(()=>toast.style.display='none', 2400);
   }
 
-  // ======= Robust JSON fetch (tolerates non-JSON responses) =======
-  async function safeGet(url){
-    const r = await fetch(url, { cache:'no-store', mode:'cors' });
-    const ct = (r.headers.get('content-type')||'').toLowerCase();
-    if (!r.ok) return { ok:false, status:r.status };
-    if (ct.includes('application/json')) {
-      try { return await r.json(); } catch { return { ok:true }; }
-    }
-    // Not JSON (e.g., CF challenge) but HTTP 200 => treat as reachable
-    return { ok:true, nonJson:true };
-  }
-
-  // ======= STATUS (health check with fallbacks) =======
+  // ======= STATUS: prefer /api/status; fallback /healthz =======
   async function refreshStatus(){
     try{
-      // 1) Preferred: /api/status
-      let j = await safeGet(`${API}/api/status?t=${Date.now()}`);
-      if (j && (j.ok || (j.running && j.connected))) { setBadge("live","LIVE"); return; }
-
-      // 2) Fallback: /healthz
-      j = await safeGet(`${API}/healthz?t=${Date.now()}`);
-      if (j && (j.ok || j.status === 'healthy')) { setBadge("live","LIVE"); return; }
-
-      // 3) Fallback: /api/price
-      j = await safeGet(`${API}/api/price?t=${Date.now()}`);
-      if (j && j.ok) { setBadge("live","LIVE"); return; }
-
-      setBadge("down","OFFLINE");
+      const r1 = await fetch(`${API}/api/status`, { cache:'no-store', mode:'cors' });
+      if (r1.ok) {
+        const j = await r1.json();
+        if ((j.running ?? j.ok) && (j.connected ?? true)) { setBadge("live","LIVE"); return; }
+      }
+    }catch{}
+    try{
+      const r2 = await fetch(`${API}/healthz`, { cache:'no-store', mode:'cors' });
+      const j2 = r2.ok ? await r2.json() : null;
+      if (j2 && j2.ok) setBadge("live","LIVE"); else setBadge("down","OFFLINE");
     }catch{
       setBadge("down","OFFLINE");
     }
@@ -357,14 +316,14 @@
     `;
   }
 
-  // Backend returns j.xrp_usd; normalize to USD/XRP (≥1) for UX + math.
+  // Backend returns j.xrp_usd; it may be USD/XRP (~0.33) or XRP/USD (~3.0). Normalize to USD/XRP (≥1).
   async function fetchBackendUsdPerXrp(){
     const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
     if (!j.ok) throw new Error('price not ok');
     let v = Number(j.xrp_usd);
     if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
-    if (v < 1) v = 1 / v;                 // normalize to USD/XRP
+    if (v < 1) v = 1 / v; // normalize to USD/XRP (≥1)
     if (!saneUsdPerXrp(v)) throw new Error('insane price');
     return { v, src:'backend', cached:false };
   }
@@ -391,33 +350,16 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= Deeplink =======
-  async function tryDeeplinkUSD(usd){
-    try{
-      const r = await fetch(`${API}/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`, { cache:'no-store', mode:'cors' });
-      if (!r.ok) return null;
-      const j = await r.json();
-      const raw = j.deeplink || j.uri || null;
-      if (raw && raw.startsWith('xrp:') && !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
-        return 'https://xumm.app/detect?uri=' + encodeURIComponent(raw);
-      }
-      return raw;
-    }catch{
-      return null;
-    }
+  // ======= BUY: use server redirect (no CORS) =======
+  function deeplinkURLforUSD(usd){
+    return `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
   }
 
-  // Safety on desktop for raw xrp: links
+  // Safety on desktop for raw xrp: links (in case the API ever returned a raw xrp: URL)
   btnBuy.addEventListener('click', (e)=>{
     const disabled = btnBuy.getAttribute('aria-disabled') === 'true';
     if (disabled) { e.preventDefault(); return; }
-    const href = btnBuy.getAttribute('href') || '';
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (href.startsWith('xrp:') && !isMobile){
-      e.preventDefault();
-      const detect = 'https://xumm.app/detect?uri=' + encodeURIComponent(href);
-      window.open(detect, '_blank', 'noopener,noreferrer');
-    }
+    // anchor navigates normally to API redirect; nothing else to do here
   });
 
   // ======= MAIN INPUT HANDLER (BAG-style) =======
@@ -442,9 +384,8 @@
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      const link = await tryDeeplinkUSD(usd);
-      if (link) enableBuy(link, "Open in wallet");
-      else disableBuy("Quote shown. Deeplink unavailable.");
+      const link = deeplinkURLforUSD(usd);
+      enableBuy(link, "Open in wallet");
     }catch(e){
       console.error(e);
       xrpConversion.textContent = '⚠️ Could not fetch price';
