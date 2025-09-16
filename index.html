@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RAD GARLINGTON — $RAD</title>
 
   <!-- Favicons / PWA -->
@@ -53,6 +53,7 @@
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
+    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
     .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
@@ -64,9 +65,11 @@
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-    .price-line{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+    .price-line{
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
       border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px 0 18px; white-space:nowrap; }
+      margin:6px 0 18px; white-space:nowrap;
+    }
     .price-line .sep{ opacity:.6 }
 
     .status-badge { display:inline-flex; align-items:center; gap:.5rem; font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
@@ -92,7 +95,6 @@
     .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
-    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
     .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:#0A74D0; border:2px solid var(--blue);
       padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16); font-weight:700; z-index:9999; display:none; }
@@ -110,22 +112,22 @@
         <strong>Token:</strong>
         <span style="color:var(--blue); font-size:1.2em; font-weight:bold;">$RAD</span>
         &nbsp;—&nbsp;
-        <strong>Mint:</strong>
+        <strong>Issuer:</strong>
         <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
       </p>
     </div>
 
     <!-- Social -->
     <div class="social" style="margin-top:14px; text-align:center;">
-      <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X" style="width:28px;height:28px;"></a>
-      <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram" style="width:28px;height:28px;"></a>
+      <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X" style="width:28px;height:28px;"></a>
+      <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram" style="width:28px;height:28px;"></a>
     </div>
 
     <div style="margin-top:8px; font-size:0.95rem; text-align:center;">
       🔍 Verify on:
-      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" style="color:var(--blue); font-weight:bold; text-decoration:none;">Bithomp</a>
+      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">Bithomp</a>
       |
-      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" style="color:var(--blue); font-weight:bold; text-decoration:none;">XRPSCAN</a>
+      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">XRPSCAN</a>
     </div>
 
     <!-- UTILITY -->
@@ -158,7 +160,7 @@
 
         <div class="card">
           <!-- Trustline -->
-          <a id="trustlineLink" class="btn-trustline" href="#" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
+          <a id="trustlineLink" class="btn-trustline" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
             Set $RAD Trustline
           </a>
 
@@ -208,9 +210,9 @@
   <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:var(--blue); text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
     |
-    <a href="https://t.me/radgarlington" target="_blank" style="color:var(--blue); text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
+    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:var(--blue); text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -220,40 +222,66 @@
   const API = "https://api.radgarlington.io";
   const MIN_USD = 1;
 
+  // ======= DOM =======
   const usdInput      = document.getElementById('usdInput');
   const xrpConversion = document.getElementById('xrpConversion');
   const radAmount     = document.getElementById('radAmount');
   const btnBuy        = document.getElementById('btnBuy');
-  const trustlineLink = document.getElementById('trustlineLink');
+  const spotLine      = document.getElementById('spotLine');
   const liveBadge     = document.getElementById('liveStatus');
   const liveText      = document.getElementById('liveText');
+  const toast         = document.getElementById('toast');
 
+  // ======= UI helpers =======
   function setBadge(state, text){
     liveBadge.classList.remove("live","down");
     liveBadge.classList.add(state);
     liveText.textContent = text;
   }
+  function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.href="#"; if (msg) btnBuy.title = msg; }
+  function enableBuy(link, msg){
+    btnBuy.setAttribute("aria-disabled","false");
+    btnBuy.href = link;
+    btnBuy.title = msg || "Open in wallet";
+    btnBuy.rel = "noopener noreferrer external";
+    btnBuy.target = "_blank";
+  }
+  const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
 
-  // === STATUS ===
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=>toast.style.display='none', 2400);
+  }
+
+  // ======= STATUS (healthz) =======
   async function refreshStatus(){
     try{
-      const r = await fetch(`${API}/api/status`, { cache:"no-store", mode:"cors" });
+      const r = await fetch(`${API}/healthz`, { cache:'no-store', mode:'cors' });
       const j = await r.json();
-      if (j.ok) setBadge("live","LIVE");
+      if (j && j.ok) setBadge("live","LIVE");
       else setBadge("down","OFFLINE");
-    }catch{ setBadge("down","OFFLINE"); }
+    }catch{
+      setBadge("down","OFFLINE");
+    }
   }
-  refreshStatus(); setInterval(refreshStatus, 10000);
+  refreshStatus();
+  setInterval(refreshStatus, 10000);
 
-  // === PRICE STATE (mirrors BAG logic) ===
-  const priceState = { usd:NaN, ts:0, locked:false, src:'', cached:false };
-  const LS_KEY='rad_last_xrp_usd', LS_SRC_KEY='rad_last_xrp_src', LS_TS_KEY='rad_last_xrp_ts';
-  const unlocked = new URLSearchParams(location.search).has('unlock');
+  // ======= PRICE LOCK (match BAG behavior) =======
+  const priceState = { usd: NaN, ts: 0, locked: false, src: '', cached: false };
+  const unlocked = new URLSearchParams(location.search).has('unlock'); // ?unlock to allow refetch during this load
+  const LS_KEY='rad_last_xrp_usd', LS_SRC_KEY='rad_last_xrp_src', LS_TS_KEY='rad_last_xrp_usd_ts';
 
-  function sane(p){ return Number.isFinite(p) && p >= 0.05 && p <= 10.0; }
+  function sane(p){ return Number.isFinite(p) && p >= 0.05 && p <= 10.0; } // USD per XRP within plausible band
 
-  function saveLocal(v,src){
-    try{ localStorage.setItem(LS_KEY,String(v)); localStorage.setItem(LS_SRC_KEY,src||''); localStorage.setItem(LS_TS_KEY,String(Date.now())); }catch{}
+  function saveLocal(v, src){
+    try{
+      localStorage.setItem(LS_KEY, String(v));
+      localStorage.setItem(LS_SRC_KEY, src||'');
+      localStorage.setItem(LS_TS_KEY, String(Date.now()));
+    }catch{}
   }
   function loadLocal(){
     try{
@@ -265,74 +293,134 @@
     return null;
   }
 
-  async function fetchProxy(){
-    const r = await fetch(`${API}/api/price`, { cache:'no-store', mode:'cors' });
+  function updateSpotBar(rateUsdPerXrpForLabel, src='proxy', locked=true, cached=false){
+    if (!spotLine) return;
+    const tag = cached ? `${src} (cached)` : src;
+    spotLine.innerHTML = `
+      <span>1M $RAD = $1 USD</span>
+      <span class="sep">·</span>
+      <span>Powered by XRP</span>
+      <span class="sep">·</span>
+      <span>Live (${tag}${locked ? ', locked' : ''}): $${(rateUsdPerXrpForLabel||0).toFixed(4)}/XRP</span>
+    `;
+  }
+
+  // Prefer your backend /api/price (USD per XRP). If backend accidentally returns XRP per USD (~3.0), invert.
+  async function fetchBackendPrice(){
+    const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
-    if (!j.ok) throw new Error('proxy not ok');
-    const v = Number(j.xrp_usd);
-    if (!sane(v)) throw new Error('proxy insane');
-    return { v, src:'proxy', cached:false };
+    if (!j.ok) throw new Error('price not ok');
+    let v = Number(j.xrp_usd);
+    if (!Number.isFinite(v)) throw new Error('no numeric price');
+
+    // Heuristics: if it looks like XRP_per_USD (~3.0), invert to USD_per_XRP (~0.33)
+    if (v > 1.5 && v < 10) {
+      v = 1 / v;
+    }
+    if (!sane(v)) throw new Error('insane price');
+    return { v, src:'backend', cached:false };
   }
 
   async function getLockedPrice(){
     if (priceState.locked && sane(priceState.usd)) return priceState;
 
     try{
-      const {v,src,cached} = await fetchProxy();
+      const {v,src,cached} = await fetchBackendPrice();
       priceState.usd=v; priceState.src=src; priceState.cached=cached; priceState.ts=Date.now();
       if (!unlocked) priceState.locked=true;
-      saveLocal(v,src); return priceState;
+      saveLocal(v, src);
+      return priceState;
     }catch{}
 
     const c = loadLocal();
-    if (c){ priceState.usd=c.v; priceState.src=c.src; priceState.cached=true; priceState.ts=c.ts; if(!unlocked) priceState.locked=true; return priceState; }
-    throw new Error("no price");
+    if (c){
+      priceState.usd=c.v; priceState.src=c.src||'cache'; priceState.cached=true; priceState.ts=c.ts;
+      if (!unlocked) priceState.locked=true;
+      return priceState;
+    }
+    throw new Error('no price source');
   }
 
-  const fmt=(n,d=6)=>Number(n).toFixed(d);
+  const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // === Deeplink
-  async function tryDeeplink(usd){
+  // ======= QUOTE / DEEPLINK =======
+  async function tryDeeplinkUSD(usd){
     try{
-      const r=await fetch(`${API}/api/deeplink?usd=${encodeURIComponent(usd)}`,{cache:"no-store",mode:"cors"});
-      if(!r.ok) return null;
-      const j=await r.json();
-      return j.fallback || j.deeplink || null;
-    }catch{return null;}
+      const r = await fetch(`${API}/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`, { cache:'no-store', mode:'cors' });
+      if (!r.ok) return null;
+      const j = await r.json();
+      const raw = j.deeplink || j.uri || null;
+      // On desktop, wrap xrp: links with Xumm Detect
+      if (raw && raw.startsWith('xrp:') && !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+        return 'https://xumm.app/detect?uri=' + encodeURIComponent(raw);
+      }
+      return raw;
+    }catch{
+      return null;
+    }
   }
 
-  function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.href="#"; if(msg) btnBuy.title=msg; }
-  function enableBuy(link,msg){ btnBuy.setAttribute("aria-disabled","false"); btnBuy.href=link; btnBuy.title=msg||"Open in wallet"; }
+  // Safety if someone clicks a raw xrp: link on desktop
+  btnBuy.addEventListener('click', (e)=>{
+    const disabled = btnBuy.getAttribute('aria-disabled') === 'true';
+    if (disabled) { e.preventDefault(); return; }
+    const href = btnBuy.getAttribute('href') || '';
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (href.startsWith('xrp:') && !isMobile){
+      e.preventDefault();
+      const detect = 'https://xumm.app/detect?uri=' + encodeURIComponent(href);
+      window.open(detect, '_blank', 'noopener,noreferrer');
+    }
+  });
 
-  // === MAIN INPUT HANDLER (BAG-style formatting)
+  // ======= MAIN INPUT HANDLER (matches BAG formatting) =======
   async function handleUSDInput(){
     const usd = Number.parseFloat(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
     radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
     disableBuy("Enter an amount to enable");
 
-    if (!Number.isFinite(usd) || usd < 1){ if (usd>0) xrpConversion.textContent='❌ Minimum $1'; return; }
+    if (!Number.isFinite(usd) || usd < MIN_USD){
+      if (usd>0) xrpConversion.textContent='❌ Minimum $1';
+      return;
+    }
 
     try{
       const p = await getLockedPrice();
-      const xrpNeeded = usd / p.usd;
-      const tokens = Math.round(usd * 1_000_000);
 
-      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${p.usd.toFixed(4)}/XRP)`;
-      radAmount.textContent = `🪙 You’ll receive: ${tokens.toLocaleString()} $RAD`;
+      // p.usd is intended as USD per 1 XRP; if it ever arrives inverted (~3), we already normalized it in fetchBackendPrice().
+      const usdPerXrpTrue = p.usd; // ~0.33 typical
+      const xrpNeeded = usd / usdPerXrpTrue;
 
-      const link = await tryDeeplink(usd);
-      if(link) enableBuy(link,"Open in wallet"); else disableBuy("Quote shown. Deeplink unavailable.");
+      // For display, mirror BAG: show $X.XXXX / XRP (≥ 1). If <1, invert for label only.
+      const rateForLabel = usdPerXrpTrue >= 1 ? usdPerXrpTrue : (1 / usdPerXrpTrue);
+
+      updateSpotBar(rateForLabel, p.src, !unlocked, p.cached);
+
+      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${rateForLabel.toFixed(4)}/XRP)`;
+      radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
+
+      const link = await tryDeeplinkUSD(usd);
+      if (link) enableBuy(link, "Open in wallet");
+      else disableBuy("Quote shown. Deeplink unavailable.");
     }catch(e){
       console.error(e);
-      xrpConversion.textContent='⚠️ Could not fetch price';
-      radAmount.textContent='🪙 You’ll receive: 0 $RAD';
+      xrpConversion.textContent = '⚠️ Could not fetch price';
+      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
       disableBuy("Could not fetch price");
     }
   }
-  usdInput.addEventListener('input', handleUSDInput);
 
-  (async function initPrice(){ try{ await getLockedPrice(); }catch{} })();
+  if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 250));
+
+  // Prime the spot bar once at load
+  (async function initPrice(){
+    try{
+      const p = await getLockedPrice();
+      const rateForLabel = p.usd >= 1 ? p.usd : (1 / p.usd);
+      updateSpotBar(rateForLabel, p.src, !unlocked, p.cached);
+    }catch{}
+  })();
 </script>
 
 </body>
