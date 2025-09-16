@@ -255,12 +255,13 @@
     showToast._t = setTimeout(()=>toast.style.display='none', 2400);
   }
 
-  // ======= STATUS (healthz) =======
+  // ======= STATUS (use CORS-enabled /api/status) =======
   async function refreshStatus(){
     try{
-      const r = await fetch(`${API}/healthz`, { cache:'no-store', mode:'cors' });
+      const r = await fetch(`${API}/api/status?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const j = await r.json();
-      if (j && j.ok) setBadge("live","LIVE");
+      if (j.ok || (j.running && j.connected)) setBadge("live","LIVE");
       else setBadge("down","OFFLINE");
     }catch{
       setBadge("down","OFFLINE");
@@ -306,19 +307,14 @@
     `;
   }
 
-  // Backend returns j.xrp_usd; it may be USD/XRP (~0.33) or XRP/USD (~3.0). Normalize to USD/XRP (≥1) for UX + math.
+  // Backend returns j.xrp_usd; it may be USD/XRP (~0.33) or XRP/USD (~3.0). Normalize to USD/XRP (≥1).
   async function fetchBackendUsdPerXrp(){
     const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
     if (!j.ok) throw new Error('price not ok');
     let v = Number(j.xrp_usd);
     if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
-
-    // Normalize to USD per XRP, ≥ 1 for the BAG-style label + math:
-    // - If backend gives ~0.33 (USD/XRP), invert -> ~3.03
-    // - If backend gives ~3.03 (XRP/USD), keep as-is
-    if (v < 1) v = 1 / v;
-
+    if (v < 1) v = 1 / v; // ensure USD/XRP, ≥ 1
     if (!saneUsdPerXrp(v)) throw new Error('insane price');
     return { v, src:'backend', cached:false };
   }
@@ -389,7 +385,7 @@
     try{
       const p = await getLockedPrice();
       const usdPerXrp = p.usdPerXrp;       // canonical, ≥ 1
-      const xrpNeeded = usd / usdPerXrp;   // BAG-style: small XRP for $1
+      const xrpNeeded = usd / usdPerXrp;   // for $1 at ~$3/XRP => ~0.33 XRP
 
       updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
 
