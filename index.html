@@ -160,7 +160,7 @@
 
         <div class="card">
           <!-- Trustline -->
-          <a id="trustlineLink" class="btn-trustline" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
+          <a class="btn-trustline" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
             Set $RAD Trustline
           </a>
 
@@ -269,12 +269,13 @@
   refreshStatus();
   setInterval(refreshStatus, 10000);
 
-  // ======= PRICE LOCK (match BAG behavior) =======
-  const priceState = { usd: NaN, ts: 0, locked: false, src: '', cached: false };
+  // ======= PRICE LOCK (match BAG UX) =======
+  // Canonical internal unit = USD per XRP (≥ 1) so XRP needed = USD / USD_per_XRP
+  const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: '', cached: false };
   const unlocked = new URLSearchParams(location.search).has('unlock'); // ?unlock to allow refetch during this load
-  const LS_KEY='rad_last_xrp_usd', LS_SRC_KEY='rad_last_xrp_src', LS_TS_KEY='rad_last_xrp_usd_ts';
+  const LS_KEY='rad_last_usd_per_xrp', LS_SRC_KEY='rad_last_usd_per_xrp_src', LS_TS_KEY='rad_last_usd_per_xrp_ts';
 
-  function sane(p){ return Number.isFinite(p) && p >= 0.05 && p <= 10.0; } // USD per XRP within plausible band
+  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.1 && p <= 20.0; } // wide guard
 
   function saveLocal(v, src){
     try{
@@ -288,12 +289,12 @@
       const v = Number(localStorage.getItem(LS_KEY));
       const src = localStorage.getItem(LS_SRC_KEY)||'cache';
       const ts = Number(localStorage.getItem(LS_TS_KEY)||0);
-      if (sane(v)) return { v, src, ts };
+      if (saneUsdPerXrp(v)) return { v, src, ts };
     }catch{}
     return null;
   }
 
-  function updateSpotBar(rateUsdPerXrpForLabel, src='proxy', locked=true, cached=false){
+  function updateSpotBar(usdPerXrp, src='backend', locked=true, cached=false){
     if (!spotLine) return;
     const tag = cached ? `${src} (cached)` : src;
     spotLine.innerHTML = `
@@ -301,32 +302,33 @@
       <span class="sep">·</span>
       <span>Powered by XRP</span>
       <span class="sep">·</span>
-      <span>Live (${tag}${locked ? ', locked' : ''}): $${(rateUsdPerXrpForLabel||0).toFixed(4)}/XRP</span>
+      <span>Live (${tag}${locked ? ', locked' : ''}): $${(usdPerXrp||0).toFixed(4)}/XRP</span>
     `;
   }
 
-  // Prefer your backend /api/price (USD per XRP). If backend accidentally returns XRP per USD (~3.0), invert.
-  async function fetchBackendPrice(){
+  // Backend returns j.xrp_usd; it may be USD/XRP (~0.33) or XRP/USD (~3.0). Normalize to USD/XRP (≥1) for UX + math.
+  async function fetchBackendUsdPerXrp(){
     const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
     if (!j.ok) throw new Error('price not ok');
     let v = Number(j.xrp_usd);
-    if (!Number.isFinite(v)) throw new Error('no numeric price');
+    if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
 
-    // Heuristics: if it looks like XRP_per_USD (~3.0), invert to USD_per_XRP (~0.33)
-    if (v > 1.5 && v < 10) {
-      v = 1 / v;
-    }
-    if (!sane(v)) throw new Error('insane price');
+    // Normalize to USD per XRP, ≥ 1 for the BAG-style label + math:
+    // - If backend gives ~0.33 (USD/XRP), invert -> ~3.03
+    // - If backend gives ~3.03 (XRP/USD), keep as-is
+    if (v < 1) v = 1 / v;
+
+    if (!saneUsdPerXrp(v)) throw new Error('insane price');
     return { v, src:'backend', cached:false };
   }
 
   async function getLockedPrice(){
-    if (priceState.locked && sane(priceState.usd)) return priceState;
+    if (priceState.locked && saneUsdPerXrp(priceState.usdPerXrp)) return priceState;
 
     try{
-      const {v,src,cached} = await fetchBackendPrice();
-      priceState.usd=v; priceState.src=src; priceState.cached=cached; priceState.ts=Date.now();
+      const {v,src,cached} = await fetchBackendUsdPerXrp();
+      priceState.usdPerXrp=v; priceState.src=src; priceState.cached=cached; priceState.ts=Date.now();
       if (!unlocked) priceState.locked=true;
       saveLocal(v, src);
       return priceState;
@@ -334,7 +336,7 @@
 
     const c = loadLocal();
     if (c){
-      priceState.usd=c.v; priceState.src=c.src||'cache'; priceState.cached=true; priceState.ts=c.ts;
+      priceState.usdPerXrp=c.v; priceState.src=c.src||'cache'; priceState.cached=true; priceState.ts=c.ts;
       if (!unlocked) priceState.locked=true;
       return priceState;
     }
@@ -343,14 +345,13 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= QUOTE / DEEPLINK =======
+  // ======= Deeplink =======
   async function tryDeeplinkUSD(usd){
     try{
       const r = await fetch(`${API}/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`, { cache:'no-store', mode:'cors' });
       if (!r.ok) return null;
       const j = await r.json();
       const raw = j.deeplink || j.uri || null;
-      // On desktop, wrap xrp: links with Xumm Detect
       if (raw && raw.startsWith('xrp:') && !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)){
         return 'https://xumm.app/detect?uri=' + encodeURIComponent(raw);
       }
@@ -360,7 +361,7 @@
     }
   }
 
-  // Safety if someone clicks a raw xrp: link on desktop
+  // Safety on desktop for raw xrp: links
   btnBuy.addEventListener('click', (e)=>{
     const disabled = btnBuy.getAttribute('aria-disabled') === 'true';
     if (disabled) { e.preventDefault(); return; }
@@ -373,7 +374,7 @@
     }
   });
 
-  // ======= MAIN INPUT HANDLER (matches BAG formatting) =======
+  // ======= MAIN INPUT HANDLER (BAG-style) =======
   async function handleUSDInput(){
     const usd = Number.parseFloat(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
@@ -387,17 +388,12 @@
 
     try{
       const p = await getLockedPrice();
+      const usdPerXrp = p.usdPerXrp;       // canonical, ≥ 1
+      const xrpNeeded = usd / usdPerXrp;   // BAG-style: small XRP for $1
 
-      // p.usd is intended as USD per 1 XRP; if it ever arrives inverted (~3), we already normalized it in fetchBackendPrice().
-      const usdPerXrpTrue = p.usd; // ~0.33 typical
-      const xrpNeeded = usd / usdPerXrpTrue;
+      updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
 
-      // For display, mirror BAG: show $X.XXXX / XRP (≥ 1). If <1, invert for label only.
-      const rateForLabel = usdPerXrpTrue >= 1 ? usdPerXrpTrue : (1 / usdPerXrpTrue);
-
-      updateSpotBar(rateForLabel, p.src, !unlocked, p.cached);
-
-      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${rateForLabel.toFixed(4)}/XRP)`;
+      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
       const link = await tryDeeplinkUSD(usd);
@@ -417,8 +413,7 @@
   (async function initPrice(){
     try{
       const p = await getLockedPrice();
-      const rateForLabel = p.usd >= 1 ? p.usd : (1 / p.usd);
-      updateSpotBar(rateForLabel, p.src, !unlocked, p.cached);
+      updateSpotBar(p.usdPerXrp, p.src, !unlocked, p.cached);
     }catch{}
   })();
 </script>
