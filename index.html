@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
   <title>RAD GARLINGTON — $RAD</title>
 
   <!-- Favicons / PWA -->
@@ -40,35 +40,59 @@
     :root{
       --bg:#ffffff; --ink:#0f172a; --muted:#475569;
       --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22);
+      --safe-l: env(safe-area-inset-left, 0px);
+      --safe-r: env(safe-area-inset-right, 0px);
     }
     body {
       margin:0; background:var(--bg); color:var(--ink);
       font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
       min-height:100vh; display:flex; flex-direction:column;
+      -webkit-text-size-adjust: 100%;
+      padding-left: max(12px, var(--safe-l));
+      padding-right: max(12px, var(--safe-r));
     }
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
 
-    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    /* Centered block helpers */
+    .container { max-width: 960px; margin: 0 auto; }
+    .p-inner { padding-left:16px; padding-right:16px; }
+
+    .hero {
+      text-align:center; padding:6vh 5vw 2vh;
+      background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px;
+      max-width:960px; margin:20px auto;
+      box-shadow:0 6px 20px rgba(2,32,71,.08);
+    }
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
-    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
+    @media (max-width:480px){
+      .hero-img{ width:65%; max-width:220px; }
+    }
 
-    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility {
+      text-align:center; padding:4vh 5vw 6vh;
+      background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px;
+      max-width:960px; margin:20px auto;
+      box-shadow:0 6px 20px rgba(2,32,71,.08);
+    }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
 
-    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; }
-    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
+    .otc-section { background: var(--card); color: var(--ink); padding: 24px 0; }
+    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 12px; }
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
     .price-line{
-      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px 0 18px; white-space:nowrap;
+      display:inline-flex; flex-wrap: wrap; align-items:center; justify-content:center; gap:.5rem;
+      padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px;
+      box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px auto 18px;
+      max-width:92vw; white-space: normal; text-align:center;
     }
     .price-line .sep{ opacity:.6 }
 
@@ -92,7 +116,12 @@
     .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
     .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
 
-    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
+    .card {
+      width:100%; max-width:520px; margin:0 auto;
+      background:#fff; border:3px solid var(--blue); border-radius:12px;
+      box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink);
+      overflow-wrap:anywhere;
+    }
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
@@ -168,7 +197,7 @@
             Enter amount in USD
           </label>
           <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
-                 autocomplete="off" style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
+                 autocomplete="off" style="padding:12px; font-size:16px; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
           <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
@@ -385,7 +414,7 @@
     try{
       const p = await getLockedPrice();
       const usdPerXrp = p.usdPerXrp;       // canonical, ≥ 1
-      const xrpNeeded = usd / usdPerXrp;   // for $1 at ~$3/XRP => ~0.33 XRP
+      const xrpNeeded = usd / usdPerXrp;   // ~$1 at ~$3/XRP => ~0.33 XRP
 
       updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
 
