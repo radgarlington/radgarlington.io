@@ -34,6 +34,9 @@
   <meta name="twitter:description" content="$RAD – The meme coin with a ledger. Built on XRPL.">
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
+  <!-- Preconnect to API -->
+  <link rel="preconnect" href="https://api.radgarlington.io" crossorigin>
+
   <style>
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -217,8 +220,10 @@
 
 <script>
   // ======= CONFIG =======
-  const API_BASE = "https://api.radgarlington.io";  // hardcode prod API
+  const API_BASE = "https://api.radgarlington.io";  // production API
   const MIN_USD  = 1;
+  const USD_PER_1M_RAD = 1.0;                        // $1 per 1,000,000 RAD
+  const USD_PER_TOKEN  = USD_PER_1M_RAD / 1_000_000; // $0.000001
 
   // ======= DOM =======
   const usdInput      = document.getElementById('usdInput');
@@ -250,14 +255,26 @@
       method: "GET",
       cache: "no-store",
       redirect: "follow",
-      headers: { "Accept": "application/json" },
-      // mode: "cors" is default in browsers; CORS headers must come from server.
+      headers: { "Accept": "application/json" }
     });
-    // If Cloudflare served HTML/challenge, content-type won't be JSON.
     const ct = r.headers.get("content-type") || "";
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     if (!ct.includes("application/json")) {
-      // try to peek for debugging
+      const text = await r.text();
+      throw new Error(`Non-JSON from API (ct="${ct}"): ${text.slice(0,120)}…`);
+    }
+    return r.json();
+  }
+
+  async function postJSON(path, bodyObj){
+    const r = await fetch(`${API_BASE}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(bodyObj)
+    });
+    const ct = r.headers.get("content-type") || "";
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    if (!ct.includes("application/json")) {
       const text = await r.text();
       throw new Error(`Non-JSON from API (ct="${ct}"): ${text.slice(0,120)}…`);
     }
@@ -273,89 +290,93 @@
   }
 
   // ======= State =======
-  let xrpUsdFallback = null; // from /api/status, used only if /api/quote fails
+  let xrp_usd = null; // USD per 1 XRP (from /api/price/source)
 
   // ======= Boot =======
   async function boot(){
-    try {
-      trustlineLink.href = buildTrustlineURL();
+    trustlineLink.href = buildTrustlineURL();
 
-      // Ping API and get a fallback price
-      try {
-        const info = await getJSON("/api/status");
-        const px = Number(info?.xrp_usd);
-        if (Number.isFinite(px) && px > 0) xrpUsdFallback = px;
-        setBadge("live", "LIVE");
-      } catch (e) {
-        console.error("status fail:", e);
-        setBadge("down", "OFFLINE");
-      }
-    } catch (e) {
-      console.error(e);
+    // health
+    try {
+      const h = await getJSON("/healthz");
+      setBadge(h.ok ? "live" : "down", h.ok ? "LIVE" : "OFFLINE");
+    } catch {
       setBadge("down", "OFFLINE");
     }
+
+    // initial price
+    await refreshPrice();
+
     handleUSDInput();
+    // refresh price every ~25s (server cache TTL ~30s)
+    setInterval(refreshPrice, 25_000);
   }
 
-  // ======= Quote & Render =======
-  async function handleUSDInput(){
-    const usd = parseFloat(usdInput.value);
-    xrpConversion.textContent = '';
-    radAmount.textContent     = '';
+  async function refreshPrice(){
+    try{
+      const p = await getJSON("/api/price/source"); // {ok, xrp_usd, cache_ttl_secs, cache_age_secs}
+      if (p && typeof p.xrp_usd === "number" && p.xrp_usd > 0){
+        xrp_usd = p.xrp_usd;
+      }
+    }catch(e){
+      console.warn("price fetch failed:", e);
+    }
+    // re-render estimate if user typed something already
+    handleUSDInput(false);
+  }
 
+  // ======= Quote & Render (client-side estimate) =======
+  function handleUSDInput(showMinMsg = true){
+    const usd = parseFloat(usdInput.value);
     if (isNaN(usd) || usd < MIN_USD){
-      xrpConversion.textContent = usd > 0 ? 'Minimum $1' : '🔁 XRP Required: 0';
+      xrpConversion.textContent = usd > 0 && showMinMsg ? 'Minimum $1' : '🔁 XRP Required: 0';
       radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
       btnBuy.disabled = true;
       return;
     }
 
-    // Primary: ask backend to compute and create an order skeleton
-    try{
-      const q = await getJSON(`/api/quote?usd=${encodeURIComponent(usd)}`);
-      const xrp = Number(q?.xrp ?? q?.xrp_due ?? 0);
-      const rad = Number(q?.rad ?? q?.rad_out ?? 0);
-      if (!xrp || !rad) throw new Error("bad quote payload");
-
-      xrpConversion.textContent = `🔁 XRP Required: ${xrp.toFixed(6)} XRP`;
-      radAmount.textContent     = `🪙 You’ll receive: ${Math.trunc(rad).toLocaleString()} $RAD`;
-      btnBuy.disabled = false;
-      return;
-    }catch(e){
-      console.warn("quote fail, falling back:", e);
-      // Fallback: client-side math only for UI feedback (BUY still requires the API)
-      if (xrpUsdFallback && xrpUsdFallback > 0){
-        const rad = usd * 1_000_000; // $1 → 1,000,000 RAD
-        const xrp = usd / xrpUsdFallback;
-        xrpConversion.textContent = `🔁 XRP Required (est): ${xrp.toFixed(6)} XRP`;
-        radAmount.textContent     = `🪙 You’ll receive (est): ${Math.trunc(rad).toLocaleString()} $RAD`;
-        // We still keep BUY enabled; click will try /api/paylink.
-        btnBuy.disabled = false;
-      } else {
-        xrpConversion.textContent = 'Could not fetch quote';
-        radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
-        btnBuy.disabled = true;
-        showToast("API blocked: check Cloudflare/CORS");
-      }
+    const tokens = Math.floor(usd / USD_PER_TOKEN); // 1 USD -> 1,000,000 RAD
+    if (xrp_usd && xrp_usd > 0) {
+      const xrp = usd / xrp_usd;
+      const drops = Math.ceil(xrp * 1_000_000);
+      xrpConversion.textContent = `🔁 XRP Required (est): ${xrp.toFixed(6)} XRP (${drops.toLocaleString()} drops)`;
+    } else {
+      xrpConversion.textContent = '🔁 XRP Required: (price unavailable)';
     }
+    radAmount.textContent = `🪙 You’ll receive: ${tokens.toLocaleString()} $RAD`;
+    btnBuy.disabled = false;
   }
 
-  // ======= Paylink (opens wallet) =======
+  // ======= Paylink (POST /api/paylink {tokens}) =======
   async function handleBuy(){
     const usd = parseFloat(usdInput.value || "0");
     if (isNaN(usd) || usd < MIN_USD) { showToast("Minimum $1"); return; }
 
+    const tokens = Math.floor(usd / USD_PER_TOKEN); // $→tokens at $1 per 1M RAD
+    if (!Number.isFinite(tokens) || tokens <= 0){
+      showToast("Amount invalid");
+      return;
+    }
+
+    btnBuy.disabled = true;
     try{
-      const pay = await getJSON(`/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`);
-      const uri = pay?.uri;
-      if (uri){
-        window.location.href = uri; // opens Xaman / xrpl: deeplink
+      const pay = await postJSON("/api/paylink", { tokens });
+      if (!pay?.ok) throw new Error(pay?.error || "Paylink failed");
+
+      // Prefer opening Xaman deeplink; QR is shown if desired
+      if (pay.deeplink) {
+        // mobile will open app; desktop shows web QR page
+        window.location.href = pay.deeplink;
+      } else if (pay.qr) {
+        window.open(pay.qr, "_blank", "noopener");
       } else {
-        throw new Error("missing uri");
+        showToast("Paylink created, but no URL returned.");
       }
     }catch(e){
       console.error("paylink error:", e);
-      showToast("Payment link error. If this persists, disable CF challenge for /api/*.");
+      showToast("Payment link error. If this persists, check Cloudflare/CORS.");
+    }finally{
+      btnBuy.disabled = false;
     }
   }
 
@@ -367,8 +388,10 @@
       showToast("Trustline link not ready. Try again.");
     }
   });
-  usdInput.addEventListener('input', handleUSDInput);
+  usdInput.addEventListener('input', () => handleUSDInput());
   btnBuy.addEventListener('click', handleBuy);
+
+  // Start
   boot();
 </script>
 
