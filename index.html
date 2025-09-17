@@ -43,14 +43,18 @@
     }
     body {
       margin:0; background:var(--bg); color:var(--ink);
-      font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
+      font-family: Arial, sans-serif; line-height:1.5;
       min-height:100vh; display:flex; flex-direction:column;
+      overflow-x:hidden;
     }
+
+    /* Centering container that caps width on every section */
+    .wrap { width:100%; max-width:1100px; margin:0 auto; padding:0 16px; }
+
+    img, video, input, button { max-width:100%; }
+
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
-
-    /* centered page wrapper */
-    .wrap { width:100%; max-width:1100px; margin:0 auto; padding:0 16px; }
 
     .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
@@ -69,9 +73,12 @@
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
     .price-line{
-      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px auto 18px; max-width:100%; flex-wrap:wrap; white-space:normal; word-break:keep-all;
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px;
+      box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px auto 18px; max-width:100%;
+      flex-wrap:wrap; white-space:normal; word-break:keep-all;
     }
     .price-line .sep{ opacity:.6 }
 
@@ -86,7 +93,7 @@
       transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
-    .btn:disabled, .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); }
+    .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); pointer-events:none; }
     .btn-primary{ background:var(--blue); color:#fff; }
     .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
       font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; margin-top:4px; }
@@ -177,7 +184,8 @@
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
-            <a id="btnBuy" class="btn btn-primary" href="#" target="_blank" rel="noopener" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
+            <!-- target is set to _self to keep universal link handling stable on iOS -->
+            <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
           </div>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
@@ -233,113 +241,89 @@
   const spotLine      = document.getElementById('spotLine');
   const liveBadge     = document.getElementById('liveStatus');
   const liveText      = document.getElementById('liveText');
-  const toast         = document.getElementById('toast');
 
-  // ======= UI helpers =======
+  // ======= helpers =======
   function setBadge(state, text){
     if (!liveBadge || !liveText) return;
     liveBadge.classList.remove("live","down");
     liveBadge.classList.add(state);
     liveText.textContent = text;
   }
-  function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.href="#"; if (msg) btnBuy.title = msg; }
+  function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.removeAttribute("target"); btnBuy.href="#"; if (msg) btnBuy.title = msg; }
   function enableBuy(link, msg){
     btnBuy.setAttribute("aria-disabled","false");
+    btnBuy.removeAttribute("target");        // open in SAME tab for iOS universal link
     btnBuy.href = link;
     btnBuy.title = msg || "Open in wallet";
-    btnBuy.rel = "noopener noreferrer external";
-    btnBuy.target = "_blank";
+    btnBuy.rel = "noopener";
   }
   const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
 
-  function showToast(msg){
-    toast.textContent = msg;
-    toast.style.display = 'block';
-    clearTimeout(showToast._t);
-    showToast._t = setTimeout(()=>toast.style.display='none', 2400);
-  }
-
-  // ======= STATUS (via /api/status) =======
+  // ======= STATUS (status → healthz fallback) =======
   async function refreshStatus(){
     try{
       const r = await fetch(`${API}/api/status`, { cache:'no-store', mode:'cors' });
       const j = await r.json();
-      if (j && j.ok && j.running) setBadge("live","LIVE");
-      else setBadge("down","OFFLINE");
-    }catch{
-      setBadge("down","OFFLINE");
-    }
+      if (j?.ok && (j.running ?? true)) { setBadge("live","LIVE"); return; }
+    }catch{}
+    try{
+      const r2 = await fetch(`${API}/healthz`, { cache:'no-store', mode:'cors' });
+      const j2 = await r2.json();
+      if (j2?.ok) { setBadge("live","LIVE"); return; }
+    }catch{}
+    setBadge("down","OFFLINE");
   }
   refreshStatus();
   setInterval(refreshStatus, 10000);
 
   // ======= PRICE (USD per XRP; XRP needed = USD / price) =======
-  const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: '', cached: false };
+  const priceState = { usdPerXrp: NaN, locked:false };
   const unlocked = new URLSearchParams(location.search).has('unlock');
-  const LS_KEY='rad_last_usd_per_xrp', LS_SRC_KEY='rad_last_usd_per_xrp_src', LS_TS_KEY='rad_last_usd_per_xrp_ts';
+  const LS_KEY='rad_last_usd_per_xrp';
 
-  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.1 && p <= 20.0; }
+  function sane(p){ return Number.isFinite(p) && p>=0.1 && p<=20; }
+  const saveLocal = v => { try{ localStorage.setItem(LS_KEY,String(v)); }catch{} };
+  const loadLocal = () => { try{ const v = Number(localStorage.getItem(LS_KEY)); return sane(v)?v:null; }catch{ return null; } };
 
-  function saveLocal(v, src){ try{
-    localStorage.setItem(LS_KEY, String(v));
-    localStorage.setItem(LS_SRC_KEY, src||'');
-    localStorage.setItem(LS_TS_KEY, String(Date.now()));
-  }catch{} }
-  function loadLocal(){ try{
-    const v = Number(localStorage.getItem(LS_KEY));
-    const src = localStorage.getItem(LS_SRC_KEY)||'cache';
-    const ts = Number(localStorage.getItem(LS_TS_KEY)||0);
-    if (saneUsdPerXrp(v)) return { v, src, ts };
-  }catch{} return null; }
-
-  function updateSpotBar(usdPerXrp, src='backend', locked=true, cached=false){
+  function updateSpotBar(usdPerXrp){
     if (!spotLine) return;
-    const tag = cached ? `${src} (cached)` : src;
     spotLine.innerHTML = `
       <span>1M $RAD = $1 USD</span>
       <span class="sep">·</span>
       <span>Powered by XRP</span>
       <span class="sep">·</span>
-      <span>Live (${tag}${locked ? ', locked' : ''}): $${(usdPerXrp||0).toFixed(4)}/XRP</span>
+      <span>Live (backend${priceState.locked?', locked':''}): $${(usdPerXrp||0).toFixed(4)}/XRP</span>
     `;
   }
 
-  async function fetchBackendUsdPerXrp(){
-    const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
-    const j = await r.json();
-    if (!j.ok) throw new Error('price not ok');
-    let v = Number(j.xrp_usd);
-    if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
-    if (v < 1) v = 1 / v;             // normalize to USD/XRP >= 1
-    if (!saneUsdPerXrp(v)) throw new Error('insane price');
-    return { v, src:'backend', cached:false };
-  }
-
   async function getLockedPrice(){
-    if (priceState.locked && saneUsdPerXrp(priceState.usdPerXrp)) return priceState;
+    if (priceState.locked && sane(priceState.usdPerXrp)) return priceState.usdPerXrp;
+    let v = null;
     try{
-      const {v,src,cached} = await fetchBackendUsdPerXrp();
-      priceState.usdPerXrp=v; priceState.src=src; priceState.cached=cached; priceState.ts=Date.now();
-      if (!unlocked) priceState.locked=true;
-      saveLocal(v, src);
-      return priceState;
-    }catch{}
-    const c = loadLocal();
-    if (c){
-      priceState.usdPerXrp=c.v; priceState.src=c.src||'cache'; priceState.cached=true; priceState.ts=c.ts;
-      if (!unlocked) priceState.locked=true;
-      return priceState;
+      const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
+      const j = await r.json();
+      if (!j.ok) throw new Error();
+      v = Number(j.xrp_usd);
+      if (!Number.isFinite(v) || v<=0) throw new Error();
+      if (v < 1) v = 1/v;              // normalize to USD/XRP
+      if (!sane(v)) throw new Error();
+      saveLocal(v);
+    }catch{
+      const c = loadLocal();
+      if (c != null) v = c;
+      else throw new Error('no price');
     }
-    throw new Error('no price source');
+    priceState.usdPerXrp = v;
+    if (!unlocked) priceState.locked = true;
+    return v;
   }
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= MAIN INPUT HANDLER =======
   async function handleUSDInput(){
     const usd = Number.parseFloat(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
-    radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+    radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
     disableBuy("Enter an amount to enable");
 
     if (!Number.isFinite(usd) || usd < MIN_USD){
@@ -348,33 +332,29 @@
     }
 
     try{
-      const p = await getLockedPrice();
-      const usdPerXrp = p.usdPerXrp;
+      const usdPerXrp = await getLockedPrice();
       const xrpNeeded = usd / usdPerXrp;
-
-      updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
+      updateSpotBar(usdPerXrp);
 
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      // No CORS issues: navigate directly to the redirector which creates the payload and 302s to Xumm Detect
+      // Open API redirector in same tab → 302 to Xumm Detect → Signature screen
       const link = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
       enableBuy(link, "Open in wallet");
     }catch(e){
-      console.error(e);
       xrpConversion.textContent = '⚠️ Could not fetch price';
-      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+      radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
       disableBuy("Could not fetch price");
     }
   }
-
-  if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 250));
+  usdInput.addEventListener('input', debounce(handleUSDInput, 220));
 
   // Prime the spot bar once at load
   (async function initPrice(){
     try{
-      const p = await getLockedPrice();
-      updateSpotBar(p.usdPerXrp, p.src, !unlocked, p.cached);
+      const usdPerXrp = await getLockedPrice();
+      updateSpotBar(usdPerXrp);
     }catch{}
   })();
 </script>
