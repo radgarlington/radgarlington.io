@@ -35,249 +35,188 @@
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
   <style>
-    /* ===== Base / Reset-ish ===== */
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow-x: hidden; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-      background: #fff;
-      color: #0f172a;
-      display: flex;
-      min-height: 100dvh;
-      flex-direction: column;
-    }
-    img { max-width: 100%; height: auto; display: block; }
-    a { color: #0A74D0; }
-
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     :root{
-      --ink:#0f172a;
-      --muted:#475569;
-      --blue:#0A74D0;
-      --card:#f4f7fb;
-      --ring:rgba(10,116,208,.22);
+      --bg:#ffffff; --ink:#0f172a; --muted:#475569;
+      --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22);
     }
+    body {
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
+      min-height:100vh; display:flex; flex-direction:column;
+    }
+    main { flex: 1 0 auto; }
+    p { margin:0 0 10px; }
 
-    /* ===== Layout containers (prevents drift) ===== */
-    .container { width: 100%; max-width: 980px; margin: 0 auto; padding: 0 16px; }
-    main { flex: 1 0 auto; display: block; }
+    /* Centered, responsive blocks */
+    .wrap { width:100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
 
-    /* ===== Hero ===== */
-    .hero { text-align:center; padding: 24px 0; }
-    .hero-inner {
-      background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px;
-      box-shadow:0 6px 20px rgba(2,32,71,.08);
-      padding: 24px 16px;
-    }
-    .hero-img { width: 280px; max-width: 70%; margin: 0 auto 14px; }
-    h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 8px; color: var(--ink); }
-    .tagline { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin: 0 0 6px; }
+    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
+    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
+    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
+    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
-    /* ===== Utility ===== */
-    .utility { padding: 18px 0 24px; }
-    .utility-inner{
-      text-align:center; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px;
-      box-shadow:0 6px 20px rgba(2,32,71,.08);
-      padding: 20px 16px;
-    }
-    .utility h2 { font-size: clamp(1.4rem, 5vw, 2rem); margin: 0 0 12px; }
-    .utility p  { font-size: clamp(1rem, 4vw, 1.1rem); color: var(--muted); margin: 6px 0; }
+    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
+    .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
 
-    /* ===== OTC ===== */
-    .otc { padding: 24px 0; background: var(--card); }
-    .otc .card{
-      width:100%; max-width: 560px; margin: 0 auto;
-      background:#fff; border:3px solid var(--blue); border-radius:12px;
-      box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink);
-    }
-    .otc-head {
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;
-      margin-bottom: 12px; text-align:center;
-    }
-    .otc h2 { font-size: clamp(1.4rem, 5vw, 2rem); margin: 0; }
+    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 0; }
+    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 16px; }
+    .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
+    .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
-    .status-badge {
-      display:inline-flex; align-items:center; gap:.5rem;
-      font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      padding:.35rem .6rem; border-radius:999px; border:1px solid var(--ring);
-      background:#fff; color:#0b3d78; user-select:none;
+    .price-line{
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px 0 18px; white-space:nowrap;
     }
+    .price-line .sep{ opacity:.6 }
+
+    .status-badge { display:inline-flex; align-items:center; gap:.5rem; font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      padding:.35rem .6rem; border-radius:999px; border:1px solid var(--ring); background:#fff; color:#0b3d78; user-select:none; }
     .status-dot{ width:.5rem; height:.5rem; border-radius:50%; background:#6aa1ea; }
     .status-badge.live  { color:#0b3d78; background:#e8f2ff; }
     .status-badge.down  { color:#3a4c66; background:#f0f6ff; }
 
-    .price-line{
-      display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:.5rem;
-      padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.1rem);
-      letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:12px auto 18px; text-align:center;
-      width: 100%; max-width: 560px;
-    }
-    .price-line .sep{ opacity:.6 }
-
-    /* ===== Buttons / Inputs ===== */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
-      padding:12px 18px; border-radius:10px; text-decoration:none; border:none;
-      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:#fff; background:var(--blue);
-      box-shadow:0 6px 20px rgba(2,32,71,.12);
-      transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-    }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:12px 18px; border-radius:10px; text-decoration:none;
+      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; box-shadow:0 6px 20px rgba(2,32,71,.12);
+      transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
-    .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; pointer-events:none; }
+    .btn:disabled, .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); }
+    .btn-primary{ background:var(--blue); color:#fff; }
+    .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
+      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; margin-top:4px; }
+    .btn-trustline:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.18); }
 
-    .btn-trustline{
-      display:inline-block; margin: 8px 0 10px;
-      background:var(--blue); color:#fff;
-    }
-
-    .text-center { text-align:center; }
-
-    input[type="number"]{
-      padding:10px; font-size:1rem; width:100%; max-width:320px;
-      border:2px solid #cbd5e1; border-radius:8px;
-    }
-
-    /* ===== Misc ===== */
-    .disclaimer { font-size:0.72rem; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:620px; margin:16px auto 6px; }
+    .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
     .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
+
+    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
+
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
-    .row { display:flex; justify-content:center; }
-    .row > * { max-width: 560px; width: 100%; }
-
-    .toast {
-      position:fixed; left:50%; transform:translateX(-50%); bottom:26px;
-      background:#fff; color:#0A74D0; border:2px solid var(--blue);
-      padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16);
-      font-weight:700; z-index:9999; display:none;
-    }
+    .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:#0A74D0; border:2px solid var(--blue);
+      padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16); font-weight:700; z-index:9999; display:none; }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-inner">
-        <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
-        <h1>RAD GARLINGTON — $RAD</h1>
-        <p class="tagline">The Protocol’s most loyal believer</p>
-        <p class="text-center" style="margin-top:8px;">
-          <strong>Token:</strong>
-          <span style="color:var(--blue); font-size:1.2em; font-weight:bold;">$RAD</span>
-          &nbsp;—&nbsp;
-          <strong>Issuer:</strong>
-          <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
-        </p>
-      </div>
-      <div class="text-center" style="margin-top:14px;">
-        <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X" style="width:28px;height:28px;display:inline-block;margin:0 6px;"></a>
-        <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram" style="width:28px;height:28px;display:inline-block;margin:0 6px;"></a>
-      </div>
-      <div class="text-center" style="margin-top:8px; font-size:0.95rem;">
-        🔍 Verify on:
-        <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="font-weight:bold; text-decoration:none;">Bithomp</a>
-        |
-        <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="font-weight:bold; text-decoration:none;">XRPSCAN</a>
-      </div>
+  <main class="wrap">
+    <!-- HERO -->
+    <div class="hero">
+      <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
+      <h1>RAD GARLINGTON — $RAD</h1>
+      <p class="tagline">The Protocol’s most loyal believer</p>
+      <p style="text-align:center; margin-top:8px;">
+        <strong>Token:</strong>
+        <span style="color:var(--blue); font-size:1.2em; font-weight:bold;">$RAD</span>
+        &nbsp;—&nbsp;
+        <strong>Issuer:</strong>
+        <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
+      </p>
     </div>
-  </section>
 
-  <!-- UTILITY -->
-  <section class="utility">
-    <div class="container">
-      <div class="utility-inner">
-        <h2>The meme coin with a ledger. Powered by XRPL.</h2>
-        <p>Ledger fast. Ledger clean.</p>
-        <p>⚡ Instant Transfers · 💸 Low Fees · 🔒 Trustless Movement</p>
-        <p>$RAD inherits XRPL utility. Fast, cheap, peer-to-peer.</p>
-      </div>
+    <!-- Social -->
+    <div class="social" style="margin-top:14px; text-align:center;">
+      <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X" style="width:28px;height:28px;"></a>
+      <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram" style="width:28px;height:28px;"></a>
     </div>
-  </section>
 
-  <!-- OTC -->
-  <section class="otc">
-    <div class="container">
-      <div class="price-line" id="spotLine">
-        <span>1M $RAD = $1 USD</span>
-        <span class="sep">·</span>
-        <span>Powered by XRP</span>
-      </div>
+    <div style="margin-top:8px; font-size:0.95rem; text-align:center;">
+      🔍 Verify on:
+      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">Bithomp</a>
+      |
+      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">XRPSCAN</a>
+    </div>
 
-      <div class="otc-head">
-        <h2>$RAD — OTC PRE-SALE</h2>
-        <div id="liveStatus" class="status-badge down" title="Backend connectivity">
-          <span class="status-dot"></span>
-          <span id="liveText">OFFLINE</span>
+    <!-- UTILITY -->
+    <div class="utility">
+      <h2>The meme coin with a ledger. Powered by XRPL.</h2>
+      <p>Ledger fast. Ledger clean.</p>
+      <p>⚡ Instant Transfers</p>
+      <p>💸 Low Fees</p>
+      <p>🔒 Trustless Movement</p>
+      <p>$RAD inherits XRPL utility.</p>
+      <p>Fast, cheap, peer-to-peer.</p>
+    </div>
+
+    <!-- OTC -->
+    <div class="otc-section">
+      <div class="otc-wrap">
+        <div class="otc-head">
+          <h2>$RAD — OTC PRE-SALE</h2>
+          <div id="liveStatus" class="status-badge down" title="OTC connectivity">
+            <span class="status-dot"></span>
+            <span id="liveText">OFFLINE</span>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
+        <div class="price-line" id="spotLine">
+          <span>1M $RAD = $1 USD</span>
+          <span class="sep">·</span>
+          <span>Powered by XRP</span>
+        </div>
+
         <div class="card">
-          <a class="btn btn-trustline"
-             href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000"
-             target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
+          <!-- Trustline -->
+          <a class="btn-trustline" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener" aria-label="Set the $RAD trustline in Xaman">
             Set $RAD Trustline
           </a>
 
           <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:14px;">
             Enter amount in USD
           </label>
-          <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD" autocomplete="off"/>
+          <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
+                 autocomplete="off" style="padding:10px; font-size:1rem; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
-          <div id="xrpConversion" style="margin-top:16px; font-size:1rem;">🔁 XRP Required: 0</div>
-          <div id="radAmount" style="margin-top:8px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
+          <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
+          <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
-            <a id="btnBuy" class="btn" href="#" target="_blank" rel="noopener" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
+            <a id="btnBuy" class="btn btn-primary" href="#" target="_blank" rel="noopener" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
           </div>
 
-          <div style="margin-top:20px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
+          <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
             <p style="margin:0 0 8px;">🎯 <strong>OTC Rate:</strong> $0.000001 per $RAD</p>
             <p style="margin:0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
             <p style="margin:0;">✅ OTC buyers in early — 3× value at launch</p>
           </div>
 
-          <p style="margin-top:10px; font-size:0.82rem; color:var(--muted);">
+          <p style="margin-top:12px; font-size:0.82rem; color:var(--muted);">
             $RAD is a meme token on XRPL. This is not financial advice. Plans may change based on treasury, market, or protocol decisions
           </p>
         </div>
+
+        <p class="disclaimer">🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.</p>
+        <p class="countdown-warning">Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.</p>
       </div>
-
-      <p class="disclaimer">🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.</p>
-      <p class="countdown-warning">Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.</p>
     </div>
-  </section>
 
-  <!-- LITE PAPER BUTTON -->
-  <section>
-    <div class="container text-center" style="margin:16px 0 6px;">
-      <a class="btn" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener" aria-label="Open the $RAD Lite Paper on GitHub">📄 Read the Lite Paper</a>
+    <!-- LITE PAPER BUTTON -->
+    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
+      <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener" aria-label="Open the $RAD Lite Paper on GitHub">📄 Read the Lite Paper</a>
     </div>
-  </section>
 
-  <!-- LEGAL DISCLAIMER -->
-  <section class="container">
-    <p class="disclaimer" style="margin-top:8px;">
+    <!-- LEGAL DISCLAIMER -->
+    <p class="disclaimer">
       🛡 Legal Disclaimer<br><br>
       $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
       It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
       All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
     </p>
-  </section>
+  </main>
 
-  <footer class="footer">
+  <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:var(--blue); text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
     |
-    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
-  </footer>
+    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:var(--blue); text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
+  </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
@@ -320,19 +259,13 @@
     showToast._t = setTimeout(()=>toast.style.display='none', 2400);
   }
 
-  // ======= STATUS: prefer /api/status; fallback /healthz =======
+  // ======= STATUS (via /api/status) =======
   async function refreshStatus(){
     try{
-      const r1 = await fetch(`${API}/api/status`, { cache:'no-store', mode:'cors' });
-      if (r1.ok) {
-        const j = await r1.json();
-        if ((j.running ?? j.ok) && (j.connected ?? true)) { setBadge("live","LIVE"); return; }
-      }
-    }catch{}
-    try{
-      const r2 = await fetch(`${API}/healthz`, { cache:'no-store', mode:'cors' });
-      const j2 = r2.ok ? await r2.json() : null;
-      if (j2 && j2.ok) setBadge("live","LIVE"); else setBadge("down","OFFLINE");
+      const r = await fetch(`${API}/api/status`, { cache:'no-store', mode:'cors' });
+      const j = await r.json();
+      if (j && j.ok && j.running) setBadge("live","LIVE");
+      else setBadge("down","OFFLINE");
     }catch{
       setBadge("down","OFFLINE");
     }
@@ -340,13 +273,13 @@
   refreshStatus();
   setInterval(refreshStatus, 10000);
 
-  // ======= PRICE LOCK (BAG-style) =======
-  // Canonical = USD per XRP (>=1). XRP needed = USD / USD_per_XRP
+  // ======= PRICE LOCK (match BAG UX) =======
+  // Canonical internal unit = USD per XRP (≥ 1) so XRP needed = USD / USD_per_XRP
   const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: '', cached: false };
-  const unlocked = new URLSearchParams(location.search).has('unlock'); // ?unlock to allow refetch this load
+  const unlocked = new URLSearchParams(location.search).has('unlock'); // ?unlock to allow refetch during this load
   const LS_KEY='rad_last_usd_per_xrp', LS_SRC_KEY='rad_last_usd_per_xrp_src', LS_TS_KEY='rad_last_usd_per_xrp_ts';
 
-  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.1 && p <= 20.0; }
+  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.1 && p <= 20.0; } // wide guard
 
   function saveLocal(v, src){
     try{
@@ -377,14 +310,15 @@
     `;
   }
 
-  // Backend returns j.xrp_usd; it may be USD/XRP (~0.33) or XRP/USD (~3). Normalize to USD/XRP (>=1).
+  // Backend returns {ok:true, xrp_usd: <either USD/XRP (~0.33) or XRP/USD (~3.0)>}
+  // Normalize to USD/XRP >= 1 for BAG-style math/label
   async function fetchBackendUsdPerXrp(){
     const r = await fetch(`${API}/api/price?t=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
     if (!j.ok) throw new Error('price not ok');
     let v = Number(j.xrp_usd);
     if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
-    if (v < 1) v = 1 / v; // normalize to USD/XRP
+    if (v < 1) v = 1 / v;       // if server gives ~0.33 USD/XRP, invert to ~3.03 USD/XRP
     if (!saneUsdPerXrp(v)) throw new Error('insane price');
     return { v, src:'backend', cached:false };
   }
@@ -411,17 +345,11 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= BUY via server redirect (no CORS) =======
-  function deeplinkURLforUSD(usd){
-    return `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
-  }
-
+  // ======= BUY (use /api/deeplink 302) =======
   btnBuy.addEventListener('click', (e)=>{
-    const disabled = btnBuy.getAttribute('aria-disabled') === 'true';
-    if (disabled) { e.preventDefault(); }
+    if (btnBuy.getAttribute('aria-disabled') === 'true'){ e.preventDefault(); }
   });
 
-  // ======= MAIN INPUT HANDLER =======
   async function handleUSDInput(){
     const usd = Number.parseFloat(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
@@ -435,15 +363,16 @@
 
     try{
       const p = await getLockedPrice();
-      const usdPerXrp = p.usdPerXrp;       // >= 1
-      const xrpNeeded = usd / usdPerXrp;
+      const usdPerXrp = p.usdPerXrp;       // canonical, ≥ 1
+      const xrpNeeded = usd / usdPerXrp;   // smaller XRP per $1
 
       updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
 
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      const link = deeplinkURLforUSD(usd);
+      // Enable BUY to hit redirect endpoint (browser will follow 302 to Xumm Detect)
+      const link = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
       enableBuy(link, "Open in wallet");
     }catch(e){
       console.error(e);
@@ -452,9 +381,10 @@
       disableBuy("Could not fetch price");
     }
   }
+
   if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 250));
 
-  // Prime price line once
+  // Prime the spot bar once at load
   (async function initPrice(){
     try{
       const p = await getLockedPrice();
