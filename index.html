@@ -49,8 +49,8 @@
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
 
-    /* Centered, responsive wrapper */
-    .wrap { width:100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+    /* centered page wrapper */
+    .wrap { width:100%; max-width:1100px; margin:0 auto; padding:0 16px; }
 
     .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
@@ -71,7 +71,7 @@
     .price-line{
       display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
       border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px 0 18px; white-space:nowrap;
+      margin:6px auto 18px; max-width:100%; flex-wrap:wrap; white-space:normal; word-break:keep-all;
     }
     .price-line .sep{ opacity:.6 }
 
@@ -273,7 +273,7 @@
   refreshStatus();
   setInterval(refreshStatus, 10000);
 
-  // ======= PRICE LOCK (USD per XRP; XRP needed = USD / price) =======
+  // ======= PRICE (USD per XRP; XRP needed = USD / price) =======
   const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: '', cached: false };
   const unlocked = new URLSearchParams(location.search).has('unlock');
   const LS_KEY='rad_last_usd_per_xrp', LS_SRC_KEY='rad_last_usd_per_xrp_src', LS_TS_KEY='rad_last_usd_per_xrp_ts';
@@ -335,31 +335,7 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= Create payload & set BUY href to the real deeplink =======
-  async function createDeeplink(usd){
-    const url = `${API}/api/paylink?usd=${encodeURIComponent(usd.toFixed(2))}`;
-    const r = await fetch(url, { cache:'no-store', mode:'cors' });
-    if (!r.ok) throw new Error('paylink http '+r.status);
-    const j = await r.json();
-    // Prefer explicit deeplink to payload (opens signature screen)
-    const link = j.deeplink || j.uri || null;
-    if (!link) throw new Error('no deeplink in response');
-    return link;
-  }
-
-  // Safety: if a raw xrp: link ever appears on desktop, wrap in Detect
-  function wrapForDesktopIfNeeded(url){
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (!isMobile && typeof url === 'string' && url.startsWith('xrp:')){
-      return 'https://xumm.app/detect?uri=' + encodeURIComponent(url);
-    }
-    return url;
-  }
-
-  btnBuy.addEventListener('click', (e)=>{
-    if (btnBuy.getAttribute('aria-disabled') === 'true'){ e.preventDefault(); }
-  });
-
+  // ======= MAIN INPUT HANDLER =======
   async function handleUSDInput(){
     const usd = Number.parseFloat(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
@@ -381,10 +357,8 @@
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      // Create payload now and wire the real deeplink
-      btnBuy.title = "Creating payment…";
-      const rawLink = await createDeeplink(usd);
-      const link = wrapForDesktopIfNeeded(rawLink);
+      // No CORS issues: navigate directly to the redirector which creates the payload and 302s to Xumm Detect
+      const link = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
       enableBuy(link, "Open in wallet");
     }catch(e){
       console.error(e);
