@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Keep pinch-zoom available for accessibility; prevent iOS auto-zoom by using 16px inputs -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Mobile: edge-to-edge; respect notches -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>RAD GARLINGTON — $RAD</title>
 
   <!-- Favicons / PWA -->
@@ -47,24 +47,32 @@
       font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
       min-height:100vh; display:flex; flex-direction:column;
       -webkit-text-size-adjust: 100%;
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
     }
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
 
-    /* Centering containers that don’t drift */
+    /* Tighter, mobile-first bounds (prevents the "zoomed out" look) */
     .section-bound {
       max-width: 960px;
       width: 100%;
-      margin: 20px auto;
-      padding: 0 16px;
+      margin: 16px auto;
+      padding: 0 12px;
     }
 
-    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
-    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
-    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
+    .hero {
+      text-align:center;
+      padding: 24px 12px;             /* narrower than 6vh/5vw on phones */
+      background:#eaf3ff;
+      border:2px solid #d7e7ff;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(2,32,71,.08);
+    }
+    .hero-img { width:60%; max-width:360px; height:auto; margin:0 auto 14px; display:block; }
+    h1 { font-size: clamp(1.9rem, 6vw, 2.8rem); margin-bottom:10px; }
+    .tagline { font-size: clamp(1.05rem, 4.4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 6px; }
 
-    /* Icon rows: always centered */
     .social, .verify {
       text-align: center;
       margin-top: 14px;
@@ -79,17 +87,24 @@
     }
     .verify img{ width:18px; height:18px; display:inline-block; vertical-align:middle; }
 
-    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility {
+      text-align:center;
+      padding: 18px 12px;             /* tighter for phones */
+      background:#f0f7ff;
+      border:2px solid #d0e3ff;
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(2,32,71,.08);
+    }
 
-    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; }
-    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
+    .otc-section { background: var(--card); color: var(--ink); padding: 18px 0; }
+    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 12px; }
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
-    .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
+    .otc-section h2 { font-size: clamp(1.6rem, 5.2vw, 2rem); margin: 0; color: var(--ink); }
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
     .price-line{
-      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 12px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.8vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
       margin:6px 0 18px; white-space:nowrap;
     }
     .price-line .sep{ opacity:.6 }
@@ -114,11 +129,22 @@
     .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
     .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
 
-    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
+    .card {
+      width:100%;
+      max-width:520px;          /* expands to 100% on phones */
+      margin:0 auto;
+      background:#fff;
+      border:3px solid var(--blue);
+      border-radius:12px;
+      box-shadow:0 6px 20px rgba(2,32,71,0.08);
+      padding:20px;
+      text-align:center;
+      color:var(--ink);
+    }
 
-    /* iOS Safari: keep font-size >= 16px to prevent zoom, and remove odd appearance */
+    /* iOS Safari: inputs >=16px to stop zoom-on-focus */
     input[type="number"]{
-      font-size:16px; /* <-- fixes the zoom */
+      font-size:16px;
       -webkit-appearance: none;
       appearance: none;
       width:100%;
@@ -133,9 +159,13 @@
     .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:#0A74D0; border:2px solid var(--blue);
       padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16); font-weight:700; z-index:9999; display:none; }
 
-    @media (max-width:480px){
-      .hero-img{ width:65%; max-width:220px; }
-      .section-bound { margin:16px auto; padding:0 12px; }
+    /* Phone-specific tightening */
+    @media (max-width:520px){
+      .section-bound { margin:12px auto; padding:0 10px; }
+      .hero, .utility { padding:16px 12px; }
+      .hero-img { width:78%; max-width:340px; }
+      .price-line { font-size:1rem; padding:10px 12px; }
+      .card { max-width:none; padding:16px; }
     }
   </style>
 </head>
@@ -319,7 +349,7 @@
   refreshStatus();
   setInterval(refreshStatus, 10000);
 
-  // ======= PRICE LOCK (USD per XRP as delivered by backend may be <1; normalize for display/math) =======
+  // ======= PRICE LOCK =======
   const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: 'backend', cached: false };
   const unlocked = new URLSearchParams(location.search).has('unlock');
   const LS_KEY='rad_last_usd_per_xrp', LS_TS_KEY='rad_last_usd_per_xrp_ts';
@@ -358,7 +388,7 @@
     if (!j.ok) throw new Error('price not ok');
     let v = Number(j.xrp_usd);
     if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
-    // If backend gave USD/XRP ~0.33, invert so we show $/XRP >=1 like BAG UX
+    // If backend gave USD/XRP ~0.33, invert so display shows $/XRP >= 1 like BAG
     if (v < 1) v = 1 / v;
     return v;
   }
@@ -396,7 +426,7 @@
 
     try{
       const p = await getLockedPrice();
-      const usdPerXrp = p.usdPerXrp;           // >= 1
+      const usdPerXrp = p.usdPerXrp;
       const xrpNeeded = usd / usdPerXrp;
 
       updateSpotBar(usdPerXrp, !unlocked);
@@ -404,7 +434,6 @@
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      // BUY now simply points to /api/deeplink (same tab) so Detect → signer works
       enableBuy(usd);
     }catch(e){
       console.error(e);
@@ -415,12 +444,10 @@
   }
 
   if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 250));
-  // Safety: if disabled, don’t navigate
   if (btnBuy) btnBuy.addEventListener('click', (e)=>{
     if (btnBuy.getAttribute('aria-disabled') === 'true') e.preventDefault();
   });
 
-  // Prime the spot bar once at load
   (async function initPrice(){
     refreshStatus();
     try{
