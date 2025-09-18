@@ -35,6 +35,7 @@
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
   <style>
+    /* --- Base / containment --- */
     * { box-sizing: border-box; }
     html, body { height: 100%; }
     :root{
@@ -47,25 +48,24 @@
       min-height:100vh; display:flex; flex-direction:column;
       overflow-x:hidden;
     }
-
-    /* Centering container that caps width on every section */
+    img, video { max-width:100%; height:auto; display:block; }
     .wrap { width:100%; max-width:1100px; margin:0 auto; padding:0 16px; }
-
-    img, video, input, button { max-width:100%; }
 
     main { flex: 1 0 auto; }
     p { margin:0 0 10px; }
 
-    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
+    /* --- Hero / utility --- */
+    .hero { text-align:center; padding:6vh 16px 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .hero-img { width:55%; max-width:320px; margin:0 auto 14px; }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
     @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
-    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility { text-align:center; padding:4vh 16px 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
 
+    /* --- OTC --- */
     .otc-section { background: var(--card); color: var(--ink); padding: 6vh 0; }
     .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 16px; }
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
@@ -73,12 +73,12 @@
     .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
     .price-line{
-      display:inline-flex; align-items:center; justify-content:center;
+      display:flex; align-items:center; justify-content:center; flex-wrap:wrap;
       gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
       border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px;
       box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
       margin:6px auto 18px; max-width:100%;
-      flex-wrap:wrap; white-space:normal; word-break:keep-all;
+      white-space:normal;
     }
     .price-line .sep{ opacity:.6 }
 
@@ -184,8 +184,7 @@
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
-            <!-- target is set to _self to keep universal link handling stable on iOS -->
-            <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
+            <button id="btnBuy" class="btn btn-primary" type="button" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</button>
           </div>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
@@ -249,22 +248,22 @@
     liveBadge.classList.add(state);
     liveText.textContent = text;
   }
-  function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.removeAttribute("target"); btnBuy.href="#"; if (msg) btnBuy.title = msg; }
-  function enableBuy(link, msg){
+  function disableBuy(msg){
+    btnBuy.setAttribute("aria-disabled","true");
+    btnBuy.title = msg || "Enter an amount to enable";
+  }
+  function enableBuy(msg){
     btnBuy.setAttribute("aria-disabled","false");
-    btnBuy.removeAttribute("target");        // open in SAME tab for iOS universal link
-    btnBuy.href = link;
     btnBuy.title = msg || "Open in wallet";
-    btnBuy.rel = "noopener";
   }
   const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
 
-  // ======= STATUS (status → healthz fallback) =======
+  // ======= STATUS (status → healthz → price fetch success) =======
   async function refreshStatus(){
     try{
       const r = await fetch(`${API}/api/status`, { cache:'no-store', mode:'cors' });
       const j = await r.json();
-      if (j?.ok && (j.running ?? true)) { setBadge("live","LIVE"); return; }
+      if (j?.ok) { setBadge("live","LIVE"); return; }
     }catch{}
     try{
       const r2 = await fetch(`${API}/healthz`, { cache:'no-store', mode:'cors' });
@@ -308,6 +307,8 @@
       if (v < 1) v = 1/v;              // normalize to USD/XRP
       if (!sane(v)) throw new Error();
       saveLocal(v);
+      // If we got a price, count backend as LIVE even if status check lags
+      setBadge("live","LIVE");
     }catch{
       const c = loadLocal();
       if (c != null) v = c;
@@ -320,6 +321,19 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
+  // ======= BUY handler (same-tab redirect to API → 302 → Xumm Detect) =======
+  btnBuy.addEventListener('click', async (e)=>{
+    e.preventDefault();
+    if (btnBuy.getAttribute('aria-disabled') === 'true') return;
+    const usd = Number.parseFloat(usdInput.value);
+    if (!Number.isFinite(usd) || usd < MIN_USD) return;
+
+    // Same-tab navigation — best for iOS universal link handling
+    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
+    window.location.href = url;
+  });
+
+  // ======= MAIN INPUT =======
   async function handleUSDInput(){
     const usd = Number.parseFloat(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
@@ -338,10 +352,7 @@
 
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
-
-      // Open API redirector in same tab → 302 to Xumm Detect → Signature screen
-      const link = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
-      enableBuy(link, "Open in wallet");
+      enableBuy("Open in wallet");
     }catch(e){
       xrpConversion.textContent = '⚠️ Could not fetch price';
       radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
@@ -350,7 +361,7 @@
   }
   usdInput.addEventListener('input', debounce(handleUSDInput, 220));
 
-  // Prime the spot bar once at load
+  // Prime once
   (async function initPrice(){
     try{
       const usdPerXrp = await getLockedPrice();
