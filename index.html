@@ -48,7 +48,10 @@
       min-height:100vh; display:flex; flex-direction:column;
       overflow-x:hidden;
     }
-    img, video { max-width:100%; height:auto; display:block; }
+
+    /* IMPORTANT: don't force all images to block; it breaks icon centering */
+    img, video { max-width:100%; height:auto; }
+
     .wrap { width:100%; max-width:1100px; margin:0 auto; padding:0 16px; }
 
     main { flex: 1 0 auto; }
@@ -56,7 +59,7 @@
 
     /* --- Hero / utility --- */
     .hero { text-align:center; padding:6vh 16px 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .hero-img { width:55%; max-width:320px; margin:0 auto 14px; }
+    .hero-img { width:55%; max-width:320px; margin:0 auto 14px; display:block; }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
     @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
@@ -64,6 +67,13 @@
     .utility { text-align:center; padding:4vh 16px 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
+
+    /* --- Social + Verify rows --- */
+    .row-center { text-align:center; }
+    .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; }
+    .social img{ width:28px; height:28px; vertical-align:middle; display:inline-block; }
+    .verify { margin-top:8px; font-size:0.95rem; text-align:center; }
+    .verify a{ color:var(--blue); font-weight:bold; text-decoration:none; }
 
     /* --- OTC --- */
     .otc-section { background: var(--card); color: var(--ink); padding: 6vh 0; }
@@ -78,7 +88,7 @@
       border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px;
       box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
       margin:6px auto 18px; max-width:100%;
-      white-space:normal;
+      white-space:normal; overflow-wrap:anywhere;
     }
     .price-line .sep{ opacity:.6 }
 
@@ -123,21 +133,22 @@
         <span style="color:var(--blue); font-size:1.2em; font-weight:bold;">$RAD</span>
         &nbsp;—&nbsp;
         <strong>Issuer:</strong>
-        <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
+        <span style="color:#0b3d78; word-break:break-all;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
       </p>
     </div>
 
     <!-- Social -->
-    <div class="social" style="margin-top:14px; text-align:center;">
-      <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X" style="width:28px;height:28px;"></a>
-      <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram" style="width:28px;height:28px;"></a>
+    <div class="row-center social" style="margin-top:14px;">
+      <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X"></a>
+      <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram"></a>
     </div>
 
-    <div style="margin-top:8px; font-size:0.95rem; text-align:center;">
+    <!-- Verify -->
+    <div class="verify">
       🔍 Verify on:
-      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">Bithomp</a>
+      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">Bithomp</a>
       |
-      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">XRPSCAN</a>
+      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">XRPSCAN</a>
     </div>
 
     <!-- UTILITY -->
@@ -204,7 +215,7 @@
     </div>
 
     <!-- LITE PAPER BUTTON -->
-    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
+    <div class="row-center" style="margin:16px 0 6px;">
       <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener" aria-label="Open the $RAD Lite Paper on GitHub">📄 Read the Lite Paper</a>
     </div>
 
@@ -258,7 +269,7 @@
   }
   const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
 
-  // ======= STATUS (status → healthz → price fetch success) =======
+  // ======= STATUS (status → healthz → price success) =======
   async function refreshStatus(){
     try{
       const r = await fetch(`${API}/api/status`, { cache:'no-store', mode:'cors' });
@@ -307,8 +318,7 @@
       if (v < 1) v = 1/v;              // normalize to USD/XRP
       if (!sane(v)) throw new Error();
       saveLocal(v);
-      // If we got a price, count backend as LIVE even if status check lags
-      setBadge("live","LIVE");
+      setBadge("live","LIVE");         // consider backend live on successful price
     }catch{
       const c = loadLocal();
       if (c != null) v = c;
@@ -321,16 +331,14 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= BUY handler (same-tab redirect to API → 302 → Xumm Detect) =======
+  // ======= BUY: same-tab redirect to /api/deeplink?usd=… (→ 302 → Xumm Detect) =======
   btnBuy.addEventListener('click', async (e)=>{
     e.preventDefault();
     if (btnBuy.getAttribute('aria-disabled') === 'true') return;
     const usd = Number.parseFloat(usdInput.value);
     if (!Number.isFinite(usd) || usd < MIN_USD) return;
-
-    // Same-tab navigation — best for iOS universal link handling
     const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
-    window.location.href = url;
+    window.location.href = url; // same tab for iOS Universal Link
   });
 
   // ======= MAIN INPUT =======
