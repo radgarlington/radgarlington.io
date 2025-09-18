@@ -46,10 +46,10 @@
       font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
       min-height:100vh; display:flex; flex-direction:column;
     }
-    main { flex: 1 0 auto; }
+    main { flex: 1 0 auto; max-width:960px; margin:0 auto; padding:0 16px; }
     p { margin:0 0 10px; }
 
-    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,.08); margin-top:20px; }
     .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
     h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
     .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
@@ -62,11 +62,11 @@
     .verify { margin-top:8px; font-size:0.95rem; text-align:center; }
     .verify a{ color:var(--blue); font-weight:bold; text-decoration:none; display:inline-block; margin:0 8px; }
 
-    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,.08); margin-top:20px; }
     .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
     .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
 
-    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; }
+    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; margin: 20px 0; }
     .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
@@ -180,7 +180,8 @@
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
-            <a id="btnBuy" class="btn btn-primary" href="#" target="_blank" rel="noopener" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
+            <!-- BUY: direct to redirect endpoint -->
+            <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
           </div>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
@@ -240,17 +241,19 @@
 
   // ======= UI helpers =======
   function setBadge(state, text){
+    if (!liveBadge || !liveText) return;
     liveBadge.classList.remove("live","down");
     liveBadge.classList.add(state);
     liveText.textContent = text;
   }
   function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.href="#"; if (msg) btnBuy.title = msg; }
-  function enableBuy(link, msg){
+  function enableBuy(usd){
+    const url = `${API}/api/deeplink?usd=${encodeURIComponent(Number(usd).toFixed(2))}&_=${Date.now()}`;
     btnBuy.setAttribute("aria-disabled","false");
-    btnBuy.href = link;
-    btnBuy.title = msg || "Open in wallet";
-    btnBuy.rel = "noopener noreferrer external";
-    btnBuy.target = "_self"; // IMPORTANT: same-tab so Xumm lands on signer
+    btnBuy.removeAttribute("target");         // let Detect take full control
+    btnBuy.rel = "noopener";
+    btnBuy.href = url;                        // server 302 → xumm.app/detect → signer
+    btnBuy.title = "Open in Xaman";
   }
   const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
 
@@ -275,39 +278,35 @@
   refreshStatus();
   setInterval(refreshStatus, 10000);
 
-  // ======= PRICE LOCK (USD/XRP as delivered by backend) =======
-  const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: '', cached: false };
+  // ======= PRICE LOCK (Normalize to BAG-style: show >= 1 $/XRP) =======
+  const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: 'backend', cached: false };
   const unlocked = new URLSearchParams(location.search).has('unlock');
-  const LS_KEY='rad_last_usd_per_xrp', LS_SRC_KEY='rad_last_usd_per_xrp_src', LS_TS_KEY='rad_last_usd_per_xrp_ts';
+  const LS_KEY='rad_last_usd_per_xrp', LS_TS_KEY='rad_last_usd_per_xrp_ts';
 
-  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.05 && p <= 20.0; }
+  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.1 && p <= 20.0; } // wide guard
 
-  function saveLocal(v, src){
+  function saveLocal(v){
     try{
       localStorage.setItem(LS_KEY, String(v));
-      localStorage.setItem(LS_SRC_KEY, src||'');
       localStorage.setItem(LS_TS_KEY, String(Date.now()));
     }catch{}
   }
   function loadLocal(){
     try{
       const v = Number(localStorage.getItem(LS_KEY));
-      const src = localStorage.getItem(LS_SRC_KEY)||'cache';
-      const ts = Number(localStorage.getItem(LS_TS_KEY)||0);
-      if (saneUsdPerXrp(v)) return { v, src, ts };
+      if (saneUsdPerXrp(v)) return v;
     }catch{}
     return null;
   }
 
-  function updateSpotBar(usdPerXrp, src='backend', locked=true, cached=false){
+  function updateSpotBar(usdPerXrp, locked=true){
     if (!spotLine) return;
-    const tag = cached ? `${src} (cached)` : src;
     spotLine.innerHTML = `
       <span>1M $RAD = $1 USD</span>
       <span class="sep">·</span>
       <span>Powered by XRP</span>
       <span class="sep">·</span>
-      <span>Live (${tag}${locked ? ', locked' : ''}): $${(usdPerXrp||0).toFixed(4)}/XRP</span>
+      <span>Live (locked): $${(usdPerXrp||0).toFixed(4)}/XRP</span>
     `;
   }
 
@@ -315,67 +314,35 @@
     const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
     if (!j.ok) throw new Error('price not ok');
-    let v = Number(j.xrp_usd);
+    let v = Number(j.xrp_usd);        // could be 0.33 (USD/XRP) or 3.05 (XRP/USD)
     if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
-    // Backend provides USD/XRP (e.g., 0.33). Keep it.
+    if (v < 1) v = 1 / v;             // normalize to >= 1 $/XRP (BAG-style)
     if (!saneUsdPerXrp(v)) throw new Error('insane price');
-    return { v, src:'backend', cached:false };
+    return v;
   }
 
   async function getLockedPrice(){
-    if (priceState.locked && saneUsdPerXrp(priceState.usdPerXrp)) return priceState;
+    if (priceState.locked && saneUsdPerXrp(priceState.usdPerXrp)) return priceState.usdPerXrp;
 
     try{
-      const {v,src,cached} = await fetchBackendUsdPerXrp();
-      priceState.usdPerXrp=v; priceState.src=src; priceState.cached=cached; priceState.ts=Date.now();
-      if (!unlocked) priceState.locked=true;
-      saveLocal(v, src);
-      return priceState;
+      const usdPerXrp = await fetchBackendUsdPerXrp();
+      priceState.usdPerXrp = usdPerXrp;
+      priceState.ts = Date.now();
+      if (!unlocked) priceState.locked = true;
+      saveLocal(usdPerXrp);
+      return usdPerXrp;
     }catch{}
 
-    const c = loadLocal();
-    if (c){
-      priceState.usdPerXrp=c.v; priceState.src=c.src||'cache'; priceState.cached=true; priceState.ts=c.ts;
-      if (!unlocked) priceState.locked=true;
-      return priceState;
+    const cached = loadLocal();
+    if (cached){
+      priceState.usdPerXrp = cached;
+      priceState.locked = true;
+      return cached;
     }
     throw new Error('no price source');
   }
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
-
-  // ======= Deeplink (JSON POST) =======
-  async function createDeeplinkUSD(usd) {
-    const r = await fetch(`${API}/api/paylink?_=${Date.now()}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ usd: Number(usd).toFixed(2) })
-    });
-    if (!r.ok) throw new Error("paylink http " + r.status);
-    const j = await r.json();
-    const raw = j.deeplink || j.uri;
-    if (!raw) throw new Error("no deeplink");
-    return `https://xumm.app/detect?uri=${encodeURIComponent(raw)}&_=${Date.now()}`;
-  }
-
-  async function handleBuy(e){
-    e.preventDefault();
-    if (btnBuy.getAttribute('aria-disabled') === 'true') return;
-    const usd = Number.parseFloat(usdInput.value || "0");
-    if (!Number.isFinite(usd) || usd < MIN_USD) return;
-
-    try{
-      const detectUrl = await createDeeplinkUSD(usd);
-      window.location.href = detectUrl;               // same tab
-      setTimeout(()=>{ try{ window.location.replace(detectUrl); }catch{} }, 250);
-    }catch(err){
-      console.error(err);
-      // Fallback to 302 redirect endpoint with cache-buster
-      const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
-      window.location.href = url;
-      setTimeout(()=>{ try{ window.location.replace(url); }catch{} }, 250);
-    }
-  }
 
   // ======= MAIN INPUT HANDLER =======
   async function handleUSDInput(){
@@ -390,17 +357,16 @@
     }
 
     try{
-      const p = await getLockedPrice();
-      const usdPerXrp = p.usdPerXrp;       // USD/XRP (e.g., 0.33)
-      const xrpNeeded = usd / usdPerXrp;   // ~3.0 XRP per $1 if usdPerXrp=0.33
+      const usdPerXrp = await getLockedPrice(); // >= 1 (e.g., 3.05)
+      const xrpNeeded = usd / usdPerXrp;        // small XRP per $1
 
-      updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
+      updateSpotBar(usdPerXrp, !unlocked);
 
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      // Enable button now; deeplink is generated on click
-      enableBuy("#", "Open in wallet");
+      // Wire BUY directly to the redirect endpoint
+      enableBuy(usd);
     }catch(e){
       console.error(e);
       xrpConversion.textContent = '⚠️ Could not fetch price';
@@ -409,15 +375,19 @@
     }
   }
 
-  if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 250));
-  if (btnBuy)   btnBuy.addEventListener('click', handleBuy);
+  usdInput.addEventListener('input', debounce(handleUSDInput, 250));
 
-  // Prime the spot bar once at load
-  (async function initPrice(){
+  // Safety: honor aria-disabled
+  btnBuy.addEventListener('click', (e) => {
+    if (btnBuy.getAttribute('aria-disabled') === 'true') e.preventDefault();
+  });
+
+  // Prime on load
+  (async function init(){
     refreshStatus();
     try{
       const p = await getLockedPrice();
-      updateSpotBar(p.usdPerXrp, p.src, !unlocked, p.cached);
+      updateSpotBar(p, !unlocked);
     }catch{}
   })();
 </script>
