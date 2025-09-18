@@ -261,7 +261,7 @@
   function enableBuyForUSD(usd){
     const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
     btnBuy.setAttribute("aria-disabled","false");
-    btnBuy.removeAttribute("target"); // let Xumm Detect take over in same tab
+    btnBuy.removeAttribute("target"); // same tab so Detect can own the flow
     btnBuy.rel = "noopener";
     btnBuy.href = url;
     btnBuy.title = "Open in Xaman";
@@ -275,16 +275,22 @@
     showToast._t = setTimeout(()=>toast.style.display='none', 2400);
   }
 
-  // ======= STATUS (api/status) =======
+  // ======= STATUS (prefer /api/status; fall back to /api/price) =======
   async function refreshStatus(){
     try{
       const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
       const j = await r.json();
-      if (j && j.ok && j.running) setBadge("live","LIVE");
-      else setBadge("down","OFFLINE");
-    }catch{
-      setBadge("down","OFFLINE");
-    }
+      if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
+    }catch{} // fall through
+
+    // If /api/status is blocked by CORS, treat a successful /api/price as "live"
+    try{
+      const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+      const pj = await rp.json();
+      if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
+    }catch{}
+
+    setBadge("down","OFFLINE");
   }
   refreshStatus();
   setInterval(refreshStatus, 10000);
@@ -324,7 +330,7 @@
 
   const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  // ======= MAIN INPUT HANDLER =======
+  // ======= INPUT PARSER =======
   function parseUSD(raw){
     if (raw == null) return NaN;
     const cleaned = String(raw).trim().replace(',', '.').replace(/[^\d.]/g,'');
@@ -334,6 +340,7 @@
     return Number.isFinite(n) ? n : NaN;
   }
 
+  // ======= MAIN INPUT HANDLER =======
   async function handleUSDInput(){
     const usd = parseUSD(usdInput.value);
     xrpConversion.textContent = '🔁 XRP Required: 0';
@@ -364,8 +371,19 @@
   }
 
   if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 200));
+
+  // As a final safety, rebuild link on click and navigate same-tab
   btnBuy.addEventListener('click', (e)=>{
-    if (btnBuy.getAttribute('aria-disabled') === 'true'){ e.preventDefault(); }
+    const disabled = btnBuy.getAttribute('aria-disabled') === 'true';
+    if (disabled){ e.preventDefault(); return; }
+    const usd = parseUSD(usdInput.value);
+    if (!Number.isFinite(usd) || usd < MIN_USD){ e.preventDefault(); return; }
+    // If href was lost or stale, rebuild it now:
+    if (!btnBuy.href || btnBuy.href === location.href || btnBuy.href.endsWith('#')) {
+      e.preventDefault();
+      const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+      window.location.href = url;
+    }
   });
 
   // Prime the spot bar once at load
