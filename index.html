@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RAD GARLINGTON — $RAD</title>
 
   <!-- Favicons / PWA -->
@@ -35,91 +35,81 @@
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
   <style>
-    /* --- Base & Layout --- */
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     :root{
       --bg:#ffffff; --ink:#0f172a; --muted:#475569;
       --blue:#0A74D0; --blue-ink:#ffffff; --card:#f4f7fb; --ring:rgba(10,116,208,.22);
     }
-    body{
+    body {
       margin:0; background:var(--bg); color:var(--ink);
-      font-family: Arial, Helvetica, sans-serif; line-height:1.5; overflow-x:hidden;
+      font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden;
       min-height:100vh; display:flex; flex-direction:column;
     }
-    main{ flex:1 0 auto; }
-    p{ margin:0 0 10px; }
-    img{ max-width:100%; height:auto; display:block; }
+    main { flex: 1 0 auto; }
+    p { margin:0 0 10px; }
 
-    /* Centering guard for small screens */
-    .wrap{ max-width:960px; margin:0 auto; padding:0 16px; }
+    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
+    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
+    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
+    @media (max-width:480px){ .hero-img{ width:65%; max-width:220px; } }
 
-    /* --- Hero --- */
-    .hero{ text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .hero-img{ width:55%; max-width:320px; height:auto; margin:0 auto 14px; }
-    h1{ font-size:clamp(1.8rem,6vw,2.8rem); margin-bottom:10px; }
-    .tagline{ font-size:clamp(1rem,4vw,1.3rem); color:var(--muted); margin-bottom:4px; padding:0 10px; }
+    .social { text-align:center; margin-top:14px; }
+    .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; vertical-align:middle; }
+    .social img{ width:28px; height:28px; display:inline-block; }
 
-    /* --- Utility --- */
-    .utility{ text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .verify { margin-top:8px; font-size:0.95rem; text-align:center; }
+    .verify a{ color:var(--blue); font-weight:bold; text-decoration:none; display:inline-block; margin:0 8px; }
 
-    /* --- OTC --- */
-    .otc-section{ background:var(--card); color:var(--ink); padding:6vh 0; }
-    .otc-wrap{ max-width:900px; margin:0 auto; padding:0 16px; text-align:center; }
-    .otc-head{ display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
-    .otc-section h2{ font-size:clamp(1.5rem,5vw,2rem); margin:0; color:var(--ink); }
-    .otc-section p{ font-size:clamp(1rem,4vw,1.1rem); margin-bottom:20px; color:var(--muted); }
+    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; color:var(--ink); }
+    .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
+
+    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; }
+    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; }
+    .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; color: var(--ink); }
+    .otc-section p { font-size: clamp(1rem, 4vw, 1.1rem); margin-bottom: 20px; color: var(--muted); }
 
     .price-line{
-      display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:.5rem;
-      padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
-      border:2px solid var(--blue); font-weight:800; font-size:clamp(1rem,3.6vw,1.2rem);
-      letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
-      margin:6px auto 18px; max-width:100%;
+      display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(1rem, 3.6vw, 1.2rem); letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px 0 18px; white-space:nowrap;
     }
-    .price-line span{ white-space:nowrap; }
     .price-line .sep{ opacity:.6 }
 
-    .status-badge{ display:inline-flex; align-items:center; gap:.5rem; font:600 12px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    .status-badge { display:inline-flex; align-items:center; gap:.5rem; font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
       padding:.35rem .6rem; border-radius:999px; border:1px solid var(--ring); background:#fff; color:#0b3d78; user-select:none; }
     .status-dot{ width:.5rem; height:.5rem; border-radius:50%; background:#6aa1ea; }
-    .status-badge.live{ color:#0b3d78; background:#e8f2ff; }
-    .status-badge.down{ color:#3a4c66; background:#f0f6ff; }
+    .status-badge.live  { color:#0b3d78; background:#e8f2ff; }
+    .status-badge.down  { color:#3a4c66; background:#f0f6ff; }
 
     .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:12px 18px; border-radius:10px; text-decoration:none;
-      font:600 16px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; box-shadow:0 6px 20px rgba(2,32,71,.12);
+      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; box-shadow:0 6px 20px rgba(2,32,71,.12);
       transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
     .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); pointer-events:none; }
     .btn-primary{ background:var(--blue); color:#fff; }
     .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
-      font:600 16px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; margin-top:4px; }
+      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; margin-top:4px; }
     .btn-trustline:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.18); }
 
-    .card{ width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
+    .disclaimer { font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
+    .countdown-warning { margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
 
-    .social{ display:flex; justify-content:center; gap:12px; margin-top:14px; }
-    .social a{ display:inline-flex; width:28px; height:28px; align-items:center; justify-content:center; }
+    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
 
-    .verify{ margin-top:8px; font-size:.95rem; text-align:center; }
+    .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
-    .disclaimer{ font-size:0.72rem !important; line-height:1.35; color:#0A74D0; font-weight:bold; text-align:center; max-width:600px; margin:16px auto 6px; }
-    .countdown-warning{ margin-top:8px; text-align:center; color:#222; font-size:0.9rem; }
-
-    .footer{ text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
-
-    .toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:#0A74D0; border:2px solid var(--blue);
+    .toast { position:fixed; left:50%; transform:translateX(-50%); bottom:26px; background:#fff; color:#0A74D0; border:2px solid var(--blue);
       padding:12px 16px; border-radius:10px; box-shadow:0 10px 26px rgba(2,32,71,.16); font-weight:700; z-index:9999; display:none; }
-
-    @media (max-width:480px){
-      .hero-img{ width:65%; max-width:220px; }
-    }
   </style>
 </head>
 <body>
 
-  <main class="wrap">
+  <main>
     <!-- HERO -->
     <div class="hero">
       <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
@@ -142,9 +132,8 @@
 
     <div class="verify">
       🔍 Verify on:
-      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">Bithomp</a>
-      |
-      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener" style="color:var(--blue); font-weight:bold; text-decoration:none;">XRPSCAN</a>
+      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">Bithomp</a>
+      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">XRPSCAN</a>
     </div>
 
     <!-- UTILITY -->
@@ -191,7 +180,7 @@
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
-            <button id="btnBuy" class="btn btn-primary" type="button" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</button>
+            <a id="btnBuy" class="btn btn-primary" href="#" target="_blank" rel="noopener" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
           </div>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px; text-align:center; box-shadow:0 4px 12px rgba(2,32,71,0.06);">
@@ -234,116 +223,204 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script>
-    // === CONFIG ===
-    const API = "https://api.radgarlington.io";
-    const MIN_USD = 1;
+<script>
+  // ======= CONFIG =======
+  const API = "https://api.radgarlington.io";
+  const MIN_USD = 1;
 
-    // === DOM ===
-    const usdInput      = document.getElementById('usdInput');
-    const xrpConversion = document.getElementById('xrpConversion');
-    const radAmount     = document.getElementById('radAmount');
-    const btnBuy        = document.getElementById('btnBuy');
-    const spotLine      = document.getElementById('spotLine');
-    const liveBadge     = document.getElementById('liveStatus');
-    const liveText      = document.getElementById('liveText');
+  // ======= DOM =======
+  const usdInput      = document.getElementById('usdInput');
+  const xrpConversion = document.getElementById('xrpConversion');
+  const radAmount     = document.getElementById('radAmount');
+  const btnBuy        = document.getElementById('btnBuy');
+  const spotLine      = document.getElementById('spotLine');
+  const liveBadge     = document.getElementById('liveStatus');
+  const liveText      = document.getElementById('liveText');
+  const toast         = document.getElementById('toast');
 
-    // Helpers
-    const fmt = (n,d=6)=>Number(n).toFixed(d);
-    const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
+  // ======= UI helpers =======
+  function setBadge(state, text){
+    liveBadge.classList.remove("live","down");
+    liveBadge.classList.add(state);
+    liveText.textContent = text;
+  }
+  function disableBuy(msg){ btnBuy.setAttribute("aria-disabled","true"); btnBuy.href="#"; if (msg) btnBuy.title = msg; }
+  function enableBuy(link, msg){
+    btnBuy.setAttribute("aria-disabled","false");
+    btnBuy.href = link;
+    btnBuy.title = msg || "Open in wallet";
+    btnBuy.rel = "noopener noreferrer external";
+    btnBuy.target = "_self"; // IMPORTANT: same-tab so Xumm lands on signer
+  }
+  const debounce = (fn, ms=250) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; };
 
-    function setBadge(state, text){
-      if (!liveBadge || !liveText) return;
-      liveBadge.classList.remove("live","down");
-      liveBadge.classList.add(state);
-      liveText.textContent = text;
-    }
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(()=>toast.style.display='none', 2400);
+  }
 
-    // Status from backend
-    async function refreshStatus(){
-      try{
-        const r = await fetch(`${API}/api/status`, { cache:'no-store' });
-        const j = await r.json();
-        if (j.ok && j.running && j.connected) setBadge("live","LIVE");
-        else setBadge("down","OFFLINE");
-      }catch{ setBadge("down","OFFLINE"); }
-    }
-    refreshStatus();
-    setInterval(refreshStatus, 10000);
-
-    // Price: normalize to USD/XRP >= 1 for label & math
-    const priceState = { usdPerXrp: NaN };
-    async function getPrice(){
-      if (Number.isFinite(priceState.usdPerXrp)) return priceState.usdPerXrp;
-      const r = await fetch(`${API}/api/price`, { cache:'no-store' });
+  // ======= STATUS (api/status) =======
+  async function refreshStatus(){
+    try{
+      const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
       const j = await r.json();
-      let p = Number(j.xrp_usd);
-      if (!Number.isFinite(p) || p <= 0) throw new Error("no price");
-      if (p < 1) p = 1/p; // convert 0.33 → 3.03
-      priceState.usdPerXrp = p;
-      if (spotLine){
-        spotLine.innerHTML = `
-          <span>1M $RAD = $1 USD</span>
-          <span class="sep">·</span>
-          <span>Powered by XRP</span>
-          <span class="sep">·</span>
-          <span>Live (backend, locked): $${p.toFixed(4)}/XRP</span>
-        `;
-      }
-      return p;
+      if (j && j.ok && j.running) setBadge("live","LIVE");
+      else setBadge("down","OFFLINE");
+    }catch{
+      setBadge("down","OFFLINE");
     }
+  }
+  refreshStatus();
+  setInterval(refreshStatus, 10000);
 
-    function disableBuy(msg){
-      btnBuy.setAttribute("aria-disabled","true");
-      btnBuy.title = msg || "Enter an amount to enable";
+  // ======= PRICE LOCK (USD/XRP as delivered by backend) =======
+  const priceState = { usdPerXrp: NaN, ts: 0, locked: false, src: '', cached: false };
+  const unlocked = new URLSearchParams(location.search).has('unlock');
+  const LS_KEY='rad_last_usd_per_xrp', LS_SRC_KEY='rad_last_usd_per_xrp_src', LS_TS_KEY='rad_last_usd_per_xrp_ts';
+
+  function saneUsdPerXrp(p){ return Number.isFinite(p) && p >= 0.05 && p <= 20.0; }
+
+  function saveLocal(v, src){
+    try{
+      localStorage.setItem(LS_KEY, String(v));
+      localStorage.setItem(LS_SRC_KEY, src||'');
+      localStorage.setItem(LS_TS_KEY, String(Date.now()));
+    }catch{}
+  }
+  function loadLocal(){
+    try{
+      const v = Number(localStorage.getItem(LS_KEY));
+      const src = localStorage.getItem(LS_SRC_KEY)||'cache';
+      const ts = Number(localStorage.getItem(LS_TS_KEY)||0);
+      if (saneUsdPerXrp(v)) return { v, src, ts };
+    }catch{}
+    return null;
+  }
+
+  function updateSpotBar(usdPerXrp, src='backend', locked=true, cached=false){
+    if (!spotLine) return;
+    const tag = cached ? `${src} (cached)` : src;
+    spotLine.innerHTML = `
+      <span>1M $RAD = $1 USD</span>
+      <span class="sep">·</span>
+      <span>Powered by XRP</span>
+      <span class="sep">·</span>
+      <span>Live (${tag}${locked ? ', locked' : ''}): $${(usdPerXrp||0).toFixed(4)}/XRP</span>
+    `;
+  }
+
+  async function fetchBackendUsdPerXrp(){
+    const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+    const j = await r.json();
+    if (!j.ok) throw new Error('price not ok');
+    let v = Number(j.xrp_usd);
+    if (!Number.isFinite(v) || v <= 0) throw new Error('no numeric price');
+    // Backend provides USD/XRP (e.g., 0.33). Keep it.
+    if (!saneUsdPerXrp(v)) throw new Error('insane price');
+    return { v, src:'backend', cached:false };
+  }
+
+  async function getLockedPrice(){
+    if (priceState.locked && saneUsdPerXrp(priceState.usdPerXrp)) return priceState;
+
+    try{
+      const {v,src,cached} = await fetchBackendUsdPerXrp();
+      priceState.usdPerXrp=v; priceState.src=src; priceState.cached=cached; priceState.ts=Date.now();
+      if (!unlocked) priceState.locked=true;
+      saveLocal(v, src);
+      return priceState;
+    }catch{}
+
+    const c = loadLocal();
+    if (c){
+      priceState.usdPerXrp=c.v; priceState.src=c.src||'cache'; priceState.cached=true; priceState.ts=c.ts;
+      if (!unlocked) priceState.locked=true;
+      return priceState;
     }
-    function enableBuy(){
-      btnBuy.setAttribute("aria-disabled","false");
-      btnBuy.title = "Open in Xaman";
-    }
-    disableBuy();
+    throw new Error('no price source');
+  }
 
-    // BUY → navigate this tab to /api/deeplink?usd=… (lets the 302 reach Xumm Detect cleanly)
-    async function handleBuy(){
-      if (btnBuy.getAttribute('aria-disabled') === 'true') return;
-      const usd = Number.parseFloat(usdInput.value || "0");
-      if (!Number.isFinite(usd) || usd < MIN_USD) return;
+  const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-      // Current-tab navigation (avoid new tab → Xumm home)
-      const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
-      // Some browsers behave better with replace(); try href first then replace as fallback shortly after.
+  // ======= Deeplink (JSON POST) =======
+  async function createDeeplinkUSD(usd) {
+    const r = await fetch(`${API}/api/paylink?_=${Date.now()}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ usd: Number(usd).toFixed(2) })
+    });
+    if (!r.ok) throw new Error("paylink http " + r.status);
+    const j = await r.json();
+    const raw = j.deeplink || j.uri;
+    if (!raw) throw new Error("no deeplink");
+    return `https://xumm.app/detect?uri=${encodeURIComponent(raw)}&_=${Date.now()}`;
+  }
+
+  async function handleBuy(e){
+    e.preventDefault();
+    if (btnBuy.getAttribute('aria-disabled') === 'true') return;
+    const usd = Number.parseFloat(usdInput.value || "0");
+    if (!Number.isFinite(usd) || usd < MIN_USD) return;
+
+    try{
+      const detectUrl = await createDeeplinkUSD(usd);
+      window.location.href = detectUrl;               // same tab
+      setTimeout(()=>{ try{ window.location.replace(detectUrl); }catch{} }, 250);
+    }catch(err){
+      console.error(err);
+      // Fallback to 302 redirect endpoint with cache-buster
+      const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
       window.location.href = url;
       setTimeout(()=>{ try{ window.location.replace(url); }catch{} }, 250);
     }
+  }
 
-    async function handleUSDInput(){
-      const usd = Number.parseFloat(usdInput.value);
-      xrpConversion.textContent = '🔁 XRP Required: 0';
-      radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
-      disableBuy("Enter an amount to enable");
+  // ======= MAIN INPUT HANDLER =======
+  async function handleUSDInput(){
+    const usd = Number.parseFloat(usdInput.value);
+    xrpConversion.textContent = '🔁 XRP Required: 0';
+    radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+    disableBuy("Enter an amount to enable");
 
-      if (!Number.isFinite(usd) || usd < MIN_USD){
-        if (usd>0) xrpConversion.textContent='❌ Minimum $1';
-        return;
-      }
-
-      try{
-        const usdPerXrp = await getPrice();
-        const xrp = usd / usdPerXrp;
-        xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrp)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
-        radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
-        enableBuy();
-      }catch(e){
-        console.error(e);
-        xrpConversion.textContent = '⚠️ Could not fetch price';
-        radAmount.textContent     = '🪙 You’ll receive: 0 $RAD';
-        disableBuy("Could not fetch price");
-      }
+    if (!Number.isFinite(usd) || usd < MIN_USD){
+      if (usd>0) xrpConversion.textContent='❌ Minimum $1';
+      return;
     }
 
-    if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 220));
-    if (btnBuy)   btnBuy.addEventListener('click', handleBuy);
-    getPrice().catch(()=>{});
-  </script>
+    try{
+      const p = await getLockedPrice();
+      const usdPerXrp = p.usdPerXrp;       // USD/XRP (e.g., 0.33)
+      const xrpNeeded = usd / usdPerXrp;   // ~3.0 XRP per $1 if usdPerXrp=0.33
+
+      updateSpotBar(usdPerXrp, p.src, !unlocked, p.cached);
+
+      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
+      radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
+
+      // Enable button now; deeplink is generated on click
+      enableBuy("#", "Open in wallet");
+    }catch(e){
+      console.error(e);
+      xrpConversion.textContent = '⚠️ Could not fetch price';
+      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+      disableBuy("Could not fetch price");
+    }
+  }
+
+  if (usdInput) usdInput.addEventListener('input', debounce(handleUSDInput, 250));
+  if (btnBuy)   btnBuy.addEventListener('click', handleBuy);
+
+  // Prime the spot bar once at load
+  (async function initPrice(){
+    refreshStatus();
+    try{
+      const p = await getLockedPrice();
+      updateSpotBar(p.usdPerXrp, p.src, !unlocked, p.cached);
+    }catch{}
+  })();
+</script>
+
 </body>
 </html>
