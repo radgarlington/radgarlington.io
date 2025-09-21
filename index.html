@@ -225,14 +225,57 @@
     btnBuy.removeAttribute("href");
     btnBuy.title = msg || "Enter an amount to enable";
   }
-  function enableBuyForUSD(usd){
-    // Backend returns 302 → /go/<UUID>
+
+  // NEW: open app directly with progressive fallbacks
+  function openXaman(uuid){
+    // 1) immediate native deep-link
+    const appUrl = `xumm://sign/${uuid}`;
+    // 2) web universal link fallback
+    const webUrl = `https://xumm.app/sign/${uuid}`;
+    // 3) your branded landing as last resort
+    const goUrl  = `${API}/go/${uuid}`;
+
+    // attempt deep link on user-gesture
+    window.location.assign(appUrl);
+
+    // if native doesn't grab focus, fall back to web, then go-page
+    setTimeout(() => {
+      window.location.assign(webUrl);
+      setTimeout(() => {
+        window.location.assign(goUrl);
+      }, 1200);
+    }, 650);
+  }
+
+  // NEW: create payload without leaving page, then open via deep-link
+  async function createAndOpenPayload(usd){
     const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+
+    // We only want the Location header (302) → /go/<uuid>
+    const res = await fetch(url, { method: 'GET', redirect: 'manual', mode: 'cors', cache: 'no-store' });
+
+    // Some browsers transform 302 to 0 in fetch; check both.
+    const status = res.status;
+    const loc = res.headers.get('Location') || res.headers.get('location') || '';
+
+    if (status !== 302 && !loc) {
+      throw new Error(`Unexpected response creating payload (status ${status})`);
+    }
+
+    // UUID may be in /go/<uuid> or already a xumm detect/sign link; pull 36-char v4
+    const uuidMatch =
+      loc.match(/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/i);
+
+    if (!uuidMatch) throw new Error(`Could not parse UUID from Location: ${loc}`);
+
+    const uuid = uuidMatch[0];
+    openXaman(uuid);
+  }
+
+  function enableBuyForUSD(usd){
     btnBuy.removeAttribute("aria-disabled");
-    btnBuy.removeAttribute("target");
-    btnBuy.rel = "noopener";
-    btnBuy.href = url;
     btnBuy.title = "Open in Xaman";
+    btnBuy.dataset.usd = usd.toFixed(2);
   }
 
   async function refreshStatus(){
@@ -321,6 +364,25 @@
   }
 
   usdInput.addEventListener('input', handleUSDInput);
+
+  // BUY click → create payload → deep-link
+  btnBuy.addEventListener('click', async (ev) => {
+    if (btnBuy.hasAttribute('aria-disabled')) {
+      ev.preventDefault();
+      return;
+    }
+    ev.preventDefault(); // keep SPA behavior; required for iOS gesture deep-link
+    const usd = Number(btnBuy.dataset.usd || '0');
+    if (!usd || usd < MIN_USD) return;
+
+    try {
+      await createAndOpenPayload(usd);
+    } catch (err) {
+      console.error(err);
+      // worst-case: still hit your redirecting /api endpoint normally
+      window.location.assign(`${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`);
+    }
+  });
 
   (async function initPrice(){
     refreshStatus();
