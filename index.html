@@ -94,12 +94,16 @@
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
-    /* Small, centered legal text */
-    .legal-wrap{ max-width:900px; margin: 10px auto 24px; padding:0 12px; }
-    .legal-title{ text-align:center; font-size:.9rem; font-weight:700; margin:10px 0 6px; }
-    .legal{ text-align:center; font-size:.80rem; line-height:1.45; color:#5b6b7e; }
-
-    .subtle { color:#64748b; font-size:.95rem; }
+    /* Small, centered legal block */
+    .legal {
+      max-width: 860px;
+      margin: 14px auto 28px;
+      padding: 12px 14px;
+      text-align: center;
+      font-size: 0.80rem;
+      line-height: 1.35;
+      color: #5b6b7f;
+    }
   </style>
 </head>
 <body>
@@ -154,7 +158,7 @@
           <span class="sep">·</span>
           <span>Powered by XRP</span>
           <span class="sep">·</span>
-          <span class="spot-rate">Live: <span id="spotVal">$—/XRP</span></span>
+          <span class="spot-rate">Live: $—/XRP</span>
         </div>
 
         <div class="card">
@@ -166,7 +170,7 @@
           <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
                  autocomplete="off" style="padding:10px; font-size:16px; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
-          <div id="xrpConversion" class="subtle" style="margin-top:12px;">⏳ Fetching price…</div>
+          <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
@@ -178,30 +182,18 @@
             <p style="margin:0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
             <p style="margin:0;">✅ OTC buyers in early — 3× value at launch</p>
           </div>
-
-          <p style="margin-top:12px; font-size:0.82rem; color:#475569;">
-            $RAD is a meme token on XRPL. This is not financial advice. Plans may change based on treasury, market, or protocol decisions
-          </p>
         </div>
 
-        <p class="disclaimer">🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.</p>
-        <p class="countdown-warning">Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.</p>
+        <p class="legal">
+          🛡 <strong>Legal Disclaimer</strong><br>
+          $RAD is an independent community-driven token built on the XRP Ledger (XRPL). It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.
+          All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
+        </p>
       </div>
     </div>
 
-    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
+    <div style="text-align:center; margin:16px 0 20px;">
       <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener">📄 Read the Lite Paper</a>
-    </div>
-
-    <div class="legal-wrap">
-      <div class="legal-title">🛡 Legal Disclaimer</div>
-      <div class="legal">
-        $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
-        It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies,
-        individuals, trademarks, or intellectual property. All references to “Rad,” “Garlington,” or related terminology are part
-        of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple,
-        Brad Garlinghouse, or any official XRP-related entities.
-      </div>
     </div>
   </main>
 
@@ -214,17 +206,16 @@
   </div>
 
 <script>
-  // Use the API subdomain explicitly for actions that must hit your backend.
-  const API_BASE = 'https://api.radgarlington.io';
+  const API = "https://api.radgarlington.io";
   const MIN_USD = 1;
 
   const usdInput      = document.getElementById('usdInput');
   const xrpConversion = document.getElementById('xrpConversion');
   const radAmount     = document.getElementById('radAmount');
   const btnBuy        = document.getElementById('btnBuy');
+  const spotLine      = document.getElementById('spotLine');
   const liveBadge     = document.getElementById('liveStatus');
   const liveText      = document.getElementById('liveText');
-  const spotVal       = document.getElementById('spotVal');
 
   function setBadge(state, text){
     liveBadge.classList.remove("live","down");
@@ -238,75 +229,64 @@
     btnBuy.title = msg || "Enter an amount to enable";
   }
   function enableBuyForUSD(usd){
-    // IMPORTANT: absolute URL to API subdomain (prevents GitHub Pages 404)
-    const url = `${API_BASE}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+    // Backend returns 302 → /go/<uuid> which tries xumm:// on its page
+    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
     btnBuy.removeAttribute("aria-disabled");
-    btnBuy.removeAttribute("target"); // open in same tab
-    btnBuy.rel = "noopener";
-    btnBuy.href = url;
-    btnBuy.title = "Open in Xaman";
-  }
-
-  // fetch JSON with timeout & mode
-  function fetchJSON(url, {timeout=4000, mode='cors'} = {}){
-    return new Promise((resolve, reject)=>{
-      const ctl = new AbortController();
-      const t = setTimeout(()=>ctl.abort(), timeout);
-      fetch(url, {
-        method:'GET',
-        headers:{ 'Accept':'application/json' },
-        cache:'no-store',
-        mode,
-        signal: ctl.signal,
-        credentials: 'omit'
-      })
-      .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
-      .then(j => { clearTimeout(t); resolve(j); })
-      .catch(err => { clearTimeout(t); reject(err); });
-    });
-  }
-
-  // Prefer API subdomain for consistency; fall back to apex if needed
-  async function getPriceJSON(){
-    const bust = `?_=${Date.now()}`;
-    try { return await fetchJSON(`${API_BASE}/api/price${bust}`); }
-    catch(e){
-      try { return await fetchJSON(`https://radgarlington.io/api/price${bust}`); }
-      catch(e2){
-        console.warn('Price fetch failed:', e.message, e2.message);
-        throw e2;
-      }
-    }
-  }
-
-  async function getStatusJSON(){
-    const bust = `?_=${Date.now()}`;
-    try { return await fetchJSON(`${API_BASE}/api/status${bust}`); }
-    catch{
-      try { return await fetchJSON(`https://radgarlington.io/api/status${bust}`); }
-      catch{ return null; }
-    }
+    btnBuy.href   = url;
+    btnBuy.target = "_self"; // keep same tab -> preserves user gesture for iOS
+    btnBuy.rel    = "noopener";
+    btnBuy.title  = "Open in Xaman";
   }
 
   async function refreshStatus(){
-    const s = await getStatusJSON();
-    if (s && s.ok && s.running) setBadge('live','LIVE'); else setBadge('down','OFFLINE');
+    try{
+      const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+      const j = await r.json();
+      if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
+    }catch{}
+    try{
+      const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+      const pj = await rp.json();
+      if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
+    }catch{}
+    setBadge("down","OFFLINE");
   }
+  refreshStatus(); setInterval(refreshStatus, 12000);
 
   const priceState = { usdPerXrp: NaN, locked: false };
   const unlocked = new URLSearchParams(location.search).has('unlock');
 
   function updateSpotBar(usdPerXrp){
     const rate = Number(usdPerXrp||0).toFixed(4);
-    spotVal.textContent = `$${rate}/XRP`;
+    spotLine.innerHTML = `
+      <span>1M $RAD = $1 USD</span>
+      <span class="sep">·</span>
+      <span>Powered by XRP</span>
+      <span class="sep">·</span>
+      <span class="spot-rate">Live: $${rate}/XRP</span>
+    `;
   }
 
+  // Fetch with small retry/backoff so "Could not fetch price" is rare
   async function fetchUsdPerXrp(){
-    const j = await getPriceJSON();
-    if (!j || !j.ok) throw new Error('price not ok');
-    const v = Number(j.xrp_usd);
-    if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
-    return v;
+    const url = `${API}/api/price?_=${Date.now()}`;
+    let lastErr;
+    for (const delay of [0, 300, 800]) {
+      try {
+        if (delay) await new Promise(r => setTimeout(r, delay));
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 3500);
+        const r = await fetch(url, { cache:'no-store', mode:'cors', signal: ctrl.signal });
+        clearTimeout(t);
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        const j = await r.json();
+        if (!j.ok) throw new Error('price not ok');
+        const v = Number(j.xrp_usd);
+        if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
+        return v;
+      } catch (e) { lastErr = e; }
+    }
+    throw lastErr || new Error('price error');
   }
 
   async function getLockedPrice(){
@@ -330,13 +310,12 @@
 
   async function handleUSDInput(){
     const usd = parseUSD(usdInput.value);
-    xrpConversion.textContent = '⏳ Fetching price…';
+    xrpConversion.textContent = '🔁 XRP Required: 0';
     radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
     disableBuy("Enter an amount to enable");
 
     if (!Number.isFinite(usd) || usd < MIN_USD){
       if (usd>0) xrpConversion.textContent='❌ Minimum $1';
-      else xrpConversion.textContent='⏳ Fetching price…';
       return;
     }
 
@@ -350,7 +329,7 @@
 
       enableBuyForUSD(usd);
     }catch(e){
-      console.error('[RAD] price error:', e);
+      console.error(e);
       xrpConversion.textContent = '⚠️ Could not fetch price';
       radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
       disableBuy("Could not fetch price");
@@ -359,19 +338,9 @@
 
   usdInput.addEventListener('input', handleUSDInput);
 
-  (async function init(){
-    try{
-      setBadge('down','OFFLINE'); // flips once status/price lands
-      const p = await getLockedPrice();
-      updateSpotBar(p);
-      setBadge('live','LIVE');
-      xrpConversion.textContent = 'Enter USD to calculate XRP';
-    }catch(e){
-      console.warn('[RAD] initial price failed:', e);
-      updateSpotBar(0);
-      xrpConversion.textContent = '⚠️ Could not fetch price';
-    }
-    setInterval(refreshStatus, 10000);
+  (async function initPrice(){
+    refreshStatus();
+    try{ updateSpotBar(await getLockedPrice()); }catch{ updateSpotBar(0); }
   })();
 </script>
 
