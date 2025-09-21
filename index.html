@@ -94,6 +94,7 @@
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
+    /* Small, centered legal text */
     .legal-wrap{ max-width:900px; margin: 10px auto 24px; padding:0 12px; }
     .legal-title{ text-align:center; font-size:.9rem; font-weight:700; margin:10px 0 6px; }
     .legal{ text-align:center; font-size:.80rem; line-height:1.45; color:#5b6b7e; }
@@ -213,6 +214,8 @@
   </div>
 
 <script>
+  // Use the API subdomain explicitly for actions that must hit your backend.
+  const API_BASE = 'https://api.radgarlington.io';
   const MIN_USD = 1;
 
   const usdInput      = document.getElementById('usdInput');
@@ -235,16 +238,17 @@
     btnBuy.title = msg || "Enter an amount to enable";
   }
   function enableBuyForUSD(usd){
-    const url = `/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+    // IMPORTANT: absolute URL to API subdomain (prevents GitHub Pages 404)
+    const url = `${API_BASE}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
     btnBuy.removeAttribute("aria-disabled");
-    btnBuy.removeAttribute("target");
+    btnBuy.removeAttribute("target"); // open in same tab
     btnBuy.rel = "noopener";
     btnBuy.href = url;
     btnBuy.title = "Open in Xaman";
   }
 
   // fetch JSON with timeout & mode
-  function fetchJSON(url, {timeout=4000, mode='same-origin'} = {}){
+  function fetchJSON(url, {timeout=4000, mode='cors'} = {}){
     return new Promise((resolve, reject)=>{
       const ctl = new AbortController();
       const t = setTimeout(()=>ctl.abort(), timeout);
@@ -254,7 +258,7 @@
         cache:'no-store',
         mode,
         signal: ctl.signal,
-        credentials: mode==='same-origin' ? 'same-origin' : 'omit'
+        credentials: 'omit'
       })
       .then(r => r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
       .then(j => { clearTimeout(t); resolve(j); })
@@ -262,31 +266,24 @@
     });
   }
 
+  // Prefer API subdomain for consistency; fall back to apex if needed
   async function getPriceJSON(){
     const bust = `?_=${Date.now()}`;
-    const errs = [];
-
-    // 1) Same-origin (no CORS dependency)
-    try { return await fetchJSON(`/api/price${bust}`, {mode:'same-origin'}); }
-    catch(e){ errs.push('primary:'+e.message); }
-
-    // 2) Absolute same-origin (handles odd base tags / CF rules)
-    try { return await fetchJSON(`https://radgarlington.io/api/price${bust}`, {mode:'cors'}); }
-    catch(e){ errs.push('absolute:'+e.message); }
-
-    // 3) API subdomain fallback
-    try { return await fetchJSON(`https://api.radgarlington.io/api/price${bust}`, {mode:'cors'}); }
-    catch(e){ errs.push('api-subdomain:'+e.message); }
-
-    console.warn('Price fetch failed paths →', errs.join(' | '));
-    throw new Error('all price endpoints failed');
+    try { return await fetchJSON(`${API_BASE}/api/price${bust}`); }
+    catch(e){
+      try { return await fetchJSON(`https://radgarlington.io/api/price${bust}`); }
+      catch(e2){
+        console.warn('Price fetch failed:', e.message, e2.message);
+        throw e2;
+      }
+    }
   }
 
   async function getStatusJSON(){
     const bust = `?_=${Date.now()}`;
-    try { return await fetchJSON(`/api/status${bust}`, {mode:'same-origin'}); }
-    catch(e){
-      try { return await fetchJSON(`https://api.radgarlington.io/api/status${bust}`, {mode:'cors'}); }
+    try { return await fetchJSON(`${API_BASE}/api/status${bust}`); }
+    catch{
+      try { return await fetchJSON(`https://radgarlington.io/api/status${bust}`); }
       catch{ return null; }
     }
   }
@@ -364,7 +361,7 @@
 
   (async function init(){
     try{
-      setBadge('down','OFFLINE'); // will flip once status/price lands
+      setBadge('down','OFFLINE'); // flips once status/price lands
       const p = await getLockedPrice();
       updateSpotBar(p);
       setBadge('live','LIVE');
