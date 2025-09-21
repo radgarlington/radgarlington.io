@@ -165,9 +165,12 @@
           <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
-          <div style="margin-top:14px;">
-            <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled title="Enter an amount to enable">🛒 BUY</a>
-          </div>
+          <!-- RELIABLE BUY: plain HTML form doing top-level navigation -->
+          <form id="buyForm" action="https://api.radgarlington.io/api/deeplink" method="GET" style="margin-top:14px;">
+            <input type="hidden" name="usd" id="usdHidden" value="">
+            <input type="hidden" name="_" value="">
+            <button id="btnBuy" class="btn btn-primary" type="submit" aria-disabled title="Enter an amount to enable">🛒 BUY</button>
+          </form>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px;">
             <p style="margin:0 0 8px;">🎯 <strong>OTC Rate:</strong> $0.000001 per $RAD</p>
@@ -212,10 +215,12 @@
   const usdInput      = document.getElementById('usdInput');
   const xrpConversion = document.getElementById('xrpConversion');
   const radAmount     = document.getElementById('radAmount');
-  const btnBuy        = document.getElementById('btnBuy');
   const spotLine      = document.getElementById('spotLine');
   const liveBadge     = document.getElementById('liveStatus');
   const liveText      = document.getElementById('liveText');
+
+  const buyForm  = document.getElementById('buyForm');
+  const usdHidden= document.getElementById('usdHidden');
 
   function setBadge(state, text){
     liveBadge.classList.remove("live","down");
@@ -224,19 +229,18 @@
   }
 
   function disableBuy(msg){
-    btnBuy.setAttribute("aria-disabled","");
-    btnBuy.removeAttribute("href");
-    btnBuy.removeAttribute("target");
-    btnBuy.title = msg || "Enter an amount to enable";
+    const btn = buyForm.querySelector('button[type="submit"]');
+    btn.setAttribute("aria-disabled", "");
+    btn.title = msg || "Enter an amount to enable";
+    btn.disabled = true;
+    usdHidden.value = "";
   }
   function enableBuyForUSD(usd){
-    // IMPORTANT: no cache-buster or extra params. Backend will 302 → Xumm Detect with ?uri=...
-    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}`;
-    btnBuy.removeAttribute("aria-disabled");
-    btnBuy.removeAttribute("target");   // same-tab improves Detect handoff
-    btnBuy.rel = "noopener";
-    btnBuy.href = url;
-    btnBuy.title = "Open in Xaman";
+    const btn = buyForm.querySelector('button[type="submit"]');
+    btn.removeAttribute("aria-disabled");
+    btn.title = "Open in Xaman";
+    btn.disabled = false;
+    usdHidden.value = usd.toFixed(2);
   }
 
   async function refreshStatus(){
@@ -308,14 +312,14 @@
     }
 
     try{
-      const usdPerXrp = await getLockedPrice(); // ≈ 0.32
+      const usdPerXrp = await getLockedPrice(); // e.g. 0.33
       updateSpotBar(usdPerXrp);
 
-      const xrpNeeded = usd / usdPerXrp;       // e.g. $1 / $0.32 ≈ 3.12 XRP
+      const xrpNeeded = usd / usdPerXrp;
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      enableBuyForUSD(usd); // backend generates the Xumm payload & 302s to Detect
+      enableBuyForUSD(usd);
     }catch(e){
       console.error(e);
       xrpConversion.textContent = '⚠️ Could not fetch price';
@@ -325,7 +329,15 @@
   }
 
   usdInput.addEventListener('input', handleUSDInput);
-  btnBuy.addEventListener('click', (e)=>{ if (btnBuy.hasAttribute('aria-disabled')) e.preventDefault(); });
+
+  // Add a cache-buster to the form on submit; full-page nav is most reliable for Xumm Detect
+  buyForm.addEventListener('submit', (e) => {
+    const btn = buyForm.querySelector('button[type="submit"]');
+    if (btn.disabled) { e.preventDefault(); return; }
+    // inject cache buster `_=` each submit
+    const cacheInput = buyForm.querySelector('input[name="_"]');
+    cacheInput.value = Date.now().toString();
+  });
 
   (async function initPrice(){
     refreshStatus();
