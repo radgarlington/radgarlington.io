@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <!-- Prevent iOS zoom + ensure safe viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
   <title>RAD GARLINGTON — $RAD</title>
 
   <!-- Favicons / PWA -->
@@ -96,6 +97,8 @@
     .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
+
+    .hint { font-size:.85rem; color:#475569; margin-top:8px; }
   </style>
 </head>
 <body>
@@ -158,18 +161,21 @@
             Set $RAD Trustline
           </a>
 
-          <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:14px;">Enter amount in USD</label>
-          <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
-                 autocomplete="off" style="padding:10px; font-size:16px; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
+          <!--
+            CRITICAL: simple GET form. This guarantees a top-level navigation
+            straight to your backend, which 302s → Detect → Signer.
+            No JS is required to make BUY work.
+          -->
+          <form id="buyForm" action="https://api.radgarlington.io/api/deeplink" method="GET" target="_self" style="margin-top:16px;">
+            <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:14px;">Enter amount in USD</label>
+            <input id="usdInput" name="usd" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
+                   autocomplete="off" style="padding:10px; font-size:16px; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" required />
 
-          <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
-          <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
+            <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
+            <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
-          <!-- RELIABLE BUY: plain HTML form doing top-level navigation -->
-          <form id="buyForm" action="https://api.radgarlington.io/api/deeplink" method="GET" style="margin-top:14px;">
-            <input type="hidden" name="usd" id="usdHidden" value="">
-            <input type="hidden" name="_" value="">
-            <button id="btnBuy" class="btn btn-primary" type="submit" aria-disabled title="Enter an amount to enable">🛒 BUY</button>
+            <button type="submit" id="btnBuy" class="btn btn-primary" style="margin-top:14px;">🛒 BUY</button>
+            <div class="hint">If the wallet opens to “home”, open this page in your phone’s system browser (Safari / Chrome) and try again.</div>
           </form>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px;">
@@ -208,142 +214,96 @@
     <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
   </div>
 
-<script>
-  const API = "https://api.radgarlington.io";
-  const MIN_USD = 1;
+  <!-- Optional enhancement: live price & preview. If this fails, BUY still works via the form. -->
+  <script>
+    const API = "https://api.radgarlington.io";
+    const MIN_USD = 1;
 
-  const usdInput      = document.getElementById('usdInput');
-  const xrpConversion = document.getElementById('xrpConversion');
-  const radAmount     = document.getElementById('radAmount');
-  const spotLine      = document.getElementById('spotLine');
-  const liveBadge     = document.getElementById('liveStatus');
-  const liveText      = document.getElementById('liveText');
+    const usdInput      = document.getElementById('usdInput');
+    const xrpConversion = document.getElementById('xrpConversion');
+    const radAmount     = document.getElementById('radAmount');
+    const spotLine      = document.getElementById('spotLine');
+    const liveBadge     = document.getElementById('liveStatus');
+    const liveText      = document.getElementById('liveText');
 
-  const buyForm  = document.getElementById('buyForm');
-  const usdHidden= document.getElementById('usdHidden');
+    function setBadge(state, text){
+      liveBadge.classList.remove("live","down");
+      liveBadge.classList.add(state);
+      liveText.textContent = text;
+    }
 
-  function setBadge(state, text){
-    liveBadge.classList.remove("live","down");
-    liveBadge.classList.add(state);
-    liveText.textContent = text;
-  }
+    async function refreshStatus(){
+      try{
+        const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+        const j = await r.json();
+        if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
+      }catch{}
+      try{
+        const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+        const pj = await rp.json();
+        if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
+      }catch{}
+      setBadge("down","OFFLINE");
+    }
+    refreshStatus(); setInterval(refreshStatus, 10000);
 
-  function disableBuy(msg){
-    const btn = buyForm.querySelector('button[type="submit"]');
-    btn.setAttribute("aria-disabled", "");
-    btn.title = msg || "Enter an amount to enable";
-    btn.disabled = true;
-    usdHidden.value = "";
-  }
-  function enableBuyForUSD(usd){
-    const btn = buyForm.querySelector('button[type="submit"]');
-    btn.removeAttribute("aria-disabled");
-    btn.title = "Open in Xaman";
-    btn.disabled = false;
-    usdHidden.value = usd.toFixed(2);
-  }
+    function updateSpotBar(usdPerXrp){
+      const rate = Number(usdPerXrp||0).toFixed(4);
+      spotLine.innerHTML = `
+        <span>1M $RAD = $1 USD</span>
+        <span class="sep">·</span>
+        <span>Powered by XRP</span>
+        <span class="sep">·</span>
+        <span class="spot-rate">Live: $${rate}/XRP</span>
+      `;
+    }
 
-  async function refreshStatus(){
-    try{
-      const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+    async function fetchUsdPerXrp(){
+      const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
       const j = await r.json();
-      if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
-    }catch{}
-    try{
-      const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-      const pj = await rp.json();
-      if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
-    }catch{}
-    setBadge("down","OFFLINE");
-  }
-  refreshStatus(); setInterval(refreshStatus, 10000);
-
-  const priceState = { usdPerXrp: NaN, locked: false };
-  const unlocked = new URLSearchParams(location.search).has('unlock');
-
-  function updateSpotBar(usdPerXrp){
-    const rate = Number(usdPerXrp||0).toFixed(4);
-    spotLine.innerHTML = `
-      <span>1M $RAD = $1 USD</span>
-      <span class="sep">·</span>
-      <span>Powered by XRP</span>
-      <span class="sep">·</span>
-      <span class="spot-rate">Live: $${rate}/XRP</span>
-    `;
-  }
-
-  async function fetchUsdPerXrp(){
-    const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-    const j = await r.json();
-    if (!j.ok) throw new Error('price not ok');
-    const v = Number(j.xrp_usd);
-    if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
-    return v;
-  }
-
-  async function getLockedPrice(){
-    if (priceState.locked && Number.isFinite(priceState.usdPerXrp)) return priceState.usdPerXrp;
-    const v = await fetchUsdPerXrp();
-    priceState.usdPerXrp = v;
-    if (!unlocked) priceState.locked = true;
-    return v;
-  }
-
-  const fmt = (n,d=6)=>Number(n).toFixed(d);
-
-  function parseUSD(raw){
-    if (raw == null) return NaN;
-    const cleaned = String(raw).trim().replace(',', '.').replace(/[^\d.]/g,'');
-    const parts = cleaned.split('.');
-    const norm = parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : cleaned;
-    const n = Number(norm);
-    return Number.isFinite(n) ? n : NaN;
-  }
-
-  async function handleUSDInput(){
-    const usd = parseUSD(usdInput.value);
-    xrpConversion.textContent = '🔁 XRP Required: 0';
-    radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-    disableBuy("Enter an amount to enable");
-
-    if (!Number.isFinite(usd) || usd < MIN_USD){
-      if (usd>0) xrpConversion.textContent='❌ Minimum $1';
-      return;
+      if (!j.ok) throw new Error('price not ok');
+      const v = Number(j.xrp_usd);
+      if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
+      return v;
     }
 
-    try{
-      const usdPerXrp = await getLockedPrice(); // e.g. 0.33
-      updateSpotBar(usdPerXrp);
+    const fmt = (n,d=6)=>Number(n).toFixed(d);
+    function parseUSD(raw){
+      if (raw == null) return NaN;
+      const cleaned = String(raw).trim().replace(',', '.').replace(/[^\d.]/g,'');
+      const parts = cleaned.split('.');
+      const norm = parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : cleaned;
+      const n = Number(norm);
+      return Number.isFinite(n) ? n : NaN;
+    }
 
-      const xrpNeeded = usd / usdPerXrp;
-      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
-      radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
-
-      enableBuyForUSD(usd);
-    }catch(e){
-      console.error(e);
-      xrpConversion.textContent = '⚠️ Could not fetch price';
+    async function handleUSDInput(){
+      const usd = parseUSD(usdInput.value);
+      xrpConversion.textContent = '🔁 XRP Required: 0';
       radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-      disableBuy("Could not fetch price");
+
+      if (!Number.isFinite(usd) || usd < MIN_USD){
+        if (usd>0) xrpConversion.textContent='❌ Minimum $1';
+        return;
+      }
+
+      try{
+        const usdPerXrp = await fetchUsdPerXrp(); // e.g. 0.33
+        updateSpotBar(usdPerXrp);
+        const xrpNeeded = usd / usdPerXrp;       // $1 / $0.33 ≈ 3.03 XRP
+        xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
+        radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
+      }catch{
+        xrpConversion.textContent = '⚠️ Could not fetch price';
+        radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+      }
     }
-  }
+    usdInput.addEventListener('input', handleUSDInput);
 
-  usdInput.addEventListener('input', handleUSDInput);
-
-  // Add a cache-buster to the form on submit; full-page nav is most reliable for Xumm Detect
-  buyForm.addEventListener('submit', (e) => {
-    const btn = buyForm.querySelector('button[type="submit"]');
-    if (btn.disabled) { e.preventDefault(); return; }
-    // inject cache buster `_=` each submit
-    const cacheInput = buyForm.querySelector('input[name="_"]');
-    cacheInput.value = Date.now().toString();
-  });
-
-  (async function initPrice(){
-    refreshStatus();
-    try{ updateSpotBar(await getLockedPrice()); }catch{ updateSpotBar(0); }
-  })();
-</script>
-
+    (async function initPrice(){
+      refreshStatus();
+      try{ updateSpotBar(await fetchUsdPerXrp()); }catch{ updateSpotBar(0); }
+    })();
+  </script>
 </body>
 </html>
