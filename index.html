@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="format-detection" content="telephone=no" />
   <title>RAD GARLINGTON — $RAD</title>
 
   <!-- Favicons / PWA -->
@@ -65,7 +64,6 @@
     .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
     .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; }
 
-    /* Price line stays compact; rate on its own line on mobile */
     .price-line{
       display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
       gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
@@ -87,7 +85,7 @@
       transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
     .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
     .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
-    .btn[aria-disabled="true"]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); pointer-events:none; }
+    .btn[aria-disabled]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); pointer-events:none; }
     .btn-primary{ background:var(--blue); color:#fff; }
     .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
       font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); margin-top:4px; }
@@ -168,8 +166,7 @@
           <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
-            <!-- BUY: aria-disabled is a boolean here -->
-            <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled="true" title="Enter an amount to enable">🛒 BUY</a>
+            <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled title="Enter an amount to enable">🛒 BUY</a>
           </div>
 
           <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px;">
@@ -209,147 +206,134 @@
   </div>
 
 <script>
-  // ------- CONFIG -------
-  const API = "https://api.radgarlington.io";
-  const MIN_USD = 1;
+const API = "https://api.radgarlington.io";
+const MIN_USD = 1;
 
-  // ------- DOM -------
-  const usdInput      = document.getElementById('usdInput');
-  const xrpConversion = document.getElementById('xrpConversion');
-  const radAmount     = document.getElementById('radAmount');
-  const btnBuy        = document.getElementById('btnBuy');
-  const spotLine      = document.getElementById('spotLine');
-  const liveBadge     = document.getElementById('liveStatus');
-  const liveText      = document.getElementById('liveText');
+const usdInput      = document.getElementById('usdInput');
+const xrpConversion = document.getElementById('xrpConversion');
+const radAmount     = document.getElementById('radAmount');
+const btnBuy        = document.getElementById('btnBuy');
+const spotLine      = document.getElementById('spotLine');
+const liveBadge     = document.getElementById('liveStatus');
+const liveText      = document.getElementById('liveText');
 
-  // ------- Status badge -------
-  function setBadge(state, text){
-    liveBadge.classList.remove("live","down");
-    liveBadge.classList.add(state);
-    liveText.textContent = text;
-  }
-  async function refreshStatus(){
-    try{
-      const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-      const j = await r.json();
-      if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
-    }catch{}
-    try{
-      const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-      const pj = await rp.json();
-      if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
-    }catch{}
-    setBadge("down","OFFLINE");
-  }
-  refreshStatus(); setInterval(refreshStatus, 10000);
-
-  // ------- Price (compact display only) -------
-  const priceState = { usdPerXrp: NaN, locked: false };
-  const unlocked = new URLSearchParams(location.search).has('unlock');
-
-  function updateSpotBar(usdPerXrp){
-    const rate = Number(usdPerXrp||0).toFixed(4);
-    spotLine.innerHTML = `
-      <span>1M $RAD = $1 USD</span>
-      <span class="sep">·</span>
-      <span>Powered by XRP</span>
-      <span class="sep">·</span>
-      <span class="spot-rate">Live: $${rate}/XRP</span>
-    `;
-  }
-  async function fetchUsdPerXrp(){
-    const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+// ----- status badge -----
+function setBadge(state, text){
+  liveBadge.classList.remove("live","down");
+  liveBadge.classList.add(state);
+  liveText.textContent = text;
+}
+async function refreshStatus(){
+  try{
+    const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
     const j = await r.json();
-    if (!j.ok) throw new Error('price not ok');
-    const v = Number(j.xrp_usd);
-    if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
-    return v;
-  }
-  async function getLockedPrice(){
-    if (priceState.locked && Number.isFinite(priceState.usdPerXrp)) return priceState.usdPerXrp;
-    const v = await fetchUsdPerXrp();
-    priceState.usdPerXrp = v;
-    if (!unlocked) priceState.locked = true;
-    return v;
-  }
-  const fmt = (n,d=6)=>Number(n).toFixed(d);
+    if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
+  }catch{}
+  try{
+    const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+    const pj = await rp.json();
+    if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
+  }catch{}
+  setBadge("down","OFFLINE");
+}
+refreshStatus(); setInterval(refreshStatus, 10000);
 
-  // ------- BUY enable/disable -------
-  function disableBuy(msg){
-    btnBuy.setAttribute("aria-disabled","true");
-    btnBuy.href = "#";
-    btnBuy.title = msg || "Enter an amount to enable";
-    btnBuy.removeAttribute("target");
-  }
-  function enableBuyForUSD(usd){
-    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
-    btnBuy.setAttribute("aria-disabled","false");
-    btnBuy.href = url;
-    btnBuy.title = "Open in Xaman";
-    btnBuy.removeAttribute("target"); // same-tab handoff for Detect
-    btnBuy.rel = "noopener";
-  }
+// ----- price display (USD per XRP) -----
+const priceState = { usdPerXrp: NaN, locked: false };
+const unlocked = new URLSearchParams(location.search).has('unlock');
 
-  // ------- Input handling -------
-  function parseUSD(raw){
-    if (raw == null) return NaN;
-    const cleaned = String(raw).trim().replace(',', '.').replace(/[^\d.]/g,'');
-    const parts = cleaned.split('.');
-    const norm = parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : cleaned;
-    const n = Number(norm);
-    return Number.isFinite(n) ? n : NaN;
-  }
+function updateSpotBar(usdPerXrp){
+  const rate = Number(usdPerXrp||0).toFixed(4);
+  spotLine.innerHTML = `
+    <span>1M $RAD = $1 USD</span>
+    <span class="sep">·</span>
+    <span>Powered by XRP</span>
+    <span class="sep">·</span>
+    <span class="spot-rate">Live: $${rate}/XRP</span>
+  `;
+}
+async function fetchUsdPerXrp(){
+  const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+  const j = await r.json();
+  if (!j.ok) throw new Error('price not ok');
+  const v = Number(j.xrp_usd);
+  if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
+  return v;
+}
+async function getLockedPrice(){
+  if (priceState.locked && Number.isFinite(priceState.usdPerXrp)) return priceState.usdPerXrp;
+  const v = await fetchUsdPerXrp();
+  priceState.usdPerXrp = v;
+  if (!unlocked) priceState.locked = true;
+  return v;
+}
+const fmt = (n,d=6)=>Number(n).toFixed(d);
 
-  async function handleUSDInput(){
-    const usd = parseUSD(usdInput.value);
-    xrpConversion.textContent = '🔁 XRP Required: 0';
-    radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-    disableBuy("Enter an amount to enable");
+// ----- buy button enable/disable -----
+function disableBuy(msg){
+  btnBuy.setAttribute("aria-disabled","");
+  btnBuy.removeAttribute("href");
+  btnBuy.removeAttribute("target");
+  btnBuy.title = msg || "Enter an amount to enable";
+}
+function enableBuyForUSD(usd){
+  // always point at backend redirect which returns 302 to Detect?uri=...
+  const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+  btnBuy.removeAttribute("aria-disabled");
+  btnBuy.removeAttribute("target"); // same-tab so Detect can handle
+  btnBuy.rel = "noopener";
+  btnBuy.href = url;
+  btnBuy.title = "Open in Xaman";
+}
 
-    if (!Number.isFinite(usd) || usd < MIN_USD){
-      if (usd>0) xrpConversion.textContent='❌ Minimum $1';
-      return;
-    }
-
-    try{
-      const usdPerXrp = await getLockedPrice();
-      updateSpotBar(usdPerXrp);
-
-      const xrpNeeded = usd / usdPerXrp;
-      xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
-      radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
-
-      enableBuyForUSD(usd);
-    }catch{
-      xrpConversion.textContent = '⚠️ Could not fetch price';
-      radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
-      disableBuy("Could not fetch price");
-    }
-  }
-
-  usdInput.addEventListener('input', handleUSDInput);
-
-  // Block click when disabled; when enabled, force same-tab nav (helps some mobile browsers)
-  btnBuy.addEventListener('click', (e)=>{
-    if (btnBuy.getAttribute('aria-disabled') === 'true'){
-      e.preventDefault();
-      return;
-    }
-    // force same-tab navigation for reliable Detect → signer flow
-    e.preventDefault();
-    const url = btnBuy.href;
-    try { window.location.href = url; } catch {}
-    setTimeout(()=>{ try { window.location.replace(url); } catch {} }, 250);
-  });
-
-  // Prime compact spot line once
-  (async function initPrice(){
-    refreshStatus();
-    try{ updateSpotBar(await getLockedPrice()); }catch{ updateSpotBar(0); }
-  })();
-
-  // Start disabled
+// ----- input handling -----
+function parseUSD(raw){
+  if (raw == null) return NaN;
+  const cleaned = String(raw).trim().replace(',', '.').replace(/[^\d.]/g,'');
+  const parts = cleaned.split('.');
+  const norm = parts.length > 2 ? parts[0] + '.' + parts.slice(1).join('') : cleaned;
+  const n = Number(norm);
+  return Number.isFinite(n) ? n : NaN;
+}
+async function handleUSDInput(){
+  const usd = parseUSD(usdInput.value);
+  xrpConversion.textContent = '🔁 XRP Required: 0';
+  radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
   disableBuy("Enter an amount to enable");
+
+  if (!Number.isFinite(usd) || usd < MIN_USD){
+    if (usd>0) xrpConversion.textContent='❌ Minimum $1';
+    return;
+  }
+
+  try{
+    const usdPerXrp = await getLockedPrice(); // ~0.33
+    updateSpotBar(usdPerXrp);
+
+    const xrpNeeded = usd / usdPerXrp;
+    xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
+    radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
+
+    enableBuyForUSD(usd);
+  }catch(e){
+    console.error(e);
+    xrpConversion.textContent = '⚠️ Could not fetch price';
+    radAmount.textContent = '🪙 You’ll receive: 0 $RAD';
+    disableBuy("Could not fetch price");
+  }
+}
+usdInput.addEventListener('input', handleUSDInput);
+
+// keep disabled click from navigating
+btnBuy.addEventListener('click', (e)=>{
+  if (btnBuy.hasAttribute('aria-disabled')) e.preventDefault();
+});
+
+// init
+(async function initPrice(){
+  refreshStatus();
+  try{ updateSpotBar(await getLockedPrice()); }catch{ updateSpotBar(0); }
+})();
 </script>
 
 </body>
