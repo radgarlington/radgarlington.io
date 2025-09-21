@@ -32,53 +32,91 @@
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
   <style>
-    *{box-sizing:border-box}html,body{height:100%}
-    :root{--bg:#fff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;--card:#f4f7fb;--ring:rgba(10,116,208,.22)}
-    html{-webkit-text-size-adjust:100%}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
-    main{flex:1 0 auto}p{margin:0 0 10px}
-    .hero{text-align:center;padding:6vh 5vw 2vh;background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
-    .hero-img{width:55%;max-width:320px;height:auto;margin:0 auto 14px;display:block}
-    h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
-    .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px;padding:0 10px}
-    .social{text-align:center;margin-top:14px}
-    .social a{display:inline-block;margin:0 8px;text-decoration:none;line-height:0;vertical-align:middle}
-    .social img{width:28px;height:28px;display:inline-block}
-    .verify{margin-top:8px;font-size:.95rem;text-align:center}
-    .verify a{color:var(--blue);font-weight:bold;text-decoration:none;display:inline-block;margin:0 8px}
-    .utility{text-align:center;padding:4vh 5vw 6vh;background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
-    .utility h2{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
-    .utility p{font-size:clamp(1rem,4vw,1.2rem);color:var(--muted);margin:6px 0}
-    .otc-section{background:var(--card);color:var(--ink);padding:6vh 5vw;overflow-x:hidden}
-    .otc-wrap{max-width:900px;margin:0 auto;text-align:center;padding:0 12px}
-    .otc-head{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-    .otc-section h2{font-size:clamp(1.5rem,5vw,2rem);margin:0}
-    .price-line{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.5rem;padding:10px 14px;border-radius:14px;background:#fff;color:var(--blue);border:2px solid var(--blue);font-weight:800;font-size:clamp(.95rem,3.6vw,1.1rem);letter-spacing:.2px;box-shadow:0 0 0 2px #fff inset,0 10px 22px rgba(2,32,71,.10);margin:6px auto 18px;max-width:100%}
-    .price-line .sep{opacity:.6}.price-line .spot-rate{flex-basis:100%;text-align:center}
-    .status-badge{display:inline-flex;align-items:center;gap:.5rem;font:600 12px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial;padding:.35rem .6rem;border-radius:999px;border:1px solid var(--ring);background:#fff;color:#0b3d78;user-select:none}
-    .status-dot{width:.5rem;height:.5rem;border-radius:50%;background:#6aa1ea}
-    .status-badge.live{background:#e8f2ff}.status-badge.down{background:#f0f6ff}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:12px 18px;border-radius:10px;text-decoration:none;font:600 16px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;box-shadow:0 6px 20px rgba(2,32,71,.12);transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease;cursor:pointer;border:none}
-    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(2,32,71,.16)}
-    .btn:active{transform:translateY(0);box-shadow:0 4px 14px rgba(2,32,71,.10)}
-    .btn[aria-disabled]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:0 4px 14px rgba(2,32,71,.08);pointer-events:none}
-    .btn-primary{background:var(--blue);color:#fff}
-    .btn-trustline{display:inline-block;padding:12px 18px;border-radius:10px;background:var(--blue);color:#fff;text-decoration:none;font:600 16px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial;box-shadow:0 6px 20px rgba(2,32,71,.14);margin-top:4px}
-    input,select,textarea{font-size:16px}
-    #usdInput{width:100%;max-width:320px;-webkit-appearance:none}
-    .card{width:100%;max-width:520px;margin:0 auto;background:#fff;border:3px solid var(--blue);border-radius:12px;box-shadow:0 6px 20px rgba(2,32,71,0.08);padding:20px;text-align:center;color:var(--ink)}
-    .footer{text-align:center;padding:18px 10px;font-size:.85rem;color:var(--muted);margin-top:auto}
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    :root{ --bg:#ffffff; --ink:#0f172a; --muted:#475569; --blue:#0A74D0; --card:#f4f7fb; --ring:rgba(10,116,208,.22); }
+    html { -webkit-text-size-adjust: 100%; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+    main { flex: 1 0 auto; }
+    p { margin:0 0 10px; }
+
+    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
+    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
+    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
+
+    .social { text-align:center; margin-top:14px; }
+    .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; vertical-align:middle; }
+    .social img{ width:28px; height:28px; display:inline-block; }
+
+    .verify { margin-top:8px; font-size:0.95rem; text-align:center; }
+    .verify a{ color:var(--blue); font-weight:bold; text-decoration:none; display:inline-block; margin:0 8px; }
+
+    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
+    .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; }
+    .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
+
+    .otc-section { background: var(--card); color: var(--ink); padding: 6vh 5vw; overflow-x:hidden; }
+    .otc-wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 12px; }
+    .otc-head { display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .otc-section h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0; }
+
+    .price-line{
+      display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+      gap:.5rem; padding:10px 14px; border-radius:14px; background:#fff; color:var(--blue);
+      border:2px solid var(--blue); font-weight:800; font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+      letter-spacing:.2px; box-shadow:0 0 0 2px #fff inset, 0 10px 22px rgba(2,32,71,.10);
+      margin:6px auto 18px; max-width:100%; white-space:normal; word-break:keep-all;
+    }
+    .price-line .sep{ opacity:.6 }
+    .price-line .spot-rate{ flex-basis:100%; text-align:center; }
+
+    .status-badge { display:inline-flex; align-items:center; gap:.5rem; font:600 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      padding:.35rem .6rem; border-radius:999px; border:1px solid var(--ring); background:#fff; color:#0b3d78; user-select:none; }
+    .status-dot{ width:.5rem; height:.5rem; border-radius:50%; background:#6aa1ea; }
+    .status-badge.live  { background:#e8f2ff; }
+    .status-badge.down  { background:#f0f6ff; }
+
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:12px 18px; border-radius:10px; text-decoration:none;
+      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; box-shadow:0 6px 20px rgba(2,32,71,.12);
+      transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
+    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
+    .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
+    .btn[aria-disabled]{ opacity:.55; cursor:not-allowed; transform:none; box-shadow:0 4px 14px rgba(2,32,71,.08); pointer-events:none; }
+    .btn-primary{ background:var(--blue); color:#fff; }
+    .btn-trustline{ display:inline-block; padding:12px 18px; border-radius:10px; background:var(--blue); color:#fff; text-decoration:none;
+      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial; box-shadow:0 6px 20px rgba(2,32,71,.14); margin-top:4px; }
+
+    input, select, textarea { font-size:16px; }
+    #usdInput { width:100%; max-width:320px; -webkit-appearance:none; }
+
+    .card { width:100%; max-width:520px; margin:0 auto; background:#fff; border:3px solid var(--blue); border-radius:12px; box-shadow:0 6px 20px rgba(2,32,71,0.08); padding:20px; text-align:center; color:var(--ink); }
+
+    .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
+
+    /* Legal disclaimer small & centered */
+    .legal-wrap{ max-width:900px; margin: 10px auto 24px; padding:0 12px; }
+    .legal-title{ text-align:center; font-size:.9rem; font-weight:700; margin:10px 0 6px; }
+    .legal{
+      text-align:center;
+      font-size:.80rem;
+      line-height:1.45;
+      color:#5b6b7e;
+    }
   </style>
 </head>
 <body>
+
   <main>
     <div class="hero">
       <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
       <h1>RAD GARLINGTON — $RAD</h1>
       <p class="tagline">The Protocol’s most loyal believer</p>
-      <p style="text-align:center;margin-top:8px;">
-        <strong>Token:</strong> <span style="color:#0A74D0;font-size:1.2em;font-weight:bold;">$RAD</span>
-        &nbsp;—&nbsp;<strong>Issuer:</strong>
+      <p style="text-align:center; margin-top:8px;">
+        <strong>Token:</strong>
+        <span style="color:#0A74D0; font-size:1.2em; font-weight:bold;">$RAD</span>
+        &nbsp;—&nbsp;
+        <strong>Issuer:</strong>
         <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
       </p>
     </div>
@@ -109,35 +147,42 @@
         <div class="otc-head">
           <h2>$RAD — OTC PRE-SALE</h2>
           <div id="liveStatus" class="status-badge down" title="OTC connectivity">
-            <span class="status-dot"></span><span id="liveText">OFFLINE</span>
+            <span class="status-dot"></span>
+            <span id="liveText">OFFLINE</span>
           </div>
         </div>
 
         <div class="price-line" id="spotLine">
-          <span>1M $RAD = $1 USD</span><span class="sep">·</span><span>Powered by XRP</span>
-          <span class="sep">·</span><span class="spot-rate">Live: $—/XRP</span>
+          <span>1M $RAD = $1 USD</span>
+          <span class="sep">·</span>
+          <span>Powered by XRP</span>
+          <span class="sep">·</span>
+          <span class="spot-rate">Live: $—/XRP</span>
         </div>
 
         <div class="card">
-          <a class="btn-trustline" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener">Set $RAD Trustline</a>
+          <a class="btn-trustline" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener">
+            Set $RAD Trustline
+          </a>
 
-          <label for="usdInput" style="font-weight:bold;display:block;margin-bottom:10px;margin-top:14px;">Enter amount in USD</label>
-          <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD" autocomplete="off" style="padding:10px;font-size:16px;width:100%;max-width:320px;border:2px solid #cbd5e1;border-radius:8px;" />
+          <label for="usdInput" style="font-weight:bold; display:block; margin-bottom:10px; margin-top:14px;">Enter amount in USD</label>
+          <input id="usdInput" type="number" inputmode="decimal" min="1" step="0.01" placeholder="1.00 USD"
+                 autocomplete="off" style="padding:10px; font-size:16px; width:100%; max-width:320px; border:2px solid #cbd5e1; border-radius:8px;" />
 
-          <div id="xrpConversion" style="margin-top:20px;font-size:1rem;">🔁 XRP Required: 0</div>
-          <div id="radAmount" style="margin-top:10px;font-size:1.1rem;font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
+          <div id="xrpConversion" style="margin-top:20px; font-size:1rem;">🔁 XRP Required: 0</div>
+          <div id="radAmount" style="margin-top:10px; font-size:1.1rem; font-weight:bold;">🪙 You’ll receive: 0 $RAD</div>
 
           <div style="margin-top:14px;">
             <a id="btnBuy" class="btn btn-primary" href="#" aria-disabled title="Enter an amount to enable">🛒 BUY</a>
           </div>
 
-          <div style="margin-top:30px;font-size:.95rem;color:var(--ink);background:#f7faff;border:2px solid #d7e7ff;padding:16px;border-radius:10px;">
+          <div style="margin-top:30px; font-size:0.95rem; color:var(--ink); background:#f7faff; border:2px solid #d7e7ff; padding:16px; border-radius:10px;">
             <p style="margin:0 0 8px;">🎯 <strong>OTC Rate:</strong> $0.000001 per $RAD</p>
             <p style="margin:0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
             <p style="margin:0;">✅ OTC buyers in early — 3× value at launch</p>
           </div>
 
-          <p style="margin-top:12px;font-size:.82rem;color:#475569;">
+          <p style="margin-top:12px; font-size:0.82rem; color:#475569;">
             $RAD is a meme token on XRPL. This is not financial advice. Plans may change based on treasury, market, or protocol decisions
           </p>
         </div>
@@ -147,27 +192,34 @@
       </div>
     </div>
 
-    <div class="litepaper-cta" style="text-align:center;margin:16px 0 6px;">
+    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
       <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener">📄 Read the Lite Paper</a>
     </div>
 
-    <p class="disclaimer">
-      🛡 Legal Disclaimer<br><br>
-      $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
-      It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
-      All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
-    </p>
+    <div class="legal-wrap">
+      <div class="legal-title">🛡 Legal Disclaimer</div>
+      <div class="legal">
+        $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
+        It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies,
+        individuals, trademarks, or intellectual property. All references to “Rad,” “Garlington,” or related terminology are part
+        of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple,
+        Brad Garlinghouse, or any official XRP-related entities.
+      </div>
+    </div>
   </main>
 
   <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold;">𝕏 @radgarlington</a> |
-    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold;">Telegram @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
+    |
+    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
   </div>
 
 <script>
-  const API = "https://api.radgarlington.io";
+  // Prefer same-origin /api (no CORS). Fall back to api.radgarlington.io if needed.
+  const API_PRIMARY   = '/api';
+  const API_FALLBACK  = 'https://api.radgarlington.io';
   const MIN_USD = 1;
 
   const usdInput      = document.getElementById('usdInput');
@@ -187,79 +239,46 @@
   function disableBuy(msg){
     btnBuy.setAttribute("aria-disabled","");
     btnBuy.removeAttribute("href");
-    btnBuy.onclick = (e)=>e.preventDefault();
     btnBuy.title = msg || "Enter an amount to enable";
   }
-
-  function openXummDeepLink(uuid){
-    const appUrl = `xumm://sign/${uuid}`;
-    // iOS: use hidden iframe first (prevents Safari from showing interstitials)
-    const ifr = document.createElement('iframe');
-    ifr.style.display = 'none';
-    ifr.src = appUrl;
-    document.body.appendChild(ifr);
-
-    // Fallback to your /go page if the app doesn't open
-    const fallback = `${API}/go/${uuid}`;
-    const t = setTimeout(()=>{ window.location.href = fallback; }, 1200);
-
-    // Also try a direct navigation (works well on Android/Chrome)
-    try { window.location.href = appUrl; } catch(_) {}
-    // Cleanup iframe later
-    setTimeout(()=>{ try{ document.body.removeChild(ifr); }catch(_){} }, 4000);
+  function enableBuyForUSD(usd){
+    // Use same-origin /api to avoid CORS; backend 302 → /go/<UUID> on api host via CF
+    const url = `${API_PRIMARY}/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+    btnBuy.removeAttribute("aria-disabled");
+    btnBuy.removeAttribute("target");
+    btnBuy.rel = "noopener";
+    btnBuy.href = url;
+    btnBuy.title = "Open in Xaman";
   }
 
-  async function enableBuyForUSD(usd){
-    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+  // Small helper: fetch JSON with timeout
+  function fetchJSON(url, opts={}, timeoutMs=4500){
+    return new Promise((resolve, reject)=>{
+      const ctl = new AbortController();
+      const t = setTimeout(()=>ctl.abort(), timeoutMs);
+      fetch(url, {cache:'no-store', mode:'cors', credentials:'omit', signal: ctl.signal, ...opts})
+        .then(r=> r.ok ? r.json() : Promise.reject(new Error('HTTP '+r.status)))
+        .then(j=>{ clearTimeout(t); resolve(j); })
+        .catch(err=>{ clearTimeout(t); reject(err); });
+    });
+  }
 
-    btnBuy.removeAttribute("aria-disabled");
-    btnBuy.title = "Open in Xaman";
-    btnBuy.href = "#"; // never let the <a> perform a normal navigation
-    btnBuy.onclick = async (ev)=>{
-      ev.preventDefault(); ev.stopPropagation();
-
-      try{
-        // 1) Ask backend for a fresh payload. We don't need the body, just the final URL or Location.
-        const resp = await fetch(url, { method: "GET", mode: "cors", cache: "no-store", redirect: "follow" });
-
-        // Prefer final URL (after following 302 → /go/<UUID>)
-        let goUrl = resp.url || "";
-
-        // If browser didn’t follow but exposed headers, grab Location
-        if ((!goUrl || !/\/go\//i.test(goUrl)) && resp.headers && resp.headers.get) {
-          const loc = resp.headers.get("Location") || resp.headers.get("location");
-          if (loc) goUrl = loc;
-        }
-
-        // Extract UUID
-        const m = /\/go\/([0-9a-f-]{36})/i.exec(goUrl);
-        if (!m) {
-          alert("Could not start Xaman signing (no UUID). Please try again.");
-          return;
-        }
-        const uuid = m[1];
-
-        // 2) Launch native deep link; fallback to /go/<uuid>
-        openXummDeepLink(uuid);
-      }catch(err){
-        console.error(err);
-        alert("Network error creating the signing request. Please try again.");
-      }
-    };
+  async function queryBoth(path){
+    // Try same-origin first, then fall back to api subdomain
+    try { return await fetchJSON(`${API_PRIMARY}${path}`); } catch(e){}
+    return await fetchJSON(`${API_FALLBACK}${path}`);
   }
 
   async function refreshStatus(){
     try{
-      const r = await fetch(`${API}/api/status?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-      const j = await r.json();
-      if (j && j.ok && j.running) { setBadge("live","LIVE"); return; }
+      const j = await queryBoth('/status?_=' + Date.now());
+      if (j && j.ok && j.running){ setBadge('live','LIVE'); return; }
     }catch{}
     try{
-      const rp = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-      const pj = await rp.json();
-      if (pj && pj.ok && Number(pj.xrp_usd) > 0) { setBadge("live","LIVE"); return; }
+      const pj = await queryBoth('/price?_=' + Date.now());
+      if (pj && pj.ok && Number(pj.xrp_usd) > 0){ setBadge('live','LIVE'); return; }
     }catch{}
-    setBadge("down","OFFLINE");
+    setBadge('down','OFFLINE');
   }
   refreshStatus(); setInterval(refreshStatus, 10000);
 
@@ -278,9 +297,8 @@
   }
 
   async function fetchUsdPerXrp(){
-    const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
-    const j = await r.json();
-    if (!j.ok) throw new Error('price not ok');
+    const j = await queryBoth('/price?_=' + Date.now());
+    if (!j || !j.ok) throw new Error('price not ok');
     const v = Number(j.xrp_usd);
     if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
     return v;
