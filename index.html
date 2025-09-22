@@ -94,15 +94,10 @@
 
     .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
 
-    /* Small, centered legal block */
-    .legal {
-      max-width: 860px;
-      margin: 14px auto 28px;
-      padding: 12px 14px;
-      text-align: center;
-      font-size: 0.80rem;
-      line-height: 1.35;
-      color: #5b6b7f;
+    /* Smaller centered disclaimer */
+    .disclaimer-block{
+      max-width:820px; margin:20px auto 32px; text-align:center;
+      font-size:0.82rem; color:#475569; line-height:1.45;
     }
   </style>
 </head>
@@ -182,18 +177,26 @@
             <p style="margin:0 0 8px;">🚀 <strong>Public Launch Price:</strong> $0.000003 per $RAD</p>
             <p style="margin:0;">✅ OTC buyers in early — 3× value at launch</p>
           </div>
+
+          <p style="margin-top:12px; font-size:0.82rem; color:#475569;">
+            $RAD is a meme token on XRPL. This is not financial advice. Plans may change based on treasury, market, or protocol decisions
+          </p>
         </div>
 
-        <p class="legal">
-          🛡 <strong>Legal Disclaimer</strong><br>
-          $RAD is an independent community-driven token built on the XRP Ledger (XRPL). It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.
-          All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
-        </p>
+        <p class="disclaimer">🔒 OTC is a one-way sale until on-chain launch. No sellbacks or redemptions during the presale phase.</p>
+        <p class="countdown-warning">Countdown to public launch begins once 500B are sold — early OTC holders lock in 3× value at launch.</p>
       </div>
     </div>
 
-    <div style="text-align:center; margin:16px 0 20px;">
+    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
       <a class="btn btn-primary" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener">📄 Read the Lite Paper</a>
+    </div>
+
+    <div class="disclaimer-block">
+      <strong>🛡 Legal Disclaimer</strong><br><br>
+      $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
+      It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
+      All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
     </div>
   </main>
 
@@ -228,14 +231,16 @@
     btnBuy.removeAttribute("href");
     btnBuy.title = msg || "Enter an amount to enable";
   }
-  function enableBuyForUSD(usd){
-    // Backend returns 302 → /go/<uuid> which tries xumm:// on its page
-    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
-    btnBuy.removeAttribute("aria-disabled");
-    btnBuy.href   = url;
-    btnBuy.target = "_self"; // keep same tab -> preserves user gesture for iOS
-    btnBuy.rel    = "noopener";
-    btnBuy.title  = "Open in Xaman";
+
+  function updateSpotBar(usdPerXrp){
+    const rate = Number(usdPerXrp||0).toFixed(4);
+    spotLine.innerHTML = `
+      <span>1M $RAD = $1 USD</span>
+      <span class="sep">·</span>
+      <span>Powered by XRP</span>
+      <span class="sep">·</span>
+      <span class="spot-rate">Live: $${rate}/XRP</span>
+    `;
   }
 
   async function refreshStatus(){
@@ -251,42 +256,18 @@
     }catch{}
     setBadge("down","OFFLINE");
   }
-  refreshStatus(); setInterval(refreshStatus, 12000);
+  refreshStatus(); setInterval(refreshStatus, 10000);
 
   const priceState = { usdPerXrp: NaN, locked: false };
   const unlocked = new URLSearchParams(location.search).has('unlock');
 
-  function updateSpotBar(usdPerXrp){
-    const rate = Number(usdPerXrp||0).toFixed(4);
-    spotLine.innerHTML = `
-      <span>1M $RAD = $1 USD</span>
-      <span class="sep">·</span>
-      <span>Powered by XRP</span>
-      <span class="sep">·</span>
-      <span class="spot-rate">Live: $${rate}/XRP</span>
-    `;
-  }
-
-  // Fetch with small retry/backoff so "Could not fetch price" is rare
   async function fetchUsdPerXrp(){
-    const url = `${API}/api/price?_=${Date.now()}`;
-    let lastErr;
-    for (const delay of [0, 300, 800]) {
-      try {
-        if (delay) await new Promise(r => setTimeout(r, delay));
-        const ctrl = new AbortController();
-        const t = setTimeout(() => ctrl.abort(), 3500);
-        const r = await fetch(url, { cache:'no-store', mode:'cors', signal: ctrl.signal });
-        clearTimeout(t);
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const j = await r.json();
-        if (!j.ok) throw new Error('price not ok');
-        const v = Number(j.xrp_usd);
-        if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
-        return v;
-      } catch (e) { lastErr = e; }
-    }
-    throw lastErr || new Error('price error');
+    const r = await fetch(`${API}/api/price?_=${Date.now()}`, { cache:'no-store', mode:'cors' });
+    const j = await r.json();
+    if (!j.ok) throw new Error('price not ok');
+    const v = Number(j.xrp_usd);
+    if (!Number.isFinite(v) || v <= 0) throw new Error('bad price');
+    return v;
   }
 
   async function getLockedPrice(){
@@ -327,7 +308,9 @@
       xrpConversion.textContent = `🔁 XRP Required: ${fmt(xrpNeeded)} XRP (Rate: $${usdPerXrp.toFixed(4)}/XRP)`;
       radAmount.textContent     = `🪙 You’ll receive: ${(usd * 1_000_000).toLocaleString()} $RAD`;
 
-      enableBuyForUSD(usd);
+      // enable BUY (handled by script click)
+      btnBuy.removeAttribute("aria-disabled");
+      btnBuy.title = "Open in Xaman";
     }catch(e){
       console.error(e);
       xrpConversion.textContent = '⚠️ Could not fetch price';
@@ -337,11 +320,37 @@
   }
 
   usdInput.addEventListener('input', handleUSDInput);
-
   (async function initPrice(){
     refreshStatus();
     try{ updateSpotBar(await getLockedPrice()); }catch{ updateSpotBar(0); }
   })();
+
+  // --- BUY click: create payload, open script-owned tab, auto-close it ---
+  async function openSignSheet(usd) {
+    const url = `${API}/api/deeplink?usd=${encodeURIComponent(usd.toFixed(2))}&_=${Date.now()}`;
+    const res = await fetch(url, { redirect: 'manual', mode: 'cors', cache: 'no-store' });
+    const goUrl = res.headers.get('Location');
+    if (!goUrl) throw new Error('No Location header');
+
+    const w = window.open('about:blank', '_blank', 'noopener,noreferrer');
+    if (!w) { window.location.href = goUrl; return; }
+    w.location = goUrl;
+    setTimeout(() => { try { w.close(); } catch {} }, 4000);
+  }
+
+  btnBuy.addEventListener('click', async (e) => {
+    if (btnBuy.hasAttribute('aria-disabled')) return;
+    e.preventDefault();
+    const raw = parseUSD(usdInput.value);
+    if (!Number.isFinite(raw) || raw < MIN_USD) return;
+    try {
+      await openSignSheet(raw);
+    } catch (err) {
+      console.error(err);
+      // Fallback: navigate current tab if popup blocked
+      window.location.href = `${API}/api/deeplink?usd=${encodeURIComponent(raw.toFixed(2))}`;
+    }
+  });
 </script>
 
 </body>
