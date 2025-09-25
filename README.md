@@ -4,7 +4,7 @@
 
 # RAD GARLINGTON — $RAD
 
-**$RAD – The meme coin with a ledger | The Protocol’s most loyal believer | Powered by XRPL**
+**$RAD — The meme coin with a ledger | The Protocol’s most loyal believer | Powered by XRPL**
 
 [![Website radgarlington.io](https://img.shields.io/website?url=https%3A%2F%2Fradgarlington.io&label=radgarlington.io&color=0A74D0&style=for-the-badge)](https://radgarlington.io)
 
@@ -16,19 +16,19 @@ Telegram: **https://t.me/radgarlington**
 
 ## Token Details
 
-- **Name**: RAD GARLINGTON  
-- **Ticker**: `RAD`  
-- **Network**: XRP Ledger (XRPL)  
-- **Decimals**: 6  
-- **Total Supply**: 1,000,000,000,000 `RAD`  
-- **Currency Hex**: `5241440000000000000000000000000000000000`
+- **Name:** RAD GARLINGTON  
+- **Ticker:** `RAD`  
+- **Network:** XRP Ledger (XRPL)  
+- **Decimals:** 6  
+- **Total Supply:** 1,000,000,000,000 `RAD`  
+- **Currency Hex:** `5241440000000000000000000000000000000000`
 
 ### Mint & Wallets
 
 - **Mint (Issuer)**  
   `rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V`
 
-- **Treasury / OTC**  
+- **Treasury**  
   `rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu`
 
 - **Reserve (Principal)**  
@@ -39,9 +39,9 @@ Telegram: **https://t.me/radgarlington**
 
 ### Allocation
 
-- **70%** — Treasury  
-- **20%** — Reserve  
-- **10%** — Liquidity
+- **70% — Treasury**  
+- **20% — Reserve**  
+- **10% — Liquidity**
 
 ---
 
@@ -53,10 +53,32 @@ Telegram: **https://t.me/radgarlington**
 - **XRPSCAN**  
   https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V
 
+- **Public TOML**  
+  `https://radgarlington.io/.well-known/xrp-ledger.toml`
+
 ---
 
 ## Trustline
 
-Set the trustline with **Xaman**.
+Set a trustline to the issuer on XRPL using Xaman or your preferred XRPL wallet
 
-- Quick link
+- **Issuer:** `rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V`  
+- **Currency:** `RAD`  
+- **Currency Hex:** `5241440000000000000000000000000000000000`  
+- **Decimals:** 6
+
+General steps
+
+1. Open your XRPL wallet and choose **Add asset** or **Set trustline**  
+2. Enter the **Issuer** address and **Currency** (or paste the **Currency Hex**)  
+3. Confirm the trustline and sign the transaction
+
+---
+
+## Notes
+
+- Trading occurs permissionlessly on the XRPL DEX and AMM once liquidity is available  
+- No crossover with unrelated projects  
+- No promises and no roadmaps — signal over noise
+
+---
