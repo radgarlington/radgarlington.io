@@ -37,8 +37,6 @@ li span{color:#475569;font-size:.9rem}
   font-weight:600;
   margin-left:6px;
 }
-.badge.renewal{background:#cbd5e1;color:#0f172a}
-.badge.standard{background:#dbeafe;color:#0A74D0}
 .badge.certified{background:#0A74D0;color:#fff}
 .seal-icon{margin-left:6px;font-size:1rem;color:gold}
 .submit-banner{background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0}
@@ -47,35 +45,16 @@ li span{color:#475569;font-size:.9rem}
 footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
 
 /* Modal styling */
-.modal{
-  display:none;
-  position:fixed;
-  z-index:999;
-  left:0;top:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,.55);
-}
+.modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
 .modal-content{
-  background:#fff;
-  color:#0f172a;
-  margin:8% auto;
-  padding:20px;
-  border:2px solid #d0e3ff;
-  border-radius:10px;
-  width:90%;
-  max-width:500px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  background:#fff;color:#0f172a;margin:8% auto;padding:20px;
+  border:2px solid #d0e3ff;border-radius:10px;width:90%;max-width:500px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25)
 }
-.close{
-  float:right;
-  font-size:1.5rem;
-  cursor:pointer;
-  color:#0A74D0;
-}
+.close{float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0}
 .close:hover{color:#083c80}
 .modal-content a{color:#0A74D0;text-decoration:none;font-weight:bold}
 .checkmark{color:#0A74D0;font-weight:bold}
-.crossmark{color:#a8a8a8;font-weight:bold}
 </style>
 </head>
 <body>
@@ -104,14 +83,15 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 
 <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
 
-<!-- Token Info Modal -->
+<!-- Modal -->
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2 id="modalToken">$RAD</h2>
-    <p><strong>Certificate:</strong> <span id="modalCert">XRPL-589-1</span></p>
+    <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
     <p><strong>Tier:</strong> <span id="modalTier"></span></p>
     <p><strong>Developer:</strong> <span id="modalDev"></span></p>
+    <p><strong>Developer 𝕏:</strong> <a id="modalDevX" href="#" target="_blank"></a></p>
     <p><strong>Doxxed:</strong> <span id="modalDoxxed"></span></p>
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
@@ -129,6 +109,7 @@ const verified=[
     issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",
     website:"https://radgarlington.io",
     dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
     email:"info@radgarlington.io",
     x:"https://x.com/mrcauliman",
     tg:"https://t.me/mrcauliman",
@@ -143,6 +124,7 @@ const verified=[
     issuer:"rBAGMintAddress",
     website:"https://getthebag.io",
     dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
     email:"info@getthebag.io",
     x:"https://x.com/mrcauliman",
     tg:"https://t.me/mrcauliman",
@@ -157,6 +139,7 @@ const verified=[
     issuer:"rWCKMintAddress",
     website:"https://wicktoken.net",
     dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
     email:"info@wicktoken.net",
     x:"https://x.com/mrcauliman",
     tg:"https://t.me/mrcauliman",
@@ -169,7 +152,7 @@ const verified=[
 
 const pending=[{token:"$ZENITH",status:"Pending Verification"}];
 
-// Group alphabetically
+// Alphabetical grouping
 verified.sort((a,b)=>a.token.localeCompare(b.token));
 const grouped={};
 for(const p of verified){
@@ -183,11 +166,10 @@ for(const l of Object.keys(grouped).sort()){
   const div=document.createElement('div');
   div.innerHTML=`<h3>${l}</h3>
   <ul>${grouped[l].map(p=>{
-    const badgeClass=p.tier.toLowerCase();
     const seal=p.certified ? '<span class="seal-icon">🟡</span>' : '';
     return `<li class="entry" data-token='${JSON.stringify(p)}'>
               <span>${p.token} ${seal}</span>
-              <span>${p.cert}<span class="badge ${badgeClass}">${p.tier}</span></span>
+              <span>${p.cert}<span class="badge certified">${p.tier}</span></span>
             </li>`;
   }).join('')}</ul>`;
   ledger.appendChild(div);
@@ -199,21 +181,23 @@ document.getElementById('pendingList').innerHTML=pending.map(p=>`<li>${p.token} 
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 document.addEventListener('click',e=>{
-  if(e.target.classList.contains('entry') || e.target.closest('.entry')){
+  if(e.target.classList.contains('entry')||e.target.closest('.entry')){
     const li=e.target.closest('.entry');
     const data=JSON.parse(li.dataset.token);
     document.getElementById('modalToken').textContent=data.token;
     document.getElementById('modalCert').textContent=data.cert;
     document.getElementById('modalTier').textContent=data.tier;
     document.getElementById('modalDev').textContent=data.dev;
-    document.getElementById('modalDoxxed').innerHTML=data.doxxed ? '<span class="checkmark">✅</span> Doxxed' : '<span class="crossmark">❌</span> Undoxxed';
+    document.getElementById('modalDevX').href=data.devx;
+    document.getElementById('modalDevX').textContent=data.devx.replace("https://x.com/","@");
+    document.getElementById('modalDoxxed').innerHTML=data.doxxed?'<span class="checkmark">✅</span> Doxxed':'❌ Undoxxed';
     document.getElementById('modalIssuer').textContent=data.issuer;
     document.getElementById('modalWebsite').textContent=data.website;
     document.getElementById('modalWebsite').href=data.website;
     document.getElementById('modalEmail').textContent=data.email;
     document.getElementById('modalX').href=data.x;
     document.getElementById('modalTG').href=data.tg;
-    document.getElementById('modalNFT').innerHTML=data.certified ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : '—';
+    document.getElementById('modalNFT').innerHTML=data.certified?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:'—';
     modal.style.display='block';
   }
 });
