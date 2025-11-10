@@ -9,7 +9,7 @@
 body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 header{
   text-align:center;
-  padding:52px 10px 20px; /* raised for clean spacing */
+  padding:52px 10px 20px;
   background:#eaf3ff;
   border-bottom:2px solid #d7e7ff;
   position:relative;
@@ -205,8 +205,8 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 
 <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 <script>
-const xumm = new Xumm("YOUR_API_KEY"); // Insert your Xumm API key
-const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu"; // RAD Treasury wallet
+const xumm = new Xumm("2a4001ce-0a75-42bc-8bd2-8ef096ac26d4"); // RAD Ledger API Key
+const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu"; // RAD Treasury Wallet
 
 async function updateRates(){
   try{
@@ -236,7 +236,15 @@ async function pay(amountUSD, memo){
       Memos: [{Memo:{MemoData: btoa(memo)}}]
     };
     const request = await xumm.payload.createAndSubscribe(payload, e=>{
-      if(e.data.signed){alert("✅ Payment confirmed. Your submission is now logged for verification.");}
+      if(e.data.signed){
+        document.body.innerHTML = `
+          <div style="text-align:center;margin-top:120px;">
+            <h1 style="color:#0A74D0;">✅ Payment Confirmed</h1>
+            <p>Your transaction has been received by <strong>The RAD Ledger</strong>.</p>
+            <p>Ledger entry will appear once verification is processed.</p>
+            <a href="/ledger.html" style="background:#0A74D0;color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:600;">Return to Ledger</a>
+          </div>`;
+      }
     });
     window.open(request.created.next.always);
   }catch(err){
