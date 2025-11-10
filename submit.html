@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Submit Token — The RAD Ledger</title>
 <style>
 *{box-sizing:border-box}
@@ -129,19 +129,19 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
   <div class="tier">
     <h2>🔁 Renewal / Update — $5.89 USD <span class="info-icon" data-info="renew">ℹ️</span></h2>
     <div id="xrp5" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="renewBtn">Pay with Xumm</button>
+    <button id="renewBtn">Pay with Xaman</button>
   </div>
 
   <div class="tier">
     <h2>🧾 Standard Verification — $25.89 USD <span class="info-icon" data-info="standard">ℹ️</span></h2>
     <div id="xrp25" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="standardBtn">Pay with Xumm</button>
+    <button id="standardBtn">Pay with Xaman</button>
   </div>
 
   <div class="tier">
     <h2>✅ Full Certified (Doxxed) — $58.90 USD <span class="info-icon" data-info="certified">ℹ️</span></h2>
     <div id="xrp58" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="certBtn">Pay with Xumm</button>
+    <button id="certBtn">Pay with Xaman</button>
   </div>
 
   <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
@@ -163,10 +163,15 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
   </div>
 </div>
 
-<script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
+<script src="https://xumm.app/assets/cdn/xumm.min.js?v=2"></script>
 <script>
+console.log("🧭 Initializing Xaman SDK…");
 const xumm = new Xumm("2a4001ce-0a75-42bc-8bd2-8ef096ac26d4");
 const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu";
+
+xumm.on("ready", () => {
+  console.log("✅ Xaman SDK ready:", xumm.environment);
+});
 
 async function updateRates(){
   try{
@@ -184,6 +189,7 @@ updateRates();
 
 async function pay(amountUSD, memo){
   try{
+    console.log("🚀 Starting payment:", memo);
     const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
     const price=(await res.json()).ripple.usd;
     const xrp=(amountUSD/price).toFixed(2);
@@ -193,19 +199,24 @@ async function pay(amountUSD, memo){
       Amount:(xrp * 1_000_000).toFixed(0),
       Memos:[{Memo:{MemoData:btoa(memo)}}]
     };
+
     const request = await xumm.payload.createAndSubscribe(payload, e=>{
-      if(e.data.signed){
+      if(e.data?.signed){
         const txid=e.data.txid || e.data.payloadResponse?.txid;
-        const amount=(xrp);
-        document.getElementById("amountLine").textContent=`Amount: ${amount} XRP`;
+        console.log("✅ Signed transaction:", txid);
+        document.getElementById("amountLine").textContent=`Amount: ${xrp} XRP`;
         document.getElementById("txLink").href=`https://xrpscan.com/tx/${txid}`;
         document.getElementById("confirmModal").style.display="block";
         setTimeout(()=>document.getElementById("confirmModal").style.display="none",6000);
+      } else if(e.data && e.data.signed === false) {
+        console.warn("❌ User declined the transaction");
       }
     });
-    window.open(request.created.next.always);
+
+    window.open(request.created.next.always, "_blank");
   }catch(err){
-    alert("Error initializing payment. Please retry.");
+    console.error("❌ Payment error:", err);
+    alert("Payment initialization failed — check console for details.");
   }
 }
 
