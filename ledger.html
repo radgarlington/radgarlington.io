@@ -7,48 +7,45 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
+
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;
+  text-align:center;
+  padding:20px 10px 18px;
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1.4;
+  border-bottom:2px solid #062a5c;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.banner em{
+  display:block;
+  margin-top:6px;
+  font-style:italic;
+  font-weight:500;
+  opacity:.85;
+}
+
+/* Legend */
+.legend{
+  background:#f1f5fb;
+  color:#0A74D0;
+  text-align:center;
+  font-size:.95rem;
+  font-weight:600;
+  padding:10px 8px;
+  border-bottom:2px solid #d7e7ff;
+}
+.legend span{margin:0 10px;}
+
+/* Header */
 header{text-align:center;padding:40px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff;position:relative}
 header h1{font-size:2.2rem;margin:0;color:#0A74D0}
 header p{margin:10px 0 0;color:#334155}
-main{max-width:900px;margin:30px auto;padding:0 16px}
-section{margin-bottom:40px}
-h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem}
-h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
-ul{list-style:none;padding:0;margin:0}
-li.entry{
-  margin:6px 0;
-  padding:8px 10px;
-  border-bottom:1px dashed #cbd5e1;
-  font-size:.95rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
-  border-radius:6px;
-  transition:background .15s ease;
-}
-li.entry:hover{background:#f1f7ff}
-li span{color:#475569;font-size:.9rem}
-.badge{
-  display:inline-block;
-  font-size:.75rem;
-  padding:3px 6px;
-  border-radius:4px;
-  font-weight:600;
-  margin-left:6px;
-}
-.badge.certified{background:#0A74D0;color:#fff}
-.seal-icon{margin-left:6px;font-size:1rem;color:gold}
-.submit-banner{background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  background:#0A74D0;color:#fff;padding:10px 16px;border-radius:8px;
-  text-decoration:none;font-weight:700;margin:6px;transition:opacity .2s ease,transform .2s ease;
-}
-.btn:hover{opacity:.9;transform:translateY(-1px)}
-footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
 
-/* Back button — smaller version */
+/* Back button */
 .back-btn {
   position:absolute;
   top:18px;
@@ -68,6 +65,27 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
   transform:translateY(-1px);
 }
 
+main{max-width:900px;margin:30px auto;padding:0 16px}
+section{margin-bottom:40px}
+h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem}
+h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
+ul{list-style:none;padding:0;margin:0}
+li.entry{
+  margin:6px 0;
+  padding:8px 10px;
+  border-bottom:1px dashed #cbd5e1;
+  font-size:.95rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  border-radius:6px;
+  transition:background .15s ease;
+}
+li.entry:hover{background:#f1f7ff}
+li span{color:#475569;font-size:.9rem}
+footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
+
 /* Modal styling */
 .modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
 .modal-content{
@@ -79,9 +97,24 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 .close:hover{color:#083c80}
 .modal-content a{color:#0A74D0;text-decoration:none;font-weight:bold}
 .checkmark{color:#0A74D0;font-weight:bold}
+
+/* Icons */
+.icon-certified{color:gold;font-size:1rem;margin-right:6px;cursor:help}
+.icon-standard{color:#0A74D0;font-size:1rem;margin-right:6px;cursor:help}
 </style>
 </head>
 <body>
+
+<div class="banner">
+  🚧 The Ledger’s being built. Verified projects will appear soon.<br>
+  Don’t rush perfection.
+  <em>— Rad</em>
+</div>
+
+<div class="legend">
+  <span>🟡 Certified — Doxxed + Seal NFT Verified</span> | 
+  <span>🔷 Verified — Non-Doxxed</span>
+</div>
 
 <header>
   <a href="/" class="back-btn">← Back</a>
@@ -95,15 +128,10 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
     <div id="ledgerList"></div>
   </section>
 
-  <section class="submit-banner">
+  <section class="submit-banner" style="background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0">
     <h2>🧾 Submit Your Token</h2>
     <p>Get your XRPL project officially verified by The RAD Ledger.</p>
-    <a href="/submit.html" class="btn">Submit for Verification</a>
-  </section>
-
-  <section id="pending">
-    <h2>⏳ Pending Reviews</h2>
-    <ul id="pendingList"></ul>
+    <a href="/submit.html" class="back-btn" style="position:relative;top:auto;left:auto;background:#0A74D0;padding:10px 16px;border-radius:8px;font-size:.9rem;">Submit for Verification</a>
   </section>
 </main>
 
@@ -176,8 +204,7 @@ const verified=[
   }
 ];
 
-const pending=[{token:"$ZENITH",status:"Pending Verification"}];
-
+// Alphabetical grouping
 verified.sort((a,b)=>a.token.localeCompare(b.token));
 const grouped={};
 for(const p of verified){
@@ -191,17 +218,17 @@ for(const l of Object.keys(grouped).sort()){
   const div=document.createElement('div');
   div.innerHTML=`<h3>${l}</h3>
   <ul>${grouped[l].map(p=>{
-    const seal=p.certified ? '<span class="seal-icon">🟡</span>' : '';
-    return `<li class="entry" data-token='${JSON.stringify(p)}'>
-              <span>${p.token} ${seal}</span>
-              <span>${p.cert}<span class="badge certified">${p.tier}</span></span>
+    const icon=p.certified?'🟡':'🔷';
+    const tooltip=p.certified?'Certified Listing — Doxxed + Seal NFT Verified':'Verified Listing — Non-Doxxed';
+    return `<li class="entry" title="${tooltip}" data-token='${JSON.stringify(p)}'>
+              <span>${icon} ${p.token}</span>
+              <span>${p.cert}</span>
             </li>`;
   }).join('')}</ul>`;
   ledger.appendChild(div);
 }
 
-document.getElementById('pendingList').innerHTML=pending.map(p=>`<li>${p.token} — ${p.status}</li>`).join('');
-
+// Modal handling
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 document.addEventListener('click',e=>{
