@@ -124,19 +124,22 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </div>
 
 <script>
-/* Certified + Verified + Unverified Merged List */
+/* Certified + Verified + Unverified Unified List */
 const certified=[
   {token:"$XRP",cert:"XRPL-589-0",tier:"Certified",certified:true,doxxed:true,issuer:"rXRPMainnetAddress",website:"https://xrpl.org",dev:"Ripple Labs",devx:"https://x.com/Ripple",email:"info@ripple.com",x:"https://x.com/Ripple",tg:"#",nft:"#"},
-  {token:"$RAD",cert:"XRPL-589-1",tier:"Certified",certified:true,doxxed:true,issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@radgarlington.io",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/12345"},
-  {token:"$BAG",cert:"XRPL-589-2",tier:"Certified",certified:true,doxxed:true,issuer:"rBAGMintAddress",website:"https://getthebag.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@getthebag.io",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/23456"},
-  {token:"$WCK",cert:"XRPL-589-3",tier:"Certified",certified:true,doxxed:true,issuer:"rWCKMintAddress",website:"https://wicktoken.net",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@wicktoken.net",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/34567"}
+  {token:"$RAD",cert:"XRPL-589-1",tier:"Certified",certified:true,doxxed:true,issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"radgarlington@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/12345"},
+  {token:"$BAG",cert:"XRPL-589-2",tier:"Certified",certified:true,doxxed:true,issuer:"rBAGMintAddress",website:"https://getthebag.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"bagtokenhq@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/23456"},
+  {token:"$WCK",cert:"XRPL-589-3",tier:"Certified",certified:true,doxxed:true,issuer:"rWCKMintAddress",website:"https://wicktoken.net",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"wicktokenhq@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/34567"}
 ];
 
-const verified=[]; // placeholder if needed later
+const verified=[];
 
-const unverified=["$ATM","$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE","$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG","$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER","$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XARCADE","$XPLAY","$XGOLD","$XPUNK","$XRPG","$XBEAR","$XDUCK","$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XHERO","$XMETA","$XMOON","$XCAT","$XOWL","$XDOG","$XRAT","$XTIGER","$XRAVEN","$XFOX","$XWOLF","$XRHINO","$XRABBIT","$XUNICORN","$XBAGEL","$XMEMES","$XRPLDOGE","$XRPLCAT","$XRPLPEPE","$XRPLFROG","$XRPLAPE","$XRPLBULL","$XRPLSHIB","$XRPLBABY","$XCOINZ","$XMONK","$XKNIGHT","$XGOD","$XSUN","$XEARTH","$XSHARK","$XPANDA","$XGIRAFFE","$XRPLKING","$XRPLQUEEN","$XRPLRUG","$XRPLMONEY","$XRPLFAMILY","$XRPLWORLD"];
+const unverified=[
+"$ATM","$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE","$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG","$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER","$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XARCADE","$XPLAY","$XGOLD","$XPUNK","$XRPG","$XBEAR","$XDUCK","$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XHERO","$XMETA","$XMOON","$XCAT","$XOWL","$XDOG","$XRAT","$XTIGER","$XRAVEN","$XFOX","$XWOLF","$XRHINO","$XRABBIT","$XUNICORN","$XBAGEL","$XMEMES","$XRPLDOGE","$XRPLCAT","$XRPLPEPE","$XRPLFROG","$XRPLAPE","$XRPLBULL","$XRPLSHIB","$XRPLBABY","$XCOINZ","$XMONK","$XKNIGHT","$XGOD","$XSUN","$XEARTH","$XSHARK","$XPANDA","$XGIRAFFE","$XRPLKING","$XRPLQUEEN","$XRPLRUG","$XRPLMONEY","$XRPLFAMILY","$XRPLWORLD"
+];
 
-const all=[]; all.push(...certified,...verified,...unverified.map(t=>({token:t,tier:"Unverified",cert:"XRPL-AUTO"})));
+const all=[]; 
+all.push(...certified,...verified,...unverified.map(t=>({token:t,tier:"Unverified",cert:"XRPL-AUTO"})));
 
 const ledger=document.getElementById('ledgerList');
 const grouped={};
