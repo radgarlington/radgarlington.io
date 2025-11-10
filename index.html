@@ -32,60 +32,56 @@
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
   <style>
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    :root{ --bg:#ffffff; --ink:#0f172a; --muted:#475569; --blue:#0A74D0; --card:#f4f7fb; --ring:rgba(10,116,208,.22); }
-    html { -webkit-text-size-adjust: 100%; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
-    main { flex: 1 0 auto; }
-    p { margin:0 0 10px; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    :root{--bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;--card:#f4f7fb;--ring:rgba(10,116,208,.22)}
+    html{-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+    main{flex:1 0 auto}
+    p{margin:0 0 10px}
 
-    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
-    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
-    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
+    .hero{text-align:center;padding:6vh 5vw 2vh;background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
+    .hero-img{width:55%;max-width:320px;height:auto;margin:0 auto 14px;display:block}
+    h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
+    .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px;padding:0 10px}
 
-    .social { text-align:center; margin-top:14px; }
-    .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; vertical-align:middle; }
-    .social img{ width:28px; height:28px; display:inline-block; }
+    .social{text-align:center;margin-top:14px}
+    .social a{display:inline-block;margin:0 8px;text-decoration:none;line-height:0;vertical-align:middle}
+    .social img{width:28px;height:28px;display:inline-block}
 
-    .verify { margin-top:8px; font-size:0.95rem; text-align:center; }
-    .verify a{ color:var(--blue); font-weight:bold; text-decoration:none; display:inline-block; margin:0 8px; }
+    .verify{margin-top:8px;font-size:.95rem;text-align:center}
+    .verify a{color:var(--blue);font-weight:bold;text-decoration:none;display:inline-block;margin:0 8px}
 
-    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; }
-    .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
+    .utility{text-align:center;padding:4vh 5vw 6vh;background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
+    .utility h2{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
+    .utility p{font-size:clamp(1rem,4vw,1.2rem);color:var(--muted);margin:6px 0}
+
+    /* Ledger section */
+    .ledger-section{
+      text-align:center;margin:40px auto;max-width:960px;padding:48px 20px;
+      background:linear-gradient(180deg,#0A74D0,#094f90);
+      color:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.2);
+      border:2px solid #083c80
+    }
+    .ledger-section h2{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:10px}
+    .ledger-section p{font-size:1.05rem;margin-bottom:20px;opacity:.95}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:14px 28px;border-radius:10px;text-decoration:none;font:600 17px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;cursor:pointer;user-select:none;transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease;border:none}
+    .btn-primary{background:#fff;color:#0A74D0;box-shadow:0 6px 20px rgba(255,255,255,.2);font-weight:700}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,.25)}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+    .pulse{animation:pulse 2.5s infinite}
 
     /* Launch banner */
-    .launch { background: var(--card); color: var(--ink); padding: 6vh 5vw; overflow-x:hidden; }
-    .launch .wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 12px; }
-    .launch h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); margin: 0 0 10px; color: var(--blue); }
-    .launch p { font-size: clamp(1rem, 4vw, 1.15rem); color:#334155; margin: 6px 0; }
-    .cta { margin-top: 16px; }
+    .launch{background:var(--card);color:var(--ink);padding:6vh 5vw;overflow-x:hidden}
+    .launch .wrap{max-width:900px;margin:0 auto;text-align:center;padding:0 12px}
+    .launch h2{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 10px;color:var(--blue)}
+    .launch p{font-size:clamp(1rem,4vw,1.15rem);color:#334155;margin:6px 0}
+    .cta{margin-top:16px}
+    .btn-ghost{background:transparent;color:#0A74D0;border:1px solid #cfe3ff}
+    .btn-ghost:hover{background:#eaf3ff}
 
-    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:12px 18px; border-radius:10px; text-decoration:none;
-      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; box-shadow:0 6px 20px rgba(2,32,71,.12);
-      transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
-    .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
-    .btn-primary{ background:var(--blue); color:#fff; }
-    .btn-ghost{ background:transparent; color:#0A74D0; border:1px solid #cfe3ff; }
-
-    .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
-
-    .disclaimer-block{
-      max-width:820px; margin:20px auto 32px; text-align:center;
-      font-size:0.82rem; color:#475569; line-height:1.45;
-    }
-
-    /* Ledger banner */
-    .ledger-section {
-      text-align:center; margin:30px auto; max-width:900px;
-      padding:32px 20px; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px;
-      box-shadow:0 6px 20px rgba(2,32,71,.08);
-    }
-    .ledger-section h2{color:#0A74D0;margin-bottom:10px}
-    .ledger-section p{color:#334155;margin-bottom:14px}
+    .footer{text-align:center;padding:18px 10px;font-size:.85rem;color:var(--muted);margin-top:auto}
+    .disclaimer-block{max-width:820px;margin:20px auto 32px;text-align:center;font-size:.82rem;color:#475569;line-height:1.45}
   </style>
 </head>
 <body>
@@ -95,9 +91,9 @@
       <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
       <h1>RAD GARLINGTON — $RAD</h1>
       <p class="tagline">The Protocol’s most loyal believer</p>
-      <p style="text-align:center; margin-top:8px;">
+      <p style="text-align:center;margin-top:8px;">
         <strong>Token:</strong>
-        <span style="color:#0A74D0; font-size:1.2em; font-weight:bold;">$RAD</span>
+        <span style="color:#0A74D0;font-size:1.2em;font-weight:bold;">$RAD</span>
         &nbsp;—&nbsp;
         <strong>Issuer:</strong>
         <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
@@ -125,6 +121,12 @@
       <p>Fast, cheap, peer-to-peer.</p>
     </div>
 
+    <section class="ledger-section">
+      <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
+      <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
+      <a href="/ledger.html" class="btn btn-primary pulse">VIEW THE RAD LEDGER</a>
+    </section>
+
     <section class="launch">
       <div class="wrap">
         <h2>$RAD Launching on AMM Soon</h2>
@@ -140,13 +142,7 @@
       </div>
     </section>
 
-    <section class="ledger-section">
-      <h2>📜 The RAD Ledger</h2>
-      <p>Verified projects. Certified by Rad Garlington himself.</p>
-      <a class="btn btn-primary" href="/ledger.html">Open Ledger</a>
-    </section>
-
-    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
+    <div class="litepaper-cta" style="text-align:center;margin:16px 0 6px;">
       <a class="btn btn-ghost" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener">📄 Read the Lite Paper</a>
     </div>
 
@@ -161,9 +157,9 @@
   <div class="footer">
     © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold;">𝕏 @radgarlington</a>
     |
-    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
+    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold;">Telegram @radgarlington</a>
   </div>
 
 </body>
