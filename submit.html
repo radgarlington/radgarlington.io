@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Submit Token — The RAD Ledger</title>
 <style>
+html,body{-webkit-text-size-adjust:100%;touch-action:manipulation}
 *{box-sizing:border-box}
 body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 header{
@@ -163,8 +164,12 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
   </div>
 </div>
 
-<script src="https://xumm.app/assets/cdn/xumm.min.js?v=2"></script>
+<script src="https://xumm.app/assets/cdn/xumm.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded",()=>{
+  console.log("DOM loaded. Xumm is", typeof Xumm);
+});
+
 console.log("🧭 Initializing Xaman SDK…");
 const xumm = new Xumm("2a4001ce-0a75-42bc-8bd2-8ef096ac26d4");
 const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu";
