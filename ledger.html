@@ -48,21 +48,25 @@ li span{color:#475569;font-size:.9rem}
 .btn:hover{opacity:.9;transform:translateY(-1px)}
 footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
 
-/* Back button */
-.back-btn{
+/* Back button — smaller version */
+.back-btn {
   position:absolute;
-  top:20px;
-  left:20px;
+  top:18px;
+  left:18px;
   background:#0A74D0;
   color:#fff;
-  padding:8px 14px;
-  border-radius:8px;
+  padding:6px 10px;
+  border-radius:6px;
   text-decoration:none;
-  font-weight:700;
-  font-size:.9rem;
+  font-weight:600;
+  font-size:0.8rem;
+  letter-spacing:0.2px;
   transition:opacity .2s ease,transform .2s ease;
 }
-.back-btn:hover{opacity:.9;transform:translateY(-1px)}
+.back-btn:hover {
+  opacity:.9;
+  transform:translateY(-1px);
+}
 
 /* Modal styling */
 .modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
@@ -174,7 +178,6 @@ const verified=[
 
 const pending=[{token:"$ZENITH",status:"Pending Verification"}];
 
-// Alphabetical grouping
 verified.sort((a,b)=>a.token.localeCompare(b.token));
 const grouped={};
 for(const p of verified){
@@ -199,7 +202,6 @@ for(const l of Object.keys(grouped).sort()){
 
 document.getElementById('pendingList').innerHTML=pending.map(p=>`<li>${p.token} — ${p.status}</li>`).join('');
 
-// Modal handling
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 document.addEventListener('click',e=>{
