@@ -16,7 +16,6 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="msapplication-TileColor" content="#0A74D0">
-
   <meta name="description" content="$RAD – The meme coin with a ledger. Rad Garlington is the Protocol’s most loyal believer. Built on XRPL with 1 trillion supply.">
   <meta name="keywords" content="Rad Garlington,RAD,meme coin,XRPL,XRP Ledger,crypto,ledger meme,digital asset,XRP meme coin">
 
@@ -32,126 +31,116 @@
   <meta name="twitter:image" content="https://github.com/radgarlington/radgarlington.io/blob/main/assets/rad_garlington.png?raw=true">
 
   <style>
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    :root{ --bg:#ffffff; --ink:#0f172a; --muted:#475569; --blue:#0A74D0; --card:#f4f7fb; --ring:rgba(10,116,208,.22); }
-    html { -webkit-text-size-adjust: 100%; }
-    body { margin:0; background:var(--bg); color:var(--ink); font-family: Arial, sans-serif; line-height:1.5; overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
-    main { flex: 1 0 auto; }
-    p { margin:0 0 10px; }
-
-    .hero { text-align:center; padding:6vh 5vw 2vh; background:#eaf3ff; border:2px solid #d7e7ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .hero-img { width:55%; max-width:320px; height:auto; margin:0 auto 14px; display:block; }
-    h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); margin-bottom:10px; }
-    .tagline { font-size: clamp(1rem, 4vw, 1.3rem); color: var(--muted); margin-bottom:4px; padding:0 10px; }
-
-    .social { text-align:center; margin-top:14px; }
-    .social a{ display:inline-block; margin:0 8px; text-decoration:none; line-height:0; vertical-align:middle; }
-    .social img{ width:28px; height:28px; display:inline-block; }
-
-    .verify { margin-top:8px; font-size:0.95rem; text-align:center; }
-    .verify a{ color:var(--blue); font-weight:bold; text-decoration:none; display:inline-block; margin:0 8px; }
-
-    .utility { text-align:center; padding:4vh 5vw 6vh; background:#f0f7ff; border:2px solid #d0e3ff; border-radius:12px; max-width:960px; margin:20px auto; box-shadow:0 6px 20px rgba(2,32,71,.08); }
-    .utility h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom:15px; }
-    .utility p { font-size: clamp(1rem, 4vw, 1.2rem); color: var(--muted); margin:6px 0; }
-
-    /* Launch banner (replaces OTC) */
-    .launch { background: var(--card); color: var(--ink); padding: 6vh 5vw; overflow-x:hidden; }
-    .launch .wrap { max-width: 900px; margin: 0 auto; text-align: center; padding: 0 12px; }
-    .launch h2 { font-size: clamp(1.6rem, 5vw, 2.2rem); margin: 0 0 10px; color: var(--blue); }
-    .launch p { font-size: clamp(1rem, 4vw, 1.15rem); color:#334155; margin: 6px 0; }
-    .cta { margin-top: 16px; }
-
-    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:.5rem; padding:12px 18px; border-radius:10px; text-decoration:none;
-      font:600 16px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; box-shadow:0 6px 20px rgba(2,32,71,.12);
-      transform:translateY(0); transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease; cursor:pointer; user-select:none; border:none; }
-    .btn:hover{ transform:translateY(-1px); box-shadow:0 10px 26px rgba(2,32,71,.16); }
-    .btn:active{ transform:translateY(0); box-shadow:0 4px 14px rgba(2,32,71,.10); }
-    .btn-primary{ background:var(--blue); color:#fff; }
-    .btn-ghost{ background:transparent; color:#0A74D0; border:1px solid #cfe3ff; }
-
-    .footer { text-align:center; padding:18px 10px; font-size:0.85rem; color:var(--muted); margin-top:auto; }
-
-    /* Disclaimer block */
-    .disclaimer-block{
-      max-width:820px; margin:20px auto 32px; text-align:center;
-      font-size:0.82rem; color:#475569; line-height:1.45;
-    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    :root{--bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;--card:#f4f7fb;--ring:rgba(10,116,208,.22)}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+    main{flex:1 0 auto}
+    p{margin:0 0 10px}
+    .hero{text-align:center;padding:6vh 5vw 2vh;background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
+    .hero-img{width:55%;max-width:320px;height:auto;margin:0 auto 14px;display:block}
+    h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
+    .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px;padding:0 10px}
+    .social{text-align:center;margin-top:14px}
+    .social a{display:inline-block;margin:0 8px;text-decoration:none;line-height:0;vertical-align:middle}
+    .social img{width:28px;height:28px;display:inline-block}
+    .verify{margin-top:8px;font-size:.95rem;text-align:center}
+    .verify a{color:var(--blue);font-weight:bold;text-decoration:none;display:inline-block;margin:0 8px}
+    .utility{text-align:center;padding:4vh 5vw 6vh;background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
+    .utility h2{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
+    .utility p{font-size:clamp(1rem,4vw,1.2rem);color:var(--muted);margin:6px 0}
+    .launch{background:var(--card);color:var(--ink);padding:6vh 5vw}
+    .launch .wrap{max-width:900px;margin:0 auto;text-align:center;padding:0 12px}
+    .launch h2{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 10px;color:var(--blue)}
+    .launch p{font-size:clamp(1rem,4vw,1.15rem);color:#334155;margin:6px 0}
+    .cta{margin-top:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:12px 18px;border-radius:10px;text-decoration:none;font:600 16px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;box-shadow:0 6px 20px rgba(2,32,71,.12);transform:translateY(0);transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease;cursor:pointer;user-select:none;border:none}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(2,32,71,.16)}
+    .btn:active{transform:translateY(0);box-shadow:0 4px 14px rgba(2,32,71,.1)}
+    .btn-primary{background:var(--blue);color:#fff}
+    .btn-ghost{background:transparent;color:#0A74D0;border:1px solid #cfe3ff}
+    .footer{text-align:center;padding:18px 10px;font-size:.85rem;color:var(--muted);margin-top:auto}
+    .disclaimer-block{max-width:820px;margin:20px auto 32px;text-align:center;font-size:.82rem;color:#475569;line-height:1.45}
+    .ledger-link{background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;max-width:960px;margin:20px auto;padding:6vh 5vw;box-shadow:0 6px 20px rgba(2,32,71,.08);text-align:center}
+    .ledger-link .btn{margin:6px}
   </style>
 </head>
 <body>
 
-  <main>
-    <div class="hero">
-      <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img" />
-      <h1>RAD GARLINGTON — $RAD</h1>
-      <p class="tagline">The Protocol’s most loyal believer</p>
-      <p style="text-align:center; margin-top:8px;">
-        <strong>Token:</strong>
-        <span style="color:#0A74D0; font-size:1.2em; font-weight:bold;">$RAD</span>
-        &nbsp;—&nbsp;
-        <strong>Issuer:</strong>
-        <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
-      </p>
-    </div>
-
-    <div class="social">
-      <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X"></a>
-      <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram"></a>
-    </div>
-
-    <div class="verify">
-      🔍 Verify on:
-      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">Bithomp</a>
-      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">XRPSCAN</a>
-    </div>
-
-    <div class="utility">
-      <h2>The meme coin with a ledger. Powered by XRPL.</h2>
-      <p>Ledger fast. Ledger clean.</p>
-      <p>⚡ Instant Transfers</p>
-      <p>💸 Low Fees</p>
-      <p>🔒 Trustless Movement</p>
-      <p>$RAD inherits XRPL utility.</p>
-      <p>Fast, cheap, peer-to-peer.</p>
-    </div>
-
-    <!-- Replacement Banner (OTC removed) -->
-    <section class="launch">
-      <div class="wrap">
-        <h2>$RAD Launching Soon</h2>
-        <p>We're going live on-chain. Liquidity will drop on the XRPL DEX.</p>
-        <p><strong>Set your trust line now</strong> to be ready.</p>
-        <div class="cta">
-          <a class="btn btn-primary"
-             href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000"
-             target="_blank" rel="noopener">
-            Set $RAD Trust Line
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="litepaper-cta" style="text-align:center; margin:16px 0 6px;">
-      <a class="btn btn-ghost" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener">📄 Read the Lite Paper</a>
-    </div>
-
-    <div class="disclaimer-block">
-      <strong>🛡 Legal Disclaimer</strong><br><br>
-      $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
-      It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
-      All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
-    </div>
-  </main>
-
-  <div class="footer">
-    © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
-    <br>
-    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">𝕏 @radgarlington</a>
-    |
-    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0; text-decoration:none; font-weight:bold;">Telegram @radgarlington</a>
+<main>
+  <div class="hero">
+    <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true" alt="$RAD Logo" class="hero-img">
+    <h1>RAD GARLINGTON — $RAD</h1>
+    <p class="tagline">The Protocol’s most loyal believer</p>
+    <p style="text-align:center;margin-top:8px"><strong>Token:</strong>
+      <span style="color:#0A74D0;font-size:1.2em;font-weight:bold">$RAD</span> —
+      <strong>Issuer:</strong>
+      <span style="color:#0b3d78">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
+    </p>
   </div>
+
+  <div class="social">
+    <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X"></a>
+    <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram"></a>
+  </div>
+
+  <div class="verify">
+    🔍 Verify on:
+    <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">Bithomp</a>
+    <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">XRPSCAN</a>
+  </div>
+
+  <div class="utility">
+    <h2>The meme coin with a ledger. Powered by XRPL.</h2>
+    <p>Ledger fast. Ledger clean.</p>
+    <p>⚡ Instant Transfers</p>
+    <p>💸 Low Fees</p>
+    <p>🔒 Trustless Movement</p>
+    <p>$RAD inherits XRPL utility.</p>
+    <p>Fast, cheap, peer-to-peer.</p>
+  </div>
+
+  <section class="launch">
+    <div class="wrap">
+      <h2>$RAD Launching Soon</h2>
+      <p>We're going live on-chain. Liquidity will drop on the XRPL DEX.</p>
+      <p><strong>Set your trust line now</strong> to be ready.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://xrpl.services/?issuer=rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V&currency=RAD&limit=1000000000000" target="_blank" rel="noopener">Set $RAD Trust Line</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RAD Ledger + Buy Section -->
+  <section class="ledger-link">
+    <div class="wrap">
+      <h2 style="color:#0A74D0;font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:10px">📘 The RAD Ledger</h2>
+      <p style="color:#334155;font-size:clamp(1rem,4vw,1.15rem)">The #1 trusted verification hub on XRPL.<br>Track certified projects, verified devs, and official ledger entries.</p>
+      <div class="cta" style="margin-top:18px">
+        <a class="btn btn-primary" href="/ledger/index.html">View The Ledger</a>
+        <a class="btn btn-ghost" href="https://xmagnetic.org/swap/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet" target="_blank" rel="noopener">Launching on AMM Soon</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="litepaper-cta" style="text-align:center;margin:16px 0 6px">
+    <a class="btn btn-ghost" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank" rel="noopener">📄 Read the Lite Paper</a>
+  </div>
+
+  <div class="disclaimer-block">
+    <strong>🛡 Legal Disclaimer</strong><br><br>
+    $RAD is an independent community-driven token built on the XRP Ledger (XRPL).
+    It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related companies, individuals, trademarks, or intellectual property.<br>
+    All references to “Rad,” “Garlington,” or related terminology are part of a fictional blockchain meme narrative developed by the $RAD team and do not depict, reference, or represent Ripple, Brad Garlinghouse, or any official XRP-related entities.
+  </div>
+</main>
+
+<div class="footer">
+  © 2025 RAD GARLINGTON | radgarlington.io | Powered by XRP
+  <br>
+  <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold">𝕏 @radgarlington</a> |
+  <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold">Telegram @radgarlington</a>
+</div>
 
 </body>
 </html>
