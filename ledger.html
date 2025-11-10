@@ -1,260 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<title>The RAD Ledger — Verified XRPL Projects</title>
-
-<link rel="preconnect" href="https://xrplcluster.com" crossorigin>
-<script src="https://unpkg.com/xrpl@2.11.0/build/xrpl-latest-min.js"></script>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>The RAD Ledger — Verified Projects</title>
+<link rel="preconnect" href="https://api.coingecko.com" crossorigin>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
+  *{box-sizing:border-box}
   body{
-    background:#0b0d0f;
-    color:#f1f1f1;
-    font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:24px 12px 60px;
-    min-height:100vh;
+    margin:0;
+    background:#0b1b13;
+    color:#f5f7f4;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
   }
-  h1{
-    font-size:clamp(1.6rem,5vw,2.6rem);
-    font-weight:700;
-    margin-bottom:20px;
-    color:#00bfff;
+  header{
     text-align:center;
+    padding:32px 12px 16px;
+    border-bottom:1px solid #173524;
+    background:#0f241a;
   }
-  .wrap{
-    background:#111418;
-    border:1px solid #1f252c;
-    border-radius:12px;
-    width:100%;
-    max-width:960px;
-    padding:20px;
-    box-shadow:0 0 25px rgba(0,0,0,.4);
-  }
-  p.intro{
-    color:#b7c0cb;
-    margin-bottom:16px;
-    text-align:center;
-    font-size:clamp(.9rem,2.5vw,1rem);
-  }
-  .search{
-    margin-bottom:14px;
-    width:100%;
-  }
-  .search input{
-    width:100%;
-    padding:10px 14px;
-    border-radius:8px;
-    border:1px solid #28313c;
-    background:#1a1f25;
-    color:#e3e6eb;
-    font-size:.95rem;
-    outline:none;
-  }
-  table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:12px;
-  }
-  th,td{
-    padding:10px 8px;
-    text-align:left;
-    font-size:.9rem;
-  }
-  th{
-    color:#00bfff;
-    border-bottom:1px solid #2c363f;
-    font-weight:600;
-  }
-  td{
-    border-bottom:1px solid #1c2228;
-    word-break:break-word;
-  }
-  tr:hover td{background:#14181e}
-  .status{
-    font-weight:700;
+  header h1{
+    font-size:2rem;
+    margin:0;
     color:#2fbf6b;
   }
-  .view-btn{
-    background:#00bfff;
-    color:#000;
-    border:none;
-    padding:6px 10px;
-    border-radius:6px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.2s ease;
+  header p{
+    margin:8px 0 0;
+    opacity:.85;
+    font-size:.95rem;
   }
-  .view-btn:hover{background:#19ccff}
-  .footer{
-    margin-top:30px;
-    text-align:center;
-    color:#a9b2bb;
-    font-size:.85rem;
-    opacity:.8;
+  main{
+    max-width:800px;
+    margin:32px auto;
+    padding:0 20px 80px;
   }
-
-  /* Responsive Layout */
-  @media(max-width:680px){
-    table,thead,tbody,th,td,tr{display:block;width:100%;}
-    thead{display:none;}
-    tr{
-      margin-bottom:16px;
-      border:1px solid #1f252c;
-      border-radius:8px;
-      background:#121619;
-      padding:12px;
-    }
-    td{
-      border:none;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:6px 0;
-      font-size:.9rem;
-    }
-    td::before{
-      content:attr(data-label);
-      font-weight:600;
-      color:#00bfff;
-      flex:0 0 45%;
-    }
-    .view-btn{padding:6px 12px;font-size:.85rem;}
+  section{
+    margin-bottom:40px;
   }
-
-  /* Modal */
-  .modal{
-    position:fixed;
-    top:0;left:0;right:0;bottom:0;
-    background:rgba(0,0,0,.7);
-    display:none;
+  h2{
+    color:#ffe175;
+    font-size:1.3rem;
+    margin:0 0 12px;
+    border-bottom:1px solid #173524;
+    padding-bottom:4px;
+  }
+  .token-group{
+    margin:12px 0 24px;
+  }
+  .token-group h3{
+    margin:0 0 8px;
+    font-size:1.1rem;
+    color:#2fbf6b;
+  }
+  ul{list-style:none;padding:0;margin:0}
+  li{
+    margin:4px 0;
+    font-size:.95rem;
+    display:flex;
+    justify-content:space-between;
     align-items:center;
-    justify-content:center;
-    z-index:1000;
+    padding:6px 0;
+    border-bottom:1px dashed #173524;
   }
-  .modal-content{
-    background:#111418;
-    border:1px solid #1f252c;
-    border-radius:12px;
-    width:90%;
-    max-width:600px;
-    padding:24px;
+  li span.cert{
+    opacity:.8;
+    font-size:.9rem;
+  }
+  .submit-banner{
     text-align:center;
-    box-shadow:0 0 30px rgba(0,0,0,.5);
-  }
-  .modal img{
-    max-width:100%;
+    margin:40px 0;
+    padding:24px;
+    border:1px solid #173524;
+    background:#0d2217;
     border-radius:8px;
-    margin-bottom:12px;
   }
-  .close{
-    position:absolute;
-    top:14px;right:20px;
-    font-size:1.4rem;
-    cursor:pointer;
-    color:#f1f1f1;
+  .submit-banner h2{color:#ffe175;margin:0 0 8px}
+  .submit-banner p{opacity:.9;margin:0 0 16px;font-size:.95rem}
+  .submit-banner .btn{
+    background:#2fbf6b;
+    color:#020703;
+    padding:10px 18px;
+    border-radius:4px;
+    text-decoration:none;
+    font-weight:700;
+    transition:.2s;
+  }
+  .submit-banner .btn:hover{background:#249a55}
+  .pending-list li{color:#ffe175}
+  footer{
+    text-align:center;
+    padding:20px;
+    opacity:.8;
+    font-size:.85rem;
+    border-top:1px solid #173524;
+    background:#0f241a;
   }
 </style>
 </head>
-
 <body>
-<h1>🧾 The RAD Ledger</h1>
+<header>
+  <h1>The RAD Ledger</h1>
+  <p>The #1 trusted certification directory for verified XRPL projects.<br>
+  If it’s not on <strong>radgarlington.io</strong>, it’s not certified.</p>
+</header>
 
-<div class="wrap">
-  <p class="intro">Verified XRPL meme coins and $XRP tokens — certified by Rad Garlington.</p>
+<main>
+  <!-- Verified Projects -->
+  <section id="verified">
+    <h2>📜 Verified Projects</h2>
 
-  <div class="search">
-    <input id="searchInput" type="text" placeholder="Search token, ticker, or issuer..." />
-  </div>
+    <div id="ledgerList">
+      <!-- Loaded dynamically -->
+    </div>
+  </section>
 
-  <table id="ledgerTable">
-    <thead>
-      <tr>
-        <th>Token</th>
-        <th>Ticker</th>
-        <th>Issuer</th>
-        <th>Developer</th>
-        <th>Certificate</th>
-        <th>Status</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Verified Projects -->
-      <tr>
-        <td data-label="Token">Rad Garlington</td>
-        <td data-label="Ticker">$RAD</td>
-        <td data-label="Issuer"><code>rRADMintAddress</code></td>
-        <td data-label="Developer">Doxxed</td>
-        <td data-label="Certificate">XRPL589</td>
-        <td data-label="Status" class="status">✅ Verified</td>
-        <td data-label="View"><button class="view-btn" data-token="$RAD" data-cert="XRPL589" data-img="/assets/img/rad-certificate.png">View Certificate</button></td>
-      </tr>
-      <tr>
-        <td data-label="Token">$BAG Token</td>
-        <td data-label="Ticker">$BAG</td>
-        <td data-label="Issuer"><code>rBAGMintAddress</code></td>
-        <td data-label="Developer">Doxxed</td>
-        <td data-label="Certificate">XRPL589</td>
-        <td data-label="Status" class="status">✅ Verified</td>
-        <td data-label="View"><button class="view-btn" data-token="$BAG" data-cert="XRPL589" data-img="/assets/img/bag-certificate.png">View Certificate</button></td>
-      </tr>
-      <tr>
-        <td data-label="Token">CONTINENTAL WICK</td>
-        <td data-label="Ticker">$WCK</td>
-        <td data-label="Issuer"><code>rWCKMintAddress</code></td>
-        <td data-label="Developer">Doxxed</td>
-        <td data-label="Certificate">XRPL589</td>
-        <td data-label="Status" class="status">✅ Verified</td>
-        <td data-label="View"><button class="view-btn" data-token="$WCK" data-cert="XRPL589" data-img="/assets/img/wck-certificate.png">View Certificate</button></td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Submit New Token -->
+  <section class="submit-banner">
+    <h2>🧾 Submit Your Token for Verification</h2>
+    <p>Get your XRPL project officially certified by <strong>The RAD Ledger</strong>.<br>
+    Verification proves authenticity, doxxed development, and full on-ledger transparency.</p>
+    <a href="/submit.html" class="btn">Submit Token</a>
+  </section>
 
-  <div class="footer">
-    Verified by Rad Garlington — The Ledger Never Lies.
-  </div>
-</div>
+  <!-- Pending Reviews -->
+  <section id="pending">
+    <h2>⏳ Pending Reviews</h2>
+    <ul id="pendingList" class="pending-list">
+      <!-- Pending projects injected here -->
+    </ul>
+  </section>
+</main>
 
-<!-- Modal -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" id="closeModal">&times;</span>
-    <img id="modalImage" src="" alt="Certificate">
-    <p id="modalTitle" style="font-weight:700;color:#00bfff;margin-bottom:6px;"></p>
-    <p id="modalCert" style="color:#2fbf6b;"></p>
-  </div>
-</div>
+<footer>
+  © 2025 The RAD Ledger | Verified by Rad Garlington | XRPL-589 Series
+</footer>
 
 <script>
-  // Search filter
-  document.getElementById('searchInput').addEventListener('input', function(){
-    const value = this.value.toLowerCase();
-    document.querySelectorAll('#ledgerTable tbody tr').forEach(row=>{
-      row.style.display = row.innerText.toLowerCase().includes(value)?'':'none';
-    });
-  });
+// Example data. Replace with fetch('/api/certificates') when live.
+const verifiedProjects = [
+  { token:"$RAD", cert:"XRPL-589-1" },
+  { token:"$BAG", cert:"XRPL-589-2" },
+  { token:"$WCK", cert:"XRPL-589-3" },
+  { token:"$APEX", cert:"XRPL-589-22" },
+  { token:"$AIRDROP", cert:"XRPL-589-17" },
+  { token:"$REAPER", cert:"XRPL-589-9" }
+];
 
-  // Modal display
-  const modal = document.getElementById('modal');
-  const modalImage = document.getElementById('modalImage');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalCert = document.getElementById('modalCert');
-  document.querySelectorAll('.view-btn').forEach(btn=>{
-    btn.onclick = ()=>{
-      modal.style.display='flex';
-      modalImage.src = btn.dataset.img;
-      modalTitle.textContent = btn.dataset.token + " — Verified Certificate";
-      modalCert.textContent = "Certificate No: " + btn.dataset.cert;
-    };
-  });
-  document.getElementById('closeModal').onclick = ()=>modal.style.display='none';
-  window.onclick = e=>{if(e.target===modal) modal.style.display='none';};
+const pendingProjects = [
+  { token:"$ZENITH", status:"Pending Verification" },
+  { token:"$DOGX", status:"Payment Received — Under Review" }
+];
+
+// Sort alphabetically
+verifiedProjects.sort((a,b)=>a.token.localeCompare(b.token));
+
+// Group alphabetically
+const grouped = {};
+for(const p of verifiedProjects){
+  const letter = p.token[1].toUpperCase();
+  if(!grouped[letter]) grouped[letter] = [];
+  grouped[letter].push(p);
+}
+
+// Render Verified
+const ledgerList = document.getElementById('ledgerList');
+for(const letter of Object.keys(grouped).sort()){
+  const group = document.createElement('div');
+  group.className = 'token-group';
+  group.innerHTML = `<h3>${letter}</h3>
+    <ul>${grouped[letter].map(p=>`<li><a href="/certificates/${p.cert.toLowerCase()}.html" style="color:#f5f7f4;text-decoration:none;">${p.token}</a><span class="cert">${p.cert}</span></li>`).join('')}</ul>`;
+  ledgerList.appendChild(group);
+}
+
+// Render Pending
+const pendingList = document.getElementById('pendingList');
+pendingList.innerHTML = pendingProjects.map(p=>`<li>${p.token} — ${p.status}</li>`).join('');
 </script>
 </body>
 </html>
