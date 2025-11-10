@@ -92,7 +92,7 @@ footer{
 
 <main>
   <h1>Submit Your Token</h1>
-  <p>Apply for official verification on <strong>The RAD Ledger</strong> and prove your authenticity on XRPL.</p>
+  <p>Apply for official verification on <strong>The RAD Ledger</strong> and choose your certification level.</p>
 
   <form id="verifyForm">
     <label>Project Name</label>
@@ -116,6 +116,9 @@ footer{
     <label>Telegram</label>
     <input type="text" id="telegram">
 
+    <label>Lead Developer / Team Name</label>
+    <input type="text" id="developer" placeholder="Full name or team name" required>
+
     <label>Upload Token Logo</label>
     <input type="file" id="logo" accept="image/*">
 
@@ -123,18 +126,28 @@ footer{
     <textarea id="notes"></textarea>
   </form>
 
-  <div class="tier">
-    <h2>🧾 New Verification — $58.90 USD</h2>
-    <p>Full review, doxx check, and permanent Ledger certification.</p>
-    <div id="xrp58" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="verifyBtn">Pay with Xumm</button>
-  </div>
-
+  <!-- Tier 1 -->
   <div class="tier">
     <h2>🔁 Renewal / Update — $5.89 USD</h2>
-    <p>For existing certified projects updating info or metadata.</p>
+    <p>Update metadata or refresh a previously verified token listing.</p>
     <div id="xrp5" class="xrp-display">Fetching XRP conversion...</div>
     <button id="renewBtn">Pay with Xumm</button>
+  </div>
+
+  <!-- Tier 2 -->
+  <div class="tier">
+    <h2>🧾 Standard Verification — $25.89 USD</h2>
+    <p>Verified listing on The RAD Ledger. No doxx required.</p>
+    <div id="xrp25" class="xrp-display">Fetching XRP conversion...</div>
+    <button id="standardBtn">Pay with Xumm</button>
+  </div>
+
+  <!-- Tier 3 -->
+  <div class="tier">
+    <h2>✅ Full Certified (Doxxed) — $58.90 USD</h2>
+    <p>Includes doxx verification and an official <strong>RAD Certification Seal NFT</strong>.</p>
+    <div id="xrp58" class="xrp-display">Fetching XRP conversion...</div>
+    <button id="certBtn">Pay with Xumm</button>
   </div>
 
   <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
@@ -145,23 +158,26 @@ async function updateRates(){
   try{
     const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
     const data = await res.json();
-    const xrpPrice = data.ripple.usd;
-    const xrp58 = (58.90 / xrpPrice).toFixed(2);
-    const xrp5 = (5.89 / xrpPrice).toFixed(2);
-    document.getElementById("xrp58").textContent = `≈ ${xrp58} XRP (Live Rate: $${xrpPrice})`;
-    document.getElementById("xrp5").textContent = `≈ ${xrp5} XRP (Live Rate: $${xrpPrice})`;
+    const price = data.ripple.usd;
+    document.getElementById("xrp5").textContent = `≈ ${(5.89/price).toFixed(2)} XRP (Live $${price})`;
+    document.getElementById("xrp25").textContent = `≈ ${(25.89/price).toFixed(2)} XRP (Live $${price})`;
+    document.getElementById("xrp58").textContent = `≈ ${(58.90/price).toFixed(2)} XRP (Live $${price})`;
   }catch(e){
-    document.getElementById("xrp58").textContent = "Conversion unavailable";
     document.getElementById("xrp5").textContent = "Conversion unavailable";
+    document.getElementById("xrp25").textContent = "Conversion unavailable";
+    document.getElementById("xrp58").textContent = "Conversion unavailable";
   }
 }
 updateRates();
 
-document.getElementById("verifyBtn").onclick = () => {
-  alert("Xumm payment request for $58.90 verification would trigger here.\n\nAfter payment, your token enters review for certification on The RAD Ledger.");
-};
 document.getElementById("renewBtn").onclick = () => {
-  alert("Xumm payment request for $5.89 renewal would trigger here.\n\nOnly available for projects already certified on The RAD Ledger.");
+  alert("Xumm payment request for $5.89 Renewal / Update would trigger here.");
+};
+document.getElementById("standardBtn").onclick = () => {
+  alert("Xumm payment request for $25.89 Standard Verification would trigger here.");
+};
+document.getElementById("certBtn").onclick = () => {
+  alert("Xumm payment request for $58.90 Full Certified (Doxxed + Seal NFT) would trigger here.");
 };
 </script>
 
