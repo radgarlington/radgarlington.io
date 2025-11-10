@@ -2,224 +2,274 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>The RAD Ledger</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The RAD Ledger — Verified XRPL Projects</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
-  body{background:#f4f8ff;color:#1a1a1a;line-height:1.6;padding:16px;}
-  h1,h2{font-weight:700;}
-  a{color:#0066ff;text-decoration:none;}
-  a:hover{text-decoration:underline;}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 
-  /* header + back button */
-  .back-btn{
-    display:inline-block;
-    background:#e5f0ff;
-    color:#005ce6;
-    border:1px solid #c4dcff;
-    border-radius:6px;
-    padding:6px 12px;
-    font-size:14px;
-    margin-bottom:10px;
-    text-decoration:none;
-  }
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;
+  text-align:center;
+  padding:20px 10px 18px;
+  font-size:1.05rem;
+  font-weight:600;
+  line-height:1.4;
+  border-bottom:2px solid #062a5c;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.banner em{
+  display:block;
+  margin-top:6px;
+  font-style:italic;
+  font-weight:500;
+  opacity:.85;
+}
 
-  .header{
-    text-align:center;
-    background:#e9f2ff;
-    border:1px solid #c8ddff;
-    border-radius:8px;
-    padding:18px 10px;
-    margin-bottom:18px;
-  }
-  .header h1{color:#004aad;font-size:26px;margin-bottom:6px;}
-  .header p{color:#385b94;font-size:15px;}
+/* Header */
+header{text-align:center;padding:40px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff;position:relative}
+header h1{font-size:2.2rem;margin:0;color:#0A74D0}
+header p{margin:10px 0 0;color:#334155}
 
-  .legend{
-    text-align:center;
-    background:#f7faff;
-    border:1px solid #dbe6ff;
-    border-radius:8px;
-    padding:10px;
-    margin-bottom:20px;
-    font-size:15px;
-  }
-  .legend span{display:block;margin:4px 0;}
-  .gold{color:#d8b100;}
-  .blue{color:#0076ff;}
-  .gray{color:#555;}
+/* Back button */
+.back-btn {
+  position:absolute;
+  top:18px;
+  left:18px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.8rem;
+  letter-spacing:0.2px;
+  transition:opacity .2s ease,transform .2s ease;
+}
+.back-btn:hover {
+  opacity:.9;
+  transform:translateY(-1px);
+}
 
-  /* section cards */
-  .section{
-    background:#fff;
-    border:1px solid #d1e0ff;
-    border-radius:10px;
-    padding:16px 14px;
-    margin-bottom:20px;
-    box-shadow:0 1px 4px rgba(0,0,0,.05);
-  }
-  .section h2{
-    color:#004aad;
-    font-size:18px;
-    margin-bottom:10px;
-    display:flex;
-    align-items:center;
-    gap:6px;
-  }
+/* Legend */
+.legend{
+  background:#f1f5fb;
+  color:#0A74D0;
+  text-align:center;
+  font-size:.95rem;
+  font-weight:600;
+  padding:12px 8px;
+  border-bottom:2px solid #d7e7ff;
+  line-height:1.6;
+}
+.legend span{
+  display:block;
+  margin:4px 0;
+}
 
-  .token-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-top:1px dotted #d6e2ff;
-    padding:8px 0;
-  }
-  .token-row:first-of-type{border-top:none;}
-  .symbol{font-weight:600;}
-  .dot{font-size:18px;margin-right:4px;}
-  .cert{color:#d8b100;}
-  .ver{color:#0076ff;}
-  .unver{color:#555;}
-  .code{color:#666;font-size:14px;}
+main{max-width:900px;margin:30px auto;padding:0 16px}
+section{margin-bottom:40px}
+h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem}
+h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
+ul{list-style:none;padding:0;margin:0}
+li.entry{
+  margin:6px 0;
+  padding:8px 10px;
+  border-bottom:1px dashed #cbd5e1;
+  font-size:.95rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  border-radius:6px;
+  transition:background .15s ease;
+}
+li.entry:hover{background:#f1f7ff}
+li span{color:#475569;font-size:.9rem}
+footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
 
-  /* submit box */
-  .submit-box{
-    background:#f9fbff;
-    border:1px solid #cfdfff;
-    border-radius:10px;
-    padding:20px;
-    text-align:center;
-    margin-top:30px;
-  }
-  .submit-box h3{color:#004aad;margin-bottom:6px;}
-  .submit-box p{color:#385b94;margin-bottom:12px;}
-  .submit-btn{
-    background:#0066ff;
-    color:#fff;
-    border:none;
-    border-radius:6px;
-    padding:10px 20px;
-    font-size:15px;
-    cursor:pointer;
-  }
-
-  /* modal */
-  .modal{
-    display:none;
-    position:fixed;
-    top:0;left:0;width:100%;height:100%;
-    background:rgba(0,0,0,.55);
-    justify-content:center;
-    align-items:center;
-    z-index:50;
-  }
-  .modal-content{
-    background:#fff;
-    border-radius:10px;
-    width:90%;
-    max-width:400px;
-    padding:20px;
-    box-shadow:0 2px 10px rgba(0,0,0,.2);
-  }
-  .modal-content h2{color:#004aad;margin-bottom:10px;}
-  .close{
-    float:right;
-    font-size:20px;
-    cursor:pointer;
-    color:#777;
-  }
-  .modal-content p{margin:6px 0;font-size:15px;}
+/* Modal styling */
+.modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
+.modal-content{
+  background:#fff;color:#0f172a;margin:8% auto;padding:20px;
+  border:2px solid #d0e3ff;border-radius:10px;width:90%;max-width:500px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25)
+}
+.close{float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0}
+.close:hover{color:#083c80}
+.modal-content a{color:#0A74D0;text-decoration:none;font-weight:bold}
+.checkmark{color:#0A74D0;font-weight:bold}
 </style>
 </head>
-
 <body>
 
-<a href="#" class="back-btn">← Back</a>
+<div class="banner">
+  🚧 The Ledger’s being built. Verified projects will appear soon.<br>
+  Don’t rush perfection.
+  <em>— Rad</em>
+</div>
 
-<div class="header">
+<header>
+  <a href="/" class="back-btn">← Back</a>
   <h1>The RAD Ledger</h1>
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
-</div>
+</header>
 
 <div class="legend">
-  <span class="gold">🟡 Certified — Doxxed + Seal NFT Verified</span>
-  <span class="blue">🔷 Verified — Non-Doxxed</span>
-  <span class="gray">⚫ Unverified — Auto-Listed from XRPL</span>
+  <span>🟡 Certified — Doxxed + Seal NFT Verified</span>
+  <span>🔷 Verified — Non-Doxxed</span>
+  <span>⚫ Unverified — Auto-Listed from XRPL</span>
 </div>
 
-<!-- CERTIFIED -->
-<div class="section">
-  <h2>🟡 Certified Projects</h2>
-  <div class="token-row" onclick="openModal('rad')">
-    <div><span class="dot cert">🟡</span><span class="symbol">$RAD</span></div>
-    <div class="code">XRPL-589-1</div>
-  </div>
-  <div class="token-row">
-    <div><span class="dot cert">🟡</span><span class="symbol">$BAG</span></div>
-    <div class="code">XRPL-589-2</div>
-  </div>
-  <div class="token-row">
-    <div><span class="dot cert">🟡</span><span class="symbol">$WCK</span></div>
-    <div class="code">XRPL-589-3</div>
-  </div>
-  <div class="token-row">
-    <div><span class="dot cert">🟡</span><span class="symbol">$XRP</span></div>
-    <div class="code">XRPL-589-0</div>
-  </div>
-</div>
+<main>
+  <section id="verified">
+    <h2>📜 Verified Projects</h2>
+    <div id="ledgerList"></div>
+  </section>
 
-<!-- VERIFIED -->
-<div class="section">
-  <h2>🔷 Verified Projects</h2>
-  <div class="token-row">
-    <div><span class="dot ver">🔷</span><span class="symbol">$RAD</span></div>
-    <div class="code">XRPL-589-4</div>
-  </div>
-</div>
+  <section class="submit-banner" style="background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0">
+    <h2>🧾 Submit Your Token</h2>
+    <p>Get your XRPL project officially verified by The RAD Ledger.</p>
+    <a href="/submit.html" class="back-btn" style="position:relative;top:auto;left:auto;background:#0A74D0;padding:10px 16px;border-radius:8px;font-size:.9rem;">Submit for Verification</a>
+  </section>
+</main>
 
-<!-- UNVERIFIED -->
-<div class="section">
-  <h2>⚫ Unverified Projects</h2>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$ARMY</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$ATM</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$DROP</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$SIGMA</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$PHNIX</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$PONGO</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$FUZZY</span></div><div class="code">XRPL-AUTO</div></div>
-  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$DONNIE</span></div><div class="code">XRPL-AUTO</div></div>
-</div>
+<footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
 
-<!-- SUBMIT -->
-<div class="submit-box">
-  <h3>🧾 Submit Your Token</h3>
-  <p>Get your XRPL project officially verified by The RAD Ledger.</p>
-  <button class="submit-btn">Submit for Verification</button>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="radModal">
+<!-- Modal -->
+<div id="tokenModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeModal('rad')">&times;</span>
-    <h2>$RAD</h2>
-    <p><strong>Certificate:</strong> XRPL-589-1</p>
-    <p><strong>Tier:</strong> Certified</p>
-    <p><strong>Developer:</strong> mrcauliman</p>
-    <p><strong>Developer 𝕏:</strong> <a href="https://x.com/mrcauliman" target="_blank">@mrcauliman</a></p>
-    <p><strong>Doxxed:</strong> ✅ Doxxed</p>
-    <p><strong>Issuer:</strong> rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</p>
-    <p><strong>Website:</strong> <a href="https://radgarlington.io" target="_blank">radgarlington.io</a></p>
-    <p><strong>Email:</strong> <a href="mailto:info@radgarlington.io">info@radgarlington.io</a></p>
-    <p><strong>Social:</strong> <a href="https://x.com/mrcauliman" target="_blank">𝕏</a> | <a href="#" target="_blank">Telegram</a></p>
-    <p><strong>Seal NFT:</strong> <a href="#" target="_blank">View Seal NFT</a></p>
+    <span class="close">&times;</span>
+    <h2 id="modalToken">$RAD</h2>
+    <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
+    <p><strong>Tier:</strong> <span id="modalTier"></span></p>
+    <p><strong>Developer:</strong> <span id="modalDev"></span></p>
+    <p><strong>Developer 𝕏:</strong> <a id="modalDevX" href="#" target="_blank"></a></p>
+    <p><strong>Doxxed:</strong> <span id="modalDoxxed"></span></p>
+    <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
+    <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
+    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
 
 <script>
-function openModal(id){document.getElementById(id+'Modal').style.display='flex';}
-function closeModal(id){document.getElementById(id+'Modal').style.display='none';}
-</script>
+const verified=[
+  {
+    token:"$XRP",
+    cert:"XRPL-589-0",
+    issuer:"rXRPMainnetAddress",
+    website:"https://xrpl.org",
+    dev:"Ripple Labs",
+    devx:"https://x.com/Ripple",
+    email:"info@ripple.com",
+    x:"https://x.com/Ripple",
+    tg:"#",
+    tier:"Certified",
+    doxxed:true,
+    certified:true,
+    nft:"#"
+  },
+  {
+    token:"$RAD",
+    cert:"XRPL-589-1",
+    issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",
+    website:"https://radgarlington.io",
+    dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
+    email:"info@radgarlington.io",
+    x:"https://x.com/mrcauliman",
+    tg:"https://t.me/mrcauliman",
+    tier:"Certified",
+    doxxed:true,
+    certified:true,
+    nft:"https://xrpscan.com/nft/12345"
+  },
+  {
+    token:"$BAG",
+    cert:"XRPL-589-2",
+    issuer:"rBAGMintAddress",
+    website:"https://getthebag.io",
+    dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
+    email:"info@getthebag.io",
+    x:"https://x.com/mrcauliman",
+    tg:"https://t.me/mrcauliman",
+    tier:"Certified",
+    doxxed:true,
+    certified:true,
+    nft:"https://xrpscan.com/nft/23456"
+  },
+  {
+    token:"$WCK",
+    cert:"XRPL-589-3",
+    issuer:"rWCKMintAddress",
+    website:"https://wicktoken.net",
+    dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
+    email:"info@wicktoken.net",
+    x:"https://x.com/mrcauliman",
+    tg:"https://t.me/mrcauliman",
+    tier:"Certified",
+    doxxed:true,
+    certified:true,
+    nft:"https://xrpscan.com/nft/34567"
+  }
+];
 
+// alphabetical grouping
+verified.sort((a,b)=>a.token.localeCompare(b.token));
+const grouped={};
+for(const p of verified){
+  const l=p.token[1].toUpperCase();
+  if(!grouped[l])grouped[l]=[];
+  grouped[l].push(p);
+}
+
+const ledger=document.getElementById('ledgerList');
+for(const l of Object.keys(grouped).sort()){
+  const div=document.createElement('div');
+  div.innerHTML=`<h3>${l}</h3>
+  <ul>${grouped[l].map(p=>{
+    const icon=p.certified?'🟡':'🔷';
+    const tooltip=p.certified?'Certified Listing — Doxxed + Seal NFT Verified':'Verified Listing — Non-Doxxed';
+    return `<li class="entry" title="${tooltip}" data-token='${JSON.stringify(p)}'>
+              <span>${icon} ${p.token}</span>
+              <span>${p.cert}</span>
+            </li>`;
+  }).join('')}</ul>`;
+  ledger.appendChild(div);
+}
+
+// modal logic
+const modal=document.getElementById('tokenModal');
+const close=document.querySelector('.close');
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('entry')||e.target.closest('.entry')){
+    const li=e.target.closest('.entry');
+    const data=JSON.parse(li.dataset.token);
+    document.getElementById('modalToken').textContent=data.token;
+    document.getElementById('modalCert').textContent=data.cert;
+    document.getElementById('modalTier').textContent=data.tier;
+    document.getElementById('modalDev').textContent=data.dev;
+    document.getElementById('modalDevX').href=data.devx;
+    document.getElementById('modalDevX').textContent=data.devx.replace("https://x.com/","@");
+    document.getElementById('modalDoxxed').innerHTML=data.doxxed?'<span class="checkmark">✅</span> Doxxed':'❌ Undoxxed';
+    document.getElementById('modalIssuer').textContent=data.issuer;
+    document.getElementById('modalWebsite').textContent=data.website;
+    document.getElementById('modalWebsite').href=data.website;
+    document.getElementById('modalEmail').textContent=data.email;
+    document.getElementById('modalX').href=data.x;
+    document.getElementById('modalTG').href=data.tg;
+    document.getElementById('modalNFT').innerHTML=data.certified?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:'—';
+    modal.style.display='block';
+  }
+});
+close.onclick=()=>modal.style.display='none';
+window.onclick=e=>{if(e.target==modal)modal.style.display='none'};
+</script>
 </body>
 </html>
