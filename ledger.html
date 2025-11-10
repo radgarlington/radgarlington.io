@@ -7,7 +7,7 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
-header{text-align:center;padding:40px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff}
+header{text-align:center;padding:40px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff;position:relative}
 header h1{font-size:2.2rem;margin:0;color:#0A74D0}
 header p{margin:10px 0 0;color:#334155}
 main{max-width:900px;margin:30px auto;padding:0 16px}
@@ -40,9 +40,29 @@ li span{color:#475569;font-size:.9rem}
 .badge.certified{background:#0A74D0;color:#fff}
 .seal-icon{margin-left:6px;font-size:1rem;color:gold}
 .submit-banner{background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0}
-.btn{display:inline-flex;align-items:center;justify-content:center;background:#0A74D0;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin:6px}
-.btn:hover{opacity:.9}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#0A74D0;color:#fff;padding:10px 16px;border-radius:8px;
+  text-decoration:none;font-weight:700;margin:6px;transition:opacity .2s ease,transform .2s ease;
+}
+.btn:hover{opacity:.9;transform:translateY(-1px)}
 footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
+
+/* Back button */
+.back-btn{
+  position:absolute;
+  top:20px;
+  left:20px;
+  background:#0A74D0;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:.9rem;
+  transition:opacity .2s ease,transform .2s ease;
+}
+.back-btn:hover{opacity:.9;transform:translateY(-1px)}
 
 /* Modal styling */
 .modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
@@ -58,7 +78,9 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </style>
 </head>
 <body>
+
 <header>
+  <a href="/" class="back-btn">← Back</a>
   <h1>The RAD Ledger</h1>
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
