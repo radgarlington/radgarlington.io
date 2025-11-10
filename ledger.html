@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>The RAD Ledger — Verified XRPL Projects</title>
+<title>The RAD Ledger — Source of Truth</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
@@ -45,8 +45,7 @@ header p{margin:10px 0 0;color:#334155}
 .legend span{display:block;margin:4px 0}
 
 main{max-width:900px;margin:30px auto;padding:0 16px}
-section{margin-bottom:40px}
-h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem}
+h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem;margin-bottom:14px}
 h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
 ul{list-style:none;padding:0;margin:0}
 li.entry{
@@ -92,14 +91,9 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </div>
 
 <main>
-  <section id="verified">
-    <h2>📜 Verified Projects</h2>
+  <section id="ledger">
+    <h2>📜 All Projects on The Ledger</h2>
     <div id="ledgerList"></div>
-  </section>
-
-  <section id="unverified">
-    <h2>⚫ Unverified — Auto-Listed from XRPL</h2>
-    <div id="unverifiedList"></div>
   </section>
 
   <section class="submit-banner" style="background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0">
@@ -130,25 +124,35 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </div>
 
 <script>
-/* ---------- CERTIFIED / VERIFIED ---------- */
-const verified=[
-  {token:"$XRP",cert:"XRPL-589-0",issuer:"rXRPMainnetAddress",website:"https://xrpl.org",dev:"Ripple Labs",devx:"https://x.com/Ripple",email:"info@ripple.com",x:"https://x.com/Ripple",tg:"#",tier:"Certified",doxxed:true,certified:true,nft:"#"},
-  {token:"$RAD",cert:"XRPL-589-1",issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@radgarlington.io",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",tier:"Certified",doxxed:true,certified:true,nft:"https://xrpscan.com/nft/12345"},
-  {token:"$BAG",cert:"XRPL-589-2",issuer:"rBAGMintAddress",website:"https://getthebag.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@getthebag.io",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",tier:"Certified",doxxed:true,certified:true,nft:"https://xrpscan.com/nft/23456"},
-  {token:"$WCK",cert:"XRPL-589-3",issuer:"rWCKMintAddress",website:"https://wicktoken.net",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@wicktoken.net",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",tier:"Certified",doxxed:true,certified:true,nft:"https://xrpscan.com/nft/34567"}
+/* Certified + Verified + Unverified Merged List */
+const certified=[
+  {token:"$XRP",cert:"XRPL-589-0",tier:"Certified",certified:true,doxxed:true,issuer:"rXRPMainnetAddress",website:"https://xrpl.org",dev:"Ripple Labs",devx:"https://x.com/Ripple",email:"info@ripple.com",x:"https://x.com/Ripple",tg:"#",nft:"#"},
+  {token:"$RAD",cert:"XRPL-589-1",tier:"Certified",certified:true,doxxed:true,issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@radgarlington.io",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/12345"},
+  {token:"$BAG",cert:"XRPL-589-2",tier:"Certified",certified:true,doxxed:true,issuer:"rBAGMintAddress",website:"https://getthebag.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@getthebag.io",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/23456"},
+  {token:"$WCK",cert:"XRPL-589-3",tier:"Certified",certified:true,doxxed:true,issuer:"rWCKMintAddress",website:"https://wicktoken.net",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"info@wicktoken.net",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/34567"}
 ];
 
-verified.sort((a,b)=>a.token.localeCompare(b.token));
-const grouped={};
-for(const p of verified){const l=p.token[1].toUpperCase();if(!grouped[l])grouped[l]=[];grouped[l].push(p);}
+const verified=[]; // placeholder if needed later
+
+const unverified=["$ATM","$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE","$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG","$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER","$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XARCADE","$XPLAY","$XGOLD","$XPUNK","$XRPG","$XBEAR","$XDUCK","$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XHERO","$XMETA","$XMOON","$XCAT","$XOWL","$XDOG","$XRAT","$XTIGER","$XRAVEN","$XFOX","$XWOLF","$XRHINO","$XRABBIT","$XUNICORN","$XBAGEL","$XMEMES","$XRPLDOGE","$XRPLCAT","$XRPLPEPE","$XRPLFROG","$XRPLAPE","$XRPLBULL","$XRPLSHIB","$XRPLBABY","$XCOINZ","$XMONK","$XKNIGHT","$XGOD","$XSUN","$XEARTH","$XSHARK","$XPANDA","$XGIRAFFE","$XRPLKING","$XRPLQUEEN","$XRPLRUG","$XRPLMONEY","$XRPLFAMILY","$XRPLWORLD"];
+
+const all=[]; all.push(...certified,...verified,...unverified.map(t=>({token:t,tier:"Unverified",cert:"XRPL-AUTO"})));
+
 const ledger=document.getElementById('ledgerList');
+const grouped={};
+all.sort((a,b)=>a.token.localeCompare(b.token));
+for(const p of all){
+  const l=p.token[1].toUpperCase();
+  if(!grouped[l])grouped[l]=[];
+  grouped[l].push(p);
+}
 for(const l of Object.keys(grouped).sort()){
   const div=document.createElement('div');
   div.innerHTML=`<h3>${l}</h3>
   <ul>${grouped[l].map(p=>{
-    const icon=p.certified?'🟡':'🔷';
-    const tip=p.certified?'Certified Listing — Doxxed + Seal NFT Verified':'Verified Listing — Non-Doxxed';
-    return `<li class="entry" title="${tip}" data-token='${JSON.stringify(p)}'>
+    const icon=p.tier==="Certified"?"🟡":(p.tier==="Verified"?"🔷":"⚫");
+    const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
+    return `<li class="entry" ${attr}>
               <span>${icon} ${p.token}</span>
               <span>${p.cert}</span>
             </li>`;
@@ -156,22 +160,13 @@ for(const l of Object.keys(grouped).sort()){
   ledger.appendChild(div);
 }
 
-/* ---------- UNVERIFIED LIST ---------- */
-const unverified=[
-"$ATM","$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE","$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG","$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER","$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XARCADE","$XPLAY","$XGOLD","$XPUNK","$XRPG","$XBEAR","$XDUCK","$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XHERO","$XMETA","$XMOON","$XCAT","$XOWL","$XDOG","$XRAT","$XTIGER","$XRAVEN","$XFOX","$XWOLF","$XRHINO","$XRABBIT","$XUNICORN","$XBAGEL","$XMEMES","$XRPLDOGE","$XRPLCAT","$XRPLPEPE","$XRPLFROG","$XRPLAPE","$XRPLBULL","$XRPLSHIB","$XRPLBABY","$XCOINZ","$XMONK","$XKNIGHT","$XGOD","$XSUN","$XEARTH","$XSHARK","$XPANDA","$XGIRAFFE","$XRPLKING","$XRPLQUEEN","$XRPLRUG","$XRPLMONEY","$XRPLFAMILY","$XRPLWORLD"
-];
-
-const ulist=document.getElementById('unverifiedList');
-ulist.innerHTML="<ul>"+unverified.sort().map(t=>`
-<li class="entry"><span>⚫ ${t}</span><span>XRPL-AUTO</span></li>`).join("")+"</ul>";
-
-/* ---------- MODAL ---------- */
+/* Modal Logic */
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 document.addEventListener('click',e=>{
   if(e.target.classList.contains('entry')||e.target.closest('.entry')){
     const li=e.target.closest('.entry');
-    if(!li.dataset.token)return;  // skip unverified
+    if(!li.dataset.token)return;
     const data=JSON.parse(li.dataset.token);
     document.getElementById('modalToken').textContent=data.token;
     document.getElementById('modalCert').textContent=data.cert;
