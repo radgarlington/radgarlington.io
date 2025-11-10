@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>The RAD Ledger — Submit Verification</title>
+<link rel="preconnect" href="https://api.coingecko.com" crossorigin>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:#0b1b13;
+    color:#f5f7f4;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  }
+  main{
+    max-width:720px;
+    margin:40px auto;
+    padding:24px;
+    background:#0f241a;
+    border:1px solid #173524;
+    border-radius:8px;
+    box-shadow:0 0 20px rgba(0,0,0,.4);
+  }
+  h1{margin:0 0 12px;font-size:1.8rem;text-align:center;color:#2fbf6b}
+  p{opacity:.85;font-size:.95rem;text-align:center}
+  label{display:block;margin:10px 0 4px;font-weight:600;font-size:.9rem}
+  input,textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #173524;
+    border-radius:4px;
+    background:#0b1b13;
+    color:#f5f7f4;
+  }
+  textarea{min-height:80px;resize:vertical}
+  .tier{
+    border:1px solid #173524;
+    border-radius:6px;
+    margin-top:20px;
+    padding:16px;
+    background:#0d2217;
+  }
+  .tier h2{margin:0 0 4px;font-size:1.1rem;color:#ffe175}
+  .tier p{margin:4px 0 12px;font-size:.9rem;opacity:.9}
+  button{
+    background:#2fbf6b;
+    border:none;
+    border-radius:4px;
+    color:#020703;
+    font-weight:700;
+    font-size:1rem;
+    padding:10px 16px;
+    cursor:pointer;
+    transition:.2s;
+  }
+  button:hover{background:#249a55}
+  .xrp-display{font-size:.9rem;opacity:.9;margin-top:6px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Submit Your Token for Verification</h1>
+  <p>Fill out the form below to apply for official certification on <strong>The RAD Ledger</strong>.</p>
+
+  <form id="verifyForm">
+    <label>Project Name</label>
+    <input type="text" required>
+
+    <label>Token Ticker</label>
+    <input type="text" required>
+
+    <label>Issuer Address</label>
+    <input type="text" required>
+
+    <label>Website</label>
+    <input type="url">
+
+    <label>Email</label>
+    <input type="email">
+
+    <label>𝕏 (Twitter)</label>
+    <input type="text">
+
+    <label>Telegram</label>
+    <input type="text">
+
+    <label>Upload Token Logo</label>
+    <input type="file" accept="image/*">
+
+    <label>Notes / Team Info</label>
+    <textarea></textarea>
+  </form>
+
+  <section class="tier">
+    <h2>🧾 New Verification — $58.90 USD</h2>
+    <p>Full review, doxx check, and permanent Ledger certification.</p>
+    <div id="xrp58" class="xrp-display">Fetching XRP conversion...</div>
+    <button id="verifyBtn">Pay with Xumm</button>
+  </section>
+
+  <section class="tier">
+    <h2>🔁 Renewal / Update — $5.89 USD</h2>
+    <p>For existing certified projects updating info or metadata.</p>
+    <div id="xrp5" class="xrp-display">Fetching XRP conversion...</div>
+    <button id="renewBtn">Pay with Xumm</button>
+  </section>
+</main>
+
+<script>
+async function updateRates(){
+  try{
+    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
+    const data = await res.json();
+    const xrpPrice = data.ripple.usd;
+    const xrp58 = (58.90 / xrpPrice).toFixed(2);
+    const xrp5 = (5.89 / xrpPrice).toFixed(2);
+    document.getElementById("xrp58").textContent = `≈ ${xrp58} XRP (Live Rate: $${xrpPrice})`;
+    document.getElementById("xrp5").textContent = `≈ ${xrp5} XRP (Live Rate: $${xrpPrice})`;
+  }catch(e){
+    document.getElementById("xrp58").textContent = "Conversion unavailable";
+    document.getElementById("xrp5").textContent = "Conversion unavailable";
+  }
+}
+updateRates();
+
+document.getElementById("verifyBtn").onclick = ()=>alert("Xumm payment request for $58.90 (verification) would trigger here.");
+document.getElementById("renewBtn").onclick = ()=>alert("Xumm payment request for $5.89 (renewal) would trigger here.");
+</script>
+</body>
+</html>
