@@ -3,132 +3,223 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>The RAD Ledger — Source of Truth</title>
+<title>The RAD Ledger</title>
 
 <style>
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
-  body{background:#0b0f14;color:#e8e8e8;line-height:1.6;padding:20px;}
-  h1,h2{font-weight:700;text-transform:uppercase;letter-spacing:1px;}
-  a{color:#57b4ff;text-decoration:none;}
+  body{background:#f4f8ff;color:#1a1a1a;line-height:1.6;padding:16px;}
+  h1,h2{font-weight:700;}
+  a{color:#0066ff;text-decoration:none;}
   a:hover{text-decoration:underline;}
 
-  .banner{
+  /* header + back button */
+  .back-btn{
+    display:inline-block;
+    background:#e5f0ff;
+    color:#005ce6;
+    border:1px solid #c4dcff;
+    border-radius:6px;
+    padding:6px 12px;
+    font-size:14px;
+    margin-bottom:10px;
+    text-decoration:none;
+  }
+
+  .header{
     text-align:center;
-    background:linear-gradient(90deg,#0c1218,#0e1822);
-    border:1px solid #1b2836;
-    border-radius:6px;
-    padding:14px;
-    font-size:14px;
-    margin-bottom:25px;
-    color:#9fb5cc;
-  }
-  .banner strong{color:#57b4ff;}
-
-  .panel{
-    background:#10161d;
-    border:1px solid #1a2633;
+    background:#e9f2ff;
+    border:1px solid #c8ddff;
     border-radius:8px;
+    padding:18px 10px;
+    margin-bottom:18px;
+  }
+  .header h1{color:#004aad;font-size:26px;margin-bottom:6px;}
+  .header p{color:#385b94;font-size:15px;}
+
+  .legend{
+    text-align:center;
+    background:#f7faff;
+    border:1px solid #dbe6ff;
+    border-radius:8px;
+    padding:10px;
+    margin-bottom:20px;
+    font-size:15px;
+  }
+  .legend span{display:block;margin:4px 0;}
+  .gold{color:#d8b100;}
+  .blue{color:#0076ff;}
+  .gray{color:#555;}
+
+  /* section cards */
+  .section{
+    background:#fff;
+    border:1px solid #d1e0ff;
+    border-radius:10px;
+    padding:16px 14px;
+    margin-bottom:20px;
+    box-shadow:0 1px 4px rgba(0,0,0,.05);
+  }
+  .section h2{
+    color:#004aad;
+    font-size:18px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  .token-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px dotted #d6e2ff;
+    padding:8px 0;
+  }
+  .token-row:first-of-type{border-top:none;}
+  .symbol{font-weight:600;}
+  .dot{font-size:18px;margin-right:4px;}
+  .cert{color:#d8b100;}
+  .ver{color:#0076ff;}
+  .unver{color:#555;}
+  .code{color:#666;font-size:14px;}
+
+  /* submit box */
+  .submit-box{
+    background:#f9fbff;
+    border:1px solid #cfdfff;
+    border-radius:10px;
     padding:20px;
-    margin-bottom:30px;
-    box-shadow:0 0 10px rgba(0,0,0,.3);
+    text-align:center;
+    margin-top:30px;
   }
-
-  .tier{margin-bottom:10px;}
-  .tier span{font-weight:700;margin-right:6px;}
-  .certified{color:#ffe175;}
-  .verified{color:#57b4ff;}
-  .unverified{color:#777;}
-
-  table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:16px;
-    background:#0f141b;
-    border:1px solid #1a2633;
+  .submit-box h3{color:#004aad;margin-bottom:6px;}
+  .submit-box p{color:#385b94;margin-bottom:12px;}
+  .submit-btn{
+    background:#0066ff;
+    color:#fff;
+    border:none;
     border-radius:6px;
-    overflow:hidden;
+    padding:10px 20px;
+    font-size:15px;
+    cursor:pointer;
   }
-  th,td{
-    padding:12px;
-    border-bottom:1px solid #1a2633;
-    font-size:14px;
-    text-align:left;
+
+  /* modal */
+  .modal{
+    display:none;
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,.55);
+    justify-content:center;
+    align-items:center;
+    z-index:50;
   }
-  th{
-    background:#121a23;
-    text-transform:uppercase;
-    font-size:12px;
-    letter-spacing:1px;
-    color:#9fb5cc;
+  .modal-content{
+    background:#fff;
+    border-radius:10px;
+    width:90%;
+    max-width:400px;
+    padding:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.2);
   }
-  tr:hover{background:#17212d;}
-  .desc{color:#9fb5cc;font-size:13px;margin-top:4px;}
-  .section{margin-top:40px;}
-  .footer{text-align:center;font-size:13px;margin-top:40px;color:#7f8fa5;}
-  @media(max-width:700px){th,td{font-size:12px;padding:10px;}}
+  .modal-content h2{color:#004aad;margin-bottom:10px;}
+  .close{
+    float:right;
+    font-size:20px;
+    cursor:pointer;
+    color:#777;
+  }
+  .modal-content p{margin:6px 0;font-size:15px;}
 </style>
 </head>
 
 <body>
 
-<div class="banner">
-  ⚙️ <strong>The RAD Ledger</strong> is under construction — the source of truth is being written.<br>
-  Coming soon. – RAD
+<a href="#" class="back-btn">← Back</a>
+
+<div class="header">
+  <h1>The RAD Ledger</h1>
+  <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </div>
 
-<h1 style="text-align:center;margin-bottom:10px;color:#57b4ff;">🧾 THE RAD LEDGER</h1>
-<p style="text-align:center;color:#9fb5cc;margin-bottom:25px;">The Source of Truth on XRPL — where verified builders rise, and ghosts disappear.</p>
-
-<div class="panel">
-  <h2 style="margin-bottom:10px;color:#57b4ff;">Ledger Status Tiers</h2>
-  <div class="tier certified">🟡 Certified — Doxxed + Seal NFT Verified<br><span class="desc">Full verification. Public dev. Ledger seal issued.</span></div>
-  <div class="tier verified">🔷 Verified — Non-Doxxed<br><span class="desc">Project reviewed. On-ledger data confirmed. No dev ID.</span></div>
-  <div class="tier unverified">⚫ Unverified — Auto-Listed from XRPL<br><span class="desc">Public token data only. No submission. No verification. Just existence.</span></div>
+<div class="legend">
+  <span class="gold">🟡 Certified — Doxxed + Seal NFT Verified</span>
+  <span class="blue">🔷 Verified — Non-Doxxed</span>
+  <span class="gray">⚫ Unverified — Auto-Listed from XRPL</span>
 </div>
 
-<div class="panel">
-  <h2 class="certified">🟡 Certified Projects</h2>
-  <table>
-    <tr><th>Ticker</th><th>Project Name</th><th>Description</th></tr>
-    <tr>
-      <td>$XRP</td>
-      <td>XRP Ledger Native Asset</td>
-      <td>The foundation — the truth layer of the ledger. The one everything else measures against.</td>
-    </tr>
-  </table>
+<!-- CERTIFIED -->
+<div class="section">
+  <h2>🟡 Certified Projects</h2>
+  <div class="token-row" onclick="openModal('rad')">
+    <div><span class="dot cert">🟡</span><span class="symbol">$RAD</span></div>
+    <div class="code">XRPL-589-1</div>
+  </div>
+  <div class="token-row">
+    <div><span class="dot cert">🟡</span><span class="symbol">$BAG</span></div>
+    <div class="code">XRPL-589-2</div>
+  </div>
+  <div class="token-row">
+    <div><span class="dot cert">🟡</span><span class="symbol">$WCK</span></div>
+    <div class="code">XRPL-589-3</div>
+  </div>
+  <div class="token-row">
+    <div><span class="dot cert">🟡</span><span class="symbol">$XRP</span></div>
+    <div class="code">XRPL-589-0</div>
+  </div>
 </div>
 
-<div class="panel">
-  <h2 class="verified">🔷 Verified Projects</h2>
-  <p class="desc">Projects reviewed and validated but awaiting full doxxed certification.</p>
-  <table>
-    <tr><th>Ticker</th><th>Project Name</th><th>Status</th></tr>
-    <tr><td>$RAD</td><td>RAD Garlington</td><td>Ledger creator. Seal NFT verification in progress.</td></tr>
-    <tr><td>$BAG</td><td>GetTheBag.io</td><td>On-ledger data confirmed. Awaiting Seal issuance.</td></tr>
-    <tr><td>$WCK</td><td>Continental Wick</td><td>Registered and under verification cycle.</td></tr>
-  </table>
+<!-- VERIFIED -->
+<div class="section">
+  <h2>🔷 Verified Projects</h2>
+  <div class="token-row">
+    <div><span class="dot ver">🔷</span><span class="symbol">$RAD</span></div>
+    <div class="code">XRPL-589-4</div>
+  </div>
 </div>
 
-<div class="panel">
-  <h2 class="unverified">⚫ Unverified — Auto-Listed from XRPL</h2>
-  <p class="desc">Public data indexed from the ledger. No submission, no verification — just existence.</p>
-  <table>
-    <tr><th>Ticker</th><th>Token Name</th><th>Notes / Source</th></tr>
-    <tr><td>$ATM</td><td>All The Money</td><td>Leading XRPL meme coin by volume — <a href="https://www.ainvest.com/news/xrp-news-today-meme-coins-dominate-xrpl-trading-volume-atm-leading-313-500-xrp-2506/?utm_source=radledger" target="_blank">ainvest</a></td></tr>
-    <tr><td>$ARMY</td><td>XRP Army</td><td>Community identity token — <a href="https://www.bitdegree.org/crypto/tutorials/best-xrp-meme-coins?utm_source=radledger" target="_blank">bitdegree</a></td></tr>
-    <tr><td>$DROP</td><td>DROP</td><td>Popular XRPL meme token — <a href="https://www.bitdegree.org/crypto/tutorials/best-xrp-meme-coins?utm_source=radledger" target="_blank">bitdegree</a></td></tr>
-    <tr><td>$SIGMA</td><td>SIGMA</td><td>Community meme token — <a href="https://cryptonews.com/cryptocurrency/best-xrp-meme-coins/?utm_source=radledger" target="_blank">cryptonews</a></td></tr>
-    <tr><td>$PHNIX</td><td>Phoenix</td><td>Rising meme project — <a href="https://cryptonews.com/cryptocurrency/best-xrp-meme-coins/?utm_source=radledger" target="_blank">cryptonews</a></td></tr>
-    <tr><td>$PONGO</td><td>PONGO</td><td>Large-supply meme coin — <a href="https://cryptonews.com/cryptocurrency/best-xrp-meme-coins/?utm_source=radledger" target="_blank">cryptonews</a></td></tr>
-    <tr><td>$FUZZY</td><td>FUZZY</td><td>High-volume XRPL meme — <a href="https://www.geckoterminal.com/category/meme/xrpl?utm_source=radledger" target="_blank">geckoterminal</a></td></tr>
-    <tr><td>$DONNIE</td><td>DONNIE</td><td>Ranked among active meme projects — <a href="https://www.ainvest.com/news/xrp-news-today-meme-coins-dominate-xrpl-trading-volume-atm-leading-313-500-xrp-2506/?utm_source=radledger" target="_blank">ainvest</a></td></tr>
-  </table>
+<!-- UNVERIFIED -->
+<div class="section">
+  <h2>⚫ Unverified Projects</h2>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$ARMY</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$ATM</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$DROP</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$SIGMA</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$PHNIX</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$PONGO</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$FUZZY</span></div><div class="code">XRPL-AUTO</div></div>
+  <div class="token-row"><div><span class="dot unver">⚫</span><span class="symbol">$DONNIE</span></div><div class="code">XRPL-AUTO</div></div>
 </div>
 
-<div class="footer">
-  🧾 radgarlington.io — The Source of Truth.<br>
-  The Ledger doesn’t debate. It documents. – RAD
+<!-- SUBMIT -->
+<div class="submit-box">
+  <h3>🧾 Submit Your Token</h3>
+  <p>Get your XRPL project officially verified by The RAD Ledger.</p>
+  <button class="submit-btn">Submit for Verification</button>
 </div>
+
+<!-- MODAL -->
+<div class="modal" id="radModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('rad')">&times;</span>
+    <h2>$RAD</h2>
+    <p><strong>Certificate:</strong> XRPL-589-1</p>
+    <p><strong>Tier:</strong> Certified</p>
+    <p><strong>Developer:</strong> mrcauliman</p>
+    <p><strong>Developer 𝕏:</strong> <a href="https://x.com/mrcauliman" target="_blank">@mrcauliman</a></p>
+    <p><strong>Doxxed:</strong> ✅ Doxxed</p>
+    <p><strong>Issuer:</strong> rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</p>
+    <p><strong>Website:</strong> <a href="https://radgarlington.io" target="_blank">radgarlington.io</a></p>
+    <p><strong>Email:</strong> <a href="mailto:info@radgarlington.io">info@radgarlington.io</a></p>
+    <p><strong>Social:</strong> <a href="https://x.com/mrcauliman" target="_blank">𝕏</a> | <a href="#" target="_blank">Telegram</a></p>
+    <p><strong>Seal NFT:</strong> <a href="#" target="_blank">View Seal NFT</a></p>
+  </div>
+</div>
+
+<script>
+function openModal(id){document.getElementById(id+'Modal').style.display='flex';}
+function closeModal(id){document.getElementById(id+'Modal').style.display='none';}
+</script>
 
 </body>
 </html>
