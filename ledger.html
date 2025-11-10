@@ -7,51 +7,64 @@
 
 <style>
   *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
-  body{background:#000;color:#f5f5f5;line-height:1.6;padding:20px;}
+  body{background:#0b0f14;color:#e8e8e8;line-height:1.6;padding:20px;}
   h1,h2{font-weight:700;text-transform:uppercase;letter-spacing:1px;}
-  a{color:#2fbf6b;text-decoration:none;}
+  a{color:#57b4ff;text-decoration:none;}
   a:hover{text-decoration:underline;}
 
   .banner{
     text-align:center;
-    border:1px solid #222;
-    padding:16px;
+    background:linear-gradient(90deg,#0c1218,#0e1822);
+    border:1px solid #1b2836;
+    border-radius:6px;
+    padding:14px;
     font-size:14px;
     margin-bottom:25px;
-    background:#080808;
+    color:#9fb5cc;
   }
-  .banner strong{color:#ffe175;}
-  .tiers{
-    background:#0a0a0a;
-    border:1px solid #222;
-    border-radius:6px;
+  .banner strong{color:#57b4ff;}
+
+  .panel{
+    background:#10161d;
+    border:1px solid #1a2633;
+    border-radius:8px;
     padding:20px;
     margin-bottom:30px;
+    box-shadow:0 0 10px rgba(0,0,0,.3);
   }
-  .tier{margin-bottom:12px;}
+
+  .tier{margin-bottom:10px;}
   .tier span{font-weight:700;margin-right:6px;}
   .certified{color:#ffe175;}
-  .verified{color:#3ea3ff;}
-  .unverified{color:#555;}
+  .verified{color:#57b4ff;}
+  .unverified{color:#777;}
+
   table{
     width:100%;
     border-collapse:collapse;
-    margin-top:20px;
-    background:#060606;
+    margin-top:16px;
+    background:#0f141b;
+    border:1px solid #1a2633;
     border-radius:6px;
     overflow:hidden;
   }
   th,td{
     padding:12px;
-    border-bottom:1px solid #191919;
+    border-bottom:1px solid #1a2633;
     font-size:14px;
     text-align:left;
   }
-  th{background:#111;color:#888;text-transform:uppercase;font-size:12px;}
-  tr:hover{background:#141414;}
+  th{
+    background:#121a23;
+    text-transform:uppercase;
+    font-size:12px;
+    letter-spacing:1px;
+    color:#9fb5cc;
+  }
+  tr:hover{background:#17212d;}
+  .desc{color:#9fb5cc;font-size:13px;margin-top:4px;}
   .section{margin-top:40px;}
-  .desc{color:#999;font-size:13px;margin-top:4px;}
-  .footer{text-align:center;font-size:13px;margin-top:40px;color:#777;}
+  .footer{text-align:center;font-size:13px;margin-top:40px;color:#7f8fa5;}
   @media(max-width:700px){th,td{font-size:12px;padding:10px;}}
 </style>
 </head>
@@ -59,43 +72,46 @@
 <body>
 
 <div class="banner">
-  ⚙️ <strong>The RAD Ledger</strong> is under construction — the source of truth is being built. <br> Only the worthy will be remembered. – RAD
+  ⚙️ <strong>The RAD Ledger</strong> is under construction — the source of truth is being written.<br>
+  Coming soon. – RAD
 </div>
 
-<h1 style="text-align:center;margin-bottom:10px;color:#ffe175;">🧾 THE RAD LEDGER</h1>
-<p style="text-align:center;color:#aaa;margin-bottom:25px;">Where the noise ends and truth begins. Every project earns its mark — or fades.</p>
+<h1 style="text-align:center;margin-bottom:10px;color:#57b4ff;">🧾 THE RAD LEDGER</h1>
+<p style="text-align:center;color:#9fb5cc;margin-bottom:25px;">The Source of Truth on XRPL — where verified builders rise, and ghosts disappear.</p>
 
-<section class="tiers">
-  <h2 style="margin-bottom:10px;color:#ffe175;">Ledger Status Tiers</h2>
+<div class="panel">
+  <h2 style="margin-bottom:10px;color:#57b4ff;">Ledger Status Tiers</h2>
   <div class="tier certified">🟡 Certified — Doxxed + Seal NFT Verified<br><span class="desc">Full verification. Public dev. Ledger seal issued.</span></div>
   <div class="tier verified">🔷 Verified — Non-Doxxed<br><span class="desc">Project reviewed. On-ledger data confirmed. No dev ID.</span></div>
   <div class="tier unverified">⚫ Unverified — Auto-Listed from XRPL<br><span class="desc">Public token data only. No submission. No verification. Just existence.</span></div>
-</section>
+</div>
 
-<h2 style="color:#ffe175;">🟡 Certified Projects</h2>
-<table>
-  <tr><th>Ticker</th><th>Project Name</th><th>Description</th></tr>
-  <tr>
-    <td>$XRP</td>
-    <td>XRP Ledger Native Asset</td>
-    <td>The foundation — the truth layer of the ledger. The one everything else bows to.</td>
-  </tr>
-</table>
-
-<div class="section">
-  <h2 style="color:#3ea3ff;">🔷 Verified Projects</h2>
-  <p class="desc">Projects reviewed and validated but awaiting full doxxed certification.</p>
+<div class="panel">
+  <h2 class="certified">🟡 Certified Projects</h2>
   <table>
-    <tr><th>Ticker</th><th>Project Name</th><th>Status</th></tr>
-    <tr><td>$RAD</td><td>RAD Garlington</td><td>Ledger creator. Pending Seal NFT verification cycle.</td></tr>
-    <tr><td>$BAG</td><td>GetTheBag.io</td><td>Listed. Verification confirmed. Seal NFT pending.</td></tr>
-    <tr><td>$WCK</td><td>Continental Wick</td><td>Listed. Under review for Seal NFT issuance.</td></tr>
+    <tr><th>Ticker</th><th>Project Name</th><th>Description</th></tr>
+    <tr>
+      <td>$XRP</td>
+      <td>XRP Ledger Native Asset</td>
+      <td>The foundation — the truth layer of the ledger. The one everything else measures against.</td>
+    </tr>
   </table>
 </div>
 
-<div class="section">
-  <h2 style="color:#555;">⚫ Unverified — Auto-Listed from XRPL</h2>
-  <p class="desc">Public data scraped from the ledger. No submission, no verification — just proof of existence.</p>
+<div class="panel">
+  <h2 class="verified">🔷 Verified Projects</h2>
+  <p class="desc">Projects reviewed and validated but awaiting full doxxed certification.</p>
+  <table>
+    <tr><th>Ticker</th><th>Project Name</th><th>Status</th></tr>
+    <tr><td>$RAD</td><td>RAD Garlington</td><td>Ledger creator. Seal NFT verification in progress.</td></tr>
+    <tr><td>$BAG</td><td>GetTheBag.io</td><td>On-ledger data confirmed. Awaiting Seal issuance.</td></tr>
+    <tr><td>$WCK</td><td>Continental Wick</td><td>Registered and under verification cycle.</td></tr>
+  </table>
+</div>
+
+<div class="panel">
+  <h2 class="unverified">⚫ Unverified — Auto-Listed from XRPL</h2>
+  <p class="desc">Public data indexed from the ledger. No submission, no verification — just existence.</p>
   <table>
     <tr><th>Ticker</th><th>Token Name</th><th>Notes / Source</th></tr>
     <tr><td>$ATM</td><td>All The Money</td><td>Leading XRPL meme coin by volume — <a href="https://www.ainvest.com/news/xrp-news-today-meme-coins-dominate-xrpl-trading-volume-atm-leading-313-500-xrp-2506/?utm_source=radledger" target="_blank">ainvest</a></td></tr>
@@ -111,7 +127,7 @@
 
 <div class="footer">
   🧾 radgarlington.io — The Source of Truth.<br>
-  The Ledger doesn’t guess. It records. – RAD
+  The Ledger doesn’t debate. It documents. – RAD
 </div>
 
 </body>
