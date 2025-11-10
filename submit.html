@@ -15,17 +15,20 @@ main{
 h1{text-align:center;color:#0A74D0;margin:0 0 12px;font-size:1.9rem}
 p{text-align:center;color:#334155;margin:0 0 18px}
 label{display:block;margin:10px 0 4px;font-weight:600;color:#0f172a}
-input,textarea{
+input,textarea,select{
   width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;
   background:#fff;font-size:.95rem
 }
 textarea{min-height:80px;resize:vertical}
-.tier{margin-top:24px;padding:20px;border:2px solid #d0e3ff;border-radius:10px;background:#eaf3ff}
+.tier{
+  margin-top:24px;padding:20px;border:2px solid #d0e3ff;
+  border-radius:10px;background:#eaf3ff
+}
 .tier h2{margin:0 0 6px;font-size:1.1rem;color:#0A74D0}
 .tier p{margin:0 0 10px;color:#334155;font-size:.95rem}
 button{
-  background:#0A74D0;color:#fff;padding:10px 16px;border:none;border-radius:8px;
-  font-weight:700;cursor:pointer;font-size:1rem
+  background:#0A74D0;color:#fff;padding:10px 16px;border:none;
+  border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem
 }
 button:hover{opacity:.9}
 .xrp-display{font-size:.9rem;color:#475569;margin-top:4px}
@@ -42,16 +45,11 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
     <label>Certificate Number</label>
     <input type="text" id="certificate" placeholder="XRPL-589-#" required>
 
-    <label>Tier</label>
-    <select id="tier" required>
-      <option value="">Select...</option>
-      <option value="Renewal">$5.89 — Renewal / Update</option>
-      <option value="Standard">$25.89 — Standard Verification</option>
-      <option value="Certified">$58.90 — Full Certified (Doxxed + NFT Seal)</option>
-    </select>
-
     <label>Developer</label>
     <input type="text" id="developer" placeholder="Full name or team name" required>
+
+    <label>Developer 𝕏 Handle</label>
+    <input type="text" id="devTwitter" placeholder="@username">
 
     <label>Doxxed Status</label>
     <select id="doxxed" required>
@@ -70,10 +68,10 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
     <input type="text" id="issuer" required>
 
     <label>Website</label>
-    <input type="url" id="website">
+    <input type="url" id="website" placeholder="https://">
 
     <label>Email</label>
-    <input type="email" id="email">
+    <input type="email" id="email" placeholder="example@email.com">
 
     <label>Social (𝕏 Handle)</label>
     <input type="text" id="twitter" placeholder="@username">
@@ -109,23 +107,23 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 <script>
 async function updateRates(){
   try{
-    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
-    const data = await res.json();
-    const price = data.ripple.usd;
-    document.getElementById("xrp5").textContent = `≈ ${(5.89/price).toFixed(2)} XRP (Live $${price})`;
-    document.getElementById("xrp25").textContent = `≈ ${(25.89/price).toFixed(2)} XRP (Live $${price})`;
-    document.getElementById("xrp58").textContent = `≈ ${(58.90/price).toFixed(2)} XRP (Live $${price})`;
+    const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
+    const data=await res.json();
+    const price=data.ripple.usd;
+    document.getElementById("xrp5").textContent=`≈ ${(5.89/price).toFixed(2)} XRP (Live $${price})`;
+    document.getElementById("xrp25").textContent=`≈ ${(25.89/price).toFixed(2)} XRP (Live $${price})`;
+    document.getElementById("xrp58").textContent=`≈ ${(58.90/price).toFixed(2)} XRP (Live $${price})`;
   }catch(e){
-    document.getElementById("xrp5").textContent = "Conversion unavailable";
-    document.getElementById("xrp25").textContent = "Conversion unavailable";
-    document.getElementById("xrp58").textContent = "Conversion unavailable";
+    document.getElementById("xrp5").textContent="Conversion unavailable";
+    document.getElementById("xrp25").textContent="Conversion unavailable";
+    document.getElementById("xrp58").textContent="Conversion unavailable";
   }
 }
 updateRates();
 
-document.getElementById("renewBtn").onclick = () => alert("Renewal submission: $5.89");
-document.getElementById("standardBtn").onclick = () => alert("Standard verification: $25.89");
-document.getElementById("certBtn").onclick = () => alert("Certified listing: $58.90 (includes Seal NFT)");
+document.getElementById("renewBtn").onclick=()=>alert("Renewal submission: $5.89");
+document.getElementById("standardBtn").onclick=()=>alert("Standard verification: $25.89");
+document.getElementById("certBtn").onclick=()=>alert("Certified listing: $58.90 (includes Seal NFT)");
 </script>
 
 </body>
