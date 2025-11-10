@@ -82,15 +82,14 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 .confirm-box{
   background:linear-gradient(180deg,#0A74D0,#083c80);
   color:#fff;padding:40px 20px;border-radius:16px;text-align:center;
-  width:90%;max-width:420px;margin:20% auto;box-shadow:0 0 20px rgba(0,0,0,.5);
+  width:90%;max-width:440px;margin:20% auto;box-shadow:0 0 20px rgba(0,0,0,.5);
   animation:fadeIn .3s ease;
 }
-.confirm-box h2{
-  font-size:1.5rem;margin-bottom:8px;
-}
-.confirm-box .check{
-  font-size:2.5rem;color:#ffe175;margin-bottom:12px;
-}
+.confirm-box h2{font-size:1.5rem;margin-bottom:8px;}
+.confirm-box p{margin:6px 0;color:#dce8ff}
+.confirm-box .check{font-size:2.5rem;color:#ffe175;margin-bottom:12px;}
+.confirm-box a{color:#ffe175;text-decoration:none;font-weight:bold;}
+.confirm-box a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
@@ -149,23 +148,25 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 </main>
 
 <!-- Info Modals -->
-<div id="modal-renew" class="info-modal"><div class="info-content"><span class="close-info">&times;</span><h3>Renewal / Update</h3><p>Used to update existing listings or extend a certification period. No re-review required.</p></div></div>
-<div id="modal-standard" class="info-modal"><div class="info-content"><span class="close-info">&times;</span><h3>Standard Verification</h3><p>Includes full project verification and listing on The RAD Ledger. Non-doxxed submission.</p></div></div>
-<div id="modal-certified" class="info-modal"><div class="info-content"><span class="close-info">&times;</span><h3>Full Certified (Doxxed)</h3><p>Includes full identity verification and issuance of a Seal NFT on XRPL.</p></div></div>
+<div id="modal-renew" class="info-modal"><div class="info-content"><span class="close-info">&times;</span><h3>Renewal / Update</h3><p>Used to update existing listings or extend certification. No re-review required.</p></div></div>
+<div id="modal-standard" class="info-modal"><div class="info-content"><span class="close-info">&times;</span><h3>Standard Verification</h3><p>Includes full project verification and listing on The RAD Ledger.</p></div></div>
+<div id="modal-certified" class="info-modal"><div class="info-content"><span class="close-info">&times;</span><h3>Full Certified (Doxxed)</h3><p>Includes full identity verification, validation, and issuance of a Seal NFT on XRPL.</p></div></div>
 
 <!-- Payment Confirmation Modal -->
 <div id="confirmModal" class="confirm-modal">
   <div class="confirm-box">
     <div class="check">✅</div>
     <h2>Payment Verified</h2>
+    <p id="amountLine">Amount: — XRP</p>
+    <p><a id="txLink" href="#" target="_blank">View Transaction</a></p>
     <p>Transaction logged on The RAD Ledger.</p>
   </div>
 </div>
 
 <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 <script>
-const xumm = new Xumm("YOUR_RAD_API_KEY"); 
-const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu"; 
+const xumm = new Xumm("YOUR_RAD_API_KEY");
+const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu";
 
 async function updateRates(){
   try{
@@ -187,16 +188,19 @@ async function pay(amountUSD, memo){
     const price=(await res.json()).ripple.usd;
     const xrp=(amountUSD/price).toFixed(2);
     const payload = {
-      TransactionType: "Payment",
-      Destination: destination,
-      Amount: (xrp * 1_000_000).toFixed(0),
-      Memos: [{Memo:{MemoData:btoa(memo)}}]
+      TransactionType:"Payment",
+      Destination:destination,
+      Amount:(xrp * 1_000_000).toFixed(0),
+      Memos:[{Memo:{MemoData:btoa(memo)}}]
     };
     const request = await xumm.payload.createAndSubscribe(payload, e=>{
       if(e.data.signed){
-        // Show confirmation modal
+        const txid=e.data.txid || e.data.payloadResponse?.txid;
+        const amount=(xrp);
+        document.getElementById("amountLine").textContent=`Amount: ${amount} XRP`;
+        document.getElementById("txLink").href=`https://xrpscan.com/tx/${txid}`;
         document.getElementById("confirmModal").style.display="block";
-        setTimeout(()=>document.getElementById("confirmModal").style.display="none",4000);
+        setTimeout(()=>document.getElementById("confirmModal").style.display="none",6000);
       }
     });
     window.open(request.created.next.always);
@@ -209,7 +213,6 @@ document.getElementById("renewBtn").onclick=()=>pay(5.89,"RAD LEDGER - Renewal")
 document.getElementById("standardBtn").onclick=()=>pay(25.89,"RAD LEDGER - Standard Verification");
 document.getElementById("certBtn").onclick=()=>pay(58.90,"RAD LEDGER - Certified Listing");
 
-// Info modals
 document.querySelectorAll(".info-icon").forEach(icon=>{
   icon.addEventListener("click",()=>document.getElementById(`modal-${icon.dataset.info}`).style.display="block");
 });
