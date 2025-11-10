@@ -9,7 +9,7 @@
 body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 header{
   text-align:center;
-  padding:40px 10px 20px;
+  padding:52px 10px 20px; /* raised for clean spacing */
   background:#eaf3ff;
   border-bottom:2px solid #d7e7ff;
   position:relative;
@@ -61,10 +61,10 @@ button:hover{opacity:.9;transform:translateY(-1px)}
 .xrp-display{font-size:.9rem;color:#475569;margin-top:4px}
 footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 
-/* Back button — smaller version */
+/* Back button — raised up */
 .back-btn {
   position:absolute;
-  top:18px;
+  top:10px;
   left:18px;
   background:#0A74D0;
   color:#fff;
@@ -203,15 +203,19 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
   </div>
 </div>
 
+<script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 <script>
+const xumm = new Xumm("YOUR_API_KEY"); // Insert your Xumm API key
+const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu"; // RAD Treasury wallet
+
 async function updateRates(){
   try{
     const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
     const data=await res.json();
     const price=data.ripple.usd;
-    document.getElementById("xrp5").textContent=`≈ ${(5.89/price).toFixed(2)} XRP (Live $${price})`;
-    document.getElementById("xrp25").textContent=`≈ ${(25.89/price).toFixed(2)} XRP (Live $${price})`;
-    document.getElementById("xrp58").textContent=`≈ ${(58.90/price).toFixed(2)} XRP (Live $${price})`;
+    document.getElementById("xrp5").textContent=`≈ ${(5.89/price).toFixed(2)} XRP`;
+    document.getElementById("xrp25").textContent=`≈ ${(25.89/price).toFixed(2)} XRP`;
+    document.getElementById("xrp58").textContent=`≈ ${(58.90/price).toFixed(2)} XRP`;
   }catch(e){
     document.getElementById("xrp5").textContent="Conversion unavailable";
     document.getElementById("xrp25").textContent="Conversion unavailable";
@@ -220,32 +224,38 @@ async function updateRates(){
 }
 updateRates();
 
-// Payments (placeholder)
-document.getElementById("renewBtn").onclick=()=>alert("Renewal submission: $5.89");
-document.getElementById("standardBtn").onclick=()=>alert("Standard verification: $25.89");
-document.getElementById("certBtn").onclick=()=>alert("Certified listing: $58.90 (includes Seal NFT)");
+async function pay(amountUSD, memo){
+  try{
+    const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
+    const price=(await res.json()).ripple.usd;
+    const xrp=(amountUSD/price).toFixed(2);
+    const payload = {
+      TransactionType: "Payment",
+      Destination: destination,
+      Amount: (xrp * 1_000_000).toFixed(0),
+      Memos: [{Memo:{MemoData: btoa(memo)}}]
+    };
+    const request = await xumm.payload.createAndSubscribe(payload, e=>{
+      if(e.data.signed){alert("✅ Payment confirmed. Your submission is now logged for verification.");}
+    });
+    window.open(request.created.next.always);
+  }catch(err){
+    alert("Error initializing payment. Please retry.");
+  }
+}
+
+document.getElementById("renewBtn").onclick=()=>pay(5.89,"RAD LEDGER - Renewal");
+document.getElementById("standardBtn").onclick=()=>pay(25.89,"RAD LEDGER - Standard Verification");
+document.getElementById("certBtn").onclick=()=>pay(58.90,"RAD LEDGER - Certified Listing");
 
 // Info modals
-const modals={
-  renew:document.getElementById("modal-renew"),
-  standard:document.getElementById("modal-standard"),
-  certified:document.getElementById("modal-certified")
-};
 document.querySelectorAll(".info-icon").forEach(icon=>{
-  icon.addEventListener("click",()=>{
-    const key=icon.getAttribute("data-info");
-    modals[key].style.display="block";
-  });
+  icon.addEventListener("click",()=>document.getElementById(`modal-${icon.dataset.info}`).style.display="block");
 });
 document.querySelectorAll(".close-info").forEach(btn=>{
   btn.addEventListener("click",()=>btn.closest(".info-modal").style.display="none");
 });
-window.onclick=e=>{
-  if(e.target.classList.contains("info-modal")){
-    e.target.style.display="none";
-  }
-};
+window.onclick=e=>{if(e.target.classList.contains("info-modal"))e.target.style.display="none"};
 </script>
-
 </body>
 </html>
