@@ -15,12 +15,54 @@ section{margin-bottom:40px}
 h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem}
 h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
 ul{list-style:none;padding:0;margin:0}
-li{margin:6px 0;padding:6px 0;border-bottom:1px dashed #cbd5e1;font-size:.95rem;display:flex;justify-content:space-between}
+li{margin:6px 0;padding:6px 0;border-bottom:1px dashed #cbd5e1;font-size:.95rem;display:flex;justify-content:space-between;align-items:center}
 li span{color:#475569;font-size:.9rem}
+.badge{
+  display:inline-block;
+  font-size:.75rem;
+  padding:3px 6px;
+  border-radius:4px;
+  font-weight:600;
+  margin-left:6px;
+}
+.badge.renewal{background:#cbd5e1;color:#0f172a}
+.badge.standard{background:#dbeafe;color:#0A74D0}
+.badge.certified{background:#0A74D0;color:#fff}
 .submit-banner{background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;padding:28px;text-align:center;margin:40px 0}
 .btn{display:inline-flex;align-items:center;justify-content:center;background:#0A74D0;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin:6px}
 .btn:hover{opacity:.9}
 footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
+
+/* Modal styling */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0;top:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,.55);
+}
+.modal-content{
+  background:#fff;
+  color:#0f172a;
+  margin:8% auto;
+  padding:20px;
+  border:2px solid #d0e3ff;
+  border-radius:10px;
+  width:90%;
+  max-width:500px;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.close{
+  float:right;
+  font-size:1.5rem;
+  cursor:pointer;
+  color:#0A74D0;
+}
+.close:hover{color:#083c80}
+.modal-content a{color:#0A74D0;text-decoration:none;font-weight:bold}
+.checkmark{color:#0A74D0;font-weight:bold}
+.crossmark{color:#a8a8a8;font-weight:bold}
 </style>
 </head>
 <body>
@@ -49,12 +91,67 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 
 <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
 
+<!-- Token Info Modal -->
+<div id="tokenModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2 id="modalToken">$RAD</h2>
+    <p><strong>Certificate:</strong> <span id="modalCert">XRPL-589-1</span></p>
+    <p><strong>Tier:</strong> <span id="modalTier"></span></p>
+    <p><strong>Developer:</strong> <span id="modalDev"></span></p>
+    <p><strong>Doxxed:</strong> <span id="modalDoxxed"></span></p>
+    <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
+    <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
+    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
+  </div>
+</div>
+
 <script>
 const verified=[
-  {token:"$RAD",cert:"XRPL-589-1"},
-  {token:"$BAG",cert:"XRPL-589-2"},
-  {token:"$WCK",cert:"XRPL-589-3"}
+  {
+    token:"$RAD",
+    cert:"XRPL-589-1",
+    issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",
+    website:"https://radgarlington.io",
+    dev:"Rad Garlington",
+    email:"rad@radgarlington.io",
+    x:"https://x.com/radgarlington",
+    tg:"https://t.me/radgarlington",
+    tier:"Certified",
+    doxxed:true,
+    certified:true,
+    nft:"https://xrpscan.com/nft/12345"
+  },
+  {
+    token:"$BAG",
+    cert:"XRPL-589-2",
+    issuer:"rBAGMintAddress",
+    website:"https://getthebag.io",
+    dev:"mrcauliman",
+    email:"info@getthebag.io",
+    x:"https://x.com/getthebag_io",
+    tg:"https://t.me/bagxchange",
+    tier:"Standard",
+    doxxed:false,
+    certified:false
+  },
+  {
+    token:"$WCK",
+    cert:"XRPL-589-3",
+    issuer:"rWCKMintAddress",
+    website:"https://wicktoken.net",
+    dev:"Continental WICK",
+    email:"contact@wicktoken.net",
+    x:"https://x.com/wcktoken",
+    tg:"https://t.me/wicktoken",
+    tier:"Renewal",
+    doxxed:false,
+    certified:false
+  }
 ];
+
 const pending=[{token:"$ZENITH",status:"Pending Verification"}];
 verified.sort((a,b)=>a.token.localeCompare(b.token));
 const grouped={};
@@ -66,10 +163,45 @@ for(const p of verified){
 const ledger=document.getElementById('ledgerList');
 for(const l of Object.keys(grouped).sort()){
   const div=document.createElement('div');
-  div.innerHTML=`<h3>${l}</h3><ul>${grouped[l].map(p=>`<li><a href="/certificates/${p.cert.toLowerCase()}.html" style="color:#0f172a;text-decoration:none">${p.token}</a><span>${p.cert}</span></li>`).join('')}</ul>`;
+  div.innerHTML=`<h3>${l}</h3>
+  <ul>${grouped[l].map(p=>{
+    let badgeClass=p.tier.toLowerCase();
+    return `<li>
+      <a href="#" class="tokenLink" data-token='${JSON.stringify(p)}'>${p.token}</a>
+      <span>
+        ${p.cert}
+        <span class="badge ${badgeClass}">${p.tier}</span>
+      </span>
+    </li>`;
+  }).join('')}</ul>`;
   ledger.appendChild(div);
 }
 document.getElementById('pendingList').innerHTML=pending.map(p=>`<li>${p.token} — ${p.status}</li>`).join('');
+
+// Modal handling
+const modal=document.getElementById('tokenModal');
+const close=document.querySelector('.close');
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('tokenLink')){
+    e.preventDefault();
+    const data=JSON.parse(e.target.dataset.token);
+    document.getElementById('modalToken').textContent=data.token;
+    document.getElementById('modalCert').textContent=data.cert;
+    document.getElementById('modalTier').textContent=data.tier;
+    document.getElementById('modalDev').textContent=data.dev;
+    document.getElementById('modalDoxxed').innerHTML=data.doxxed ? '<span class="checkmark">✅</span> Doxxed' : '<span class="crossmark">❌</span> Undoxxed';
+    document.getElementById('modalIssuer').textContent=data.issuer;
+    document.getElementById('modalWebsite').textContent=data.website;
+    document.getElementById('modalWebsite').href=data.website;
+    document.getElementById('modalEmail').textContent=data.email;
+    document.getElementById('modalX').href=data.x;
+    document.getElementById('modalTG').href=data.tg;
+    document.getElementById('modalNFT').innerHTML=data.certified ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : '—';
+    modal.style.display='block';
+  }
+});
+close.onclick=()=>modal.style.display='none';
+window.onclick=e=>{if(e.target==modal)modal.style.display='none'};
 </script>
 </body>
 </html>
