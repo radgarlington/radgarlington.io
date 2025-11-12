@@ -170,6 +170,12 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
+
+    <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
+      <img id="modalLogo" src="" alt="Project Logo"
+           style="max-width:80px;max-height:80px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
+    </div>
+
     <h2 id="modalToken">$RAD</h2>
     <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
     <p><strong>Tier:</strong> <span id="modalTier"></span></p>
@@ -180,7 +186,7 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
     <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
-    <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
+    <p><strong>Seal NFT (Certified only):</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
 
@@ -201,6 +207,7 @@ const certified=[
     x:"https://x.com/Ripple",
     tg:"#",
     nft:"#",
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   },
@@ -215,9 +222,10 @@ const certified=[
     dev:"mrcauliman",
     devx:"https://x.com/mrcauliman",
     email:"radgarlington@gmail.com",
-    x:"https://x.com/mrcauliman",
-    tg:"https://t.me/mrcauliman",
+    x:"https://x.com/radgarlington",
+    tg:"https://t.me/radgarlington",
     nft:"https://xrpscan.com/nft/12345",
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   },
@@ -232,9 +240,10 @@ const certified=[
     dev:"mrcauliman",
     devx:"https://x.com/mrcauliman",
     email:"bagtokenhq@gmail.com",
-    x:"https://x.com/mrcauliman",
-    tg:"https://t.me/mrcauliman",
+    x:"https://x.com/getthebag_io",
+    tg:"https://t.me/getthebag_io",
     nft:"https://xrpscan.com/nft/23456",
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   },
@@ -249,9 +258,10 @@ const certified=[
     dev:"mrcauliman",
     devx:"https://x.com/mrcauliman",
     email:"wicktokenhq@gmail.com",
-    x:"https://x.com/mrcauliman",
-    tg:"https://t.me/mrcauliman",
+    x:"https://x.com/wcktoken",
+    tg:"https://t.me/wcktoken",
     nft:"https://xrpscan.com/nft/34567",
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   },
@@ -269,6 +279,7 @@ const certified=[
     x:"https://x.com/Ripple",
     tg:"#",
     nft:"#",
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   }
@@ -383,6 +394,17 @@ document.addEventListener('click',e=>{
   const modal=document.getElementById('tokenModal');
   if(li && li.dataset.token){
     const data=JSON.parse(li.dataset.token);
+
+    const logoWrap=document.getElementById('modalLogoWrap');
+    const logoImg=document.getElementById('modalLogo');
+    if(data.logo_url){
+      logoImg.src=data.logo_url;
+      logoWrap.style.display='block';
+    }else{
+      logoImg.src="";
+      logoWrap.style.display='none';
+    }
+
     document.getElementById('modalToken').textContent=data.token;
     document.getElementById('modalCert').textContent=data.cert;
     document.getElementById('modalTier').textContent=data.tier;
