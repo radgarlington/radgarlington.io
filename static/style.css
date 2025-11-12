@@ -1,0 +1,8 @@
+body{font-family:Arial,system-ui;background:#fff;color:#0f172a;margin:0}
+header{text-align:center;padding:40px 10px;background:#eaf3ff;border-bottom:2px solid #d7e7ff}
+h1{color:#0A74D0;margin:0}
+main{max-width:700px;margin:30px auto;padding:0 10px}
+.paybox{margin-top:30px;text-align:center}
+.paybox input{display:block;width:100%;margin:8px 0;padding:10px;border:1px solid #ccc;border-radius:5px}
+.paybox button{background:#0A74D0;color:#fff;padding:12px 20px;border:none;border-radius:5px;cursor:pointer}
+.entry{border:1px solid #d7e7ff;padding:10px;margin:10px 0;border-radius:5px}
