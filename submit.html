@@ -164,19 +164,9 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
   </div>
 </div>
 
-<script src="https://xumm.app/assets/cdn/xumm.js"></script>
+<script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
-  console.log("DOM loaded. Xumm is", typeof Xumm);
-});
-
-console.log("🧭 Initializing Xaman SDK…");
-const xumm = new Xumm("2a4001ce-0a75-42bc-8bd2-8ef096ac26d4");
-const destination = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu";
-
-xumm.on("ready", () => {
-  console.log("✅ Xaman SDK ready:", xumm.environment);
-});
+const xumm = new Xumm("YOUR_XUMM_API_KEY"); // same key as in app.py
 
 async function updateRates(){
   try{
@@ -194,33 +184,28 @@ updateRates();
 
 async function pay(amountUSD, memo){
   try{
-    console.log("🚀 Starting payment:", memo);
     const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
     const price=(await res.json()).ripple.usd;
     const xrp=(amountUSD/price).toFixed(2);
-    const payload = {
-      TransactionType:"Payment",
-      Destination:destination,
-      Amount:(xrp * 1_000_000).toFixed(0),
-      Memos:[{Memo:{MemoData:btoa(memo)}}]
-    };
+    const project=document.getElementById("tokenName").value.trim();
+    const issuer=document.getElementById("issuer").value.trim();
+    if(!project||!issuer){alert("Enter token name and issuer before payment.");return;}
 
-    const request = await xumm.payload.createAndSubscribe(payload, e=>{
-      if(e.data?.signed){
-        const txid=e.data.txid || e.data.payloadResponse?.txid;
-        console.log("✅ Signed transaction:", txid);
-        document.getElementById("amountLine").textContent=`Amount: ${xrp} XRP`;
-        document.getElementById("txLink").href=`https://xrpscan.com/tx/${txid}`;
-        document.getElementById("confirmModal").style.display="block";
-        setTimeout(()=>document.getElementById("confirmModal").style.display="none",6000);
-      } else if(e.data && e.data.signed === false) {
-        console.warn("❌ User declined the transaction");
-      }
+    const r=await fetch("/create_payload",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({project,issuer,amount:xrp})
     });
 
-    window.open(request.created.next.always, "_blank");
+    const d=await r.json();
+    if(d.next&&d.next.always){
+      window.open(d.next.always,"_blank");
+    }else{
+      alert("Error creating payment payload.");
+      console.log(d);
+    }
   }catch(err){
-    console.error("❌ Payment error:", err);
+    console.error("❌ Payment error:",err);
     alert("Payment initialization failed — check console for details.");
   }
 }
