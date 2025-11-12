@@ -3,52 +3,138 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>The RAD Ledger</title>
-<link rel="stylesheet" href="/static/style.css">
+<title>The RAD Ledger — Source of Truth</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,system-ui,sans-serif;background:#fff;color:#0f172a;line-height:1.5}
+header{
+  text-align:center;
+  padding:60px 10px 30px;
+  background:linear-gradient(90deg,#0A74D0,#083e9e);
+  color:#fff;
+}
+header h1{font-size:2.2rem;margin:0}
+header p{font-size:1rem;opacity:.9}
+.banner{
+  background:#fff3cd;
+  color:#664d03;
+  text-align:center;
+  padding:12px;
+  font-weight:bold;
+  border-bottom:1px solid #ffecb5;
+}
+main{
+  max-width:720px;
+  margin:40px auto;
+  padding:0 10px 80px;
+}
+h2{color:#0A74D0;margin-bottom:10px;text-transform:uppercase;font-size:1.1rem}
+.section{margin-top:30px}
+.entry{
+  border:1px solid #d7e7ff;
+  padding:10px 14px;
+  border-radius:6px;
+  margin:12px 0;
+  background:#f9fbff;
+}
+.entry strong{color:#0A74D0}
+footer{
+  text-align:center;
+  font-size:.9rem;
+  color:#64748b;
+  padding:20px 0 40px;
+  border-top:1px solid #e2e8f0;
+  margin-top:60px;
+}
+button{
+  background:#0A74D0;
+  color:#fff;
+  border:none;
+  border-radius:5px;
+  padding:12px 18px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:hover{background:#0959a0}
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:1px solid #cbd5e1;
+  border-radius:5px;
+}
+</style>
 <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 </head>
 <body>
+
+<div class="banner">⚙️ The RAD Ledger is under construction — coming soon. – RAD</div>
+
 <header>
   <h1>The RAD Ledger</h1>
-  <p>Certified Builders. On-Ledger Truth.</p>
+  <p>XRPL’s Registry of Verified and Certified Projects</p>
 </header>
 
 <main>
-  <div id="ledger"></div>
+  <h2>Verification Standards</h2>
+  <p>🟡 <b>Certified</b> — Doxxed developer + Seal NFT verified<br>
+     🔷 <b>Verified</b> — Transparent project, non-doxxed</p>
 
-  <div class="paybox">
+  <div class="section">
+    <h2>Verified Projects</h2>
+    <div id="ledger">Loading...</div>
+  </div>
+
+  <div class="section">
+    <h2>Submit Your Project</h2>
+    <p style="margin-bottom:10px;">To certify your project, send a 5 XRP ledger entry payment through Xaman below.</p>
+
     <input id="project" placeholder="Project Name">
     <input id="issuer" placeholder="Issuer Address">
     <button onclick="payCert()">Pay 5 XRP — Get Certified</button>
   </div>
 </main>
 
-<script>
-async function payCert(){
-  const project = document.getElementById('project').value;
-  const issuer = document.getElementById('issuer').value;
+<footer>© 2025 The RAD Ledger. All Rights Reserved.</footer>
 
-  const res = await fetch('/create_payload', {
-    method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({project, issuer, amount:5})
+<script>
+const xumm = new Xumm('YOUR_XUMM_API_KEY');
+
+async function payCert(){
+  const project=document.getElementById('project').value.trim();
+  const issuer=document.getElementById('issuer').value.trim();
+  if(!project||!issuer){alert('Enter project name and issuer.');return;}
+  const res=await fetch('/create_payload',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({project,issuer,amount:5})
   });
-  const data = await res.json();
-  if (data.next && data.next.always) window.open(data.next.always, '_blank');
+  const data=await res.json();
+  if(data.next&&data.next.always){
+    window.open(data.next.always,'_blank');
+  }else{
+    alert('Error creating payment payload.');
+  }
 }
 
 async function loadLedger(){
-  const r = await fetch('/ledger.json');
-  const d = await r.json();
-  const el = document.getElementById('ledger');
-  el.innerHTML = d.length ? d.map(p=>`
-    <div class="entry">
-      <strong>${p.project}</strong> — ${p.status}<br>
-      Issuer: ${p.issuer}<br>
-      Ledger: ${p.ledger_index}
-    </div>
-  `).join('') : '<p>No certified entries yet.</p>';
+  try{
+    const r=await fetch('/ledger.json');
+    const d=await r.json();
+    const el=document.getElementById('ledger');
+    el.innerHTML=d.length?d.map(p=>`
+      <div class="entry">
+        <strong>${p.project}</strong> — ${p.status}<br>
+        Issuer: ${p.issuer}<br>
+        Ledger: ${p.ledger_index}
+      </div>
+    `).join(''):'<p>No certified entries yet.</p>';
+  }catch(e){
+    document.getElementById('ledger').innerHTML='<p>Unable to load ledger entries.</p>';
+  }
 }
 loadLedger();
 </script>
+
 </body>
 </html>
