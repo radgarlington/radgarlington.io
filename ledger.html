@@ -36,10 +36,43 @@ header p{margin:10px 0 0;color:#334155}
 .annual ul{margin:6px 0 6px 18px;padding:0;list-style:disc}
 /* Legend */
 .legend{background:#f1f5fb;color:#0A74D0;text-align:center;font-size:.95rem;font-weight:600;
-  padding:12px 8px;border-bottom:2px solid #d7e7ff;line-height:1.6}
+  padding:12px 8px;border-bottom:1px solid #d7e7ff;line-height:1.6}
 .legend span{display:block;margin:4px 0}
-.filter-pill{cursor:pointer}
-.filter-pill.active{text-decoration:underline}
+/* View filters */
+.view-filters{
+  background:#eef2ff;
+  border-bottom:2px solid #d7e7ff;
+  padding:10px 12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.view-label{
+  font-size:.9rem;
+  font-weight:600;
+  color:#0A74D0;
+}
+.view-pill{
+  border:none;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:.85rem;
+  cursor:pointer;
+  background:#e5e7eb;
+  color:#111827;
+  font-weight:600;
+  transition:background .15s ease,transform .15s ease;
+}
+.view-pill:hover{
+  background:#d4d4d8;
+  transform:translateY(-1px);
+}
+.view-pill.active{
+  background:#0A74D0;
+  color:#f9fafb;
+}
 /* Rug Report Link */
 .rug-link-container{text-align:center;background:#fffbe6;border-bottom:2px solid #d7e7ff;padding:14px 0 22px}
 .rug-link{display:inline-block;background:#facc15;color:#111827;font-weight:700;font-size:.95rem;text-decoration:none;
@@ -96,10 +129,19 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </section>
 
 <div class="legend">
-  <span class="filter-pill" data-filter="certified">🟡 Certified — Doxxed + Seal NFT Verified (permanent, unless revoked)</span>
-  <span class="filter-pill" data-filter="verified">🔷 Verified — Non-Doxxed (12-month status, renewal required)</span>
-  <span class="filter-pill" data-filter="unverified">⚫ Unverified — Auto-Listed from XRPL</span>
-  <span class="filter-pill" data-filter="expired">⬛ Expired — Verified listing lapsed, renewal required</span>
+  <span>🟡 Certified — Doxxed + Seal NFT Verified</span>
+  <span>🔷 Verified — Non-Doxxed</span>
+  <span>⚫ Unverified — Auto-Listed from XRPL</span>
+  <span>⬛ Expired — Verified listing lapsed, renewal required</span>
+</div>
+
+<div class="view-filters">
+  <span class="view-label">View:</span>
+  <button class="view-pill active" data-filter="all">All</button>
+  <button class="view-pill" data-filter="certified">Certified</button>
+  <button class="view-pill" data-filter="verified">Verified</button>
+  <button class="view-pill" data-filter="unverified">Unverified</button>
+  <button class="view-pill" data-filter="expired">Expired</button>
 </div>
 
 <div class="rug-link-container">
@@ -159,8 +201,8 @@ const certified=[
     x:"https://x.com/Ripple",
     tg:"#",
     nft:"#",
-    registered_at:"2025-11-12", // adjust as needed
-    expires_at:null              // unlimited for Certified
+    registered_at:"2025-11-12",
+    expires_at:null
   },
   {
     token:"$RAD",
@@ -216,8 +258,7 @@ const certified=[
 ];
 
 const verified=[
-// When you add verified entries later, give them registered_at + expires_at
-// { token:"$EXAMPLE", cert:"XRPL-XXX", tier:"Verified", certified:false, doxxed:false, issuer:"...", website:"...", registered_at:"2025-11-12", expires_at:"2026-11-12", ... }
+// add verified entries later with registered_at + expires_at
 ];
 
 const unverified=[
@@ -275,16 +316,20 @@ let currentFilter="all";
 
 function buildProjects(){
   const base=[];
-  base.push(...certified,...verified,...unverified.map(t=>({
-    token:t,
-    tier:"Unverified",
-    cert:"XRPL-AUTO",
-    certified:false,
-    doxxed:false
-  })));
+  base.push(
+    ...certified,
+    ...verified,
+    ...unverified.map(t=>({
+      token:t,
+      tier:"Unverified",
+      cert:"XRPL-AUTO",
+      certified:false,
+      doxxed:false
+    }))
+  );
   allProjects = base.map(p=>{
-    const copy = {...p};
-    copy.category = getCategory(copy);
+    const copy={...p};
+    copy.category=getCategory(copy);
     return copy;
   }).sort((a,b)=>a.token.localeCompare(b.token));
 }
@@ -305,9 +350,9 @@ function renderLedger(){
   Object.keys(grouped).sort().forEach(l=>{
     const div=document.createElement('div');
     const itemsHtml = grouped[l].map(p=>{
-      const icon = getIcon(p);
-      const meta = getMeta(p);
-      const attr = p.certified ? `data-token='${JSON.stringify(p)}' title="${p.tier} Project"` : "";
+      const icon=getIcon(p);
+      const meta=getMeta(p);
+      const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
       return `<li class="entry" ${attr}><span>${icon} ${p.token}</span><span>${meta}</span></li>`;
     }).join('');
     div.innerHTML=`<h3>${l}</h3><ul>${itemsHtml}</ul>`;
@@ -315,7 +360,7 @@ function renderLedger(){
   });
 }
 
-// INTERACTION
+// MODAL + SCROLL
 document.addEventListener('click',e=>{
   const li=e.target.closest('.entry');
   const modal=document.getElementById('tokenModal');
@@ -349,21 +394,16 @@ document.querySelector('.submit-link').addEventListener('click',e=>{
   document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
 });
 
-// FILTER CONTROLS
+// INIT + FILTER BAR
 buildProjects();
 renderLedger();
 
-const filterPills=document.querySelectorAll('.legend .filter-pill');
+const filterPills=document.querySelectorAll('.view-filters .view-pill');
 filterPills.forEach(pill=>{
   pill.addEventListener('click',()=>{
     const filter=pill.dataset.filter;
-    if(currentFilter===filter){
-      currentFilter="all"; // tap again to reset
-      filterPills.forEach(p=>p.classList.remove('active'));
-    }else{
-      currentFilter=filter;
-      filterPills.forEach(p=>p.classList.toggle('active',p===pill));
-    }
+    currentFilter=filter;
+    filterPills.forEach(p=>p.classList.toggle('active',p===pill));
     renderLedger();
   });
 });
