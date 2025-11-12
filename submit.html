@@ -8,89 +8,37 @@
 html,body{-webkit-text-size-adjust:100%;touch-action:manipulation}
 *{box-sizing:border-box}
 body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
-header{
-  text-align:center;
-  padding:52px 10px 20px;
-  background:#eaf3ff;
-  border-bottom:2px solid #d7e7ff;
-  position:relative;
-}
+header{text-align:center;padding:52px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff;position:relative}
 header h1{font-size:2rem;margin:0;color:#0A74D0}
 header p{margin:10px 0 0;color:#334155}
-main{
-  max-width:720px;margin:40px auto;padding:24px;
-  border:2px solid #d0e3ff;border-radius:12px;background:#f8fbff;
-  box-shadow:0 6px 20px rgba(2,32,71,.08)
-}
+main{max-width:720px;margin:40px auto;padding:24px;border:2px solid #d0e3ff;border-radius:12px;background:#f8fbff;box-shadow:0 6px 20px rgba(2,32,71,.08)}
 label{display:block;margin:10px 0 4px;font-weight:600;color:#0f172a}
-input,textarea{
-  width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;
-  background:#fff;font-size:.95rem
-}
+input,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:6px;background:#fff;font-size:.95rem}
+input[readonly]{background:#f1f5f9;color:#64748b;cursor:not-allowed}
 textarea{min-height:80px;resize:vertical}
-.tier{
-  margin-top:24px;padding:20px;border:2px solid #d0e3ff;
-  border-radius:10px;background:#eaf3ff;position:relative
-}
-.tier h2{
-  margin:0 0 6px;font-size:1.1rem;color:#0A74D0;
-  display:flex;align-items:center;gap:6px;
-}
-.info-icon{
-  font-size:.9rem;background:#0A74D0;color:#fff;border-radius:50%;
-  width:18px;height:18px;display:inline-flex;align-items:center;
-  justify-content:center;cursor:pointer;font-weight:bold;
-}
-button{
-  background:#0A74D0;color:#fff;padding:10px 16px;border:none;
-  border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;
-  transition:opacity .2s ease,transform .2s ease;
-}
+.tier{margin-top:24px;padding:20px;border:2px solid #d0e3ff;border-radius:10px;background:#eaf3ff;position:relative}
+.tier h2{margin:0 0 6px;font-size:1.1rem;color:#0A74D0;display:flex;align-items:center;gap:6px}
+.info-icon{font-size:.9rem;background:#0A74D0;color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-weight:bold}
+button{background:#0A74D0;color:#fff;padding:10px 16px;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:1rem;transition:opacity .2s ease,transform .2s ease}
 button:hover{opacity:.9;transform:translateY(-1px)}
 .xrp-display{font-size:.9rem;color:#475569;margin-top:4px}
 footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
-
-/* Back button */
-.back-btn{
-  position:absolute;top:10px;left:18px;
-  background:#0A74D0;color:#fff;padding:6px 10px;border-radius:6px;
-  text-decoration:none;font-weight:600;font-size:0.8rem;
-  letter-spacing:0.2px;transition:opacity .2s ease,transform .2s ease;
-}
+.back-btn{position:absolute;top:10px;left:18px;background:#0A74D0;color:#fff;padding:6px 10px;border-radius:6px;text-decoration:none;font-weight:600;font-size:0.8rem;letter-spacing:0.2px;transition:opacity .2s ease,transform .2s ease}
 .back-btn:hover{opacity:.9;transform:translateY(-1px)}
-
-/* Info modal */
-.info-modal{
-  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,.55);z-index:999;animation:fadeIn .2s ease;
-}
-.info-content{
-  background:#fff;color:#0f172a;margin:15% auto;padding:20px;
-  border-radius:10px;border:2px solid #d0e3ff;width:90%;max-width:400px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
+.info-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:999;animation:fadeIn .2s ease}
+.info-content{background:#fff;color:#0f172a;margin:15% auto;padding:20px;border-radius:10px;border:2px solid #d0e3ff;width:90%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .info-content h3{margin-top:0;color:#0A74D0;font-size:1.2rem}
 .info-content p{font-size:.95rem;color:#334155}
 .close-info{float:right;font-size:1.3rem;cursor:pointer;color:#0A74D0}
 .close-info:hover{color:#083c80}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-/* Payment confirmation modal */
-.confirm-modal{
-  display:none;position:fixed;z-index:1000;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
-}
-.confirm-box{
-  background:linear-gradient(180deg,#0A74D0,#083c80);
-  color:#fff;padding:40px 20px;border-radius:16px;text-align:center;
-  width:90%;max-width:440px;margin:20% auto;box-shadow:0 0 20px rgba(0,0,0,.5);
-  animation:fadeIn .3s ease;
-}
-.confirm-box h2{font-size:1.5rem;margin-bottom:8px;}
+.confirm-modal{display:none;position:fixed;z-index:1000;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);backdrop-filter:blur(4px)}
+.confirm-box{background:linear-gradient(180deg,#0A74D0,#083c80);color:#fff;padding:40px 20px;border-radius:16px;text-align:center;width:90%;max-width:440px;margin:20% auto;box-shadow:0 0 20px rgba(0,0,0,.5);animation:fadeIn .3s ease}
+.confirm-box h2{font-size:1.5rem;margin-bottom:8px}
 .confirm-box p{margin:6px 0;color:#dce8ff}
-.confirm-box .check{font-size:2.5rem;color:#ffe175;margin-bottom:12px;}
-.confirm-box a{color:#ffe175;text-decoration:none;font-weight:bold;}
-.confirm-box a:hover{text-decoration:underline;}
+.confirm-box .check{font-size:2.5rem;color:#ffe175;margin-bottom:12px}
+.confirm-box a{color:#ffe175;text-decoration:none;font-weight:bold}
+.confirm-box a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
@@ -103,8 +51,8 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 
 <main>
   <form id="verifyForm">
-    <label>Certificate Number</label>
-    <input type="text" id="certificate" placeholder="XRPL-589-#" required>
+    <label>Certificate Number (Auto-Assigned)</label>
+    <input type="text" id="certificate" value="Auto-Generated by RAD" readonly>
     <label>Developer</label>
     <input type="text" id="developer" placeholder="Full name or team name" required>
     <label>Developer 𝕏 Handle</label>
@@ -166,7 +114,7 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 
 <script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 <script>
-const xumm = new Xumm("YOUR_XUMM_API_KEY"); // same key as in app.py
+const xumm = new Xumm("YOUR_XUMM_API_KEY");
 
 async function updateRates(){
   try{
@@ -182,7 +130,7 @@ async function updateRates(){
 }
 updateRates();
 
-async function pay(amountUSD, memo){
+async function pay(amountUSD,memo){
   try{
     const res=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
     const price=(await res.json()).ripple.usd;
@@ -190,37 +138,20 @@ async function pay(amountUSD, memo){
     const project=document.getElementById("tokenName").value.trim();
     const issuer=document.getElementById("issuer").value.trim();
     if(!project||!issuer){alert("Enter token name and issuer before payment.");return;}
-
-    const r=await fetch("/create_payload",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({project,issuer,amount:xrp})
-    });
-
+    const r=await fetch("/create_payload",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({project,issuer,amount:xrp})});
     const d=await r.json();
-    if(d.next&&d.next.always){
-      window.open(d.next.always,"_blank");
-    }else{
-      alert("Error creating payment payload.");
-      console.log(d);
-    }
-  }catch(err){
-    console.error("❌ Payment error:",err);
-    alert("Payment initialization failed — check console for details.");
-  }
+    if(d.next&&d.next.always){window.open(d.next.always,"_blank");}
+    else{alert("Error creating payment payload.");console.log(d);}
+  }catch(err){console.error("❌ Payment error:",err);alert("Payment initialization failed — check console for details.");}
 }
 
 document.getElementById("renewBtn").onclick=()=>pay(5.89,"RAD LEDGER - Renewal");
 document.getElementById("standardBtn").onclick=()=>pay(25.89,"RAD LEDGER - Standard Verification");
 document.getElementById("certBtn").onclick=()=>pay(58.90,"RAD LEDGER - Certified Listing");
 
-document.querySelectorAll(".info-icon").forEach(icon=>{
-  icon.addEventListener("click",()=>document.getElementById(`modal-${icon.dataset.info}`).style.display="block");
-});
-document.querySelectorAll(".close-info").forEach(btn=>{
-  btn.addEventListener("click",()=>btn.closest(".info-modal").style.display="none"));
-});
-window.onclick=e=>{if(e.target.classList.contains("info-modal"))e.target.style.display="none"};
+document.querySelectorAll(".info-icon").forEach(icon=>{icon.addEventListener("click",()=>document.getElementById(`modal-${icon.dataset.info}`).style.display="block");});
+document.querySelectorAll(".close-info").forEach(btn=>{btn.addEventListener("click",()=>btn.closest(".info-modal").style.display="none");});
+window.onclick=e=>{if(e.target.classList.contains("info-modal"))e.target.style.display="none";}
 </script>
 </body>
 </html>
