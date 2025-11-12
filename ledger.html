@@ -21,6 +21,19 @@ header p{margin:10px 0 0;color:#334155}
   padding:6px 10px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.8rem;letter-spacing:.2px;
   transition:opacity .2s ease,transform .2s ease}
 .back-btn:hover{opacity:.9;transform:translateY(-1px)}
+/* Annual notice */
+.annual{
+  max-width:760px;
+  margin:20px auto 24px;
+  padding:14px 16px;
+  border-radius:10px;
+  border:1px solid #d4e1ff;
+  background:#edf3ff;
+  color:#0f172a;
+  font-size:.95rem;
+  line-height:1.5;
+}
+.annual ul{margin:6px 0 6px 18px;padding:0;list-style:disc}
 /* Legend */
 .legend{background:#f1f5fb;color:#0A74D0;text-align:center;font-size:.95rem;font-weight:600;
   padding:12px 8px;border-bottom:2px solid #d7e7ff;line-height:1.6}
@@ -65,10 +78,26 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
 
+<section class="annual">
+  <strong>Annual Listings &amp; Renewals</strong>
+  <p style="margin:8px 0 4px">
+    Every project on The RAD Ledger is registered for <strong>12 months</strong> from the date of approval.
+  </p>
+  <ul>
+    <li>Initial listings are marked as <strong>Certified</strong>, <strong>Verified</strong>, or <strong>Unverified</strong> for one year.</li>
+    <li>To remain in good standing, projects must <strong>renew yearly</strong>.</li>
+    <li>Each renewal goes through the <strong>same vetting process</strong> as the initial listing to confirm nothing has changed.</li>
+  </ul>
+  <p style="margin:6px 0 0">
+    If a project does not renew on time, its status is treated as <strong>Expired</strong> until it passes review again.
+  </p>
+</section>
+
 <div class="legend">
-  <span>🟡 Certified — Doxxed + Seal NFT Verified</span>
-  <span>🔷 Verified — Non-Doxxed</span>
+  <span>🟡 Certified — Doxxed + Seal NFT Verified (12-month status)</span>
+  <span>🔷 Verified — Non-Doxxed (12-month status)</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
+  <span>⬛ Expired — Listing lapsed, renewal required</span>
 </div>
 
 <div class="rug-link-container">
