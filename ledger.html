@@ -7,111 +7,46 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
-
 /* Banner */
-.banner{
-  background:linear-gradient(90deg,#0A74D0,#083c80);
-  color:#fff;text-align:center;
-  padding:20px 10px 18px;
-  font-size:1.05rem;font-weight:600;line-height:1.4;
-  border-bottom:2px solid #062a5c;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
-}
+.banner{background:linear-gradient(90deg,#0A74D0,#083c80);color:#fff;text-align:center;
+  padding:20px 10px 18px;font-size:1.05rem;font-weight:600;line-height:1.4;
+  border-bottom:2px solid #062a5c;box-shadow:0 4px 10px rgba(0,0,0,.25)}
 .banner em{display:block;margin-top:6px;font-style:italic;font-weight:500;opacity:.85}
-
 /* Header */
 header{text-align:center;padding:52px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff;position:relative}
 header h1{font-size:2.2rem;margin:0;color:#0A74D0}
 header p{margin:10px 0 0;color:#334155}
-
 /* Back button */
-.back-btn{
-  position:absolute;top:10px;left:18px;
-  background:#0A74D0;color:#fff;padding:6px 10px;border-radius:6px;
-  text-decoration:none;font-weight:600;font-size:0.8rem;letter-spacing:0.2px;
-  transition:opacity .2s ease,transform .2s ease;
-}
+.back-btn{position:absolute;top:10px;left:18px;background:#0A74D0;color:#fff;
+  padding:6px 10px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.8rem;letter-spacing:.2px;
+  transition:opacity .2s ease,transform .2s ease}
 .back-btn:hover{opacity:.9;transform:translateY(-1px)}
-
 /* Legend */
-.legend{
-  background:#f1f5fb;color:#0A74D0;text-align:center;
-  font-size:.95rem;font-weight:600;padding:12px 8px;
-  border-bottom:2px solid #d7e7ff;line-height:1.6;
-}
+.legend{background:#f1f5fb;color:#0A74D0;text-align:center;font-size:.95rem;font-weight:600;
+  padding:12px 8px;border-bottom:2px solid #d7e7ff;line-height:1.6}
 .legend span{display:block;margin:4px 0}
-
 /* Rug Report Link */
-.rug-link-container{
-  text-align:center;
-  background:#fffbe6;
-  border-bottom:2px solid #d7e7ff;
-  padding:14px 0 22px;
-}
-.rug-link{
-  display:inline-block;
-  background:#facc15;
-  color:#111827;
-  font-weight:700;
-  font-size:.95rem;
-  text-decoration:none;
-  padding:9px 18px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-  border:2px solid #b45309;
-  transition:all .2s ease;
-}
-.rug-link:hover{
-  background:#fde047;
-  transform:translateY(-2px) scale(1.02);
-  box-shadow:0 3px 8px rgba(0,0,0,.3);
-}
-
+.rug-link-container{text-align:center;background:#fffbe6;border-bottom:2px solid #d7e7ff;padding:14px 0 22px}
+.rug-link{display:inline-block;background:#facc15;color:#111827;font-weight:700;font-size:.95rem;text-decoration:none;
+  padding:9px 18px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.25);border:2px solid #b45309;transition:all .2s ease}
+.rug-link:hover{background:#fde047;transform:translateY(-2px) scale(1.02);box-shadow:0 3px 8px rgba(0,0,0,.3)}
 /* Submit Link */
-.submit-link{
-  display:inline-block;
-  background:#0A74D0;
-  color:#fff;
-  font-weight:600;
-  font-size:.9rem;
-  text-decoration:none;
-  padding:8px 14px;
-  border-radius:8px;
-  margin:12px auto 24px;
-  box-shadow:0 2px 5px rgba(0,0,0,.2);
-  transition:background .2s ease,transform .2s ease;
-}
-.submit-link:hover{
-  background:#094d9d;
-  transform:translateY(-2px);
-}
-.submit-link-container{
-  text-align:center;
-  background:#f9fbff;
-  border-bottom:2px solid #d7e7ff;
-  padding-bottom:20px;
-}
-
+.submit-link{display:inline-block;background:#0A74D0;color:#fff;font-weight:600;font-size:.9rem;text-decoration:none;
+  padding:8px 14px;border-radius:8px;margin:12px auto 24px;box-shadow:0 2px 5px rgba(0,0,0,.2);transition:background .2s ease,transform .2s ease}
+.submit-link:hover{background:#094d9d;transform:translateY(-2px)}
+.submit-link-container{text-align:center;background:#f9fbff;border-bottom:2px solid #d7e7ff;padding-bottom:20px}
 main{max-width:900px;margin:30px auto;padding:0 16px}
 h2{color:#0A74D0;border-bottom:1px solid #cbd5e1;padding-bottom:4px;font-size:1.3rem;margin-bottom:14px}
 h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
 ul{list-style:none;padding:0;margin:0}
-li.entry{
-  margin:6px 0;padding:8px 10px;border-bottom:1px dashed #cbd5e1;
-  font-size:.95rem;display:flex;justify-content:space-between;align-items:center;
-  cursor:pointer;border-radius:6px;transition:background .15s ease;
-}
+li.entry{margin:6px 0;padding:8px 10px;border-bottom:1px dashed #cbd5e1;font-size:.95rem;
+  display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-radius:6px;transition:background .15s ease}
 li.entry:hover{background:#f1f7ff}
 li span{color:#475569;font-size:.9rem}
 footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
-
 /* Modal */
 .modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
-.modal-content{
-  background:#fff;color:#0f172a;margin:8% auto;padding:20px;
-  border:2px solid #d0e3ff;border-radius:10px;width:90%;max-width:500px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25)
-}
+.modal-content{background:#fff;color:#0f172a;margin:8% auto;padding:20px;border:2px solid #d0e3ff;border-radius:10px;width:90%;max-width:500px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .close{float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0}
 .close:hover{color:#083c80}
 .modal-content a{color:#0A74D0;text-decoration:none;font-weight:bold}
@@ -119,10 +54,8 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </style>
 </head>
 <body>
-
 <div class="banner">
-  🚧 The Ledger’s being built. Verified projects will appear soon.<br>
-  Don’t rush perfection.
+  🚧 The Ledger’s being built. Verified projects will appear soon.<br>Don’t rush perfection.
   <em>— Rad</em>
 </div>
 
@@ -161,7 +94,6 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 
 <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
 
-<!-- Modal -->
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -180,7 +112,6 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </div>
 
 <script>
-/* Certified + Verified + Unverified Unified List */
 const certified=[
   {token:"$XRP",cert:"XRPL-589-0",tier:"Certified",certified:true,doxxed:true,issuer:"rXRPMainnetAddress",website:"https://xrpl.org",dev:"Ripple Labs",devx:"https://x.com/Ripple",email:"info@ripple.com",x:"https://x.com/Ripple",tg:"#",nft:"#"},
   {token:"$RAD",cert:"XRPL-589-1",tier:"Certified",certified:true,doxxed:true,issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"radgarlington@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/12345"},
@@ -189,11 +120,27 @@ const certified=[
 ];
 
 const verified=[];
-const unverified=["$ATM","$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE","$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG","$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER","$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XARCADE","$XPLAY","$XGOLD","$XPUNK","$XRPG","$XBEAR","$XDUCK","$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XHERO","$XMETA","$XMOON","$XCAT","$XOWL","$XDOG","$XRAT","$XTIGER","$XRAVEN","$XFOX","$XWOLF","$XRHINO","$XRABBIT","$XUNICORN","$XBAGEL","$XMEMES","$XRPLDOGE","$XRPLCAT","$XRPLPEPE","$XRPLFROG","$XRPLAPE","$XRPLBULL","$XRPLSHIB","$XRPLBABY","$XCOINZ","$XMONK","$XKNIGHT","$XGOD","$XSUN","$XEARTH","$XSHARK","$XPANDA","$XGIRAFFE","$XRPLKING","$XRPLQUEEN","$XRPLRUG","$XRPLMONEY","$XRPLFAMILY","$XRPLWORLD"];
+const unverified=[
+  "$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE",
+  "$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG",
+  "$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER",
+  "$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XRPG",
+  "$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XMETA","$XMOON",
+  "$SOLO","$RPR","$CSC","$EVM","$OXP","$XLS","$LUX","$XPUNKZ",
+  "$XSP","$SGB","$XUS","$XAM","$XEG","$BTR","$XD","$XFT","$CSC2",
+  "$XPX","$XGM","$REAPER","$CLAW","$PWR","$XISO","$XKI","$XPT",
+  "$XRDOGE","$XDX","$XRZ","$SRT","$XRWA","$XRPNFT","$XLON",
+  "$XHUB","$XW","$XSPARK","$XFLR","$XUM","$XSR","$XDOGE",
+  "$XCRV","$XRW","$XGO","$XGB","$XGOAT","$XFAI","$XRAPP",
+  "$XDEFI","$XRPLX","$XRPLANET","$XRPLCORE","$XRPLTOKEN",
+  "$XRPLSAFE","$XRPLNEXUS","$XRPLMINT","$XRPLPAY","$XRPLSTORE",
+  "$XRPLDEX","$XRPLLABS","$XRPLCHAIN","$XRPLCASH","$XRPLCOIN",
+  "$XRPLXRP","$XRPLDEXFI","$XRPLSCAN","$XRPLTOOLS","$XRPLMETA",
+  "$XRPLWORLD"
+];
 
-const all=[]; 
+const all=[];
 all.push(...certified,...verified,...unverified.map(t=>({token:t,tier:"Unverified",cert:"XRPL-AUTO"})));
-
 const ledger=document.getElementById('ledgerList');
 const grouped={};
 all.sort((a,b)=>a.token.localeCompare(b.token));
@@ -208,42 +155,34 @@ for(const l of Object.keys(grouped).sort()){
   <ul>${grouped[l].map(p=>{
     const icon=p.tier==="Certified"?"🟡":(p.tier==="Verified"?"🔷":"⚫");
     const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
-    return `<li class="entry" ${attr}>
-              <span>${icon} ${p.token}</span>
-              <span>${p.cert}</span>
-            </li>`;
+    return `<li class="entry" ${attr}><span>${icon} ${p.token}</span><span>${p.cert}</span></li>`;
   }).join('')}</ul>`;
   ledger.appendChild(div);
 }
-
-/* Smooth Scroll to Submit Section */
 document.querySelector('.submit-link').addEventListener('click',e=>{
   e.preventDefault();
   document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
 });
-
-/* Modal Logic */
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 document.addEventListener('click',e=>{
-  if(e.target.classList.contains('entry')||e.target.closest('.entry')){
-    const li=e.target.closest('.entry');
-    if(!li.dataset.token)return;
+  const li=e.target.closest('.entry');
+  if(li && li.dataset.token){
     const data=JSON.parse(li.dataset.token);
     document.getElementById('modalToken').textContent=data.token;
     document.getElementById('modalCert').textContent=data.cert;
     document.getElementById('modalTier').textContent=data.tier;
-    document.getElementById('modalDev').textContent=data.dev;
-    document.getElementById('modalDevX').href=data.devx;
-    document.getElementById('modalDevX').textContent=data.devx.replace("https://x.com/","@");
+    document.getElementById('modalDev').textContent=data.dev||"—";
+    document.getElementById('modalDevX').href=data.devx||"#";
+    document.getElementById('modalDevX').textContent=data.devx?data.devx.replace("https://x.com/","@"):"";
     document.getElementById('modalDoxxed').innerHTML=data.doxxed?'<span class="checkmark">✅</span> Doxxed':'❌ Undoxxed';
-    document.getElementById('modalIssuer').textContent=data.issuer;
-    document.getElementById('modalWebsite').textContent=data.website;
-    document.getElementById('modalWebsite').href=data.website;
-    document.getElementById('modalEmail').textContent=data.email;
-    document.getElementById('modalX').href=data.x;
-    document.getElementById('modalTG').href=data.tg;
-    document.getElementById('modalNFT').innerHTML=data.certified?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:'—';
+    document.getElementById('modalIssuer').textContent=data.issuer||"—";
+    document.getElementById('modalWebsite').textContent=data.website||"—";
+    document.getElementById('modalWebsite').href=data.website||"#";
+    document.getElementById('modalEmail').textContent=data.email||"—";
+    document.getElementById('modalX').href=data.x||"#";
+    document.getElementById('modalTG').href=data.tg||"#";
+    document.getElementById('modalNFT').innerHTML=data.nft?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:'—';
     modal.style.display='block';
   }
 });
