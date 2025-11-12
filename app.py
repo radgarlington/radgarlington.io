@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
-import requests, json, os, base64
+import requests, json, os
 
 app = Flask(__name__)
 
 # ====================================================
-#  RAD Ledger Backend — Xaman Payment + Webhook Handler
+#  RAD Ledger Backend — Payment + Webhook Handler
 # ====================================================
 
 # Xaman (XUMM) API credentials
@@ -17,7 +17,6 @@ HEADERS = {
 }
 
 LEDGER_FILE = "/var/www/radgarlington.io/ledger.json"
-TREASURY_WALLET = "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu"  # Live treasury wallet
 
 # ---------- Utility ----------
 def load_ledger():
@@ -34,70 +33,64 @@ def save_ledger(data):
 
 @app.route("/create_payload", methods=["POST"])
 def create_payload():
-    """Create a Xaman payment payload for RAD Ledger certification"""
+    """
+    Create a Xaman (XUMM) payment payload for RAD Ledger certification
+    """
     data = request.get_json(force=True)
-    try:
-        amount_xrp = float(data.get("amount", 5))
-    except:
-        amount_xrp = 5.0
-
+    amount_xrp = float(data.get("amount", 5))
     project = data.get("project", "Unknown Project")
     issuer = data.get("issuer", "Unknown Issuer")
-
-    memo_text = f"RAD LEDGER | {project} | {issuer}"
-    memo_encoded = base64.b64encode(memo_text.encode()).decode()
 
     payload = {
         "txjson": {
             "TransactionType": "Payment",
-            "Destination": TREASURY_WALLET,
-            "Amount": str(int(amount_xrp * 1_000_000)),
-            "Memos": [{"Memo": {"MemoData": memo_encoded}}]
+            "Destination": "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu",  # your live RAD treasury wallet
+            "Amount": str(int(amount_xrp * 1_000_000))
         },
         "custom_meta": {
-            "instruction": f"RAD Ledger Certification: {project}",
-            "identifier": project
+            "identifier": project,
+            "instruction": f"RAD Ledger verification payment for {project} ({issuer})"
         },
         "options": {
-            "return_url": {"web": "https://radgarlington.io/ledger"}
+            "submit": False,
+            "return_url": {
+                "app": "https://radgarlington.io/ledger.html",
+                "web": "https://radgarlington.io/ledger.html"
+            }
         }
     }
 
     try:
-        resp = requests.post(
+        r = requests.post(
             "https://xumm.app/api/v1/platform/payload",
             headers=HEADERS,
             json=payload,
             timeout=10
         )
-        resp.raise_for_status()
-        payload_resp = resp.json()
-        return jsonify({
-            "uuid": payload_resp.get("uuid"),
-            "next": payload_resp.get("next"),
-            "refs": payload_resp.get("refs"),
-            "project": project,
-            "issuer": issuer
-        })
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        r.raise_for_status()
+        return jsonify(r.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": str(e), "payload": payload}), 500
 
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    """Handle webhook callbacks from Xaman when payments are signed"""
+    """
+    Receive webhook callbacks from Xaman when a payment is signed & confirmed.
+    Automatically logs new Certified entries to ledger.json.
+    """
     data = request.get_json(force=True)
     if not data or "payloadResponse" not in data:
         return "invalid", 400
 
     tx = data["payloadResponse"]
     if tx.get("signed") and tx.get("dispatched"):
-        project = tx.get("custom_meta", {}).get("identifier", "Unknown")
+        project = tx["custom_meta"]["identifier"]
         new_entry = {
             "project": project,
-            "issuer": tx.get("response", {}).get("account", "Unknown"),
+            "issuer": tx["response"]["account"],
             "status": "Certified",
-            "ledger_index": tx.get("response", {}).get("txid", "pending"),
+            "ledger_index": tx.get("txid", "pending"),
             "cert_number": "XRPL589"
         }
         ledger = load_ledger()
