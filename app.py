@@ -1,16 +1,24 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 import requests, json, os
 
 app = Flask(__name__)
 
-# Xaman API keys
-API_KEY = "YOUR_XUMM_API_KEY"
-API_SECRET = "YOUR_XUMM_API_SECRET"
-HEADERS = {"Content-Type": "application/json", "x-api-key": API_KEY, "x-api-secret": API_SECRET}
+# ====================================================
+#  RAD Ledger Backend — Payment + Webhook Handler Only
+# ====================================================
 
-LEDGER_FILE = "ledger.json"
+# Xaman (XUMM) API credentials
+API_KEY = "2a4001ce-0a75-42bc-8bd2-8ef096ac26d4"
+API_SECRET = "7c508def-83b7-41c9-b4a1-2c82da1d6a79"
+HEADERS = {
+    "Content-Type": "application/json",
+    "x-api-key": API_KEY,
+    "x-api-secret": API_SECRET
+}
 
-# Utility: read/write ledger file
+LEDGER_FILE = "/var/www/radgarlington.io/ledger.json"
+
+# ---------- Utility ----------
 def load_ledger():
     if os.path.exists(LEDGER_FILE):
         with open(LEDGER_FILE, "r") as f:
@@ -21,13 +29,14 @@ def save_ledger(data):
     with open(LEDGER_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+# ---------- Routes ----------
 
 @app.route("/create_payload", methods=["POST"])
 def create_payload():
-    data = request.get_json()
+    """
+    Create a Xaman (XUMM) payment payload for RAD Ledger certification
+    """
+    data = request.get_json(force=True)
     amount_xrp = data.get("amount", 5)
     project = data.get("project", "Unknown Project")
     issuer = data.get("issuer", "Unknown Issuer")
@@ -35,29 +44,43 @@ def create_payload():
     payload = {
         "txjson": {
             "TransactionType": "Payment",
-            "Destination": "rYourTreasuryWalletAddress",
+            "Destination": "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu",  # Replace with your live treasury wallet
             "Amount": str(int(amount_xrp * 1_000_000))
         },
         "custom_meta": {
-            "instruction": f"Payment for RAD Ledger certification: {project}",
+            "instruction": f"RAD Ledger certification payment: {project}",
             "identifier": project
         },
-        "options": {"return_url": {"web": "https://radgarlington.io"}}
+        "options": {
+            "return_url": {"web": "https://radgarlington.io/ledger.html"}
+        }
     }
 
-    resp = requests.post("https://xumm.app/api/v1/platform/payload", headers=HEADERS, json=payload)
-    payload_resp = resp.json()
-    return jsonify({
-        "uuid": payload_resp.get("uuid"),
-        "next": payload_resp.get("next"),
-        "refs": payload_resp.get("refs"),
-        "project": project,
-        "issuer": issuer
-    })
+    try:
+        resp = requests.post(
+            "https://xumm.app/api/v1/platform/payload",
+            headers=HEADERS,
+            json=payload
+        )
+        payload_resp = resp.json()
+        return jsonify({
+            "uuid": payload_resp.get("uuid"),
+            "next": payload_resp.get("next"),
+            "refs": payload_resp.get("refs"),
+            "project": project,
+            "issuer": issuer
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.get_json()
+    """
+    Receive webhook callbacks from Xaman when a payment is signed & confirmed.
+    Automatically logs new Certified entries to ledger.json.
+    """
+    data = request.get_json(force=True)
     if not data or "payloadResponse" not in data:
         return "invalid", 400
 
@@ -78,5 +101,7 @@ def webhook():
 
     return "ignored", 200
 
+
+# ---------- Main ----------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
