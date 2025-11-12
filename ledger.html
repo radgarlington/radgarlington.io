@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The RAD Ledger — Source of Truth</title>
 <style>
 *{box-sizing:border-box}
@@ -180,7 +180,7 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </div>
 
 <script>
-/* 1. Base Certified List */
+/* Certified + Verified + Unverified Unified List */
 const certified=[
   {token:"$XRP",cert:"XRPL-589-0",tier:"Certified",certified:true,doxxed:true,issuer:"rXRPMainnetAddress",website:"https://xrpl.org",dev:"Ripple Labs",devx:"https://x.com/Ripple",email:"info@ripple.com",x:"https://x.com/Ripple",tg:"#",nft:"#"},
   {token:"$RAD",cert:"XRPL-589-1",tier:"Certified",certified:true,doxxed:true,issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"radgarlington@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/12345"},
@@ -188,83 +188,67 @@ const certified=[
   {token:"$WCK",cert:"XRPL-589-3",tier:"Certified",certified:true,doxxed:true,issuer:"rWCKMintAddress",website:"https://wicktoken.net",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"wicktokenhq@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/34567"}
 ];
 
-/* 2. Unverified fallback (basic static list) */
-const staticUnverified=["$ARMY","$FUZZY","$DROP","$SIGMA"];
+const verified=[];
+const unverified=["$ATM","$ARMY","$DROP","$SIGMA","$PHNIX","$PONGO","$FUZZY","$DONNIE","$DOGECOIN","$SHIBA","$CORE","$NFT","$TOKEN","$XSHIB","$RUG","$XRUG","$BOBA","$CAT","$SPONGE","$XPEPE","$LEDGER","$XRPLNATION","$XCOIN","$MEME","$XDAO","$XCRYPTO","$XARCADE","$XPLAY","$XGOLD","$XPUNK","$XRPG","$XBEAR","$XDUCK","$BULL","$FLOKI","$APE","$BABYXRP","$XRPH","$XHERO","$XMETA","$XMOON","$XCAT","$XOWL","$XDOG","$XRAT","$XTIGER","$XRAVEN","$XFOX","$XWOLF","$XRHINO","$XRABBIT","$XUNICORN","$XBAGEL","$XMEMES","$XRPLDOGE","$XRPLCAT","$XRPLPEPE","$XRPLFROG","$XRPLAPE","$XRPLBULL","$XRPLSHIB","$XRPLBABY","$XCOINZ","$XMONK","$XKNIGHT","$XGOD","$XSUN","$XEARTH","$XSHARK","$XPANDA","$XGIRAFFE","$XRPLKING","$XRPLQUEEN","$XRPLRUG","$XRPLMONEY","$XRPLFAMILY","$XRPLWORLD"];
 
-/* 3. Function to render any list into grouped <ul> */
-function renderLedger(all){
-  const ledger=document.getElementById('ledgerList');
-  ledger.innerHTML='';
-  const grouped={};
-  all.sort((a,b)=>a.token.localeCompare(b.token));
-  for(const p of all){
-    const l=p.token[1]?.toUpperCase()||'#';
-    if(!grouped[l])grouped[l]=[];
-    grouped[l].push(p);
-  }
-  for(const l of Object.keys(grouped).sort()){
-    const div=document.createElement('div');
-    div.innerHTML=`<h3>${l}</h3>
-    <ul>${grouped[l].map(p=>{
-      const icon=p.tier==="Certified"?"🟡":(p.tier==="Verified"?"🔷":"⚫");
-      const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
-      return `<li class="entry" ${attr}><span>${icon} ${p.token}</span><span>${p.cert}</span></li>`;
-    }).join('')}</ul>`;
-    ledger.appendChild(div);
-  }
+const all=[]; 
+all.push(...certified,...verified,...unverified.map(t=>({token:t,tier:"Unverified",cert:"XRPL-AUTO"})));
+
+const ledger=document.getElementById('ledgerList');
+const grouped={};
+all.sort((a,b)=>a.token.localeCompare(b.token));
+for(const p of all){
+  const l=p.token[1].toUpperCase();
+  if(!grouped[l])grouped[l]=[];
+  grouped[l].push(p);
+}
+for(const l of Object.keys(grouped).sort()){
+  const div=document.createElement('div');
+  div.innerHTML=`<h3>${l}</h3>
+  <ul>${grouped[l].map(p=>{
+    const icon=p.tier==="Certified"?"🟡":(p.tier==="Verified"?"🔷":"⚫");
+    const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
+    return `<li class="entry" ${attr}>
+              <span>${icon} ${p.token}</span>
+              <span>${p.cert}</span>
+            </li>`;
+  }).join('')}</ul>`;
+  ledger.appendChild(div);
 }
 
-/* 4. Combine Certified + auto tokens from ledger_tokens.csv */
-async function loadTokens(){
-  const all=[...certified];
-  try{
-    const csv=await fetch('ledger_tokens.csv').then(r=>r.text());
-    const rows=csv.trim().split('\n');
-    rows.forEach(line=>{
-      const [currency,issuer,name,domain]=line.split(',');
-      if(!currency||currency==="currency")return;
-      all.push({token:`$${currency}`,cert:"XRPL-AUTO",tier:"Unverified",certified:false,doxxed:false,issuer,website:domain?`https://${domain}`:"#"});
-    });
-  }catch(err){
-    console.warn('No CSV loaded, using static list');
-    staticUnverified.forEach(t=>all.push({token:t,cert:"XRPL-AUTO",tier:"Unverified"}));
-  }
-  renderLedger(all);
-}
-loadTokens();
+/* Smooth Scroll to Submit Section */
+document.querySelector('.submit-link').addEventListener('click',e=>{
+  e.preventDefault();
+  document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
+});
 
-/* 5. Modal Logic */
+/* Modal Logic */
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 document.addEventListener('click',e=>{
-  const li=e.target.closest('.entry');
-  if(li && li.dataset.token){
+  if(e.target.classList.contains('entry')||e.target.closest('.entry')){
+    const li=e.target.closest('.entry');
+    if(!li.dataset.token)return;
     const data=JSON.parse(li.dataset.token);
     document.getElementById('modalToken').textContent=data.token;
     document.getElementById('modalCert').textContent=data.cert;
     document.getElementById('modalTier').textContent=data.tier;
-    document.getElementById('modalDev').textContent=data.dev||'—';
-    document.getElementById('modalDevX').href=data.devx||'#';
-    document.getElementById('modalDevX').textContent=data.devx?data.devx.replace('https://x.com/','@'):'';
+    document.getElementById('modalDev').textContent=data.dev;
+    document.getElementById('modalDevX').href=data.devx;
+    document.getElementById('modalDevX').textContent=data.devx.replace("https://x.com/","@");
     document.getElementById('modalDoxxed').innerHTML=data.doxxed?'<span class="checkmark">✅</span> Doxxed':'❌ Undoxxed';
-    document.getElementById('modalIssuer').textContent=data.issuer||'—';
-    document.getElementById('modalWebsite').textContent=data.website||'—';
-    document.getElementById('modalWebsite').href=data.website||'#';
-    document.getElementById('modalEmail').textContent=data.email||'—';
-    document.getElementById('modalX').href=data.x||'#';
-    document.getElementById('modalTG').href=data.tg||'#';
-    document.getElementById('modalNFT').innerHTML=data.nft?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:'—';
+    document.getElementById('modalIssuer').textContent=data.issuer;
+    document.getElementById('modalWebsite').textContent=data.website;
+    document.getElementById('modalWebsite').href=data.website;
+    document.getElementById('modalEmail').textContent=data.email;
+    document.getElementById('modalX').href=data.x;
+    document.getElementById('modalTG').href=data.tg;
+    document.getElementById('modalNFT').innerHTML=data.certified?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:'—';
     modal.style.display='block';
   }
 });
 close.onclick=()=>modal.style.display='none';
 window.onclick=e=>{if(e.target==modal)modal.style.display='none'};
-
-/* 6. Smooth scroll to submit section */
-document.querySelector('.submit-link').addEventListener('click',e=>{
-  e.preventDefault();
-  document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
-});
 </script>
 </body>
 </html>
