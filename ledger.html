@@ -38,6 +38,8 @@ header p{margin:10px 0 0;color:#334155}
 .legend{background:#f1f5fb;color:#0A74D0;text-align:center;font-size:.95rem;font-weight:600;
   padding:12px 8px;border-bottom:2px solid #d7e7ff;line-height:1.6}
 .legend span{display:block;margin:4px 0}
+.filter-pill{cursor:pointer}
+.filter-pill.active{text-decoration:underline}
 /* Rug Report Link */
 .rug-link-container{text-align:center;background:#fffbe6;border-bottom:2px solid #d7e7ff;padding:14px 0 22px}
 .rug-link{display:inline-block;background:#facc15;color:#111827;font-weight:700;font-size:.95rem;text-decoration:none;
@@ -55,7 +57,7 @@ ul{list-style:none;padding:0;margin:0}
 li.entry{margin:6px 0;padding:8px 10px;border-bottom:1px dashed #cbd5e1;font-size:.95rem;
   display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-radius:6px;transition:background .15s ease}
 li.entry:hover{background:#f1f7ff}
-li span{color:#475569;font-size:.9rem}
+li span{color:#475569;font-size:.85rem}
 footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem}
 /* Modal */
 .modal{display:none;position:fixed;z-index:999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55)}
@@ -94,10 +96,10 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </section>
 
 <div class="legend">
-  <span>🟡 Certified — Doxxed + Seal NFT Verified (permanent, unless revoked)</span>
-  <span>🔷 Verified — Non-Doxxed (12-month status, renewal required)</span>
-  <span>⚫ Unverified — Auto-Listed from XRPL</span>
-  <span>⬛ Expired — Verified listing lapsed, renewal required</span>
+  <span class="filter-pill" data-filter="certified">🟡 Certified — Doxxed + Seal NFT Verified (permanent, unless revoked)</span>
+  <span class="filter-pill" data-filter="verified">🔷 Verified — Non-Doxxed (12-month status, renewal required)</span>
+  <span class="filter-pill" data-filter="unverified">⚫ Unverified — Auto-Listed from XRPL</span>
+  <span class="filter-pill" data-filter="expired">⬛ Expired — Verified listing lapsed, renewal required</span>
 </div>
 
 <div class="rug-link-container">
@@ -141,14 +143,83 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </div>
 
 <script>
+// DATA
 const certified=[
-  {token:"$XRP",cert:"XRPL-589-0",tier:"Certified",certified:true,doxxed:true,issuer:"rXRPMainnetAddress",website:"https://xrpl.org",dev:"Ripple Labs",devx:"https://x.com/Ripple",email:"info@ripple.com",x:"https://x.com/Ripple",tg:"#",nft:"#"},
-  {token:"$RAD",cert:"XRPL-589-1",tier:"Certified",certified:true,doxxed:true,issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",website:"https://radgarlington.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"radgarlington@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/12345"},
-  {token:"$BAG",cert:"XRPL-589-2",tier:"Certified",certified:true,doxxed:true,issuer:"rBAGMintAddress",website:"https://getthebag.io",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"bagtokenhq@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/23456"},
-  {token:"$WCK",cert:"XRPL-589-3",tier:"Certified",certified:true,doxxed:true,issuer:"rWCKMintAddress",website:"https://wicktoken.net",dev:"mrcauliman",devx:"https://x.com/mrcauliman",email:"wicktokenhq@gmail.com",x:"https://x.com/mrcauliman",tg:"https://t.me/mrcauliman",nft:"https://xrpscan.com/nft/34567"}
+  {
+    token:"$XRP",
+    cert:"XRPL-589-0",
+    tier:"Certified",
+    certified:true,
+    doxxed:true,
+    issuer:"rXRPMainnetAddress",
+    website:"https://xrpl.org",
+    dev:"Ripple Labs",
+    devx:"https://x.com/Ripple",
+    email:"info@ripple.com",
+    x:"https://x.com/Ripple",
+    tg:"#",
+    nft:"#",
+    registered_at:"2025-11-12", // adjust as needed
+    expires_at:null              // unlimited for Certified
+  },
+  {
+    token:"$RAD",
+    cert:"XRPL-589-1",
+    tier:"Certified",
+    certified:true,
+    doxxed:true,
+    issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",
+    website:"https://radgarlington.io",
+    dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
+    email:"radgarlington@gmail.com",
+    x:"https://x.com/mrcauliman",
+    tg:"https://t.me/mrcauliman",
+    nft:"https://xrpscan.com/nft/12345",
+    registered_at:"2025-11-12",
+    expires_at:null
+  },
+  {
+    token:"$BAG",
+    cert:"XRPL-589-2",
+    tier:"Certified",
+    certified:true,
+    doxxed:true,
+    issuer:"rBAGMintAddress",
+    website:"https://getthebag.io",
+    dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
+    email:"bagtokenhq@gmail.com",
+    x:"https://x.com/mrcauliman",
+    tg:"https://t.me/mrcauliman",
+    nft:"https://xrpscan.com/nft/23456",
+    registered_at:"2025-11-12",
+    expires_at:null
+  },
+  {
+    token:"$WCK",
+    cert:"XRPL-589-3",
+    tier:"Certified",
+    certified:true,
+    doxxed:true,
+    issuer:"rWCKMintAddress",
+    website:"https://wicktoken.net",
+    dev:"mrcauliman",
+    devx:"https://x.com/mrcauliman",
+    email:"wicktokenhq@gmail.com",
+    x:"https://x.com/mrcauliman",
+    tg:"https://t.me/mrcauliman",
+    nft:"https://xrpscan.com/nft/34567",
+    registered_at:"2025-11-12",
+    expires_at:null
+  }
 ];
 
-const verified=[];
+const verified=[
+// When you add verified entries later, give them registered_at + expires_at
+// { token:"$EXAMPLE", cert:"XRPL-XXX", tier:"Verified", certified:false, doxxed:false, issuer:"...", website:"...", registered_at:"2025-11-12", expires_at:"2026-11-12", ... }
+];
+
 const unverified=[
   "$PHNIX","$FUZZY","$ARMY","$DROP","$SLT","$XRPM","$BEAR","$CULT","$ATM","$XRPATRIOT","$GOAT","$SIGMA","$XRDOGE","$FML","$666",
   "$FLIPPY","$PIGEONS","$SEAL","$TOTO","$SCRAP","$BERT","$SCHMECKLES","$LIHUA","$JELLY","$XOGE","$RBT","$XRBITCOIN","$589",
@@ -159,34 +230,95 @@ const unverified=[
   "$XPT","$XKI","$XISO","$XPX","$XMETA","$XMOON","$XRPLCORE","$XRPLMETA","$XRPLANET","$XRFI","$XCAT","$XFOX","$XDUCK","$XPWR"
 ];
 
-const all=[];
-all.push(...certified,...verified,...unverified.map(t=>({token:t,tier:"Unverified",cert:"XRPL-AUTO"})));
-const ledger=document.getElementById('ledgerList');
-const grouped={};
-all.sort((a,b)=>a.token.localeCompare(b.token));
-for(const p of all){
-  const l=p.token[1].toUpperCase();
-  if(!grouped[l])grouped[l]=[];
-  grouped[l].push(p);
+// HELPERS
+function isExpired(entry){
+  if(!entry.expires_at) return false;
+  const today=new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  return entry.expires_at < today;
 }
-for(const l of Object.keys(grouped).sort()){
-  const div=document.createElement('div');
-  div.innerHTML=`<h3>${l}</h3>
-  <ul>${grouped[l].map(p=>{
-    const icon=p.tier==="Certified"?"🟡":(p.tier==="Verified"?"🔷":"⚫");
-    const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
-    return `<li class="entry" ${attr}><span>${icon} ${p.token}</span><span>${p.cert}</span></li>`;
-  }).join('')}</ul>`;
-  ledger.appendChild(div);
+
+function getCategory(entry){
+  if(entry.tier==="Certified") return "certified";
+  if(entry.tier==="Verified"){
+    return isExpired(entry) ? "expired" : "verified";
+  }
+  return "unverified";
 }
-document.querySelector('.submit-link').addEventListener('click',e=>{
-  e.preventDefault();
-  document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
-});
-const modal=document.getElementById('tokenModal');
-const close=document.querySelector('.close');
+
+function getMeta(entry){
+  const cert = entry.cert || "XRPL-AUTO";
+  if(entry.tier==="Certified"){
+    const reg = entry.registered_at || "—";
+    return `Cert: ${cert} · Registered: ${reg} · Status: Unlimited`;
+  }
+  if(entry.tier==="Verified"){
+    const reg = entry.registered_at || "—";
+    const exp = entry.expires_at || "—";
+    const expired = isExpired(entry);
+    return `Cert: ${cert} · Registered: ${reg} · ${expired ? "Expired" : "Expires"}: ${exp}`;
+  }
+  // Unverified
+  return `Status: Auto-Listed from XRPL`;
+}
+
+function getIcon(entry){
+  const cat = entry.category || getCategory(entry);
+  if(cat==="certified") return "🟡";
+  if(cat==="verified") return "🔷";
+  if(cat==="expired") return "⬛";
+  return "⚫";
+}
+
+// BUILD PROJECT LIST
+let allProjects=[];
+let currentFilter="all";
+
+function buildProjects(){
+  const base=[];
+  base.push(...certified,...verified,...unverified.map(t=>({
+    token:t,
+    tier:"Unverified",
+    cert:"XRPL-AUTO",
+    certified:false,
+    doxxed:false
+  })));
+  allProjects = base.map(p=>{
+    const copy = {...p};
+    copy.category = getCategory(copy);
+    return copy;
+  }).sort((a,b)=>a.token.localeCompare(b.token));
+}
+
+function renderLedger(){
+  const ledger=document.getElementById('ledgerList');
+  if(!ledger) return;
+  ledger.innerHTML="";
+
+  const grouped={};
+  allProjects.forEach(p=>{
+    if(currentFilter!=="all" && p.category!==currentFilter) return;
+    const l = p.token[1] ? p.token[1].toUpperCase() : p.token[0].toUpperCase();
+    if(!grouped[l]) grouped[l]=[];
+    grouped[l].push(p);
+  });
+
+  Object.keys(grouped).sort().forEach(l=>{
+    const div=document.createElement('div');
+    const itemsHtml = grouped[l].map(p=>{
+      const icon = getIcon(p);
+      const meta = getMeta(p);
+      const attr = p.certified ? `data-token='${JSON.stringify(p)}' title="${p.tier} Project"` : "";
+      return `<li class="entry" ${attr}><span>${icon} ${p.token}</span><span>${meta}</span></li>`;
+    }).join('');
+    div.innerHTML=`<h3>${l}</h3><ul>${itemsHtml}</ul>`;
+    ledger.appendChild(div);
+  });
+}
+
+// INTERACTION
 document.addEventListener('click',e=>{
   const li=e.target.closest('.entry');
+  const modal=document.getElementById('tokenModal');
   if(li && li.dataset.token){
     const data=JSON.parse(li.dataset.token);
     document.getElementById('modalToken').textContent=data.token;
@@ -206,8 +338,35 @@ document.addEventListener('click',e=>{
     modal.style.display='block';
   }
 });
+
+const modal=document.getElementById('tokenModal');
+const close=document.querySelector('.close');
 close.onclick=()=>modal.style.display='none';
 window.onclick=e=>{if(e.target==modal)modal.style.display='none'};
+
+document.querySelector('.submit-link').addEventListener('click',e=>{
+  e.preventDefault();
+  document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
+});
+
+// FILTER CONTROLS
+buildProjects();
+renderLedger();
+
+const filterPills=document.querySelectorAll('.legend .filter-pill');
+filterPills.forEach(pill=>{
+  pill.addEventListener('click',()=>{
+    const filter=pill.dataset.filter;
+    if(currentFilter===filter){
+      currentFilter="all"; // tap again to reset
+      filterPills.forEach(p=>p.classList.remove('active'));
+    }else{
+      currentFilter=filter;
+      filterPills.forEach(p=>p.classList.toggle('active',p===pill));
+    }
+    renderLedger();
+  });
+});
 </script>
 </body>
 </html>
