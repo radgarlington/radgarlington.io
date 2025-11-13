@@ -33,14 +33,14 @@ header p{margin:10px 0 0;color:#4b5563;font-weight:500}
 }
 .back-btn:hover{opacity:.9;transform:translateY(-1px)}
 
-/* Description section */
+/* Description */
 .description{
   background:#fffbea;text-align:center;padding:20px 16px;
   border-bottom:2px solid #fef3c7;font-size:.95rem;line-height:1.6;
 }
 .description strong{color:#b91c1c}
 
-/* Placeholder Report Link */
+/* Report Link */
 .report-link-container{
   text-align:center;
   background:#fff;
@@ -65,7 +65,7 @@ header p{margin:10px 0 0;color:#4b5563;font-weight:500}
   transform:translateY(-2px) scale(1.02);
 }
 
-/* Table-style listing */
+/* Listing */
 main{max-width:900px;margin:30px auto;padding:0 16px}
 h2{color:#b91c1c;border-bottom:1px solid #fca5a5;padding-bottom:4px;font-size:1.3rem;margin-bottom:14px}
 h3{color:#b91c1c;font-size:1.1rem;margin:10px 0}
@@ -94,7 +94,7 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
 <body>
 
 <div class="banner">
-  ⚠️ Exposing the truth on XRPL — one rug at a time. <br>
+  ⚠️ Exposing the truth on XRPL — one rug at a time.<br>
   <em>— The Rug Report</em>
 </div>
 
@@ -106,7 +106,7 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
 
 <div class="description">
   <strong>The Rug Report</strong> is an extension of The RAD Ledger — a public accountability system built on the $XRP Ledger.<br><br>
-  Every entry here represents a project or developer **proven** to have engaged in fraudulent behavior, vanished with funds, or misled investors.<br><br>
+  Every entry here represents a project or developer <strong>proven</strong> to have engaged in fraudulent behavior, vanished with funds, or misled investors.<br><br>
   No speculation. No bias. Just verifiable, on-ledger truth.
 </div>
 
@@ -117,14 +117,20 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
 <main>
   <section id="report-list">
     <h2>🚨 Flagged Projects</h2>
-    <p style="color:#4b5563;margin-bottom:16px;">No confirmed rugs have been logged yet. Below is a placeholder for layout preview.</p>
 
     <div id="rugList">
-      <h3>R</h3>
+      <h3>P</h3>
       <ul>
-        <li class="entry" data-token='{"token":"$RUGGED","reason":"Liquidity Pulled","dev":"Unknown","issuer":"rFakeAddress123","proof":"https://xrpscan.com/tx/EXAMPLE"}'>
-          <span>🟥 $RUGGED</span>
-          <span>Liquidity Pulled — 2024</span>
+        <li class="entry" data-token='{
+          "token":"$PONGO",
+          "reason":"Confirmed Rug Pull",
+          "details":"30+ days inactivity, website offline, verification removed, dev withdrew all XRP to CEX",
+          "dev":"Unknown",
+          "issuer":"UNKNOWN",
+          "proof":"https://x.com/CupidMonday/status/186717652334"
+        }'>
+          <span>🟥 $PONGO</span>
+          <span>Confirmed Rug — 2025</span>
         </li>
       </ul>
     </div>
@@ -143,22 +149,17 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-    <h2 id="modalToken">$RUGGED</h2>
+    <h2 id="modalToken">$RUG</h2>
+
     <p><strong>Reason:</strong> <span id="modalReason"></span></p>
+    <p><strong>Details:</strong> <span id="modalDetails"></span></p>
     <p><strong>Developer:</strong> <span id="modalDev"></span></p>
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
-    <p><strong>Evidence:</strong> <a id="modalProof" href="#" target="_blank">View Transaction</a></p>
+    <p><strong>Evidence:</strong> <a id="modalProof" href="#" target="_blank">View On-Ledger Proof</a></p>
   </div>
 </div>
 
 <script>
-/* Placeholder Rug List */
-const rugs=[
-  {token:"$RUGGED",reason:"Liquidity Pulled",dev:"Unknown",issuer:"rFakeAddress123",proof:"https://xrpscan.com/tx/EXAMPLE"}
-];
-
-const rugList=document.getElementById('rugList');
-/* Modal Logic */
 const modal=document.getElementById('tokenModal');
 const close=document.querySelector('.close');
 
@@ -167,11 +168,14 @@ document.addEventListener('click',e=>{
     const li=e.target.closest('.entry');
     if(!li.dataset.token)return;
     const data=JSON.parse(li.dataset.token);
+
     document.getElementById('modalToken').textContent=data.token;
     document.getElementById('modalReason').textContent=data.reason;
+    document.getElementById('modalDetails').textContent=data.details;
     document.getElementById('modalDev').textContent=data.dev;
     document.getElementById('modalIssuer').textContent=data.issuer;
     document.getElementById('modalProof').href=data.proof;
+
     modal.style.display='block';
   }
 });
