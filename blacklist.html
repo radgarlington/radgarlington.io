@@ -94,21 +94,37 @@ footer{
 
 <main>
   <h2>🚨 Active Entries</h2>
-
-  <!-- ENTRY #001 -->
-  <div class="scammer">
-    <div>
-      <span>#001 — The Crypto Coffee ☕️</span>
-      <small>@CryptoxxxCoffee<br>
-      Offense: Non-delivery, airdrop bait, engagement farming</small>
-    </div>
-    <strong style="color:#b91c1c;">BLACKLISTED</strong>
-  </div>
-
-  <!-- Add more entries here -->
+  <div id="blacklistEntries"></div>
 </main>
 
 <footer>© 2025 THE BLACKLIST | RAD Enforcement Layer</footer>
+
+<script>
+async function loadBlacklist() {
+  const container = document.getElementById("blacklistEntries");
+
+  try {
+    const res = await fetch("blacklist.json");
+    const data = await res.json();
+
+    container.innerHTML = data.map(entry => `
+      <div class="scammer">
+        <div>
+          <span>#${entry.id} — ${entry.name}</span>
+          <small>${entry.handle}<br>${entry.note}</small>
+        </div>
+        <strong style="color:#b91c1c;">${entry.status}</strong>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    container.innerHTML =
+      "<p style='color:#b91c1c;font-weight:600;'>Error loading blacklist.</p>";
+  }
+}
+
+loadBlacklist();
+</script>
 
 </body>
 </html>
