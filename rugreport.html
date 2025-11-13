@@ -91,6 +91,7 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
 .modal-content a{color:#b91c1c;text-decoration:none;font-weight:bold}
 </style>
 </head>
+
 <body>
 
 <div class="banner">
@@ -121,6 +122,8 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
 <div id="rugList">
   <h3>P</h3>
   <ul>
+
+    <!-- PONGO -->
     <li class="entry" data-token='{
       "token":"$PONGO",
       "reason":"Confirmed Rug Pull",
@@ -132,6 +135,20 @@ footer{text-align:center;padding:20px;border-top:2px solid #fca5a5;color:#475569
       <span>🟥 $PONGO</span>
       <span>Confirmed Rug — 2025</span>
     </li>
+
+    <!-- XRPATRIOT -->
+    <li class="entry" data-token='{
+      "token":"@XRPATRIOTARMY",
+      "reason":"Confirmed Rug Behavior",
+      "details":"Pulled funds, told community to stop buying, prepping a relaunch, holders left with losses.",
+      "dev":"XRPATRIOT",
+      "issuer":"UNKNOWN",
+      "proof":"https://x.com/XRPPatriotArmy"
+    }'>
+      <span>🟥 @XRPATRIOTARMY</span>
+      <span>Rug Behavior — 2025</span>
+    </li>
+
   </ul>
 </div>
 
@@ -180,8 +197,10 @@ document.addEventListener('click',e=>{
     modal.style.display='block';
   }
 });
+
 close.onclick=()=>modal.style.display='none';
 window.onclick=e=>{if(e.target==modal)modal.style.display='none'};
 </script>
+
 </body>
 </html>
