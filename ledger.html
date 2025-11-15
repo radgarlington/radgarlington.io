@@ -73,7 +73,7 @@ header p{margin:10px 0 0;color:#334155}
   background:#0A74D0;
   color:#f9fafb;
 }
-/* Rug Report Link */
+/* Rug / Blacklist / Shill Links */
 .rug-link-container{text-align:center;background:#fffbe6;border-bottom:2px solid #d7e7ff;padding:14px 0 22px}
 .rug-link{display:inline-block;background:#facc15;color:#111827;font-weight:700;font-size:.95rem;text-decoration:none;
   padding:9px 18px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.25);border:2px solid #b45309;transition:all .2s ease}
@@ -114,25 +114,23 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 </header>
 
 <section class="annual">
-  <strong>Listings, Certification &amp; Renewals</strong>
+  <strong>Listings, Certification & Renewals</strong>
   <p style="margin:8px 0 4px">
     The RAD Ledger separates <strong>Certified</strong> projects from <strong>Verified</strong> projects.
   </p>
   <ul>
-    <li><strong>Certified</strong> listings are permanent unless downgraded for cause (rug, fraud, or violation).</li>
-    <li><strong>Verified</strong> listings are <strong>annual</strong> and must renew every 12 months to stay in good standing.</li>
-    <li>Each renewal goes through the <strong>same vetting process</strong> as the initial listing to confirm nothing has changed.</li>
+    <li><strong>Certified</strong> listings are permanent unless downgraded for cause.</li>
+    <li><strong>Verified</strong> listings are annual and must renew every 12 months.</li>
+    <li>Renewals go through the same process as initial verification.</li>
   </ul>
-  <p style="margin:6px 0 0">
-    When a Verified project does not renew on time, its status is treated as <strong>Expired</strong> until it passes review again.
-  </p>
+  <p style="margin:6px 0 0">Expired listings must pass review again.</p>
 </section>
 
 <div class="legend">
-  <span>🟡 Certified — Doxxed + Seal NFT Verified</span>
+  <span>🟡 Certified — Doxxed + Seal NFT</span>
   <span>🔷 Verified — Non-Doxxed</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
-  <span>⬛ Expired — Verified listing lapsed, renewal required</span>
+  <span>⬛ Expired — Renewal Required</span>
 </div>
 
 <div class="view-filters">
@@ -144,17 +142,23 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
   <button class="view-pill" data-filter="expired">Expired</button>
 </div>
 
-  <div class="rug-link-container">
+<div class="rug-link-container">
   <a href="/rugreport.html" class="rug-link">⚠️ The Rug Report — View Flagged Projects ⚠️</a>
 </div>
 
 <div class="rug-link-container" style="background:#ffe8e8;border-bottom:2px solid #d7e7ff;padding:16px 0 22px;">
-  <a href="/blacklist.html" class="rug-link" 
+  <a href="/blacklist.html" class="rug-link"
      style="background:#dc2626;color:#fff;border-color:#7f1d1d;">
     🛑 THE BLACKLIST — View Scammers 🛑
   </a>
 </div>
 
+<div class="rug-link-container" style="background:#fff3e0;border-bottom:2px solid #d7e7ff;padding:16px 0 22px;">
+  <a href="/shills.html" class="rug-link"
+     style="background:#fb923c;color:#111827;border-color:#c2410c;">
+    🤡 THE SHILL LIST — View The Clowns 🤡
+  </a>
+</div>
 
 <div class="submit-link-container">
   <a href="#submit-section" class="submit-link">🧾 Submit Your Token</a>
@@ -178,12 +182,10 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
-
     <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
       <img id="modalLogo" src="" alt="Project Logo"
            style="max-width:80px;max-height:80px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
     </div>
-
     <h2 id="modalToken">$RAD</h2>
     <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
     <p><strong>Tier:</strong> <span id="modalTier"></span></p>
@@ -194,12 +196,11 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
     <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
-    <p><strong>Seal NFT (Certified only):</strong> <span id="modalNFT"></span></p>
+    <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
 
 <script>
-// DATA
 const certified=[
   {
     token:"$XRP",
@@ -215,7 +216,7 @@ const certified=[
     x:"https://x.com/Ripple",
     tg:"#",
     nft:"#",
-    logo_url:"", // add later if you host an XRP logo
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   },
@@ -287,105 +288,87 @@ const certified=[
     x:"https://x.com/Ripple",
     tg:"#",
     nft:"#",
-    logo_url:"", // add later if you host RLUSD logo
+    logo_url:"",
     registered_at:"2025-11-12",
     expires_at:null
   }
 ];
 
-const verified=[
-// add verified entries later with registered_at + expires_at
-];
-
+const verified=[];
 const unverified=[
-  "$PHNIX","$FUZZY","$ARMY","$DROP","$SLT","$XRPM","$BEAR","$CULT","$ATM","$XRPATRIOT","$GOAT","$SIGMA","$XRDOGE","$FML","$666",
-  "$FLIPPY","$PIGEONS","$SEAL","$TOTO","$SCRAP","$BERT","$SCHMECKLES","$LIHUA","$JELLY","$XOGE","$RBT","$XRBITCOIN","$589",
-  "$MALLARD","$CBIRD","$HORIZON","$X","$XOX","$FLAME","$GOPNIK","$BCHAMP","$FARM","$BRB","$UGA","$XMEME","$OLX",
-  "$DONNIE","$FUSE","$CAMELTOE","$LAUGH","$BANKER","$FRIENDS","$LEDGERGUY",
-  "$SOLO","$RPR","$CSC","$EVM","$OXP","$SGB","$XUM","$REAPER","$PWR","$CORE","$APE","$BULL","$XFT","$XGM","$LUX","$XPUNKZ",
-  "$XRWA","$CLAW","$XDEFI","$XFAI","$XSP","$XRW","$XGB","$XGOAT","$XCRV","$XDOGE","$XGO","$XRAPP","$XSPARK","$XFLR","$XSR",
-  "$XPT","$XKI","$XISO","$XPX","$XMETA","$XMOON","$XRPLCORE","$XRPLMETA","$XRPLANET","$XRFI","$XCAT","$XFOX","$XDUCK","$XPWR"
+  "$PHNIX","$FUZZY","$ARMY","$DROP","$SLT","$XRPM","$BEAR","$CULT","$ATM","$XRPATRIOT","$GOAT",
+  "$SIGMA","$XRDOGE","$FML","$666","$FLIPPY","$PIGEONS","$SEAL","$TOTO","$SCRAP","$BERT","$SCHMECKLES",
+  "$LIHUA","$JELLY","$XOGE","$RBT","$XRBITCOIN","$589","$MALLARD","$CBIRD","$HORIZON","$X","$XOX",
+  "$FLAME","$GOPNIK","$BCHAMP","$FARM","$BRB","$UGA","$XMEME","$OLX","$DONNIE","$FUSE","$CAMELTOE",
+  "$LAUGH","$BANKER","$FRIENDS","$LEDGERGUY","$SOLO","$RPR","$CSC","$EVM","$OXP","$SGB","$XUM",
+  "$REAPER","$PWR","$CORE","$APE","$BULL","$XFT","$XGM","$LUX","$XPUNKZ","$XRWA","$CLAW","$XDEFI",
+  "$XFAI","$XSP","$XRW","$XGB","$XGOAT","$XCRV","$XDOGE","$XGO","$XRAPP","$XSPARK","$XFLR","$XSR",
+  "$XPT","$XKI","$XISO","$XPX","$XMETA","$XMOON","$XRPLCORE","$XRPLMETA","$XRPLANET","$XRFI","$XCAT",
+  "$XFOX","$XDUCK","$XPWR"
 ];
 
-// HELPERS
 function isExpired(entry){
   if(!entry.expires_at) return false;
-  const today=new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  const today=new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
 function getCategory(entry){
   if(entry.tier==="Certified") return "certified";
-  if(entry.tier==="Verified"){
-    return isExpired(entry) ? "expired" : "verified";
-  }
+  if(entry.tier==="Verified") return isExpired(entry) ? "expired" : "verified";
   return "unverified";
 }
 
 function getMeta(entry){
-  const cert = entry.cert || "XRPL-AUTO";
+  const cert=entry.cert||"XRPL-AUTO";
   if(entry.tier==="Certified"){
-    const reg = entry.registered_at || "—";
+    const reg=entry.registered_at||"—";
     return `Cert: ${cert} · Registered: ${reg} · Status: Unlimited`;
   }
   if(entry.tier==="Verified"){
-    const reg = entry.registered_at || "—";
-    const exp = entry.expires_at || "—";
-    const expired = isExpired(entry);
+    const reg=entry.registered_at||"—";
+    const exp=entry.expires_at||"—";
+    const expired=isExpired(entry);
     return `Cert: ${cert} · Registered: ${reg} · ${expired ? "Expired" : "Expires"}: ${exp}`;
   }
-  // Unverified
   return `Status: Auto-Listed from XRPL`;
 }
 
 function getIcon(entry){
-  const cat = entry.category || getCategory(entry);
+  const cat=entry.category||getCategory(entry);
   if(cat==="certified") return "🟡";
   if(cat==="verified") return "🔷";
   if(cat==="expired") return "⬛";
   return "⚫";
 }
 
-// BUILD PROJECT LIST
 let allProjects=[];
 let currentFilter="all";
 
 function buildProjects(){
   const base=[];
-  base.push(
-    ...certified,
-    ...verified,
-    ...unverified.map(t=>({
-      token:t,
-      tier:"Unverified",
-      cert:"XRPL-AUTO",
-      certified:false,
-      doxxed:false
-    }))
-  );
-  allProjects = base.map(p=>{
-    const copy={...p};
-    copy.category=getCategory(copy);
-    return copy;
-  }).sort((a,b)=>a.token.localeCompare(b.token));
+  base.push(...certified,...verified,...unverified.map(t=>({
+    token:t,tier:"Unverified",cert:"XRPL-AUTO",certified:false,doxxed:false
+  })));
+  allProjects=base.map(p=>({...p,category:getCategory(p)}))
+                  .sort((a,b)=>a.token.localeCompare(b.token));
 }
 
 function renderLedger(){
   const ledger=document.getElementById('ledgerList');
   if(!ledger) return;
   ledger.innerHTML="";
-
   const grouped={};
   allProjects.forEach(p=>{
     if(currentFilter!=="all" && p.category!==currentFilter) return;
-    const l = p.token[1] ? p.token[1].toUpperCase() : p.token[0].toUpperCase();
+    const l=p.token[1]?p.token[1].toUpperCase():p.token[0].toUpperCase();
     if(!grouped[l]) grouped[l]=[];
     grouped[l].push(p);
   });
 
   Object.keys(grouped).sort().forEach(l=>{
     const div=document.createElement('div');
-    const itemsHtml = grouped[l].map(p=>{
+    const itemsHtml=grouped[l].map(p=>{
       const icon=getIcon(p);
       const meta=getMeta(p);
       const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
@@ -396,7 +379,6 @@ function renderLedger(){
   });
 }
 
-// MODAL + SCROLL
 document.addEventListener('click',e=>{
   const li=e.target.closest('.entry');
   const modal=document.getElementById('tokenModal');
@@ -441,15 +423,13 @@ document.querySelector('.submit-link').addEventListener('click',e=>{
   document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
 });
 
-// INIT + FILTER BAR
 buildProjects();
 renderLedger();
 
 const filterPills=document.querySelectorAll('.view-filters .view-pill');
 filterPills.forEach(pill=>{
   pill.addEventListener('click',()=>{
-    const filter=pill.dataset.filter;
-    currentFilter=filter;
+    currentFilter=pill.dataset.filter;
     filterPills.forEach(p=>p.classList.toggle('active',p===pill));
     renderLedger();
   });
