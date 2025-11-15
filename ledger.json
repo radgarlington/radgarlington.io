@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "token": "$BAG",
+    "cert": "XRPL-589-2",
+    "tier": "Certified",
+    "issuer": "rBAGMintAddress",
+    "logo_url": "/assets/logos/bag_logo.webp"
+  },
+  {
+    "token": "$RAD",
+    "cert": "XRPL-589-1",
+    "tier": "Certified",
+    "issuer": "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",
+    "logo_url": "/assets/logos/rad_logo.webp"
+  },
+  {
+    "token": "$RLUSD",
+    "cert": "XRPL-589-4",
+    "tier": "Certified",
+    "issuer": "rRLUSDMainnetAddress",
+    "logo_url": ""
+  },
+  {
+    "token": "$TRLS",
+    "cert": "XRPL-589-5",
+    "tier": "Certified",
+    "issuer": "r9NcytRxC1CX1vERGn9HGR2Bwbuo6tGX1h",
+    "logo_url": "/assets/logos/trls_logo.webp"
+  },
+  {
+    "token": "$WCK",
+    "cert": "XRPL-589-3",
+    "tier": "Certified",
+    "issuer": "rWCKMintAddress",
+    "logo_url": "/assets/logos/wck_logo.webp"
+  },
+  {
+    "token": "$XRP",
+    "cert": "XRPL-589-0",
+    "tier": "Certified",
+    "issuer": "rXRPMainnetAddress",
+    "logo_url": ""
+  }
+]
