@@ -1,9 +1,25 @@
 [
   {
     "id": 1,
-    "name": "The Crypto Coffee",
-    "handle": "@CryptoxxxCoffee",
-    "offense": "Low-IQ chain worship, comment brigading, engagement shilling",
+    "name": "Danny Marraro",
+    "handle": "@marraro_danny",
+    "offense": "$FUZZY SHILL — Boomer-tier chirping, zero signal, full parroting.",
+    "status": "SHILL",
+    "impact": "ZERO"
+  },
+  {
+    "id": 2,
+    "name": "West of the Pecos",
+    "handle": "@WestofthePecos2",
+    "offense": "$FUZZY SHILL — Emotional defense of a token that can't defend itself.",
+    "status": "SHILL",
+    "impact": "NEGATIVE"
+  },
+  {
+    "id": 3,
+    "name": "XR Pawnshop",
+    "handle": "@Xrpawnshop",
+    "offense": "$FUZZY SHILL — Long-winded cope disguised as insight. Still shilling.",
     "status": "SHILL",
     "impact": "ZERO"
   }
