@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Shill List — RAD Enforcement</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
+
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#b45309,#f97316);
+  color:#fff;text-align:center;
+  padding:20px 10px 18px;
+  font-size:1.05rem;font-weight:600;line-height:1.4;
+  border-bottom:2px solid #b45309;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.banner em{
+  display:block;margin-top:6px;
+  font-style:italic;font-weight:500;opacity:.85;
+}
+
+/* Header */
+header{
+  text-align:center;
+  padding:52px 10px 20px;
+  background:#fff3e0;
+  border-bottom:2px solid #fed7aa;
+  position:relative;
+}
+header h1{
+  font-size:2.2rem;margin:0;color:#b45309;
+}
+header p{
+  margin:10px 0 0;color:#7c2d12;
+}
+
+/* Back button */
+.back-btn{
+  position:absolute;top:10px;left:18px;
+  background:#b45309;color:#fff;
+  padding:6px 10px;border-radius:6px;
+  text-decoration:none;font-weight:600;font-size:.8rem;
+  letter-spacing:.2px;
+  transition:opacity .2s ease,transform .2s ease;
+}
+.back-btn:hover{
+  opacity:.9;transform:translateY(-1px);
+}
+
+/* List container */
+main{max-width:900px;margin:30px auto;padding:0 16px}
+h2{
+  color:#b45309;border-bottom:1px solid #fed7aa;
+  padding-bottom:4px;font-size:1.4rem;margin-bottom:16px;
+}
+.shill{
+  background:#fff7ed;border:1px solid #fed7aa;
+  padding:14px 16px;border-radius:10px;
+  margin-bottom:14px;
+  display:flex;justify-content:space-between;
+  align-items:center;
+}
+.shill span{
+  font-size:1rem;color:#7c2d12;font-weight:600;
+}
+.shill small{
+  display:block;color:#b45309;margin-top:4px;
+  font-size:.85rem;
+}
+
+/* Footer */
+footer{
+  text-align:center;padding:20px;
+  border-top:2px solid #fed7aa;
+  color:#7c2d12;font-size:.9rem;
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  🤡 THE SHILL LIST — Public. Embarrassing. No Credibility.
+  <em>Logged by RAD Garlington</em>
+</div>
+
+<header>
+  <a href="/ledger.html" class="back-btn">← Back</a>
+  <h1>THE SHILL LIST</h1>
+  <p>Documenting the loudest, dumbest, most persistent chain parrots on social media.</p>
+</header>
+
+<main>
+  <h2>🤡 Active Shills</h2>
+  <div id="shillEntries"></div>
+</main>
+
+<footer>© 2025 THE SHILL LIST | RAD Enforcement Layer</footer>
+
+<script>
+async function loadShills() {
+  const container = document.getElementById("shillEntries");
+
+  try {
+    const res = await fetch("shills.json");
+    const data = await res.json();
+
+    container.innerHTML = data.map(entry => `
+      <div class="shill">
+        <div>
+          <span>#${entry.id} — ${entry.name}</span>
+          <small>${entry.handle}<br>${entry.offense}<br>Impact: ${entry.impact}</small>
+        </div>
+        <strong style="color:#b45309;">${entry.status}</strong>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    container.innerHTML =
+      "<p style='color:#b45309;font-weight:600;'>Error loading shill list.</p>";
+  }
+}
+
+loadShills();
+</script>
+
+</body>
+</html>
