@@ -1,0 +1,24 @@
+[
+  {
+    "token": "$PONGO",
+    "status": "Confirmed Rug",
+    "reason": "Confirmed Rug Pull",
+    "details": "30+ days inactivity, website offline, verification removed, dev withdrew all XRP to CEX.",
+    "dev": "Unknown",
+    "issuer": "UNKNOWN",
+    "proof": "https://xrpscan.com/account/rwCq6TENSo3Hh9LKipXnLaxaeXBXKubqki",
+    "year": 2025,
+    "last_updated": "2025-11-15"
+  },
+  {
+    "token": "@XRPATRIOTARMY",
+    "status": "Rug Behavior",
+    "reason": "Confirmed Rug Behavior",
+    "details": "Pulled funds, told community to stop buying, prepping a relaunch, holders left with losses.",
+    "dev": "Unknown",
+    "issuer": "UNKNOWN",
+    "proof": "https://x.com/XRPPatriotArmy",
+    "year": 2025,
+    "last_updated": "2025-11-15"
+  }
+]
