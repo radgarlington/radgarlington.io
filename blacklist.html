@@ -82,19 +82,21 @@ footer{
 <body>
 
 <div class="banner">
-  🛑 THE BLACKLIST — Public. Permanent. No Appeal.
+  🛑 THE BLACKLIST - Public. Permanent. No Appeal.
   <em>Logged by RAD Garlington</em>
 </div>
 
 <header>
   <a href="/ledger.html" class="back-btn">← Back</a>
   <h1>THE BLACKLIST</h1>
-  <p>People & social accounts caught scamming, baiting, or pushing fake airdrops.</p>
+  <p>People and social accounts caught scamming, baiting, or pushing fake airdrops.</p>
 </header>
 
 <main>
   <h2>🚨 Active Entries</h2>
-  <div id="blacklistEntries"></div>
+  <div id="blacklistEntries">
+    <p style="color:#4b5563;font-size:.95rem;">Loading blacklist entries...</p>
+  </div>
 </main>
 
 <footer>© 2025 THE BLACKLIST | RAD Enforcement Layer</footer>
@@ -102,15 +104,27 @@ footer{
 <script>
 async function loadBlacklist() {
   const container = document.getElementById("blacklistEntries");
+  if (!container) return;
+
+  container.innerHTML =
+    "<p style='color:#4b5563;font-size:.95rem;'>Loading blacklist entries...</p>";
 
   try {
-    const res = await fetch("blacklist.json");
+    const res = await fetch("blacklist.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load blacklist.json");
     const data = await res.json();
+    const entries = Array.isArray(data) ? data : [];
 
-    container.innerHTML = data.map(entry => `
+    if (!entries.length) {
+      container.innerHTML =
+        "<p style='color:#4b5563;font-size:.95rem;'>No active blacklist entries yet.</p>";
+      return;
+    }
+
+    container.innerHTML = entries.map(entry => `
       <div class="scammer">
         <div>
-          <span>#${entry.id} — ${entry.name}</span>
+          <span>#${entry.id} - ${entry.name}</span>
           <small>${entry.handle}<br>${entry.note}</small>
         </div>
         <strong style="color:#b91c1c;">${entry.status}</strong>
@@ -118,12 +132,13 @@ async function loadBlacklist() {
     `).join("");
 
   } catch (err) {
+    console.error(err);
     container.innerHTML =
       "<p style='color:#b91c1c;font-weight:600;'>Error loading blacklist.</p>";
   }
 }
 
-loadBlacklist();
+document.addEventListener("DOMContentLoaded", loadBlacklist);
 </script>
 
 </body>
