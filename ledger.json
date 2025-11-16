@@ -101,8 +101,6 @@
     "expires_at": null,
     "doxxed": true
   },
-
-  // UNVERIFIED — AUTO-LISTED FROM XRPL
   {
     "token": "$PHNIX",
     "tier": "Unverified"
