@@ -304,7 +304,7 @@ async function loadLedger(){
     if(!res.ok) throw new Error("Failed to load ledger.json");
     const data = await res.json();
 
-    allProjects = (data || []).map(entry => {
+    allProjects = (Array.isArray(data) ? data : []).map(entry => {
       const category = getCategory(entry);
       return { ...entry, category };
     }).sort((a,b) => {
@@ -424,5 +424,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadLedger();
 });
 </script>
+
 </body>
 </html>
