@@ -204,274 +204,224 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
+
 <script>
-const certified=[
-  {
-    token:"$XRP",
-    cert:"XRPL-589-0",
-    tier:"Certified",
-    certified:true,
-    doxxed:true,
-    issuer:"rXRPMainnetAddress",
-    website:"https://xrpl.org",
-    dev:"Ripple Labs",
-    devx:"https://x.com/Ripple",
-    email:"info@ripple.com",
-    x:"https://x.com/Ripple",
-    tg:"#",
-    nft:"#",
-    logo_url:"",
-    registered_at:"2025-11-12",
-    expires_at:null
-  },
-  {
-    token:"$RAD",
-    cert:"XRPL-589-1",
-    tier:"Certified",
-    certified:true,
-    doxxed:true,
-    issuer:"rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V",
-    website:"https://radgarlington.io",
-    dev:"mrcauliman",
-    devx:"https://x.com/mrcauliman",
-    email:"radgarlington@gmail.com",
-    x:"https://x.com/radgarlington",
-    tg:"https://t.me/radgarlington",
-    nft:"https://xrpscan.com/nft/12345",
-    logo_url:"/assets/logos/rad_logo.webp",
-    registered_at:"2025-11-12",
-    expires_at:null
-  },
-  {
-    token:"$BAG",
-    cert:"XRPL-589-2",
-    tier:"Certified",
-    certified:true,
-    doxxed:true,
-    issuer:"rBAGMintAddress",
-    website:"https://getthebag.io",
-    dev:"mrcauliman",
-    devx:"https://x.com/mrcauliman",
-    email:"bagtokenhq@gmail.com",
-    x:"https://x.com/getthebag_io",
-    tg:"https://t.me/getthebag_io",
-    nft:"https://xrpscan.com/nft/23456",
-    logo_url:"/assets/logos/bag_logo.webp",
-    registered_at:"2025-11-12",
-    expires_at:null
-  },
-  {
-    token:"$WCK",
-    cert:"XRPL-589-3",
-    tier:"Certified",
-    certified:true,
-    doxxed:true,
-    issuer:"rWCKMintAddress",
-    website:"https://wicktoken.net",
-    dev:"mrcauliman",
-    devx:"https://x.com/mrcauliman",
-    email:"wicktokenhq@gmail.com",
-    x:"https://x.com/wcktoken",
-    tg:"https://t.me/wcktoken",
-    nft:"https://xrpscan.com/nft/34567",
-    logo_url:"/assets/logos/wck_logo.webp",
-    registered_at:"2025-11-12",
-    expires_at:null
-  },
-  {
-    token:"$RLUSD",
-    cert:"XRPL-589-4",
-    tier:"Certified",
-    certified:true,
-    doxxed:true,
-    issuer:"rRLUSDMainnetAddress",
-    website:"https://ripple.com",
-    dev:"Ripple Labs",
-    devx:"https://x.com/Ripple",
-    email:"info@ripple.com",
-    x:"https://x.com/Ripple",
-    tg:"#",
-    nft:"#",
-    logo_url:"",
-    registered_at:"2025-11-12",
-    expires_at:null
-  },
-  {
-    token:"$TRLS",
-    cert:"XRPL-589-5",
-    tier:"Certified",
-    certified:true,
-    doxxed:true,
-    issuer:"r9NcytRxC1CX1vERGn9HGR2Bwbuo6tGX1h",
-    website:"https://trustlesspayments.io",
-    dev:"RevKek",
-    devx:"https://t.me/RevKek",    // ✔ UPDATED — Telegram developer link
-    email:"TrustlessPayments@gmail.com",
-    x:"https://x.com/TrustlessToads",
-    tg:"https://t.me/TrustlessPayments",
-    nft:"https://xrpscan.com/nft/12345",
-    logo_url:"/assets/logos/trls_logo.webp",
-    registered_at:"2025-11-15",
-    expires_at:null
-  }
-];
-
-const verified=[];
-
-const unverified=[
-  "$PHNIX","$FUZZY","$ARMY","$DROP","$SLT","$XRPM","$BEAR","$CULT","$ATM","$XRPATRIOT","$GOAT",
-  "$SIGMA","$XRDOGE","$FML","$666","$FLIPPY","$PIGEONS","$SEAL","$TOTO","$SCRAP","$BERT","$SCHMECKLES",
-  "$LIHUA","$JELLY","$XOGE","$RBT","$XRBITCOIN","$589","$MALLARD","$CBIRD","$HORIZON","$X","$XOX",
-  "$FLAME","$GOPNIK","$BCHAMP","$FARM","$BRB","$UGA","$XMEME","$OLX","$DONNIE","$FUSE","$CAMELTOE",
-  "$LAUGH","$BANKER","$FRIENDS","$LEDGERGUY","$SOLO","$RPR","$CSC","$EVM","$OXP","$SGB","$XUM",
-  "$REAPER","$PWR","$CORE","$APE","$BULL","$XFT","$XGM","$LUX","$XPUNKZ","$XRWA","$CLAW","$XDEFI",
-  "$XFAI","$XSP","$XRW","$XGB","$XGOAT","$XCRV","$XDOGE","$XGO","$XRAPP","$XSPARK","$XFLR","$XSR",
-  "$XPT","$XKI","$XISO","$XPX","$XMETA","$XMOON","$XRPLCORE","$XRPLMETA","$XRPLANET","$XRFI","$XCAT",
-  "$XFOX","$XDUCK","$XPWR"
-];
+let allProjects = [];
+let currentFilter = "all";
+let modal = null;
 
 function isExpired(entry){
   if(!entry.expires_at) return false;
-  const today=new Date().toISOString().slice(0,10);
+  const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
 function getCategory(entry){
-  if(entry.tier==="Certified") return "certified";
-  if(entry.tier==="Verified") return isExpired(entry) ? "expired" : "verified";
+  const tier = (entry.tier || "").toLowerCase();
+  if(tier === "certified") return "certified";
+  if(tier === "verified") return isExpired(entry) ? "expired" : "verified";
   return "unverified";
 }
 
 function getMeta(entry){
-  const cert=entry.cert||"XRPL-AUTO";
-  if(entry.tier==="Certified"){
-    const reg=entry.registered_at||"—";
+  const cert = entry.cert || "XRPL-AUTO";
+  const reg  = entry.registered_at || "—";
+  const exp  = entry.expires_at || "—";
+  const tier = (entry.tier || "").toLowerCase();
+
+  if(tier === "certified"){
     return `Cert: ${cert} · Registered: ${reg} · Status: Unlimited`;
   }
-  if(entry.tier==="Verified"){
-    const reg=entry.registered_at||"—";
-    const exp=entry.expires_at||"—";
-    const expired=isExpired(entry);
+  if(tier === "verified"){
+    const expired = isExpired(entry);
     return `Cert: ${cert} · Registered: ${reg} · ${expired ? "Expired" : "Expires"}: ${exp}`;
   }
   return `Status: Auto-Listed from XRPL`;
 }
 
-function getIcon(entry){
-  const cat=entry.category||getCategory(entry);
-  if(cat==="certified") return "🟡";
-  if(cat==="verified") return "🔷";
-  if(cat==="expired") return "⬛";
+function getIcon(category){
+  if(category === "certified") return "🟡";
+  if(category === "verified") return "🔷";
+  if(category === "expired") return "⬛";
   return "⚫";
 }
 
-let allProjects=[];
-let currentFilter="all";
-
-function buildProjects(){
-  const base=[];
-  base.push(...certified,...verified,...unverified.map(t=>({
-    token:t,tier:"Unverified",cert:"XRPL-AUTO",certified:false,doxxed:false
-  })));
-  allProjects=base.map(p=>({...p,category:getCategory(p)}))
-                  .sort((a,b)=>a.token.localeCompare(b.token));
-}
-
 function renderLedger(){
-  const ledger=document.getElementById('ledgerList');
+  const ledger = document.getElementById("ledgerList");
   if(!ledger) return;
-  ledger.innerHTML="";
-  const grouped={};
-  allProjects.forEach(p=>{
-    if(currentFilter!=="all" && p.category!==currentFilter) return;
-    const l=p.token[1]?p.token[1].toUpperCase():p.token[0].toUpperCase();
-    if(!grouped[l]) grouped[l]=[];
-    grouped[l].push(p);
+
+  ledger.innerHTML = "";
+
+  const grouped = {};
+  allProjects.forEach(p => {
+    if(currentFilter !== "all" && p.category !== currentFilter) return;
+    const token = p.token || "";
+    const clean = token.replace(/^\$/,"");
+    const letter = (clean.charAt(0) || "#").toUpperCase();
+    if(!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(p);
   });
 
-  Object.keys(grouped).sort().forEach(l=>{
-    const div=document.createElement('div');
-    const itemsHtml=grouped[l].map(p=>{
-      const icon=getIcon(p);
-      const meta=getMeta(p);
-      const attr=p.certified?`data-token='${JSON.stringify(p)}' title="${p.tier} Project"`:"";
-      return `<li class="entry" ${attr}><span>${icon} ${p.token}</span><span>${meta}</span></li>`;
-    }).join('');
-    div.innerHTML=`<h3>${l}</h3><ul>${itemsHtml}</ul>`;
+  const letters = Object.keys(grouped).sort();
+  if(!letters.length){
+    ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">No projects match this view yet.</p>';
+    return;
+  }
+
+  letters.forEach(letter => {
+    const div = document.createElement("div");
+    const itemsHtml = grouped[letter].map(p => {
+      const icon = getIcon(p.category);
+      const meta = getMeta(p);
+      const hasDetails = (p.tier === "Certified" || p.tier === "Verified");
+      const dataToken = hasDetails
+        ? JSON.stringify(p).replace(/'/g, "&#39;")
+        : null;
+      const attr = hasDetails
+        ? `data-token='${dataToken}' title="${p.tier} Project"`
+        : "";
+      return `
+        <li class="entry" ${attr}>
+          <span>${icon} ${p.token || ""}</span>
+          <span>${meta}</span>
+        </li>
+      `;
+    }).join("");
+
+    div.innerHTML = `<h3>${letter}</h3><ul>${itemsHtml}</ul>`;
     ledger.appendChild(div);
   });
 }
 
-document.addEventListener('click',e=>{
-  const li=e.target.closest('.entry');
-  const modal=document.getElementById('tokenModal');
-  if(li && li.dataset.token){
-    const data=JSON.parse(li.dataset.token);
+async function loadLedger(){
+  const ledger = document.getElementById("ledgerList");
+  if(!ledger) return;
 
-    const logoWrap=document.getElementById('modalLogoWrap');
-    const logoImg=document.getElementById('modalLogo');
+  ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">Loading Ledger...</p>';
 
-    if(data.logo_url){
-      logoImg.src=data.logo_url;
-      logoWrap.style.display='block';
-    }else{
-      logoImg.src="";
-      logoWrap.style.display='none';
-    }
+  try{
+    const res = await fetch("ledger.json", { cache: "no-store" });
+    if(!res.ok) throw new Error("Failed to load ledger.json");
+    const data = await res.json();
 
-    document.getElementById('modalToken').textContent=data.token;
-    document.getElementById('modalCert').textContent=data.cert;
-    document.getElementById('modalTier').textContent=data.tier;
-    document.getElementById('modalDev').textContent=data.dev||"—";
+    allProjects = (data || []).map(entry => {
+      const category = getCategory(entry);
+      return { ...entry, category };
+    }).sort((a,b) => {
+      const at = (a.token || "").toUpperCase();
+      const bt = (b.token || "").toUpperCase();
+      if(at < bt) return -1;
+      if(at > bt) return 1;
+      return 0;
+    });
 
-    document.getElementById('modalDevX').href=data.devx||"#";
-
-    document.getElementById('modalDevX').textContent=
-      data.devx
-      ? data.devx.includes("t.me")
-          ? "@"+data.dev               // Telegram handle
-          : data.devx.replace("https://x.com/","@")   // X handle
-      : "";
-
-    document.getElementById('modalDoxxed').innerHTML=data.doxxed
-      ? '<span class="checkmark">✅</span> Doxxed'
-      : '❌ Undoxxed';
-
-    document.getElementById('modalIssuer').textContent=data.issuer||"—";
-    document.getElementById('modalWebsite').textContent=data.website||"—";
-    document.getElementById('modalWebsite').href=data.website||"#";
-    document.getElementById('modalEmail').textContent=data.email||"—";
-    document.getElementById('modalX').href=data.x||"#";
-    document.getElementById('modalTG').href=data.tg||"#";
-    document.getElementById('modalNFT').innerHTML=
-      data.nft
-        ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>`
-        : '—';
-
-    modal.style.display='block';
-  }
-});
-
-const modal=document.getElementById('tokenModal');
-const close=document.querySelector('.close');
-close.onclick=()=>modal.style.display='none';
-window.onclick=e=>{if(e.target==modal)modal.style.display='none'};
-
-document.querySelector('.submit-link').addEventListener('click',e=>{
-  e.preventDefault();
-  document.querySelector('#submit-section').scrollIntoView({behavior:'smooth'});
-});
-
-buildProjects();
-renderLedger();
-
-const filterPills=document.querySelectorAll('.view-filters .view-pill');
-filterPills.forEach(pill=>{
-  pill.addEventListener('click',()=>{
-    currentFilter=pill.dataset.filter;
-    filterPills.forEach(p=>p.classList.toggle('active',p===pill));
     renderLedger();
+  }catch(err){
+    console.error(err);
+    ledger.innerHTML = '<p style="color:#b91c1c;font-weight:600;">Error loading Ledger data. Try refreshing.</p>';
+  }
+}
+
+document.addEventListener("click", e => {
+  const li = e.target.closest(".entry");
+  if(!li || !li.dataset.token || !modal) return;
+
+  let data;
+  try{
+    data = JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
+  }catch(err){
+    console.error("Error parsing token data", err);
+    return;
+  }
+
+  const logoWrap = document.getElementById("modalLogoWrap");
+  const logoImg  = document.getElementById("modalLogo");
+
+  if(data.logo_url){
+    logoImg.src = data.logo_url;
+    logoWrap.style.display = "block";
+  }else{
+    logoImg.src = "";
+    logoWrap.style.display = "none";
+  }
+
+  document.getElementById("modalToken").textContent  = data.token || "";
+  document.getElementById("modalCert").textContent   = data.cert || "XRPL-AUTO";
+  document.getElementById("modalTier").textContent   = data.tier || "Unverified";
+  document.getElementById("modalDev").textContent    = data.dev || "—";
+
+  const devXEl = document.getElementById("modalDevX");
+  devXEl.href = data.devx || "#";
+
+  if(data.devx){
+    if(data.devx.includes("t.me")){
+      devXEl.textContent = data.dev ? "@" + data.dev : data.devx;
+    }else{
+      devXEl.textContent = data.devx.replace("https://x.com/","@");
+    }
+  }else{
+    devXEl.textContent = "";
+  }
+
+  document.getElementById("modalDoxxed").innerHTML = data.doxxed
+    ? '<span class="checkmark">✅</span> Doxxed'
+    : "❌ Undoxxed";
+
+  document.getElementById("modalIssuer").textContent   = data.issuer || "—";
+
+  const webEl = document.getElementById("modalWebsite");
+  webEl.textContent = data.website || "—";
+  webEl.href        = data.website || "#";
+
+  document.getElementById("modalEmail").textContent = data.email || "—";
+  document.getElementById("modalX").href           = data.x || "#";
+  document.getElementById("modalTG").href          = data.tg || "#";
+
+  const nftEl = document.getElementById("modalNFT");
+  if(data.nft){
+    nftEl.innerHTML = `<a href="${data.nft}" target="_blank">View Seal NFT</a>`;
+  }else{
+    nftEl.textContent = "—";
+  }
+
+  modal.style.display = "block";
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  modal = document.getElementById("tokenModal");
+
+  const close = document.querySelector(".close");
+  if(close){
+    close.onclick = () => { modal.style.display = "none"; };
+  }
+
+  window.onclick = e => {
+    if(e.target === modal){
+      modal.style.display = "none";
+    }
+  };
+
+  const submitLink = document.querySelector(".submit-link");
+  if(submitLink){
+    submitLink.addEventListener("click", e => {
+      e.preventDefault();
+      const target = document.querySelector("#submit-section");
+      if(target){
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  const filterPills = document.querySelectorAll(".view-filters .view-pill");
+  filterPills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      currentFilter = pill.dataset.filter;
+      filterPills.forEach(p => p.classList.toggle("active", p === pill));
+      renderLedger();
+    });
   });
+
+  loadLedger();
 });
 </script>
 </body>
