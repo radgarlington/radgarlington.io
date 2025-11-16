@@ -102,186 +102,373 @@
     "doxxed": true
   },
 
-  /* ---- AUTO-LISTED UNVERIFIED TOKENS ---- */
+  // UNVERIFIED — AUTO-LISTED FROM XRPL
   {
     "token": "$PHNIX",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$FUZZY",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$ARMY",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$DROP",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$SLT",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$XRPM",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$BEAR",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$CULT",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$ATM",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
   },
   {
     "token": "$GOAT",
-    "cert": "XRPL-AUTO",
-    "tier": "Unverified",
-    "issuer": "",
-    "website": "",
-    "dev": "",
-    "devx": "",
-    "email": "",
-    "x": "",
-    "tg": "",
-    "nft": "",
-    "logo_url": "",
-    "registered_at": "",
-    "expires_at": null,
-    "doxxed": false
+    "tier": "Unverified"
+  },
+  {
+    "token": "$SIGMA",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRDOGE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$FML",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$666",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$FLIPPY",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$PIGEONS",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$SEAL",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$TOTO",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$SCRAP",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$BERT",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$SCHMECKLES",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$LIHUA",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$JELLY",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XOGE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$RBT",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRBITCOIN",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$589",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$MALLARD",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$CBIRD",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$HORIZON",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$X",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XOX",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$FLAME",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$GOPNIK",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$BCHAMP",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$FARM",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$BRB",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$UGA",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XMEME",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$OLX",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$DONNIE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$FUSE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$CAMELTOE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$LAUGH",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$BANKER",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$FRIENDS",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$LEDGERGUY",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$SOLO",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$RPR",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$CSC",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$EVM",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$OXP",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$SGB",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XUM",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$REAPER",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$PWR",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$CORE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$APE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$BULL",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XFT",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XGM",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$LUX",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XPUNKZ",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRWA",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$CLAW",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XDEFI",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XFAI",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XSP",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRW",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XGB",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XGOAT",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XCRV",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XDOGE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XGO",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRAPP",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XSPARK",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XFLR",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XSR",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XPT",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XKI",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XISO",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XPX",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XMETA",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XMOON",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRPLCORE",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRPLMETA",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRPLANET",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XRFI",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XCAT",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XFOX",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XDUCK",
+    "tier": "Unverified"
+  },
+  {
+    "token": "$XPWR",
+    "tier": "Unverified"
   }
-
-  /* continue the same pattern for:
-     $SIGMA,$XRDOGE,$FML,$666,$FLIPPY,$PIGEONS,$SEAL,$TOTO,$SCRAP,$BERT,$SCHMECKLES,
-     $LIHUA,$JELLY,$XOGE,$RBT,$XRBITCOIN,$589,$MALLARD,$CBIRD,$HORIZON,$X,$XOX,
-     $FLAME,$GOPNIK,$BCHAMP,$FARM,$BRB,$UGA,$XMEME,$OLX,$DONNIE,$FUSE,$CAMELTOE,
-     $LAUGH,$BANKER,$FRIENDS,$LEDGERGUY,$SOLO,$RPR,$CSC,$EVM,$OXP,$SGB,$XUM,
-     $REAPER,$PWR,$CORE,$APE,$BULL,$XFT,$XGM,$LUX,$XPUNKZ,$XRWA,$CLAW,$XDEFI,
-     $XFAI,$XSP,$XRW,$XGB,$XGOAT,$XCRV,$XDOGE,$XGO,$XRAPP,$XSPARK,$XFLR,$XSR,
-     $XPT,$XKI,$XISO,$XPX,$XMETA,$XMOON,$XRPLCORE,$XRPLMETA,$XRPLANET,$XRFI,$XCAT,
-     $XFOX,$XDUCK,$XPWR
-  */
 ]
