@@ -113,7 +113,9 @@ footer{
 
 <main>
   <h2>🤡 Active Shills</h2>
-  <div id="shillEntries"></div>
+  <div id="shillEntries">
+    <p style="color:#4b5563;font-size:.95rem;">Loading shill entries...</p>
+  </div>
 </main>
 
 <footer>© 2025 THE SHILL LIST | RAD Enforcement Layer</footer>
@@ -121,12 +123,24 @@ footer{
 <script>
 async function loadShills() {
   const container = document.getElementById("shillEntries");
+  if (!container) return;
+
+  container.innerHTML =
+    "<p style='color:#4b5563;font-size:.95rem;'>Loading shill entries...</p>";
 
   try {
-    const res = await fetch("shills.json");
+    const res = await fetch("shills.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load shills.json");
     const data = await res.json();
+    const entries = Array.isArray(data) ? data : [];
 
-    container.innerHTML = data.map(entry => `
+    if (!entries.length) {
+      container.innerHTML =
+        "<p style='color:#4b5563;font-size:.95rem;'>No active shills logged yet.</p>";
+      return;
+    }
+
+    container.innerHTML = entries.map(entry => `
       <div class="shill">
         <div>
           <span>#${entry.id} — ${entry.name}</span>
@@ -137,12 +151,13 @@ async function loadShills() {
     `).join("");
 
   } catch (err) {
+    console.error(err);
     container.innerHTML =
       "<p style='color:#b45309;font-weight:600;'>Error loading shill list.</p>";
   }
 }
 
-loadShills();
+document.addEventListener("DOMContentLoaded", loadShills);
 </script>
 
 </body>
