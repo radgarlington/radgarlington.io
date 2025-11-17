@@ -7,7 +7,13 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
+body{
+  margin:0;
+  background:#fff;
+  color:#0f172a;
+  font-family:Arial,system-ui,sans-serif;
+  padding:0 10px;
+}
 
 /* Certified tickers bold */
 .certified-bold {
@@ -17,32 +23,23 @@ body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-ser
 
 /* Search Bar */
 .search-wrap{
-  max-width:900px;margin:20px auto 0;
-  padding:0 16px 10px;
+  max-width:900px;
+  margin:18px auto 0;
+  display:flex;
+  justify-content:center;
 }
-.search-box{
-  width:100%;padding:10px 14px;
-  border:2px solid #cbd5e1;border-radius:8px;
-  font-size:.95rem;outline:none;
+.search-input{
+  width:100%;
+  max-width:420px;
+  padding:10px 14px;
+  border-radius:8px;
+  border:1px solid #c4d6f5;
+  font-size:.95rem;
+  outline:none;
+  transition:border .2s ease;
 }
-.search-box:focus{
+.search-input:focus{
   border-color:#0A74D0;
-  box-shadow:0 0 0 2px rgba(10,116,208,.15);
-}
-
-/* Collapse-all */
-.collapse-wrap{
-  max-width:900px;margin:6px auto -10px;
-  padding:0 16px;text-align:right;
-}
-.collapse-btn{
-  background:#0A74D0;color:#fff;
-  padding:6px 12px;border-radius:8px;
-  font-size:.8rem;font-weight:600;
-  cursor:pointer;border:none;
-}
-.collapse-btn:hover{
-  opacity:.9;
 }
 
 /* Banner */
@@ -52,24 +49,26 @@ body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-ser
   padding:20px 10px 18px;
   font-size:1.05rem;font-weight:600;line-height:1.4;
   border-bottom:2px solid #062a5c;
-  box-shadow:0 4px 10px rgba(0,0,0,.25)
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  margin:0 -10px;
 }
 .banner em{
   display:block;margin-top:6px;
-  font-style:italic;font-weight:500;opacity:.85
+  font-style:italic;font-weight:500;opacity:.85;
 }
 
 /* Header */
 header{
   text-align:center;padding:52px 10px 20px;
   background:#eaf3ff;border-bottom:2px solid #d7e7ff;
-  position:relative
+  position:relative;
+  margin:0 -10px;
 }
 header h1{
-  font-size:2.2rem;margin:0;color:#0A74D0
+  font-size:2.2rem;margin:0;color:#0A74D0;
 }
 header p{
-  margin:10px 0 0;color:#334155
+  margin:10px 0 0;color:#334155;
 }
 
 /* Back Button */
@@ -78,10 +77,10 @@ header p{
   background:#0A74D0;color:#fff;
   padding:6px 10px;border-radius:6px;
   text-decoration:none;font-weight:600;font-size:.8rem;
-  transition:opacity .2s ease,transform .2s ease
+  transition:opacity .2s ease,transform .2s ease;
 }
 .back-btn:hover{
-  opacity:.9;transform:translateY(-1px)
+  opacity:.9;transform:translateY(-1px);
 }
 
 /* Annual Notice */
@@ -89,7 +88,7 @@ header p{
   max-width:760px;margin:20px auto 24px;padding:14px 16px;
   border-radius:10px;border:1px solid #d4e1ff;
   background:#edf3ff;color:#0f172a;
-  font-size:.95rem;line-height:1.5
+  font-size:.95rem;line-height:1.5;
 }
 .annual ul{margin:6px 0 6px 18px;padding:0;list-style:disc}
 
@@ -97,7 +96,8 @@ header p{
 .legend{
   background:#f1f5fb;color:#0A74D0;
   text-align:center;font-size:.95rem;font-weight:600;
-  padding:12px 8px;border-bottom:1px solid #d7e7ff;line-height:1.6
+  padding:12px 8px;border-bottom:1px solid #d7e7ff;line-height:1.6;
+  margin:0 -10px;
 }
 .legend span{display:block;margin:4px 0}
 
@@ -105,36 +105,58 @@ header p{
 .view-filters{
   background:#eef2ff;border-bottom:2px solid #d7e7ff;
   padding:10px 12px;display:flex;justify-content:center;
-  gap:8px;flex-wrap:wrap
+  gap:8px;flex-wrap:wrap;
+  margin:0 -10px;
 }
 .view-label{font-size:.9rem;font-weight:600;color:#0A74D0}
 .view-pill{
   border:none;border-radius:999px;padding:4px 10px;
   font-size:.85rem;cursor:pointer;background:#e5e7eb;
   color:#111827;font-weight:600;
-  transition:background .15s ease,transform .15s ease
+  transition:background .15s ease,transform .15s ease;
 }
 .view-pill:hover{background:#d4d4d8;transform:translateY(-1px)}
 .view-pill.active{background:#0A74D0;color:#f9fafb}
 
-/* Lists */
+/* Main */
+main{
+  max-width:900px;
+  margin:30px auto;
+  padding:0 6px;
+}
+h2{
+  color:#0A74D0;border-bottom:1px solid #cbd5e1;
+  padding-bottom:4px;font-size:1.3rem;margin-bottom:14px;
+}
+h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
+
+/* Entries */
 ul{list-style:none;padding:0;margin:0}
 li.entry{
-  margin:6px 0;padding:8px 10px;
+  margin:6px 0;padding:10px 12px;
   border-bottom:1px dashed #cbd5e1;
   font-size:.95rem;display:flex;
   justify-content:space-between;align-items:center;
   cursor:pointer;border-radius:6px;
-  transition:background .15s ease
+  transition:background .15s ease;
 }
 li.entry:hover{background:#f1f7ff}
 li span{color:#475569;font-size:.85rem}
+
+/* Issuer sub-box */
+.issuer-box{
+  padding:10px;
+  margin-top:8px;
+  border:1px solid #d3dced;
+  border-radius:8px;
+  background:#f9fbff;
+}
 
 /* Modal */
 .modal{
   display:none;position:fixed;z-index:999;
   left:0;top:0;width:100%;height:100%;
-  background:rgba(0,0,0,.55)
+  background:rgba(0,0,0,.55);
 }
 .modal-content{
   background:#fff;color:#0f172a;
@@ -142,19 +164,21 @@ li span{color:#475569;font-size:.85rem}
   border:2px solid #d0e3ff;border-radius:10px;
   width:90%;max-width:500px;
   max-height:82vh;overflow-y:auto;
-  box-shadow:0 10px 30px rgba(0,0,0,.25)
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
 .close{
-  float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0
+  float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0;
 }
 .close:hover{color:#083c80}
 .modal-content a{
-  color:#0A74D0;text-decoration:none;font-weight:bold
+  color:#0A74D0;text-decoration:none;font-weight:bold;
 }
 
+/* Footer */
 footer{
   text-align:center;padding:20px;
-  border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem
+  border-top:2px solid #d7e7ff;color:#475569;font-size:.9rem;
+  margin:0 -10px;
 }
 </style>
 </head>
@@ -173,12 +197,19 @@ footer{
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
 
+<div class="search-wrap">
+  <input id="searchInput" class="search-input" placeholder="Search tickers or issuers…">
+</div>
+
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
+  <p style="margin:8px 0 4px">
+    The RAD Ledger separates <strong>Certified</strong> projects from <strong>Verified</strong> projects.
+  </p>
   <ul>
     <li><strong>Certified</strong> listings are permanent.</li>
-    <li><strong>Verified</strong> listings renew annually.</li>
-    <li>Expired listings must reapply.</li>
+    <li><strong>Verified</strong> listings must renew annually.</li>
+    <li>Expired listings must be re-reviewed.</li>
   </ul>
 </section>
 
@@ -187,16 +218,6 @@ footer{
   <span>🔷 Verified — Non-Doxxed</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
   <span>⬛ Expired — Renewal Required</span>
-</div>
-
-<!-- SEARCH -->
-<div class="search-wrap">
-  <input id="searchBox" class="search-box" type="text" placeholder="Search token or issuer…">
-</div>
-
-<!-- Collapse All -->
-<div class="collapse-wrap">
-  <button class="collapse-btn" onclick="collapseAll()">Collapse All</button>
 </div>
 
 <div class="view-filters">
@@ -223,274 +244,318 @@ footer{
     <span class="close">&times;</span>
 
     <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
-      <img id="modalLogo"
-           style="max-width:80px;max-height:80px;border-radius:12px;object-fit:contain;">
+      <img id="modalLogo" src="" alt="Project Logo"
+           style="max-width:80px;max-height:80px;border-radius:12px;
+                  box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
     </div>
 
-    <h2 id="modalToken"></h2>
+    <h2 id="modalToken">$RAD</h2>
     <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
     <p><strong>Tier:</strong> <span id="modalTier"></span></p>
     <p><strong>Developer:</strong> <span id="modalDev"></span></p>
-    <p><strong>Developer 𝕏:</strong> <a id="modalDevX" target="_blank"></a></p>
+    <p><strong>Developer 𝕏:</strong> <a id="modalDevX" href="#" target="_blank"></a></p>
     <p><strong>Doxxed:</strong> <span id="modalDoxxed"></span></p>
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
-    <p><strong>Website:</strong> <a id="modalWebsite" target="_blank"></a></p>
+    <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-    <p><strong>Social:</strong> <a id="modalX" target="_blank">𝕏</a> |
-       <a id="modalTG" target="_blank">Telegram</a></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
 
 <script>
-let allProjects=[];
-let currentFilter="all";
+let allProjects = [];
+let currentFilter = "all";
+let modal = null;
+let searchQuery = "";
 
-/* Collapse all expanded issuer groups */
-function collapseAll(){
-  document.querySelectorAll("[id^='issuer-group-']").forEach(e=>e.remove());
+/* EXPIRATION CHECK */
+function isExpired(entry){
+  if(!entry.expires_at) return false;
+  const today = new Date().toISOString().slice(0,10);
+  return entry.expires_at < today;
 }
 
-/* Expired check */
-function isExpired(e){
-  if(!e.expires_at) return false;
-  return e.expires_at < new Date().toISOString().slice(0,10);
-}
-
-/* Category */
-function getCategory(e){
-  const t=(e.tier||"").toLowerCase();
-  if(t==="certified") return "certified";
-  if(t==="verified") return isExpired(e)?"expired":"verified";
+/* CATEGORY */
+function getCategory(entry){
+  const tier = (entry.tier || "").toLowerCase();
+  if(tier === "certified") return "certified";
+  if(tier === "verified") return isExpired(entry) ? "expired" : "verified";
   return "unverified";
 }
 
-/* Meta */
-function getMeta(e){
-  const t=(e.tier||"").toLowerCase();
-  const iss=e.issuers||[];
-  if(t==="certified") return "Certified · Unlimited";
-  if(t==="verified") return isExpired(e)?"Expired":"Verified";
-  if(t==="unverified"){
-    if(iss.length===0) return "Issuer: undefined";
-    if(iss.length===1) return `Issuer: ${iss[0].issuer}`;
-    return `Issuers: ${iss.length}`;
+/* META */
+function getMeta(entry){
+  const t = (entry.tier || "").toLowerCase();
+  const issuers = entry.issuers || [];
+
+  if(t === "certified") return "Certified · Unlimited";
+  if(t === "verified") return isExpired(entry) ? "Expired" : "Verified";
+
+  if(t === "unverified"){
+    if(issuers.length === 0) return "Issuer: undefined";
+    if(issuers.length === 1) return `Issuer: ${issuers[0].issuer}`;
+    return `Issuers: ${issuers.length}`;
   }
+
   return "";
 }
 
-/* Icons */
-function getIcon(c){
-  if(c==="certified")return"🟡";
-  if(c==="verified")return"🔷";
-  if(c==="expired")return"⬛";
-  return"⚫";
+/* ICON */
+function getIcon(category){
+  if(category === "certified") return "🟡";
+  if(category === "verified") return "🔷";
+  if(category === "expired") return "⬛";
+  return "⚫";
 }
 
-/* Render Ledger */
+/* SEARCH FILTER */
+function matchesSearch(entry){
+  if(!searchQuery) return true;
+
+  const q = searchQuery.toLowerCase();
+  const token = (entry.token || "").toLowerCase();
+
+  if(token.includes(q)) return true;
+
+  const issuers = entry.issuers || [];
+  for(const iss of issuers){
+    if((iss.issuer || "").toLowerCase().includes(q)) return true;
+  }
+
+  return false;
+}
+
+/* RENDER LEDGER */
 function renderLedger(){
-  collapseAll();
+  const ledger = document.getElementById("ledgerList");
+  ledger.innerHTML = "";
 
-  const ledger=document.getElementById("ledgerList");
-  ledger.innerHTML="";
+  const grouped = {};
 
-  const search=document.getElementById("searchBox").value.toLowerCase();
+  allProjects.forEach(p => {
+    if(currentFilter !== "all" && p.category !== currentFilter) return;
+    if(!matchesSearch(p)) return;
 
-  const groups={};
+    const clean = (p.token || "").replace(/^\$/,"");
+    const letter = (clean.charAt(0) || "#").toUpperCase();
 
-  allProjects.forEach(p=>{
-    if(currentFilter!=="all"&&p.category!==currentFilter) return;
-
-    const text=(p.token+" "+(p.issuer||"")+" "+JSON.stringify(p.issuers||[])).toLowerCase();
-    if(!text.includes(search)) return;
-
-    const clean=(p.token||"").replace(/^\$/,"");
-    const letter=(clean.charAt(0)||"#").toUpperCase();
-
-    if(!groups[letter]) groups[letter]=[];
-    groups[letter].push(p);
+    if(!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(p);
   });
 
-  Object.keys(groups).sort().forEach(letter=>{
-    const block=document.createElement("div");
-    block.innerHTML=`<h3>${letter}</h3>`;
+  const letters = Object.keys(grouped).sort();
 
-    const ul=document.createElement("ul");
+  if(!letters.length){
+    ledger.innerHTML = "<p>No matching results.</p>";
+    return;
+  }
 
-    groups[letter].forEach(entry=>{
-      const li=document.createElement("li");
-      li.className="entry";
+  letters.forEach(letter => {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = `<h3>${letter}</h3>`;
+    const ul = document.createElement("ul");
 
-      const tier=(entry.tier||"").toLowerCase();
-      const icon=getIcon(entry.category);
-      const meta=getMeta(entry);
+    grouped[letter].forEach(entry => {
+      const li = document.createElement("li");
+      li.className = "entry";
 
-      const isCertified=tier==="certified";
+      const tier = (entry.tier || "").toLowerCase();
+      const icon = getIcon(entry.category);
+      const meta = getMeta(entry);
+      const isCertified = tier === "certified";
 
-      li.innerHTML=`
-        <span class="${isCertified?"certified-bold":""}">
+      li.innerHTML = `
+        <span class="${isCertified ? "certified-bold" : ""}">
           ${icon} ${entry.token}
         </span>
         <span>${meta}</span>
       `;
 
-      /* certified / verified = normal modal */
-      if(tier==="certified"||tier==="verified"){
-        li.dataset.token=JSON.stringify(entry).replace(/'/g,"&#39;");
+      /* Certified + Verified */
+      if(tier === "certified" || tier === "verified"){
+        const encoded = JSON.stringify(entry).replace(/'/g,"&#39;");
+        li.setAttribute("data-token", encoded);
       }
 
-      /* unverified logic */
-      const issuers=entry.issuers||[];
+      /* UNVERIFIED */
+      if(tier === "unverified"){
+        const issuers = entry.issuers || [];
 
-      if(tier==="unverified"){
-        if(issuers.length===0){
-          li.onclick=()=>openUndefinedIssuer(entry);
-        } else if(issuers.length===1){
-          li.onclick=()=>openIssuerModal(issuers[0],entry.token);
-        } else {
-          li.onclick=()=>toggleIssuerGroup(entry);
+        if(issuers.length === 0){
+          li.onclick = () => openUndefinedIssuer(entry);
+        }
+        else if(issuers.length === 1){
+          li.onclick = () => openIssuerModal(issuers[0], entry.token);
+        }
+        else{
+          li.onclick = () => toggleIssuerGroup(entry);
         }
       }
 
       ul.appendChild(li);
     });
 
-    block.appendChild(ul);
-    ledger.appendChild(block);
+    wrap.appendChild(ul);
+    ledger.appendChild(wrap);
   });
 }
 
-/* Expand issuer group */
+/* UNVERIFIED: MULTI-ISSUER EXPANSION */
 function toggleIssuerGroup(entry){
-  const id="issuer-group-"+entry.token;
-  const exist=document.getElementById(id);
-  if(exist){exist.remove();return;}
+  const id = "issuer-group-" + entry.token;
+  const exist = document.getElementById(id);
+  if(exist){
+    exist.remove();
+    return;
+  }
 
-  const div=document.createElement("div");
-  div.id=id;
-  div.style.padding="10px 20px";
+  const div = document.createElement("div");
+  div.id = id;
+  div.style.padding = "10px 20px 14px";
 
-  let html="<div>";
+  let html = `<div style="margin-top:6px;">`;
 
-  entry.issuers.forEach(iss=>{
-    const enc=JSON.stringify(iss).replace(/'/g,"&#39;");
-    html+=`
-      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
+  (entry.issuers || []).forEach(iss => {
+    const encoded = JSON.stringify(iss).replace(/'/g,"&#39;");
+    html += `
+      <div class="issuer-box">
         <div><strong>Issuer:</strong> ${iss.issuer}</div>
-        <div><strong>Domain:</strong> ${iss.domain||"—"}</div>
+        <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
 
-        <button onclick='openIssuerModal(${enc},"${entry.token}")'
-          style="margin-top:6px;padding:6px 10px;border-radius:6px;background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
+        <button onclick='openIssuerModal(${encoded},"${entry.token}")'
+          style="margin-top:6px;padding:6px 10px;border-radius:6px;
+                 background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
           View Card
         </button>
       </div>
     `;
   });
 
-  html+="</div>";
-  div.innerHTML=html;
+  html += `</div>`;
+  div.innerHTML = html;
 
-  const rows=document.querySelectorAll("li.entry");
+  const rows = Array.from(document.querySelectorAll("li.entry"));
   for(const li of rows){
-    if(li.innerText.includes(entry.token)){ li.after(div); break; }
+    if(li.innerText.includes(entry.token)){
+      li.after(div);
+      break;
+    }
   }
 }
 
-/* Undefined issuer modal */
+/* UNVERIFIED: ZERO-ISSUER AUTO CARD */
 function openUndefinedIssuer(entry){
-  const m=document.getElementById("tokenModal");
-  m.style.display="block";
+  const modal = document.getElementById("tokenModal");
+  modal.style.display = "block";
 
-  document.getElementById("modalLogoWrap").style.display="none";
-  document.getElementById("modalToken").textContent=entry.token+" — Issuer: undefined";
-  document.getElementById("modalCert").textContent="XRPL-AUTO";
-  document.getElementById("modalTier").textContent="Unverified";
-  document.getElementById("modalDev").textContent="—";
-  document.getElementById("modalDevX").textContent="";
-  document.getElementById("modalIssuer").textContent="undefined";
-  document.getElementById("modalWebsite").textContent="—";
-  document.getElementById("modalWebsite").href="#";
-  document.getElementById("modalEmail").textContent="—";
-  document.getElementById("modalX").href="#";
-  document.getElementById("modalTG").href="#";
-  document.getElementById("modalNFT").textContent="—";
+  document.getElementById("modalLogoWrap").style.display = "none";
+
+  document.getElementById("modalToken").textContent =
+    `${entry.token} — Issuer: undefined`;
+
+  document.getElementById("modalCert").textContent = "XRPL-AUTO";
+  document.getElementById("modalTier").textContent = "Unverified";
+  document.getElementById("modalDev").textContent = "—";
+  document.getElementById("modalDevX").textContent = "";
+  document.getElementById("modalDevX").href = "#";
+
+  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent = "undefined";
+
+  const w = document.getElementById("modalWebsite");
+  w.textContent = "—";
+  w.href = "#";
+
+  document.getElementById("modalEmail").textContent = "—";
+  document.getElementById("modalX").href = "#";
+  document.getElementById("modalTG").href = "#";
+  document.getElementById("modalNFT").textContent = "—";
 }
 
-/* Certified/Verified modal */
-document.addEventListener("click",e=>{
-  const li=e.target.closest(".entry");
-  if(!li||!li.dataset.token)return;
+/* OPEN CERTIFIED/VERIFIED CARD */
+document.addEventListener("click", e => {
+  const li = e.target.closest(".entry");
+  if(!li || !li.dataset.token) return;
 
-  const data=JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
+  let data = JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
+  const modal = document.getElementById("tokenModal");
+  modal.style.display = "block";
 
-  const m=document.getElementById("tokenModal");
-  m.style.display="block";
-
-  const wrap=document.getElementById("modalLogoWrap");
-  const img=document.getElementById("modalLogo");
+  const wrap = document.getElementById("modalLogoWrap");
+  const img = document.getElementById("modalLogo");
 
   if(data.logo_url){
-    wrap.style.display="block";
-    img.src=data.logo_url;
-  }else{
-    wrap.style.display="none";
+    wrap.style.display = "block";
+    img.src = data.logo_url;
+  } else {
+    wrap.style.display = "none";
+    img.src = "";
   }
 
-  document.getElementById("modalToken").textContent=data.token;
-  document.getElementById("modalCert").textContent=data.cert||"—";
-  document.getElementById("modalTier").textContent=data.tier||"—";
-  document.getElementById("modalDev").textContent=data.dev||"—";
+  document.getElementById("modalToken").textContent = data.token;
+  document.getElementById("modalCert").textContent = data.cert || "—";
+  document.getElementById("modalTier").textContent = data.tier || "—";
+  document.getElementById("modalDev").textContent = data.dev || "—";
 
-  const dx=document.getElementById("modalDevX");
-  dx.href=data.devx||"#";
-  dx.textContent=data.devx?data.devx.replace("https://x.com/","@"):"";
+  const dx = document.getElementById("modalDevX");
+  dx.href = data.devx || "#";
+  dx.textContent = data.devx ? data.devx.replace("https://x.com/","@") : "";
 
-  document.getElementById("modalDoxxed").innerHTML=
-    data.doxxed?"✅ Doxxed":"❌ Undoxxed";
+  document.getElementById("modalDoxxed").innerHTML =
+    data.doxxed ? "✅ Doxxed" : "❌ Undoxxed";
 
-  document.getElementById("modalIssuer").textContent=data.issuer||"—";
+  document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
-  const w=document.getElementById("modalWebsite");
-  w.textContent=data.website||"—";
-  w.href=data.website||"#";
+  const web = document.getElementById("modalWebsite");
+  web.textContent = data.website || "—";
+  web.href = data.website || "#";
 
-  document.getElementById("modalEmail").textContent=data.email||"—";
-  document.getElementById("modalX").href=data.x||"#";
-  document.getElementById("modalTG").href=data.tg||"#";
+  document.getElementById("modalEmail").textContent = data.email || "—";
+  document.getElementById("modalX").href = data.x || "#";
+  document.getElementById("modalTG").href = data.tg || "#";
 
-  const nft=document.getElementById("modalNFT");
-  nft.innerHTML=data.nft?`<a href="${data.nft}" target="_blank">View Seal NFT</a>`:"—";
+  const nft = document.getElementById("modalNFT");
+  nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 });
 
-/* Search handler */
-document.getElementById("searchBox").addEventListener("input",()=>renderLedger());
-
-/* Load & init */
+/* LOAD LEDGER */
 async function loadLedger(){
-  const res=await fetch("ledger.json",{cache:"no-store"});
-  const data=await res.json();
+  const res = await fetch("ledger.json",{cache:"no-store"});
+  const data = await res.json();
 
-  allProjects=data.map(e=>({...e,category:getCategory(e)}));
+  allProjects = data.map(entry => ({
+    ...entry,
+    category: getCategory(entry)
+  }));
+
   renderLedger();
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
+/* INIT */
+document.addEventListener("DOMContentLoaded", () => {
+  modal = document.getElementById("tokenModal");
 
-  document.querySelector(".close").onclick=()=>{
-    document.getElementById("tokenModal").style.display="none";
+  document.querySelector(".close").onclick = () => {
+    modal.style.display = "none";
   };
 
-  window.onclick=e=>{
-    if(e.target===document.getElementById("tokenModal")){
-      document.getElementById("tokenModal").style.display="none";
+  window.onclick = e => {
+    if(e.target === modal){
+      modal.style.display = "none";
     }
   };
 
-  document.querySelectorAll(".view-pill").forEach(btn=>{
-    btn.onclick=()=>{
-      currentFilter=btn.dataset.filter;
-      document.querySelectorAll(".view-pill").forEach(b=>b.classList.remove("active"));
-      btn.classList.add("active");
+  document.getElementById("searchInput").oninput = e => {
+    searchQuery = e.target.value.trim().toLowerCase();
+    renderLedger();
+  };
+
+  document.querySelectorAll(".view-pill").forEach(pill => {
+    pill.onclick = () => {
+      currentFilter = pill.dataset.filter;
+      document.querySelectorAll(".view-pill").forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
       renderLedger();
     };
   });
