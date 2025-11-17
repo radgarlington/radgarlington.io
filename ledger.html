@@ -209,10 +209,8 @@ footer{text-align:center;padding:20px;border-top:2px solid #d7e7ff;color:#475569
 let allProjects = [];
 let currentFilter = "all";
 let modal = null;
+let issuerModal = null;
 
-/* =========================
-    CATEGORY + META LOGIC
-========================= */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
@@ -227,20 +225,16 @@ function getCategory(entry){
 }
 
 function getMeta(entry){
-  const cert = entry.cert || "XRPL-AUTO";
-  const reg  = entry.registered_at || "—";
-  const exp  = entry.expires_at || "—";
-  const tier = (entry.tier || "").toLowerCase();
-
-  if(tier === "certified")
-    return `Cert: ${cert} · Registered: ${reg} · Status: Unlimited`;
-
-  if(tier === "verified"){
-    const expired = isExpired(entry);
-    return `Cert: ${cert} · Registered: ${reg} · ${expired ? "Expired" : "Expires"}: ${exp}`;
+  if(entry.tier === "Certified"){
+    return `Certified · Unlimited`;
   }
-
-  return `Status: Auto-Listed from XRPL`;
+  if(entry.tier === "Verified"){
+    return isExpired(entry) ? "Expired" : "Verified";
+  }
+  if(entry.tier === "Unverified"){
+    return `Issuers: ${(entry.issuers || []).length}`;
+  }
+  return "";
 }
 
 function getIcon(category){
@@ -250,200 +244,174 @@ function getIcon(category){
   return "⚫";
 }
 
-/* =========================
-    GROUPED RENDER
-========================= */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
-  if(!ledger) return;
-
   ledger.innerHTML = "";
 
-  // group by token symbol
   const grouped = {};
+
   allProjects.forEach(p => {
     if(currentFilter !== "all" && p.category !== currentFilter) return;
 
-    const symbol = (p.token || "").toUpperCase();
-    if(!grouped[symbol]){
-      grouped[symbol] = { parents:[], issuers:[] };
-    }
+    const clean = (p.token || "").replace(/^\$/,"");
+    const letter = (clean.charAt(0) || "#").toUpperCase();
 
-    if(p.grouped){
-      grouped[symbol].parents.push(p);
-      (p.issuers || []).forEach(i => grouped[symbol].issuers.push(i));
-    } else {
-      grouped[symbol].parents.push(p);
-    }
+    if(!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(p);
   });
 
-  const sorted = Object.keys(grouped).sort();
-
-  if(!sorted.length){
-    ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">No projects match this view yet.</p>';
+  const letters = Object.keys(grouped).sort();
+  if(!letters.length){
+    ledger.innerHTML = '<p>No projects found.</p>';
     return;
   }
 
-  sorted.forEach(symbol => {
-    const entry = grouped[symbol];
-    const parent = entry.parents[0];
-    const icon = getIcon(parent.category);
-    const meta = getMeta(parent);
+  letters.forEach(letter => {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = `<h3>${letter}</h3>`;
+    const ul = document.createElement("ul");
 
-    const isExpandable = entry.issuers.length > 0;
+    grouped[letter].forEach(entry => {
+      const li = document.createElement("li");
+      li.className = "entry";
 
-    let html = `
-      <li class="entry parent-entry" data-token="${parent.tier === 'Certified' || parent.tier === 'Verified'
-        ? JSON.stringify(parent).replace(/"/g,'&quot;')
-        : ''}">
-        <span>${icon} ${parent.token}</span>
-        <span>${meta}</span>
-        ${isExpandable ? `<span class="expander" style="margin-left:10px;color:#0A74D0;font-weight:bold;cursor:pointer;">▼</span>` : ``}
-      </li>
-    `;
+      const icon = getIcon(entry.category);
+      const meta = getMeta(entry);
 
-    if(isExpandable){
-      html += `<ul class="issuer-list" style="display:none;margin-left:20px;">`;
-      entry.issuers.forEach(iss => {
-        html += `
-          <li class="entry issuer-entry" style="background:#f7fbff;cursor:default;">
-            <span style="font-size:.85rem;color:#475569;">Issuer</span>
-            <span style="font-size:.85rem;color:#475569;">${iss}</span>
-          </li>`;
-      });
-      html += `</ul>`;
-    }
+      // Unverified: expandable
+      if(entry.tier === "Unverified"){
+        li.innerHTML = `
+          <span style="font-weight:bold;">${icon} ${entry.token}</span>
+          <span>${meta}</span>
+        `;
 
-    ledger.insertAdjacentHTML("beforeend", html);
-  });
+        li.style.cursor = "pointer";
+        li.onclick = () => toggleIssuerGroup(entry);
+      }
+      else {
+        const encoded = JSON.stringify(entry).replace(/'/g, "&#39;");
+        li.setAttribute("data-token", encoded);
+        li.innerHTML = `
+          <span>${icon} ${entry.token}</span>
+          <span>${meta}</span>
+        `;
+      }
 
-  attachExpanders();
-}
-
-/* =========================
-    DROPDOWN LOGIC
-========================= */
-function attachExpanders(){
-  document.querySelectorAll(".expander").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const issuerList = btn.parentElement.nextElementSibling;
-      if(!issuerList) return;
-      const open = issuerList.style.display === "block";
-      issuerList.style.display = open ? "none" : "block";
-      btn.textContent = open ? "▼" : "▲";
+      ul.appendChild(li);
     });
+
+    wrap.appendChild(ul);
+    ledger.appendChild(wrap);
   });
 }
 
-/* =========================
-    MODAL HANDLING
-========================= */
-function openModal(data){
-  const logoWrap = document.getElementById("modalLogoWrap");
-  const logoImg  = document.getElementById("modalLogo");
+function toggleIssuerGroup(entry){
+  const ledger = document.getElementById("ledgerList");
+  const openRow = document.getElementById("issuer-group-" + entry.token);
 
-  if(data.logo_url){
-    logoImg.src = data.logo_url;
-    logoWrap.style.display = "block";
-  } else {
-    logoImg.src = "";
-    logoWrap.style.display = "none";
-  }
-
-  document.getElementById("modalToken").textContent  = data.token || "";
-  document.getElementById("modalCert").textContent   = data.cert || "XRPL-AUTO";
-  document.getElementById("modalTier").textContent   = data.tier || "Unverified";
-  document.getElementById("modalDev").textContent    = data.dev || "—";
-
-  const devXEl = document.getElementById("modalDevX");
-  devXEl.href = data.devx || "#";
-
-  if(data.devx){
-    if(data.devx.includes("t.me")){
-      devXEl.textContent = data.dev ? "@" + data.dev : data.devx;
-    } else {
-      devXEl.textContent = data.devx.replace("https://x.com/","@");
-    }
-  } else {
-    devXEl.textContent = "";
-  }
-
-  document.getElementById("modalDoxxed").innerHTML = data.doxxed
-    ? '<span class="checkmark">✅</span> Doxxed'
-    : "❌ Undoxxed";
-
-  document.getElementById("modalIssuer").textContent = data.issuer || "—";
-
-  const webEl = document.getElementById("modalWebsite");
-  webEl.textContent = data.website || "—";
-  webEl.href        = data.website || "#";
-
-  document.getElementById("modalEmail").textContent = data.email || "—";
-  document.getElementById("modalX").href           = data.x || "#";
-  document.getElementById("modalTG").href          = data.tg || "#";
-
-  const nftEl = document.getElementById("modalNFT");
-  nftEl.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
-
-  modal.style.display = "block";
-}
-
-/* =========================
-    CLICK HANDLER
-========================= */
-document.addEventListener("click", e => {
-  const li = e.target.closest(".entry");
-  if(!li) return;
-
-  if(li.classList.contains("issuer-entry")) return;
-  if(!li.dataset.token) return;
-
-  let data;
-  try{
-    data = JSON.parse(li.dataset.token.replace(/&quot;/g,'"'));
-  }catch{
+  if(openRow){
+    openRow.remove();
     return;
   }
 
-  openModal(data);
-});
+  const groupDiv = document.createElement("div");
+  groupDiv.id = "issuer-group-" + entry.token;
+  groupDiv.style.padding = "10px 20px 14px";
 
-/* =========================
-    LOAD + FILTER
-========================= */
+  const issuers = entry.issuers || [];
+
+  let html = `<div style="margin-top:6px;">`;
+
+  issuers.forEach(iss => {
+    html += `
+      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
+        <div><strong>Issuer:</strong> ${iss.issuer}</div>
+        <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
+        <div style="margin-top:6px;">
+          <button onclick='openIssuerModal(${JSON.stringify(iss).replace(/'/g,"&#39;")}, "${entry.token}")'
+            style="padding:6px 10px;border-radius:6px;background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
+            View Card
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  html += `</div>`;
+
+  groupDiv.innerHTML = html;
+
+  const allLists = Array.from(ledger.querySelectorAll("li.entry"));
+  let targetLi = null;
+  allLists.forEach(li => {
+    if(li.innerText.includes(entry.token)){
+      targetLi = li;
+    }
+  });
+
+  if(targetLi){
+    targetLi.after(groupDiv);
+  }
+}
+
+function openIssuerModal(issuer, token){
+  const modal = document.getElementById("tokenModal");
+  modal.style.display = "block";
+
+  document.getElementById("modalLogoWrap").style.display = "none";
+  document.getElementById("modalLogo").src = "";
+
+  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
+  document.getElementById("modalCert").textContent = "XRPL-AUTO";
+  document.getElementById("modalTier").textContent = "Unverified";
+
+  document.getElementById("modalDev").textContent = "—";
+  const devx = document.getElementById("modalDevX");
+  devx.href = "#";
+  devx.textContent = "";
+
+  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent = issuer.issuer;
+
+  const web = document.getElementById("modalWebsite");
+  web.textContent = issuer.website || "—";
+  web.href = issuer.website || "#";
+
+  document.getElementById("modalEmail").textContent = issuer.email || "—";
+  document.getElementById("modalX").href = issuer.x || "#";
+  document.getElementById("modalTG").href = issuer.tg || "#";
+  document.getElementById("modalNFT").textContent = "—";
+}
+
 async function loadLedger(){
-  const ledger = document.getElementById("ledgerList");
-  if(!ledger) return;
-  ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">Loading Ledger...</p>';
-
   try{
-    const res = await fetch("ledger.json", { cache:"no-store" });
-    if(!res.ok) throw new Error("Failed to load ledger.json");
+    const res = await fetch("ledger.json", { cache: "no-store" });
     const data = await res.json();
 
-    allProjects = (Array.isArray(data) ? data : []).map(entry => ({
+    allProjects = data.map(entry => ({
       ...entry,
       category: getCategory(entry)
-    })).sort((a,b) => (a.token || "").localeCompare(b.token || ""));
+    }));
 
     renderLedger();
   }catch(err){
-    ledger.innerHTML = '<p style="color:#b91c1c;font-weight:600;">Error loading Ledger.</p>';
+    console.error(err);
+    document.getElementById("ledgerList").innerHTML = "Error loading ledger.";
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   modal = document.getElementById("tokenModal");
-
   const close = document.querySelector(".close");
-  if(close) close.onclick = () => { modal.style.display = "none"; };
 
+  close.onclick = () => { modal.style.display = "none"; };
   window.onclick = e => { if(e.target === modal) modal.style.display = "none"; };
 
-  document.querySelectorAll(".view-pill").forEach(pill => {
+  const filterPills = document.querySelectorAll(".view-filters .view-pill");
+  filterPills.forEach(pill => {
     pill.addEventListener("click", () => {
       currentFilter = pill.dataset.filter;
-      document.querySelectorAll(".view-pill").forEach(p => p.classList.toggle("active", p === pill));
+      filterPills.forEach(p => p.classList.toggle("active", p === pill));
       renderLedger();
     });
   });
@@ -451,6 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadLedger();
 });
 </script>
+
 
 
 </body>
