@@ -79,10 +79,10 @@ header p{
   transition:background .15s ease,transform .15s ease
 }
 .view-pill:hover{background:#d4d4d8;transform:translateY(-1px)}
-.view-pill.active{background:#0A74D0;color:#f9fafb}
+.view-pill.active{background:#0A74D0;color:#fff}
 
-/* Certified = bold & blue */
-.certified-bold {
+/* Certified tickers bold + blue */
+.certified-bold{
   font-weight:700;
   color:#0A74D0;
 }
@@ -129,11 +129,9 @@ footer{
   float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0
 }
 .close:hover{color:#083c80}
-
 .modal-content a{
   color:#0A74D0;text-decoration:none;font-weight:bold
 }
-.checkmark{color:#0A74D0;font-weight:bold}
 </style>
 </head>
 
@@ -153,21 +151,19 @@ footer{
 
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
-  <p style="margin:8px 0 4px">
-    The RAD Ledger separates <strong>Certified</strong> projects from <strong>Verified</strong> projects.
-  </p>
+  <p>The RAD Ledger separates <strong>Certified</strong> from <strong>Verified</strong>.</p>
   <ul>
-    <li><strong>Certified</strong> listings are permanent.</li>
-    <li><strong>Verified</strong> listings must renew annually.</li>
-    <li>Expired listings must be re-reviewed.</li>
+    <li><strong>Certified</strong> = Permanent.</li>
+    <li><strong>Verified</strong> = Annual renewal.</li>
+    <li><strong>Expired</strong> = Must re-apply.</li>
   </ul>
 </section>
 
 <div class="legend">
   <span>🟡 Certified — Doxxed + Seal NFT</span>
   <span>🔷 Verified — Non-Doxxed</span>
-  <span>⚫ Unverified — Auto-Listed from XRPL</span>
-  <span>⬛ Expired — Renewal Required</span>
+  <span>⚫ Unverified — Auto-Listed</span>
+  <span>⬛ Expired — Renewal Needed</span>
 </div>
 
 <div class="view-filters">
@@ -195,8 +191,7 @@ footer{
 
     <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
       <img id="modalLogo" src="" alt="Project Logo"
-           style="max-width:80px;max-height:80px;border-radius:12px;
-                  box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
+           style="max-width:80px;max-height:80px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
     </div>
 
     <h2 id="modalToken">$RAD</h2>
@@ -213,51 +208,50 @@ footer{
   </div>
 </div>
 
-  <script>
+<script>
 let allProjects = [];
 let currentFilter = "all";
 let modal = null;
 
-/* EXPIRATION CHECK */
+/* Expired Check */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
-/* CATEGORY DETECTION */
+/* Category */
 function getCategory(entry){
-  const tier = (entry.tier || "").toLowerCase();
-  if(tier === "certified") return "certified";
-  if(tier === "verified") return isExpired(entry) ? "expired" : "verified";
+  const t = (entry.tier || "").toLowerCase();
+  if(t === "certified") return "certified";
+  if(t === "verified") return isExpired(entry) ? "expired" : "verified";
   return "unverified";
 }
 
-/* META LINE */
-function getMeta(entry){
-  const t = (entry.tier || "").toLowerCase();
-
+/* Meta */
+function getMeta(e){
+  const t = (e.tier || "").toLowerCase();
   if(t === "certified") return "Certified · Unlimited";
-  if(t === "verified") return isExpired(entry) ? "Expired" : "Verified";
+  if(t === "verified") return isExpired(e) ? "Expired" : "Verified";
 
   if(t === "unverified"){
-    const list = entry.issuers || [];
-    if(list.length === 1) return `Issuer: ${list[0].issuer || "—"}`;
-    return `Issuers: ${list.length}`;
+    const iss = e.issuers || [];
+    if(iss.length === 1) return `Issuer: ${iss[0].issuer}`;
+    return `Issuers: ${iss.length}`;
   }
 
   return "";
 }
 
-/* ICONS */
-function getIcon(category){
-  if(category === "certified") return "🟡";
-  if(category === "verified") return "🔷";
-  if(category === "expired") return "⬛";
+/* Icon */
+function getIcon(c){
+  if(c === "certified") return "🟡";
+  if(c === "verified") return "🔷";
+  if(c === "expired") return "⬛";
   return "⚫";
 }
 
-/* RENDER LEDGER CORE */
+/* Render Ledger */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   ledger.innerHTML = "";
@@ -267,7 +261,7 @@ function renderLedger(){
   allProjects.forEach(p => {
     if(currentFilter !== "all" && p.category !== currentFilter) return;
 
-    const clean = (p.token || "").replace(/^\$/,"");
+    const clean = (p.token || "").replace(/^\$/,"").trim();
     const letter = (clean.charAt(0) || "#").toUpperCase();
 
     if(!grouped[letter]) grouped[letter] = [];
@@ -287,26 +281,31 @@ function renderLedger(){
 
       const icon = getIcon(entry.category);
       const meta = getMeta(entry);
-
       const isCertified = (entry.tier || "").toLowerCase() === "certified";
-      const isUnverified = (entry.tier || "").toLowerCase() === "unverified";
-      const issuers = entry.issuers || [];
+      const iss = entry.issuers || [];
 
-      /* === UNVERIFIED WITH EXACTLY ONE ISSUER → OPEN CARD ON TAP === */
-      if(isUnverified && issuers.length === 1){
-        const one = issuers[0];
-        const encodedI = JSON.stringify(one).replace(/'/g,"&#39;");
+      /* Single-issuer unverified → open card on tap */
+      if(entry.category === "unverified" && iss.length === 1){
+        const encoded = JSON.stringify({
+          token: entry.token,
+          issuer: iss[0].issuer,
+          domain: iss[0].domain || "",
+          tier: "Unverified",
+          cert: "XRPL-AUTO",
+          doxxed: false
+        }).replace(/'/g,"&#39;");
+
+        li.setAttribute("data-token", encoded);
         li.innerHTML = `
           <span class="${isCertified ? "certified-bold" : ""}">
             ${icon} ${entry.token}
           </span>
           <span>${meta}</span>
         `;
-        li.onclick = () => openIssuerModal(one, entry.token);
       }
 
-      /* === UNVERIFIED WITH 2+ ISSUERS → EXPANDABLE GROUP === */
-      else if(isUnverified && issuers.length > 1){
+      /* Multi-issuer unverified → expandable list */
+      else if(entry.category === "unverified" && iss.length > 1){
         li.innerHTML = `
           <span class="${isCertified ? "certified-bold" : ""}">
             ${icon} ${entry.token}
@@ -316,10 +315,11 @@ function renderLedger(){
         li.onclick = () => toggleIssuerGroup(entry);
       }
 
-      /* === VERIFIED & CERTIFIED → NORMAL CARD === */
-      else {
+      /* Certified / Verified / Expired → card popup */
+      else{
         const encoded = JSON.stringify(entry).replace(/'/g,"&#39;");
         li.setAttribute("data-token", encoded);
+
         li.innerHTML = `
           <span class="${isCertified ? "certified-bold" : ""}">
             ${icon} ${entry.token}
@@ -336,12 +336,11 @@ function renderLedger(){
   });
 }
 
-    /* EXPAND UNVERIFIED ISSUERS */
+/* Expand Multi-Issuer */
 function toggleIssuerGroup(entry){
-  const ledger = document.getElementById("ledgerList");
   const id = "issuer-group-" + entry.token;
-
   const exist = document.getElementById(id);
+
   if(exist){
     exist.remove();
     return;
@@ -354,17 +353,21 @@ function toggleIssuerGroup(entry){
   let html = `<div style="margin-top:6px;">`;
 
   (entry.issuers || []).forEach(iss => {
-    const data = JSON.stringify(iss).replace(/'/g,"&#39;");
+    const data = JSON.stringify({
+      issuer: iss.issuer,
+      domain: iss.domain || "",
+      tier: "Unverified",
+      cert: "XRPL-AUTO",
+      doxxed: false
+    }).replace(/'/g,"&#39;");
+
     html += `
-      <div style="padding:10px;margin-top:8px;
-                  border:1px solid #d3dced;border-radius:8px;
-                  background:#f9fbff;">
-        <div><strong>Issuer:</strong> ${iss.issuer || "—"}</div>
+      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
+        <div><strong>Issuer:</strong> ${iss.issuer}</div>
         <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
 
         <button onclick='openIssuerModal(${data},"${entry.token}")'
-          style="margin-top:6px;padding:6px 10px;border-radius:6px;
-                 background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
+          style="margin-top:6px;padding:6px 10px;border-radius:6px;background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
           View Card
         </button>
       </div>
@@ -383,7 +386,7 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* OPEN ISSUER CARD (UNVERIFIED, AUTO-LISTED) */
+/* Open Issuer Card */
 function openIssuerModal(issuer, token){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
@@ -391,16 +394,15 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalLogoWrap").style.display = "none";
   document.getElementById("modalLogo").src = "";
 
-  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer || ""}`;
+  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
-
   document.getElementById("modalDevX").href = "#";
   document.getElementById("modalDevX").textContent = "";
-
   document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
-  document.getElementById("modalIssuer").textContent = issuer.issuer || "—";
+
+  document.getElementById("modalIssuer").textContent = issuer.issuer;
 
   const w = document.getElementById("modalWebsite");
   w.textContent = issuer.domain || "—";
@@ -412,7 +414,7 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalNFT").textContent = "—";
 }
 
-/* OPEN CARD FOR CERTIFIED + VERIFIED */
+/* Open Card for Certified/Verified */
 document.addEventListener("click", e => {
   const li = e.target.closest(".entry");
   if(!li || !li.dataset.token) return;
@@ -459,20 +461,20 @@ document.addEventListener("click", e => {
   nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 });
 
-    /* LOAD LEDGER */
+/* Load Ledger */
 async function loadLedger(){
   const res = await fetch("ledger.json",{cache:"no-store"});
   const data = await res.json();
 
-  allProjects = data.map(entry => ({
-    ...entry,
-    category: getCategory(entry)
+  allProjects = data.map(e => ({
+    ...e,
+    category: getCategory(e)
   }));
 
   renderLedger();
 }
 
-/* INIT */
+/* Init */
 document.addEventListener("DOMContentLoaded", () => {
   modal = document.getElementById("tokenModal");
 
@@ -497,3 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadLedger();
 });
+</script>
+
+</body>
+</html>
