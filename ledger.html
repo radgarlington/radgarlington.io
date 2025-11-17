@@ -210,6 +210,9 @@ let allProjects = [];
 let currentFilter = "all";
 let modal = null;
 
+/* =========================
+    CATEGORY + META LOGIC
+========================= */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
@@ -229,13 +232,14 @@ function getMeta(entry){
   const exp  = entry.expires_at || "—";
   const tier = (entry.tier || "").toLowerCase();
 
-  if(tier === "certified"){
+  if(tier === "certified")
     return `Cert: ${cert} · Registered: ${reg} · Status: Unlimited`;
-  }
+
   if(tier === "verified"){
     const expired = isExpired(entry);
     return `Cert: ${cert} · Registered: ${reg} · ${expired ? "Expired" : "Expires"}: ${exp}`;
   }
+
   return `Status: Auto-Listed from XRPL`;
 }
 
@@ -246,101 +250,102 @@ function getIcon(category){
   return "⚫";
 }
 
+/* =========================
+    GROUPED RENDER
+========================= */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   if(!ledger) return;
 
   ledger.innerHTML = "";
 
+  // group by token symbol
   const grouped = {};
   allProjects.forEach(p => {
     if(currentFilter !== "all" && p.category !== currentFilter) return;
-    const token = p.token || "";
-    const clean = token.replace(/^\$/,"");
-    const letter = (clean.charAt(0) || "#").toUpperCase();
-    if(!grouped[letter]) grouped[letter] = [];
-    grouped[letter].push(p);
+
+    const symbol = (p.token || "").toUpperCase();
+    if(!grouped[symbol]){
+      grouped[symbol] = { parents:[], issuers:[] };
+    }
+
+    if(p.grouped){
+      grouped[symbol].parents.push(p);
+      (p.issuers || []).forEach(i => grouped[symbol].issuers.push(i));
+    } else {
+      grouped[symbol].parents.push(p);
+    }
   });
 
-  const letters = Object.keys(grouped).sort();
-  if(!letters.length){
+  const sorted = Object.keys(grouped).sort();
+
+  if(!sorted.length){
     ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">No projects match this view yet.</p>';
     return;
   }
 
-  letters.forEach(letter => {
-    const div = document.createElement("div");
-    const itemsHtml = grouped[letter].map(p => {
-      const icon = getIcon(p.category);
-      const meta = getMeta(p);
-      const hasDetails = (p.tier === "Certified" || p.tier === "Verified");
-      const dataToken = hasDetails
-        ? JSON.stringify(p).replace(/'/g, "&#39;")
-        : null;
-      const attr = hasDetails
-        ? `data-token='${dataToken}' title="${p.tier} Project"`
-        : "";
-      return `
-        <li class="entry" ${attr}>
-          <span>${icon} ${p.token || ""}</span>
-          <span>${meta}</span>
-        </li>
-      `;
-    }).join("");
+  sorted.forEach(symbol => {
+    const entry = grouped[symbol];
+    const parent = entry.parents[0];
+    const icon = getIcon(parent.category);
+    const meta = getMeta(parent);
 
-    div.innerHTML = `<h3>${letter}</h3><ul>${itemsHtml}</ul>`;
-    ledger.appendChild(div);
+    const isExpandable = entry.issuers.length > 0;
+
+    let html = `
+      <li class="entry parent-entry" data-token="${parent.tier === 'Certified' || parent.tier === 'Verified'
+        ? JSON.stringify(parent).replace(/"/g,'&quot;')
+        : ''}">
+        <span>${icon} ${parent.token}</span>
+        <span>${meta}</span>
+        ${isExpandable ? `<span class="expander" style="margin-left:10px;color:#0A74D0;font-weight:bold;cursor:pointer;">▼</span>` : ``}
+      </li>
+    `;
+
+    if(isExpandable){
+      html += `<ul class="issuer-list" style="display:none;margin-left:20px;">`;
+      entry.issuers.forEach(iss => {
+        html += `
+          <li class="entry issuer-entry" style="background:#f7fbff;cursor:default;">
+            <span style="font-size:.85rem;color:#475569;">Issuer</span>
+            <span style="font-size:.85rem;color:#475569;">${iss}</span>
+          </li>`;
+      });
+      html += `</ul>`;
+    }
+
+    ledger.insertAdjacentHTML("beforeend", html);
+  });
+
+  attachExpanders();
+}
+
+/* =========================
+    DROPDOWN LOGIC
+========================= */
+function attachExpanders(){
+  document.querySelectorAll(".expander").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const issuerList = btn.parentElement.nextElementSibling;
+      if(!issuerList) return;
+      const open = issuerList.style.display === "block";
+      issuerList.style.display = open ? "none" : "block";
+      btn.textContent = open ? "▼" : "▲";
+    });
   });
 }
 
-async function loadLedger(){
-  const ledger = document.getElementById("ledgerList");
-  if(!ledger) return;
-
-  ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">Loading Ledger...</p>';
-
-  try{
-    const res = await fetch("ledger.json", { cache: "no-store" });
-    if(!res.ok) throw new Error("Failed to load ledger.json");
-    const data = await res.json();
-
-    allProjects = (Array.isArray(data) ? data : []).map(entry => {
-      const category = getCategory(entry);
-      return { ...entry, category };
-    }).sort((a,b) => {
-      const at = (a.token || "").toUpperCase();
-      const bt = (b.token || "").toUpperCase();
-      if(at < bt) return -1;
-      if(at > bt) return 1;
-      return 0;
-    });
-
-    renderLedger();
-  }catch(err){
-    console.error(err);
-    ledger.innerHTML = '<p style="color:#b91c1c;font-weight:600;">Error loading Ledger data. Try refreshing.</p>';
-  }
-}
-
-document.addEventListener("click", e => {
-  const li = e.target.closest(".entry");
-  if(!li || !li.dataset.token || !modal) return;
-
-  let data;
-  try{
-    data = JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
-  }catch(err){
-    console.error("Error parsing token data", err);
-    return;
-  }
-
+/* =========================
+    MODAL HANDLING
+========================= */
+function openModal(data){
   const logoWrap = document.getElementById("modalLogoWrap");
   const logoImg  = document.getElementById("modalLogo");
 
   if(data.logo_url){
     logoImg.src = data.logo_url;
     logoWrap.style.display = "block";
-  }else{
+  } else {
     logoImg.src = "";
     logoWrap.style.display = "none";
   }
@@ -356,10 +361,10 @@ document.addEventListener("click", e => {
   if(data.devx){
     if(data.devx.includes("t.me")){
       devXEl.textContent = data.dev ? "@" + data.dev : data.devx;
-    }else{
+    } else {
       devXEl.textContent = data.devx.replace("https://x.com/","@");
     }
-  }else{
+  } else {
     devXEl.textContent = "";
   }
 
@@ -367,7 +372,7 @@ document.addEventListener("click", e => {
     ? '<span class="checkmark">✅</span> Doxxed'
     : "❌ Undoxxed";
 
-  document.getElementById("modalIssuer").textContent   = data.issuer || "—";
+  document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
   const webEl = document.getElementById("modalWebsite");
   webEl.textContent = data.website || "—";
@@ -378,45 +383,67 @@ document.addEventListener("click", e => {
   document.getElementById("modalTG").href          = data.tg || "#";
 
   const nftEl = document.getElementById("modalNFT");
-  if(data.nft){
-    nftEl.innerHTML = `<a href="${data.nft}" target="_blank">View Seal NFT</a>`;
-  }else{
-    nftEl.textContent = "—";
-  }
+  nftEl.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 
   modal.style.display = "block";
+}
+
+/* =========================
+    CLICK HANDLER
+========================= */
+document.addEventListener("click", e => {
+  const li = e.target.closest(".entry");
+  if(!li) return;
+
+  if(li.classList.contains("issuer-entry")) return;
+  if(!li.dataset.token) return;
+
+  let data;
+  try{
+    data = JSON.parse(li.dataset.token.replace(/&quot;/g,'"'));
+  }catch{
+    return;
+  }
+
+  openModal(data);
 });
+
+/* =========================
+    LOAD + FILTER
+========================= */
+async function loadLedger(){
+  const ledger = document.getElementById("ledgerList");
+  if(!ledger) return;
+  ledger.innerHTML = '<p style="color:#475569;font-size:.95rem;">Loading Ledger...</p>';
+
+  try{
+    const res = await fetch("ledger.json", { cache:"no-store" });
+    if(!res.ok) throw new Error("Failed to load ledger.json");
+    const data = await res.json();
+
+    allProjects = (Array.isArray(data) ? data : []).map(entry => ({
+      ...entry,
+      category: getCategory(entry)
+    })).sort((a,b) => (a.token || "").localeCompare(b.token || ""));
+
+    renderLedger();
+  }catch(err){
+    ledger.innerHTML = '<p style="color:#b91c1c;font-weight:600;">Error loading Ledger.</p>';
+  }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   modal = document.getElementById("tokenModal");
 
   const close = document.querySelector(".close");
-  if(close){
-    close.onclick = () => { modal.style.display = "none"; };
-  }
+  if(close) close.onclick = () => { modal.style.display = "none"; };
 
-  window.onclick = e => {
-    if(e.target === modal){
-      modal.style.display = "none";
-    }
-  };
+  window.onclick = e => { if(e.target === modal) modal.style.display = "none"; };
 
-  const submitLink = document.querySelector(".submit-link");
-  if(submitLink){
-    submitLink.addEventListener("click", e => {
-      e.preventDefault();
-      const target = document.querySelector("#submit-section");
-      if(target){
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
-
-  const filterPills = document.querySelectorAll(".view-filters .view-pill");
-  filterPills.forEach(pill => {
+  document.querySelectorAll(".view-pill").forEach(pill => {
     pill.addEventListener("click", () => {
       currentFilter = pill.dataset.filter;
-      filterPills.forEach(p => p.classList.toggle("active", p === pill));
+      document.querySelectorAll(".view-pill").forEach(p => p.classList.toggle("active", p === pill));
       renderLedger();
     });
   });
@@ -424,6 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadLedger();
 });
 </script>
+
 
 </body>
 </html>
