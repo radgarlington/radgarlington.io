@@ -15,6 +15,58 @@ body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-ser
   color:#0A74D0;
 }
 
+/* --- NEW: Search Bar + Collapse All --- */
+.search-bar-wrap {
+  max-width:900px;
+  margin:20px auto 0;
+  padding:0 16px;
+}
+.search-input {
+  width:100%;
+  padding:10px 14px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:.95rem;
+  background:#f8fafc;
+  transition:border .15s ease, box-shadow .15s ease;
+}
+.search-input:focus {
+  outline:none;
+  border-color:#0A74D0;
+  box-shadow:0 0 0 2px rgba(10,116,208,.15);
+}
+
+/* Collapse-all button */
+.collapse-btn {
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  background:#0A74D0;
+  color:#fff;
+  border-radius:8px;
+  font-size:.85rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .15s ease, transform .15s ease;
+}
+.collapse-btn:hover {
+  background:#084c96;
+  transform:translateY(-1px);
+}
+
+/* Smooth expand */
+.expand-smooth {
+  transition:max-height .35s ease, opacity .35s ease, margin .3s ease;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+}
+.expand-open {
+  max-height:600px; 
+  opacity:1;
+  margin-top:8px;
+}
+
 /* Banner */
 .banner{
   background:linear-gradient(90deg,#0A74D0,#083c80);
@@ -136,6 +188,8 @@ footer{
 </style>
 </head>
 
+  </head>
+
 <body>
 
 <div class="banner">
@@ -178,6 +232,15 @@ footer{
   <button class="view-pill" data-filter="expired">Expired</button>
 </div>
 
+<!-- 🔍 SEARCH BAR + COLLAPSE BUTTON -->
+<div class="search-bar-wrap">
+  <input id="searchInput" class="search-input" type="text"
+         placeholder="Search by ticker or issuer…">
+  <button id="collapseAllBtn" class="collapse-btn" style="margin-top:12px;">
+    Collapse All Groups
+  </button>
+</div>
+
 <main>
   <section id="ledger">
     <h2>📜 All Projects on The Ledger</h2>
@@ -207,32 +270,40 @@ footer{
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> |
+       <a id="modalTG" href="#" target="_blank">Telegram</a></p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
 
   <script>
 let allProjects = [];
+let filteredProjects = [];
 let currentFilter = "all";
 let modal = null;
 
-/* EXPIRATION CHECK */
+/* ------------------------------
+   EXPIRATION CHECK
+------------------------------ */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
-/* CATEGORY */
+/* ------------------------------
+   CATEGORY
+------------------------------ */
 function getCategory(entry){
-  const tier = (entry.tier || "").toLowerCase();
-  if(tier === "certified") return "certified";
-  if(tier === "verified") return isExpired(entry) ? "expired" : "verified";
+  const t = (entry.tier || "").toLowerCase();
+  if(t === "certified") return "certified";
+  if(t === "verified") return isExpired(entry) ? "expired" : "verified";
   return "unverified";
 }
 
-/* META */
+/* ------------------------------
+   META LINE
+------------------------------ */
 function getMeta(entry){
   const t = (entry.tier || "").toLowerCase();
   const issuers = entry.issuers || [];
@@ -249,7 +320,9 @@ function getMeta(entry){
   return "";
 }
 
-/* ICON */
+/* ------------------------------
+   ICON
+------------------------------ */
 function getIcon(category){
   if(category === "certified") return "🟡";
   if(category === "verified") return "🔷";
@@ -257,16 +330,41 @@ function getIcon(category){
   return "⚫";
 }
 
-/* RENDER LEDGER */
+/* ------------------------------
+   FILTER + SEARCH COMBINATION
+------------------------------ */
+function applyFilters(){
+  const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+  filteredProjects = allProjects.filter(p => {
+    // category filter
+    if(currentFilter !== "all" && p.category !== currentFilter) return false;
+
+    // search filter
+    if(input){
+      const tokenMatch = (p.token || "").toLowerCase().includes(input);
+      const issuerMatch = (p.issuers || []).some(i =>
+        (i.issuer || "").toLowerCase().includes(input)
+      );
+      return tokenMatch || issuerMatch;
+    }
+
+    return true;
+  });
+
+  renderLedger();
+}
+
+/* ------------------------------
+   RENDER LEDGER
+------------------------------ */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   ledger.innerHTML = "";
 
   const grouped = {};
 
-  allProjects.forEach(p => {
-    if(currentFilter !== "all" && p.category !== currentFilter) return;
-
+  filteredProjects.forEach(p => {
     const clean = (p.token || "").replace(/^\$/,"");
     const letter = (clean.charAt(0) || "#").toUpperCase();
 
@@ -275,6 +373,13 @@ function renderLedger(){
   });
 
   const letters = Object.keys(grouped).sort();
+
+  if(!letters.length){
+    ledger.innerHTML = `<p style="color:#475569;font-size:.95rem;">
+      No projects match this search or filter.
+    </p>`;
+    return;
+  }
 
   letters.forEach(letter => {
     const wrap = document.createElement("div");
@@ -288,36 +393,33 @@ function renderLedger(){
       const tier = (entry.tier || "").toLowerCase();
       const icon = getIcon(entry.category);
       const meta = getMeta(entry);
+
       const isCertified = tier === "certified";
-      const htmlToken = `
+      const tokenHTML = `
         <span class="${isCertified ? "certified-bold" : ""}">
           ${icon} ${entry.token}
         </span>
         <span>${meta}</span>
       `;
 
-      li.innerHTML = htmlToken;
+      li.innerHTML = tokenHTML;
 
-      /* Certified + Verified → Normal card tap */
+      /* CERTIFIED + VERIFIED — open modal */
       if(tier === "certified" || tier === "verified"){
-        const encoded = JSON.stringify(entry).replace(/'/g, "&#39;");
-        li.setAttribute("data-token", encoded);
+        li.dataset.token = JSON.stringify(entry).replace(/'/g,"&#39;");
       }
 
-      /* UNVERIFIED LOGIC */
-      if(tier === "unverified"){
-        const issuers = entry.issuers || [];
+      /* UNVERIFIED HANDLING */
+      const issuers = entry.issuers || [];
 
+      if(tier === "unverified"){
         if(issuers.length === 0){
-          /* Undefined issuer → open small auto-card */
           li.onclick = () => openUndefinedIssuer(entry);
         }
         else if(issuers.length === 1){
-          /* Single issuer → open modal card */
           li.onclick = () => openIssuerModal(issuers[0], entry.token);
         }
         else{
-          /* Multiple issuers → expandable list */
           li.onclick = () => toggleIssuerGroup(entry);
         }
       }
@@ -330,14 +432,22 @@ function renderLedger(){
   });
 }
 
+/* ------------------------------
+   COLLAPSE ALL GROUPS
+------------------------------ */
+function collapseAllGroups(){
+  document.querySelectorAll("[id^='issuer-group-']").forEach(div => div.remove());
+}
 
-
-/* UNVERIFIED: MULTI-ISSUER EXPANSION */
+/* ------------------------------
+   MULTI-ISSUER EXPANDER
+------------------------------ */
 function toggleIssuerGroup(entry){
   const id = "issuer-group-" + entry.token;
-  const exist = document.getElementById(id);
-  if(exist){
-    exist.remove();
+  const existing = document.getElementById(id);
+
+  if(existing){
+    existing.remove();
     return;
   }
 
@@ -377,13 +487,14 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* UNVERIFIED: ZERO-ISSUER AUTO CARD */
+/* ------------------------------
+   UNVERIFIED — ZERO ISSUER CARD
+------------------------------ */
 function openUndefinedIssuer(entry){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
   document.getElementById("modalLogoWrap").style.display = "none";
-
   document.getElementById("modalToken").textContent =
     `${entry.token} — Issuer: undefined`;
 
@@ -406,25 +517,27 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalNFT").textContent = "—";
 }
 
-
-
-/* OPEN CERTIFIED/VERIFIED CARD */
+/* ------------------------------
+   CERTIFIED / VERIFIED MODAL
+------------------------------ */
 document.addEventListener("click", e => {
   const li = e.target.closest(".entry");
   if(!li || !li.dataset.token) return;
+
+  collapseAllGroups();
 
   let data = JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
-  const wrap = document.getElementById("modalLogoWrap");
+  const logoWrap = document.getElementById("modalLogoWrap");
   const img = document.getElementById("modalLogo");
 
   if(data.logo_url){
-    wrap.style.display = "block";
+    logoWrap.style.display = "block";
     img.src = data.logo_url;
   } else {
-    wrap.style.display = "none";
+    logoWrap.style.display = "none";
     img.src = "";
   }
 
@@ -454,7 +567,9 @@ document.addEventListener("click", e => {
   nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 });
 
-/* LOAD LEDGER */
+/* ------------------------------
+   LOAD LEDGER JSON
+------------------------------ */
 async function loadLedger(){
   const res = await fetch("ledger.json",{cache:"no-store"});
   const data = await res.json();
@@ -464,10 +579,13 @@ async function loadLedger(){
     category: getCategory(entry)
   }));
 
+  filteredProjects = allProjects;
   renderLedger();
 }
 
-/* INIT */
+/* ------------------------------
+   INIT
+------------------------------ */
 document.addEventListener("DOMContentLoaded", () => {
   modal = document.getElementById("tokenModal");
 
@@ -486,13 +604,62 @@ document.addEventListener("DOMContentLoaded", () => {
       currentFilter = pill.dataset.filter;
       document.querySelectorAll(".view-pill").forEach(p => p.classList.remove("active"));
       pill.classList.add("active");
-      renderLedger();
+      applyFilters();
     };
   });
+
+  document.getElementById("searchInput").oninput = applyFilters;
+  document.getElementById("collapseAllBtn").onclick = collapseAllGroups;
 
   loadLedger();
 });
 </script>
 
-</body>
-</html>
+  <!-- SEARCH + TOOLS BAR -->
+<div style="
+  max-width:900px;
+  margin:0 auto 20px;
+  padding:0 16px;
+  display:flex;
+  gap:12px;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+">
+
+  <!-- Search Bar -->
+  <input id="searchInput" type="text" placeholder="Search token or issuer..."
+    style="
+      flex:1;
+      padding:10px 14px;
+      font-size:.95rem;
+      border:2px solid #d7e7ff;
+      border-radius:8px;
+      outline:none;
+      transition:border .2s ease;
+    "
+    onfocus="this.style.border='2px solid #0A74D0'"
+    onblur="this.style.border='2px solid #d7e7ff'"
+  >
+
+  <!-- Collapse All -->
+  <button id="collapseAllBtn"
+    style="
+      padding:10px 16px;
+      font-size:.9rem;
+      font-weight:600;
+      background:#0A74D0;
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      transition:opacity .2s ease,transform .2s ease;
+      white-space:nowrap;
+    "
+    onmouseover="this.style.opacity='0.9'"
+    onmouseout="this.style.opacity='1'"
+  >
+    Collapse All
+  </button>
+
+</div>
