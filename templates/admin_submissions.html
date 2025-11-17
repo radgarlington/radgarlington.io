@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RAD Ledger — Submissions Admin</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,system-ui,sans-serif;
+  background:#0f172a;
+  color:#e5e7eb;
+}
+header{
+  padding:20px 16px;
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  border-bottom:2px solid #0b4a9b;
+}
+header h1{
+  margin:0;
+  font-size:1.6rem;
+}
+header p{
+  margin:6px 0 0;
+  font-size:.9rem;
+  color:#dbeafe;
+}
+main{
+  max-width:1100px;
+  margin:24px auto;
+  padding:0 16px 30px;
+}
+.table-wrap{
+  background:#020617;
+  border-radius:12px;
+  border:1px solid #1e293b;
+  box-shadow:0 12px 35px rgba(0,0,0,.55);
+  overflow:hidden;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:.9rem;
+}
+thead{
+  background:#0b1120;
+}
+th,td{
+  padding:10px 8px;
+  border-bottom:1px solid #1e293b;
+  text-align:left;
+  vertical-align:top;
+}
+th{
+  font-size:.8rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:#9ca3af;
+}
+tr:nth-child(even) td{
+  background:#020617;
+}
+tr:nth-child(odd) td{
+  background:#020617;
+}
+.badge{
+  display:inline-block;
+  padding:2px 8px;
+  border-radius:999px;
+  font-size:.7rem;
+  font-weight:700;
+}
+.badge-verified{background:#0f766e;color:#ecfdf5;}
+.badge-certified{background:#0f172a;color:#e0f2fe;border:1px solid #38bdf8;}
+.badge-renewal{background:#92400e;color:#ffedd5;}
+.badge-unknown{background:#4b5563;color:#e5e7eb;}
+small{
+  display:block;
+  color:#9ca3af;
+  font-size:.75rem;
+  margin-top:2px;
+}
+code{
+  font-size:.75rem;
+  background:#020617;
+  padding:2px 4px;
+  border-radius:4px;
+}
+.footer-note{
+  margin-top:14px;
+  font-size:.8rem;
+  color:#9ca3af;
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>RAD Ledger — Submissions Admin</h1>
+  <p>Internal view of incoming verification requests logged from Submit Token.</p>
+</header>
+
+<main>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Token</th>
+          <th>Issuer</th>
+          <th>Developer</th>
+          <th>Links</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if submissions %}
+          {% for s in submissions %}
+          <tr>
+            <td>
+              {% set t = s.tier|lower %}
+              {% if t == 'verified' %}
+                <span class="badge badge-verified">VERIFIED</span>
+              {% elif t == 'certified' %}
+                <span class="badge badge-certified">CERTIFIED</span>
+              {% elif t == 'renewal' %}
+                <span class="badge badge-renewal">RENEWAL</span>
+              {% else %}
+                <span class="badge badge-unknown">{{ s.tier or 'UNKNOWN' }}</span>
+              {% endif %}
+            </td>
+            <td>
+              <strong>{{ s.token_name or '(no name)' }}</strong><br>
+              <small>Symbol: {{ s.token_symbol or '—' }}</small>
+            </td>
+            <td>
+              <code>{{ s.issuer or '—' }}</code>
+            </td>
+            <td>
+              {{ s.developer or '—' }}<br>
+              <small>{{ s.developer_x or '' }}</small>
+            </td>
+            <td>
+              {% if s.website %}
+                <small>🌐 <a href="{{ s.website }}" target="_blank" style="color:#60a5fa;text-decoration:none;">Website</a></small>
+              {% endif %}
+              {% if s.project_twitter %}
+                <small>𝕏 {{ s.project_twitter }}</small>
+              {% endif %}
+              {% if s.telegram %}
+                <small>TG {{ s.telegram }}</small>
+              {% endif %}
+            </td>
+            <td>
+              <small>{{ s.submitted_at or '' }}</small>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="6">
+              <small>No submissions logged yet.</small>
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-note">
+    Review entries here, then manually promote approved projects into <code>ledger.json</code> and the main Ledger UI.
+  </div>
+</main>
+</body>
+</html>
