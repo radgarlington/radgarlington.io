@@ -9,6 +9,12 @@
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 
+/* Certified tickers bold */
+.certified-bold {
+  font-weight:700;
+  color:#0A74D0;
+}
+
 /* Banner */
 .banner{
   background:linear-gradient(90deg,#0A74D0,#083c80);
@@ -79,13 +85,7 @@ header p{
   transition:background .15s ease,transform .15s ease
 }
 .view-pill:hover{background:#d4d4d8;transform:translateY(-1px)}
-.view-pill.active{background:#0A74D0;color:#fff}
-
-/* Certified tickers bold + blue */
-.certified-bold{
-  font-weight:700;
-  color:#0A74D0;
-}
+.view-pill.active{background:#0A74D0;color:#f9fafb}
 
 main{max-width:900px;margin:30px auto;padding:0 16px}
 h2{
@@ -132,6 +132,7 @@ footer{
 .modal-content a{
   color:#0A74D0;text-decoration:none;font-weight:bold
 }
+.checkmark{color:#0A74D0;font-weight:bold}
 </style>
 </head>
 
@@ -151,19 +152,21 @@ footer{
 
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
-  <p>The RAD Ledger separates <strong>Certified</strong> from <strong>Verified</strong>.</p>
+  <p style="margin:8px 0 4px">
+    The RAD Ledger separates <strong>Certified</strong> projects from <strong>Verified</strong> projects.
+  </p>
   <ul>
-    <li><strong>Certified</strong> = Permanent.</li>
-    <li><strong>Verified</strong> = Annual renewal.</li>
-    <li><strong>Expired</strong> = Must re-apply.</li>
+    <li><strong>Certified</strong> listings are permanent.</li>
+    <li><strong>Verified</strong> listings must renew annually.</li>
+    <li>Expired listings must be re-reviewed.</li>
   </ul>
 </section>
 
 <div class="legend">
   <span>🟡 Certified — Doxxed + Seal NFT</span>
   <span>🔷 Verified — Non-Doxxed</span>
-  <span>⚫ Unverified — Auto-Listed</span>
-  <span>⬛ Expired — Renewal Needed</span>
+  <span>⚫ Unverified — Auto-Listed from XRPL</span>
+  <span>⬛ Expired — Renewal Required</span>
 </div>
 
 <div class="view-filters">
@@ -191,7 +194,8 @@ footer{
 
     <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
       <img id="modalLogo" src="" alt="Project Logo"
-           style="max-width:80px;max-height:80px;border-radius:12px;box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
+           style="max-width:80px;max-height:80px;border-radius:12px;
+                  box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
     </div>
 
     <h2 id="modalToken">$RAD</h2>
@@ -208,50 +212,52 @@ footer{
   </div>
 </div>
 
-<script>
+  <script>
 let allProjects = [];
 let currentFilter = "all";
 let modal = null;
 
-/* Expired Check */
+/* EXPIRATION CHECK */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
-/* Category */
+/* CATEGORY */
 function getCategory(entry){
-  const t = (entry.tier || "").toLowerCase();
-  if(t === "certified") return "certified";
-  if(t === "verified") return isExpired(entry) ? "expired" : "verified";
+  const tier = (entry.tier || "").toLowerCase();
+  if(tier === "certified") return "certified";
+  if(tier === "verified") return isExpired(entry) ? "expired" : "verified";
   return "unverified";
 }
 
-/* Meta */
-function getMeta(e){
-  const t = (e.tier || "").toLowerCase();
+/* META */
+function getMeta(entry){
+  const t = (entry.tier || "").toLowerCase();
+  const issuers = entry.issuers || [];
+
   if(t === "certified") return "Certified · Unlimited";
-  if(t === "verified") return isExpired(e) ? "Expired" : "Verified";
+  if(t === "verified") return isExpired(entry) ? "Expired" : "Verified";
 
   if(t === "unverified"){
-    const iss = e.issuers || [];
-    if(iss.length === 1) return `Issuer: ${iss[0].issuer}`;
-    return `Issuers: ${iss.length}`;
+    if(issuers.length === 0) return "Issuer: undefined";
+    if(issuers.length === 1) return `Issuer: ${issuers[0].issuer}`;
+    return `Issuers: ${issuers.length}`;
   }
 
   return "";
 }
 
-/* Icon */
-function getIcon(c){
-  if(c === "certified") return "🟡";
-  if(c === "verified") return "🔷";
-  if(c === "expired") return "⬛";
+/* ICON */
+function getIcon(category){
+  if(category === "certified") return "🟡";
+  if(category === "verified") return "🔷";
+  if(category === "expired") return "⬛";
   return "⚫";
 }
 
-/* Render Ledger */
+/* RENDER LEDGER */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   ledger.innerHTML = "";
@@ -261,7 +267,7 @@ function renderLedger(){
   allProjects.forEach(p => {
     if(currentFilter !== "all" && p.category !== currentFilter) return;
 
-    const clean = (p.token || "").replace(/^\$/,"").trim();
+    const clean = (p.token || "").replace(/^\$/,"");
     const letter = (clean.charAt(0) || "#").toUpperCase();
 
     if(!grouped[letter]) grouped[letter] = [];
@@ -279,53 +285,41 @@ function renderLedger(){
       const li = document.createElement("li");
       li.className = "entry";
 
+      const tier = (entry.tier || "").toLowerCase();
       const icon = getIcon(entry.category);
       const meta = getMeta(entry);
-      const isCertified = (entry.tier || "").toLowerCase() === "certified";
-      const iss = entry.issuers || [];
+      const isCertified = tier === "certified";
+      const htmlToken = `
+        <span class="${isCertified ? "certified-bold" : ""}">
+          ${icon} ${entry.token}
+        </span>
+        <span>${meta}</span>
+      `;
 
-      /* Single-issuer unverified → open card on tap */
-      if(entry.category === "unverified" && iss.length === 1){
-        const encoded = JSON.stringify({
-          token: entry.token,
-          issuer: iss[0].issuer,
-          domain: iss[0].domain || "",
-          tier: "Unverified",
-          cert: "XRPL-AUTO",
-          doxxed: false
-        }).replace(/'/g,"&#39;");
+      li.innerHTML = htmlToken;
 
+      /* Certified + Verified → Normal card tap */
+      if(tier === "certified" || tier === "verified"){
+        const encoded = JSON.stringify(entry).replace(/'/g, "&#39;");
         li.setAttribute("data-token", encoded);
-        li.innerHTML = `
-          <span class="${isCertified ? "certified-bold" : ""}">
-            ${icon} ${entry.token}
-          </span>
-          <span>${meta}</span>
-        `;
       }
 
-      /* Multi-issuer unverified → expandable list */
-      else if(entry.category === "unverified" && iss.length > 1){
-        li.innerHTML = `
-          <span class="${isCertified ? "certified-bold" : ""}">
-            ${icon} ${entry.token}
-          </span>
-          <span>${meta}</span>
-        `;
-        li.onclick = () => toggleIssuerGroup(entry);
-      }
+      /* UNVERIFIED LOGIC */
+      if(tier === "unverified"){
+        const issuers = entry.issuers || [];
 
-      /* Certified / Verified / Expired → card popup */
-      else{
-        const encoded = JSON.stringify(entry).replace(/'/g,"&#39;");
-        li.setAttribute("data-token", encoded);
-
-        li.innerHTML = `
-          <span class="${isCertified ? "certified-bold" : ""}">
-            ${icon} ${entry.token}
-          </span>
-          <span>${meta}</span>
-        `;
+        if(issuers.length === 0){
+          /* Undefined issuer → open small auto-card */
+          li.onclick = () => openUndefinedIssuer(entry);
+        }
+        else if(issuers.length === 1){
+          /* Single issuer → open modal card */
+          li.onclick = () => openIssuerModal(issuers[0], entry.token);
+        }
+        else{
+          /* Multiple issuers → expandable list */
+          li.onclick = () => toggleIssuerGroup(entry);
+        }
       }
 
       ul.appendChild(li);
@@ -336,11 +330,12 @@ function renderLedger(){
   });
 }
 
-/* Expand Multi-Issuer */
+
+
+/* UNVERIFIED: MULTI-ISSUER EXPANSION */
 function toggleIssuerGroup(entry){
   const id = "issuer-group-" + entry.token;
   const exist = document.getElementById(id);
-
   if(exist){
     exist.remove();
     return;
@@ -353,21 +348,17 @@ function toggleIssuerGroup(entry){
   let html = `<div style="margin-top:6px;">`;
 
   (entry.issuers || []).forEach(iss => {
-    const data = JSON.stringify({
-      issuer: iss.issuer,
-      domain: iss.domain || "",
-      tier: "Unverified",
-      cert: "XRPL-AUTO",
-      doxxed: false
-    }).replace(/'/g,"&#39;");
-
+    const encoded = JSON.stringify(iss).replace(/'/g,"&#39;");
     html += `
-      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
+      <div style="padding:10px;margin-top:8px;
+                  border:1px solid #d3dced;border-radius:8px;
+                  background:#f9fbff;">
         <div><strong>Issuer:</strong> ${iss.issuer}</div>
         <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
 
-        <button onclick='openIssuerModal(${data},"${entry.token}")'
-          style="margin-top:6px;padding:6px 10px;border-radius:6px;background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
+        <button onclick='openIssuerModal(${encoded},"${entry.token}")'
+          style="margin-top:6px;padding:6px 10px;border-radius:6px;
+                 background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
           View Card
         </button>
       </div>
@@ -386,27 +377,28 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* Open Issuer Card */
-function openIssuerModal(issuer, token){
+/* UNVERIFIED: ZERO-ISSUER AUTO CARD */
+function openUndefinedIssuer(entry){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
   document.getElementById("modalLogoWrap").style.display = "none";
-  document.getElementById("modalLogo").src = "";
 
-  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
+  document.getElementById("modalToken").textContent =
+    `${entry.token} — Issuer: undefined`;
+
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
-  document.getElementById("modalDevX").href = "#";
   document.getElementById("modalDevX").textContent = "";
-  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
+  document.getElementById("modalDevX").href = "#";
 
-  document.getElementById("modalIssuer").textContent = issuer.issuer;
+  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent = "undefined";
 
   const w = document.getElementById("modalWebsite");
-  w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? "https://" + issuer.domain : "#";
+  w.textContent = "—";
+  w.href = "#";
 
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
@@ -414,13 +406,14 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalNFT").textContent = "—";
 }
 
-/* Open Card for Certified/Verified */
+
+
+/* OPEN CERTIFIED/VERIFIED CARD */
 document.addEventListener("click", e => {
   const li = e.target.closest(".entry");
   if(!li || !li.dataset.token) return;
 
   let data = JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
-
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
@@ -435,7 +428,7 @@ document.addEventListener("click", e => {
     img.src = "";
   }
 
-  document.getElementById("modalToken").textContent = data.token || "";
+  document.getElementById("modalToken").textContent = data.token;
   document.getElementById("modalCert").textContent = data.cert || "—";
   document.getElementById("modalTier").textContent = data.tier || "—";
   document.getElementById("modalDev").textContent = data.dev || "—";
@@ -449,9 +442,9 @@ document.addEventListener("click", e => {
 
   document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
-  const w = document.getElementById("modalWebsite");
-  w.textContent = data.website || "—";
-  w.href = data.website || "#";
+  const web = document.getElementById("modalWebsite");
+  web.textContent = data.website || "—";
+  web.href = data.website || "#";
 
   document.getElementById("modalEmail").textContent = data.email || "—";
   document.getElementById("modalX").href = data.x || "#";
@@ -461,20 +454,20 @@ document.addEventListener("click", e => {
   nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 });
 
-/* Load Ledger */
+/* LOAD LEDGER */
 async function loadLedger(){
   const res = await fetch("ledger.json",{cache:"no-store"});
   const data = await res.json();
 
-  allProjects = data.map(e => ({
-    ...e,
-    category: getCategory(e)
+  allProjects = data.map(entry => ({
+    ...entry,
+    category: getCategory(entry)
   }));
 
   renderLedger();
 }
 
-/* Init */
+/* INIT */
 document.addEventListener("DOMContentLoaded", () => {
   modal = document.getElementById("tokenModal");
 
