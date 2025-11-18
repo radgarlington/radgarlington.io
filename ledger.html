@@ -93,6 +93,11 @@ header p{
   border-bottom:2px solid #d7e7ff;
 }
 
+/* FIX: allow pulse rings to show */
+.primary-actions {
+  overflow:visible !important;
+}
+
 /* BASE RAD BUTTON */
 .rad-btn {
   background:#0A74D0;
@@ -113,52 +118,53 @@ header p{
   transform:translateY(-2px);
 }
 
-/* NFT LISTINGS BUTTON — MATCH MAIN PAGE PULSE */
-.rad-actions .nft-btn {
+/* NFT LISTINGS BUTTON — BLUE + GOLD OUTLINE + GOLD PULSE */
+.nft-btn {
   background:#0A74D0 !important;
   color:#fff !important;
   border:3px solid #d4a537 !important;
   border-radius:10px !important;
   font-weight:800 !important;
   position:relative;
-  z-index:10;
-  overflow:hidden;
+  z-index:20;
+  overflow:visible !important;
 }
 
-/* GOLD RING PULSE */
-.rad-actions .nft-btn::after {
+/* GOLD PULSE RING — MATCHES MAIN PAGE BEHAVIOR */
+.nft-btn::after {
   content:"";
   position:absolute;
   top:50%;
   left:50%;
-  width:0;
-  height:0;
+  width:40px;
+  height:40px;
   border-radius:50%;
   transform:translate(-50%,-50%);
-  box-shadow:0 0 0 0 rgba(212,165,55,0.6);
-  animation:nftPulseRing 2.4s infinite;
+  box-shadow:0 0 0 0 rgba(212,165,55,0.55);
+  animation:nftPulse 2.5s infinite ease-out;
+  pointer-events:none;
+  z-index:-1;
 }
 
-@keyframes nftPulseRing {
+@keyframes nftPulse {
   0% {
-    width:0;
-    height:0;
-    opacity:1;
+    width:40px;
+    height:40px;
+    opacity:0.85;
     box-shadow:0 0 0 0 rgba(212,165,55,0.65);
   }
   70% {
-    width:220%;
-    height:220%;
+    width:240px;
+    height:240px;
     opacity:0;
     box-shadow:0 0 0 40px rgba(212,165,55,0);
   }
   100% {
-    width:0;
-    height:0;
+    width:40px;
+    height:40px;
     opacity:0;
   }
 }
-
 
 /* View Filters */
 .view-filters{
@@ -413,7 +419,6 @@ function renderLedger(){
         <span>${meta}</span>
       `;
 
-      /* CLICK BEHAVIOR */
       const issuers = entry.issuers || [];
 
       if(tier === "certified" || tier === "verified"){
@@ -623,5 +628,3 @@ async function loadLedger(){
 
 </body>
 </html>
-
-
