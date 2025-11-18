@@ -1,5 +1,5 @@
 /* Load NFT Ledger JSON */
-fetch('nft_ledger.json', { cache: "no-store" })
+fetch('/nft_ledger.json', { cache: "no-store" })
   .then(res => res.json())
   .then(data => {
     window.nftData = data;
@@ -7,32 +7,32 @@ fetch('nft_ledger.json', { cache: "no-store" })
     renderCards("all");
   });
 
-/* ALWAYS resolve logo properly */
+/* Resolve logo path ALWAYS correctly */
 function getLogoPath(raw) {
-  // If missing or empty → force placeholder
+  // If undefined, null, empty → return placeholder
   if (!raw || raw.trim() === "") {
     return "/assets/RAD_ledger.png";
   }
 
-  // If the entry contains the right file name → force correct absolute path
+  // If path contains RAD_ledger.png anywhere → force absolute
   if (raw.includes("RAD_ledger.png")) {
     return "/assets/RAD_ledger.png";
   }
 
-  // If it's already an absolute path
+  // If starts with slash → trust it
   if (raw.startsWith("/")) {
     return raw;
   }
 
-  // Final fallback
+  // FINAL fallback
   return "/assets/RAD_ledger.png";
 }
 
-/* Render Featured NFT */
+/* Featured NFT */
 function renderFeatured() {
   const wrap = document.getElementById("featuredNFT");
 
-  let featured =
+  const featured =
     nftData.certified[0] ||
     nftData.verified[0] ||
     nftData.unverified[0];
@@ -55,7 +55,7 @@ function renderFeatured() {
   `;
 }
 
-/* Render Cards */
+/* Render grid */
 function renderCards(filter) {
   const grid = document.getElementById("nftGrid");
   grid.innerHTML = "";
@@ -66,7 +66,6 @@ function renderCards(filter) {
 
   tiers.forEach(tier => {
     nftData[tier].forEach(item => {
-
       const card = document.createElement("div");
       card.className = "card";
 
@@ -85,10 +84,11 @@ function renderCards(filter) {
   });
 }
 
-/* Filter buttons */
+/* Filter behavior */
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn")
+    document
+      .querySelectorAll(".filter-btn")
       .forEach(b => b.classList.remove("active"));
 
     btn.classList.add("active");
