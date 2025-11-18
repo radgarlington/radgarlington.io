@@ -289,12 +289,10 @@ footer{
   <span>⬛ Expired — Renewal Required</span>
 </div>
 
-<!-- UPDATED BUTTONS -->
 <div class="rad-actions primary-actions">
   <a href="nfts.html" class="rad-btn nft-btn">✨ NFT Listings</a>
 </div>
 
-<!-- RESTORED SUBMIT + RENEW BUTTONS -->
 <div class="rad-actions">
   <a href="submit.html" class="rad-btn">➕ Submit Token</a>
   <a href="submit.html" class="rad-btn">🔄 Renew Listing</a>
@@ -323,7 +321,6 @@ footer{
 
 <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
 
-<!-- MODAL -->
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -343,7 +340,8 @@ footer{
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> |
+       <a id="modalTG" href="#" target="_blank">Telegram</a></p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
@@ -351,7 +349,6 @@ footer{
 <script>
 let allProjects = [];
 let currentFilter = "all";
-
 /* EXPIRATION CHECK */
 function isExpired(entry){
   if(!entry.expires_at) return false;
@@ -498,12 +495,16 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* ZERO ISSUER CARD */
+/* ZERO ISSUER CARD — USE DEFAULT RAD IMAGE */
 function openUndefinedIssuer(entry){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
-  document.getElementById("modalLogoWrap").style.display = "none";
+  const wrap = document.getElementById("modalLogoWrap");
+  const img = document.getElementById("modalLogo");
+
+  wrap.style.display = "block";
+  img.src = "assets/RAD_ledger.png";
 
   document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
@@ -526,7 +527,6 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalTG").href = "#";
   document.getElementById("modalNFT").textContent = "—";
 }
-
 /* VERIFIED / CERTIFIED CARD */
 function openVerifiedCard(data){
   const modal = document.getElementById("tokenModal");
@@ -569,13 +569,16 @@ function openVerifiedCard(data){
   nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 }
 
-/* SINGLE ISSUER CARD */
+/* SINGLE ISSUER CARD (UNVERIFIED) — USE RAD DEFAULT IMAGE */
 function openIssuerModal(issuer, token){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
-  document.getElementById("modalLogoWrap").style.display = "none";
-  document.getElementById("modalLogo").src = "";
+  const wrap = document.getElementById("modalLogoWrap");
+  const img = document.getElementById("modalLogo");
+
+  wrap.style.display = "block";
+  img.src = "assets/RAD_ledger.png";
 
   document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
@@ -591,7 +594,7 @@ function openIssuerModal(issuer, token){
 
   const w = document.getElementById("modalWebsite");
   w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? "https://"+issuer.domain : "#";
+  w.href = issuer.domain ? "https://" + issuer.domain : "#";
 
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
@@ -606,6 +609,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".close").onclick = () => {
     modal.style.display = "none";
   };
+
   window.onclick = e => {
     if(e.target === modal){
       modal.style.display = "none";
