@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Submit NFT — RAD Registry</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#eef4ff;
+  font-family:Arial,system-ui,sans-serif;
+  color:#0f172a;
+}
+
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;
+  text-align:center;
+  padding:20px 10px;
+  font-size:1.1rem;
+  font-weight:700;
+  border-bottom:2px solid #062a5c;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+
+/* BACK BUTTON */
+.back-btn{
+  position:absolute;
+  top:14px;
+  left:14px;
+  background:#0A74D0;
+  color:#fff;
+  padding:8px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:.85rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  transition:all .2s ease;
+}
+.back-btn:hover{
+  background:#094d9d;
+  transform:translateY(-2px);
+}
+
+/* Form container */
+.form-wrap{
+  max-width:480px;
+  background:#fff;
+  margin:40px auto;
+  padding:26px 22px;
+  border-radius:14px;
+  border:2px solid #d7e7ff;
+  box-shadow:0 6px 20px rgba(0,0,0,.1);
+  position:relative;
+}
+
+.form-wrap h2{
+  text-align:center;
+  margin:0 0 14px;
+  font-size:1.4rem;
+  color:#0A74D0;
+  font-weight:800;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  color:#083c80;
+  margin:14px 0 6px;
+}
+
+input,textarea{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:2px solid #c2d9ff;
+  font-size:1rem;
+  transition:.15s ease;
+}
+input:focus,textarea:focus{
+  border-color:#0A74D0;
+  background:#f3f9ff;
+}
+
+/* SUBMIT BUTTON */
+.pay-btn{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  text-align:center;
+  background:#0A74D0;
+  border-radius:10px;
+  border:3px solid #d4a537;
+  color:#fff;
+  font-size:1.05rem;
+  font-weight:800;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.pay-btn:hover{
+  background:#094d9d;
+  transform:translateY(-2px);
+}
+
+/* DISCLAIMER */
+.disclaimer{
+  font-size:.8rem;
+  color:#475569;
+  margin-top:16px;
+  text-align:center;
+  line-height:1.4;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="banner">Submit Your NFT to The RAD Registry</div>
+
+<a href="nfts.html" class="back-btn">← Back</a>
+
+<div class="form-wrap">
+  <h2>List Your NFT</h2>
+
+  <form id="nftForm">
+
+    <label>Collection Name</label>
+    <input name="collection_name" required>
+
+    <label>Artist Name</label>
+    <input name="artist_name" required>
+
+    <label>Issuer Address (XRPL)</label>
+    <input name="issuer" required>
+
+    <label>Collection Link</label>
+    <input name="collection_link" required>
+
+    <label>Website (Optional)</label>
+    <input name="website">
+
+    <label>X Profile (Optional)</label>
+    <input name="social_x">
+
+    <label>Logo Filename (Must already be uploaded)</label>
+    <input name="logo" placeholder="example.png" required>
+
+    <button type="button" class="pay-btn" onclick="pay()">Pay & Submit</button>
+  </form>
+
+  <div class="disclaimer">
+    Payment is processed through Xaman.  
+    After confirming, your NFT will be reviewed and added to the Registry.
+  </div>
+</div>
+
+<script>
+async function pay(){
+  const resp = await fetch('/api/create-nft-payment', {
+    method:'POST'
+  });
+
+  const data = await resp.json();
+  window.location = data.next;
+}
+</script>
+
+</body>
+</html>
