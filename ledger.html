@@ -83,6 +83,35 @@ header p{
 }
 .legend span{display:block;margin:4px 0}
 
+/* === RAD ACTION BUTTONS (Style A) === */
+.rad-actions {
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  padding:18px 10px;
+  background:#f8fbff;
+  border-bottom:2px solid #d7e7ff;
+}
+
+.rad-btn {
+  background:#0A74D0;
+  color:#fff;
+  font-weight:700;
+  padding:10px 18px;
+  font-size:.9rem;
+  border-radius:10px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:all .15s ease;
+}
+.rad-btn:hover {
+  background:#094d9d;
+  transform:translateY(-2px);
+}
+
 /* View Filters */
 .view-filters{
   background:#eef2ff;
@@ -198,6 +227,13 @@ footer{
   <span>🔷 Verified — Non-Doxxed</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
   <span>⬛ Expired — Renewal Required</span>
+</div>
+
+<!-- RAD BUTTONS (under LEGEND) -->
+<div class="rad-actions">
+  <a href="rug-report.html" class="rad-btn">🧨 Rug Report</a>
+  <a href="blacklist.html" class="rad-btn">🚫 Blacklist</a>
+  <a href="shills.html" class="rad-btn">📢 Shills</a>
 </div>
 
 <div class="view-filters">
@@ -464,7 +500,7 @@ function openVerifiedCard(data){
   nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 }
 
-/* SINGLE ISSUER CARD (UNVERIFIED) */
+/* SINGLE ISSUER CARD */
 function openIssuerModal(issuer, token){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
@@ -482,7 +518,6 @@ function openIssuerModal(issuer, token){
   dx.textContent = "";
 
   document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
-
   document.getElementById("modalIssuer").textContent = issuer.issuer;
 
   const w = document.getElementById("modalWebsite");
