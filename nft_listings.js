@@ -7,21 +7,28 @@ fetch('nft_ledger.json', { cache: "no-store" })
     renderCards("all");
   });
 
-/* Force logo path resolution */
+/* ALWAYS resolve logo properly */
 function getLogoPath(raw) {
-  if (!raw) return "/assets/RAD_ledger.png";
+  // If missing or empty → force placeholder
+  if (!raw || raw.trim() === "") {
+    return "/assets/RAD_ledger.png";
+  }
 
-  // Always force absolute path usage
-  if (raw.includes("RAD_ledger.png")) return "/assets/RAD_ledger.png";
+  // If the entry contains the right file name → force correct absolute path
+  if (raw.includes("RAD_ledger.png")) {
+    return "/assets/RAD_ledger.png";
+  }
 
-  // If user supplies absolute path
-  if (raw.startsWith("/")) return raw;
+  // If it's already an absolute path
+  if (raw.startsWith("/")) {
+    return raw;
+  }
 
-  // Fallback
+  // Final fallback
   return "/assets/RAD_ledger.png";
 }
 
-/* Render featured NFT */
+/* Render Featured NFT */
 function renderFeatured() {
   const wrap = document.getElementById("featuredNFT");
 
@@ -48,15 +55,14 @@ function renderFeatured() {
   `;
 }
 
-/* Render NFT cards */
+/* Render Cards */
 function renderCards(filter) {
   const grid = document.getElementById("nftGrid");
   grid.innerHTML = "";
 
-  const tiers =
-    filter === "all"
-      ? ["certified", "verified", "unverified"]
-      : [filter];
+  const tiers = filter === "all"
+    ? ["certified", "verified", "unverified"]
+    : [filter];
 
   tiers.forEach(tier => {
     nftData[tier].forEach(item => {
@@ -82,9 +88,9 @@ function renderCards(filter) {
 /* Filter buttons */
 document.querySelectorAll(".filter-btn").forEach(btn => {
   btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-btn").forEach(b =>
-      b.classList.remove("active")
-    );
+    document.querySelectorAll(".filter-btn")
+      .forEach(b => b.classList.remove("active"));
+
     btn.classList.add("active");
     renderCards(btn.dataset.filter);
   });
