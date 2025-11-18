@@ -294,6 +294,11 @@ footer{
   <a href="nfts.html" class="rad-btn nft-btn">✨ NFT Listings</a>
 </div>
 
+<!-- RESTORED SUBMIT + RENEW BUTTONS -->
+<div class="rad-actions">
+  <a href="submit.html" class="rad-btn">➕ Submit Token</a>
+  <a href="submit.html" class="rad-btn">🔄 Renew Listing</a>
+</div>
 <div class="rad-actions">
   <a href="rugreport.html" class="rad-btn">🧨 Rug Report</a>
   <a href="blacklist.html" class="rad-btn">🚫 Blacklist</a>
@@ -586,7 +591,7 @@ function openIssuerModal(issuer, token){
 
   const w = document.getElementById("modalWebsite");
   w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? "https://" + issuer.domain : "#";
+  w.href = issuer.domain ? "https://"+issuer.domain : "#";
 
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
