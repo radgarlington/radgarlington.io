@@ -3,8 +3,32 @@ fetch('nft_ledger.json')
   .then(res => res.json())
   .then(data => {
     window.nftData = data;
-    renderCards('all');
+renderFeatured();
+renderCards('all');
   });
+
+// Render Featured NFT (first entry in certified, then verified, fallback unverified)
+function renderFeatured(){
+  const f = window.nftData;
+
+  let pick =
+    (f.certified.length ? f.certified[0] :
+    (f.verified.length ? f.verified[0] :
+    (f.unverified.length ? f.unverified[0] : null)));
+
+  if(!pick) return;
+
+  const box = document.getElementById('featuredNFT');
+
+  box.innerHTML = `
+    <img src="${pick.logo.startsWith('/') ? pick.logo : 'static/logos/' + pick.logo}">
+    <h3>${pick.collection_name}</h3>
+    <p>${pick.artist_name}</p>
+    <a target="_blank" href="${pick.collection_link}">View</a>
+    <a target="_blank" href="${pick.website}">Site</a>
+  `;
+}
+
 
 // Render cards into the grid
 function renderCards(filter){
@@ -21,7 +45,7 @@ function renderCards(filter){
       card.className = 'card';
 
       card.innerHTML = `
-        <img src="static/logos/${item.logo}">
+<img src="${item.logo.startsWith('/') ? item.logo : 'static/logos/' + item.logo}">
         <h3>${item.collection_name}</h3>
         <p>${item.artist_name}</p>
         <a class="btn" target="_blank" href="${item.collection_link}">View Collection</a>

@@ -9,6 +9,29 @@ body{margin:0;font-family:Arial,system-ui;background:#fff;color:#0f172a}
   border-bottom:2px solid #062a5c;
 }
 
+/* Submit Callout */
+.submit-callout{
+  text-align:center;
+  background:#fff7d1;
+  padding:16px 10px;
+  border-bottom:2px solid #f2d98a;
+}
+.submit-callout a{
+  font-size:1rem;
+  font-weight:800;
+  color:#8a6d00;
+  text-decoration:none;
+  padding:10px 18px;
+  border:2px solid #e0b84c;
+  border-radius:18px;
+  background:#ffeb9c;
+  transition:.2s;
+}
+.submit-callout a:hover{
+  filter:brightness(1.08);
+}
+
+
 /* Filters */
 .filters{
   display:flex;gap:10px;justify-content:center;
@@ -57,3 +80,55 @@ body{margin:0;font-family:Arial,system-ui;background:#fff;color:#0f172a}
   transition:.2s;
 }
 .btn:hover{filter:brightness(1.1)}
+
+/* Featured NFT */
+.featured-title{
+  text-align:center;
+  font-size:1.15rem;
+  font-weight:800;
+  margin-top:20px;
+  color:#b58900;
+}
+
+.featured-card{
+  max-width:360px;
+  margin:20px auto;
+  padding:20px;
+  background:#fffdf5;
+  border:3px solid #d4a537;
+  border-radius:16px;
+  text-align:center;
+  box-shadow:0 4px 10px rgba(0,0,0,.15);
+}
+.featured-card img{
+  width:110px;
+  height:110px;
+  border-radius:12px;
+  margin-bottom:12px;
+  border:2px solid #d4a537;
+}
+.featured-card h3{
+  margin:0;
+  font-size:1.2rem;
+  font-weight:800;
+  color:#6b4d00;
+}
+.featured-card p{
+  margin:8px 0;
+  font-size:.95rem;
+  color:#4a3d00;
+}
+.featured-card a{
+  display:inline-block;
+  margin:10px 6px;
+  padding:10px 16px;
+  background:#d4a537;
+  color:#fff;
+  text-decoration:none;
+  border-radius:14px;
+  font-size:.9rem;
+  font-weight:700;
+}
+.featured-card a:hover{
+  filter:brightness(1.1);
+}
