@@ -1,10 +1,19 @@
 from flask import Flask, request, jsonify, render_template
-import requests, json, os
+import requests
+import json
+import os
 from datetime import datetime, timezone
 import smtplib
 from email.message import EmailMessage
 
 app = Flask(__name__)
+
+from api.create_nft_payment import create_nft_payment
+from api.submit_nft import submit_nft
+
+app.register_blueprint(create_nft_payment)
+app.register_blueprint(submit_nft)
+
 
 # ====================================================
 #  RAD Ledger Backend — Payment + Webhook + Submissions
@@ -16,7 +25,7 @@ API_SECRET = "7c508def-83b7-41c9-b4a1-2c82da1d6a79"
 HEADERS = {
     "Content-Type": "application/json",
     "x-api-key": API_KEY,
-    "x-api-secret": API_SECRET
+    "x-api-secret": API_SECRET,
 }
 
 LEDGER_FILE = "/var/www/radgarlington.io/ledger.json"
@@ -80,7 +89,7 @@ def send_email_notification(entry: dict):
     subject = f"RAD Ledger submission: {token_name} [{token_symbol}] ({tier})"
 
     lines = [
-        f"New RAD Ledger submission received.",
+        "New RAD Ledger submission received.",
         "",
         f"Tier:        {tier}",
         f"Token:       {token_name} ({token_symbol})",
@@ -97,7 +106,7 @@ def send_email_notification(entry: dict):
 
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = EMAIL_TO
+    msg["From"] = SMTP_USER or EMAIL_TO
     msg["To"] = EMAIL_TO
     msg.set_content("\n".join(lines))
 
@@ -126,32 +135,34 @@ def create_payload():
         "txjson": {
             "TransactionType": "Payment",
             "Destination": "rG1pBfHDaE6Y65yoLay77zWcCR391dd4Nu",  # live treasury wallet
-            "Amount": str(int(float(amount_xrp) * 1_000_000))
+            "Amount": str(int(float(amount_xrp) * 1_000_000)),
         },
         "custom_meta": {
             "instruction": f"RAD Ledger certification payment: {project}",
-            "identifier": project
+            "identifier": project,
         },
         "options": {
-            "return_url": {"web": "https://radgarlington.io/ledger.html"}
-        }
+            "return_url": {"web": "https://radgarlington.io/ledger.html"},
+        },
     }
 
     try:
         resp = requests.post(
             "https://xumm.app/api/v1/platform/payload",
             headers=HEADERS,
-            json=payload
+            json=payload,
         )
         resp.raise_for_status()
         payload_resp = resp.json()
-        return jsonify({
-            "uuid": payload_resp.get("uuid"),
-            "next": payload_resp.get("next"),
-            "refs": payload_resp.get("refs"),
-            "project": project,
-            "issuer": issuer
-        })
+        return jsonify(
+            {
+                "uuid": payload_resp.get("uuid"),
+                "next": payload_resp.get("next"),
+                "refs": payload_resp.get("refs"),
+                "project": project,
+                "issuer": issuer,
+            }
+        )
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -174,7 +185,7 @@ def webhook():
             "issuer": tx["response"]["account"],
             "status": "Certified",
             "ledger_index": tx.get("txid", "pending"),
-            "cert_number": "XRPL589"
+            "cert_number": "XRPL589",
         }
         ledger = load_ledger()
         ledger.append(new_entry)
@@ -204,7 +215,7 @@ def submit_token():
         "project_twitter": data.get("project_twitter", ""),
         "telegram": data.get("telegram", ""),
         "seal_nft": data.get("seal_nft", ""),
-        "submitted_at": datetime.now(timezone.utc).isoformat()
+        "submitted_at": datetime.now(timezone.utc).isoformat(),
     }
 
     # Log to file
@@ -232,8 +243,7 @@ def admin_submissions():
     Simple admin view of submissions in the browser
     """
     subs = load_submissions()
-    # newest first
-    subs = list(reversed(subs))
+    subs = list(reversed(subs))  # newest first
     return render_template("admin_submissions.html", submissions=subs)
 
 

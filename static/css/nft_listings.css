@@ -1,0 +1,59 @@
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,system-ui;background:#fff;color:#0f172a}
+
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;text-align:center;font-weight:700;
+  padding:22px 10px;font-size:1.1rem;
+  border-bottom:2px solid #062a5c;
+}
+
+/* Filters */
+.filters{
+  display:flex;gap:10px;justify-content:center;
+  padding:20px 10px;background:#eaf3ff;
+  border-bottom:2px solid #d7e7ff;
+}
+.filter-btn{
+  padding:10px 18px;border-radius:20px;
+  font-size:.9rem;font-weight:700;cursor:pointer;
+  border:2px solid #0A74D0;color:#0A74D0;background:#fff;
+  transition:.2s;
+}
+.filter-btn.active{
+  background:#0A74D0;color:#fff;
+}
+
+/* Grid */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;padding:30px;
+}
+.card{
+  border:2px solid #dceaff;border-radius:12px;
+  padding:20px;text-align:center;background:#f7faff;
+  transition:.2s;
+}
+.card:hover{transform:scale(1.03)}
+.card img{
+  width:90px;height:90px;border-radius:10px;
+  border:2px solid #0A74D0;margin-bottom:15px;
+}
+.card h3{
+  margin:0;font-size:1.1rem;font-weight:700;color:#083c80;
+}
+.card p{
+  margin:8px 0;font-size:.9rem;color:#334155;
+}
+
+/* Buttons */
+.btn{
+  display:block;margin:12px 0;padding:10px 14px;
+  background:#0A74D0;color:#fff;text-decoration:none;
+  font-size:.85rem;border-radius:16px;font-weight:700;
+  border:2px solid #083c80;
+  transition:.2s;
+}
+.btn:hover{filter:brightness(1.1)}
