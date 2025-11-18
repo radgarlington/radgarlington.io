@@ -7,14 +7,28 @@ fetch('nft_ledger.json', { cache: "no-store" })
     renderCards("all");
   });
 
-/* Render featured NFT (first certified > verified > unverified) */
+/* Force logo path resolution */
+function getLogoPath(raw) {
+  if (!raw) return "/assets/RAD_ledger.png";
+
+  // Always force absolute path usage
+  if (raw.includes("RAD_ledger.png")) return "/assets/RAD_ledger.png";
+
+  // If user supplies absolute path
+  if (raw.startsWith("/")) return raw;
+
+  // Fallback
+  return "/assets/RAD_ledger.png";
+}
+
+/* Render featured NFT */
 function renderFeatured() {
   const wrap = document.getElementById("featuredNFT");
 
   let featured =
-    (nftData.certified[0]) ||
-    (nftData.verified[0]) ||
-    (nftData.unverified[0]);
+    nftData.certified[0] ||
+    nftData.verified[0] ||
+    nftData.unverified[0];
 
   if (!featured) {
     wrap.innerHTML = `
@@ -25,19 +39,16 @@ function renderFeatured() {
     return;
   }
 
-  let featuredLogo =
-    featured.logo && featured.logo.startsWith("/")
-      ? featured.logo
-      : "/assets/RAD_ledger.png";
+  const logo = getLogoPath(featured.logo);
 
   wrap.innerHTML = `
-    <img src="${featuredLogo}">
+    <img src="${logo}">
     <h3>${featured.collection_name}</h3>
     <p>${featured.artist_name}</p>
   `;
 }
 
-/* Render grid of NFTs */
+/* Render NFT cards */
 function renderCards(filter) {
   const grid = document.getElementById("nftGrid");
   grid.innerHTML = "";
@@ -53,14 +64,10 @@ function renderCards(filter) {
       const card = document.createElement("div");
       card.className = "card";
 
-      // ALWAYS prefer absolute paths like /assets/RAD_ledger.png
-      let logoPath =
-        item.logo && item.logo.startsWith("/")
-          ? item.logo
-          : "/assets/RAD_ledger.png";
+      const logo = getLogoPath(item.logo);
 
       card.innerHTML = `
-        <img src="${logoPath}">
+        <img src="${logo}">
         <h3>${item.collection_name}</h3>
         <p>${item.artist_name}</p>
         <a class="btn" target="_blank" href="${item.collection_link}">View Collection</a>
