@@ -51,12 +51,33 @@ header p{
 .back-btn{
   position:absolute;top:10px;left:18px;
   background:#0A74D0;color:#fff;
-  padding:6px 10px;border-radius:6px;
-  text-decoration:none;font-weight:600;font-size:.8rem;
+  padding:6px 12px;border-radius:6px;
+  text-decoration:none;font-weight:700;font-size:.85rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
   transition:opacity .2s ease,transform .2s ease
 }
 .back-btn:hover{
   opacity:.9;transform:translateY(-1px)
+}
+
+/* BUY RAD BUTTON — RIGHT SIDE */
+.buy-rad-btn {
+  position:absolute;
+  top:10px;
+  right:18px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 14px;
+  border-radius:6px;
+  font-weight:700;
+  font-size:.85rem;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:opacity .2s ease, transform .2s ease;
+}
+.buy-rad-btn:hover {
+  opacity:.9;
+  transform:translateY(-1px);
 }
 
 /* Annual Notice */
@@ -133,7 +154,7 @@ header p{
   overflow: visible !important;
 }
 
-/* LAYER 1 — Controlled Glow */
+/* Glow */
 .nft-btn::before {
   content: "";
   position: absolute;
@@ -145,8 +166,6 @@ header p{
   z-index: -1;
   animation: nftGlow 3.2s infinite ease-out;
 }
-
-/* LAYER 2 — Strong but clean gold contour */
 .nft-btn::after {
   content: "";
   position: absolute;
@@ -158,18 +177,15 @@ header p{
   animation: nftOutline 3.2s infinite ease-out;
 }
 
-/* Glow pulse */
 @keyframes nftGlow {
-  0%   { transform: scale(1);   opacity: .95; }
-  55%  { transform: scale(1.22); opacity: 0; }
-  100% { transform: scale(1);   opacity: 0; }
+  0% {transform:scale(1);opacity:.95;}
+  55% {transform:scale(1.22);opacity:0;}
+  100% {transform:scale(1);opacity:0;}
 }
-
-/* Outline pulse */
 @keyframes nftOutline {
-  0%   { transform: scale(1);     opacity: .9; }
-  65%  { transform: scale(1.18);   opacity: 0; }
-  100% { transform: scale(1);     opacity: 0; }
+  0% {transform:scale(1);opacity:.9;}
+  65% {transform:scale(1.18);opacity:0;}
+  100% {transform:scale(1);opacity:0;}
 }
 
 /* View Filters */
@@ -266,10 +282,10 @@ footer{
 
 <header>
   <a href="/" class="back-btn">← Back</a>
+  <a href="index.html" class="buy-rad-btn">$BUY RAD</a>
   <h1>The RAD Ledger</h1>
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
-
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
   <p style="margin:8px 0 4px">
@@ -297,6 +313,7 @@ footer{
   <a href="submit.html" class="rad-btn">➕ Submit Token</a>
   <a href="submit.html" class="rad-btn">🔄 Renew Listing</a>
 </div>
+
 <div class="rad-actions">
   <a href="rugreport.html" class="rad-btn">🧨 Rug Report</a>
   <a href="blacklist.html" class="rad-btn">🚫 Blacklist</a>
@@ -340,15 +357,17 @@ footer{
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> |
-       <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
-
 <script>
 let allProjects = [];
 let currentFilter = "all";
+
+/* UNVERIFIED DEFAULT LOGO */
+const defaultUnverifiedLogo = "assets/RAD_ledger.png";
+
 /* EXPIRATION CHECK */
 function isExpired(entry){
   if(!entry.expires_at) return false;
@@ -427,7 +446,6 @@ function renderLedger(){
         <span>${meta}</span>
       `;
 
-      /* CLICK BEHAVIOR */
       const issuers = entry.issuers || [];
 
       if(tier === "certified" || tier === "verified"){
@@ -495,16 +513,13 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* ZERO ISSUER CARD — USE DEFAULT RAD IMAGE */
+/* ZERO ISSUER CARD */
 function openUndefinedIssuer(entry){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
-  const wrap = document.getElementById("modalLogoWrap");
-  const img = document.getElementById("modalLogo");
-
-  wrap.style.display = "block";
-  img.src = "assets/RAD_ledger.png";
+  document.getElementById("modalLogoWrap").style.display = "block";
+  document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
   document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
@@ -527,6 +542,7 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalTG").href = "#";
   document.getElementById("modalNFT").textContent = "—";
 }
+
 /* VERIFIED / CERTIFIED CARD */
 function openVerifiedCard(data){
   const modal = document.getElementById("tokenModal");
@@ -539,8 +555,8 @@ function openVerifiedCard(data){
     wrap.style.display = "block";
     img.src = data.logo_url;
   } else {
-    wrap.style.display = "none";
-    img.src = "";
+    wrap.style.display = "block";
+    img.src = defaultUnverifiedLogo;
   }
 
   document.getElementById("modalToken").textContent = data.token;
@@ -569,16 +585,13 @@ function openVerifiedCard(data){
   nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
 }
 
-/* SINGLE ISSUER CARD (UNVERIFIED) — USE RAD DEFAULT IMAGE */
+/* SINGLE ISSUER CARD */
 function openIssuerModal(issuer, token){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
-  const wrap = document.getElementById("modalLogoWrap");
-  const img = document.getElementById("modalLogo");
-
-  wrap.style.display = "block";
-  img.src = "assets/RAD_ledger.png";
+  document.getElementById("modalLogoWrap").style.display = "block";
+  document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
   document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
@@ -594,7 +607,7 @@ function openIssuerModal(issuer, token){
 
   const w = document.getElementById("modalWebsite");
   w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? "https://" + issuer.domain : "#";
+  w.href = issuer.domain ? "https://"+issuer.domain : "#";
 
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
@@ -609,7 +622,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector(".close").onclick = () => {
     modal.style.display = "none";
   };
-
   window.onclick = e => {
     if(e.target === modal){
       modal.style.display = "none";
