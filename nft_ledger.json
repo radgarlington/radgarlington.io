@@ -1,5 +1,20 @@
 {
   "certified": [],
   "verified": [],
-  "unverified": []
+  "unverified": [
+    {
+      "id": "radnft-placeholder",
+      "collection_name": "Sample XRPL Collection",
+      "artist_name": "Placeholder Artist",
+      "issuer": "rEXAMPLEPLACEHOLDER123456789",
+      "category": "Art",
+      "description": "This is a placeholder listing automatically added for visual testing.",
+      "logo": "placeholder.png",
+      "collection_link": "https://bithomp.com/nft/placeholder",
+      "website": "https://example.com",
+      "social_x": "",
+      "submitted_at": "2025-11-18T05:00:00Z",
+      "tx_hash": ""
+    }
+  ]
 }
