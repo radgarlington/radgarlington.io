@@ -4,91 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RAD NFT Listings — XRPL Registry</title>
+
 <link rel="stylesheet" href="static/css/nft_listings.css">
-
-<style>
-/* BACK BUTTON */
-.back-btn{
-  position:absolute;top:14px;left:14px;
-  background:#0A74D0;color:#fff;
-  padding:8px 14px;border-radius:8px;
-  text-decoration:none;font-weight:700;font-size:.85rem;
-  box-shadow:0 2px 6px rgba(0,0,0,.2);
-  transition:all .2s ease;
-}
-.back-btn:hover{
-  background:#094d9d;
-  transform:translateY(-2px);
-}
-
-/* SUBMIT BUTTON */
-.submit-btn {
-  display:inline-block;
-  background:#0A74D0;
-  color:#fff;
-  padding:12px 20px;
-  border-radius:10px;
-  font-size:.95rem;
-  font-weight:700;
-  text-decoration:none;
-  border:3px solid #d4a537;
-  transition:.15s ease;
-}
-.submit-btn:hover {
-  background:#094d9d;
-  transform:translateY(-2px);
-}
-
-/* SUBMIT CALLOUT */
-.submit-callout {
-  text-align:center;
-  padding:22px 10px;
-  background:#f0f6ff;
-  border-bottom:2px solid #d7e7ff;
-}
-
-/* FEATURED SECTION */
-.featured-wrap {
-  max-width:960px;
-  margin:28px auto;
-  padding:22px;
-  background:#fffef7;
-  border:3px solid #d4a537;
-  border-radius:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,.1);
-}
-.featured-title {
-  text-align:center;
-  font-weight:800;
-  font-size:1.3rem;
-  color:#0A74D0;
-  margin-bottom:12px;
-}
-.featured-card {
-  text-align:center;
-}
-.featured-card img {
-  width:110px;
-  height:110px;
-  border-radius:12px;
-  object-fit:contain;
-  border:3px solid #0A74D0;
-  background:#fff;
-  box-shadow:0 2px 10px rgba(0,0,0,.15);
-}
-.featured-card h3 {
-  margin:12px 0 4px;
-  color:#083c80;
-  font-size:1.2rem;
-  font-weight:700;
-}
-.featured-card p {
-  margin:4px 0;
-  color:#475569;
-  font-size:.95rem;
-}
-</style>
-
 </head>
 
 <body>
@@ -97,22 +14,15 @@
 
 <a href="ledger.html" class="back-btn">← Back</a>
 
-<!-- SUBMIT BUTTON -->
 <div class="submit-callout">
   <a href="submit-nft.html" class="submit-btn">Submit Your NFT</a>
 </div>
 
-<!-- FEATURED NFT SECTION -->
 <div class="featured-wrap">
   <div class="featured-title">Featured NFT</div>
-  <div id="featuredNFT" class="featured-card">
-    <img src="/assets/RAD_ledger.png">
-    <h3>Coming Soon</h3>
-    <p>Premium NFT listings will appear here.</p>
-  </div>
+  <div id="featuredNFT" class="featured-card"></div>
 </div>
 
-<!-- FILTERS -->
 <div class="filters">
   <div class="filter-btn active" data-filter="all">All</div>
   <div class="filter-btn" data-filter="certified">Certified</div>
