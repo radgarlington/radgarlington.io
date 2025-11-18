@@ -120,44 +120,56 @@ header p{
   transform:translateY(-2px);
 }
 
-/* NFT LISTINGS BUTTON — BLUE + GOLD PULSE OUTLINE */
+/* NFT BUTTON — BLUE + GOLD */
 .nft-btn {
   position: relative !important;
   background: #0A74D0 !important;
   color: #fff !important;
   border: 3px solid #d4a537 !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   font-weight: 800 !important;
-  padding:12px 22px !important;
+  padding: 12px 26px !important;
   z-index: 100 !important;
   overflow: visible !important;
 }
 
-/* GOLD RECTANGULAR OUTLINE PULSE */
+/* LAYER 1 — Controlled Glow */
 .nft-btn::before {
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:10px;
-  border:3px solid rgba(212,165,55,0.55);
-  opacity:0;
-  z-index:-1;
-  animation:contourPulse 2.8s infinite ease-out;
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 14px;
+  background: rgba(212,165,55,0.28);
+  filter: blur(14px);
+  opacity: 0;
+  z-index: -1;
+  animation: nftGlow 3.2s infinite ease-out;
 }
 
-@keyframes contourPulse {
-  0% {
-    transform:scale(1);
-    opacity:.85;
-  }
-  60% {
-    transform:scale(1.25);
-    opacity:0;
-  }
-  100% {
-    transform:scale(1);
-    opacity:0;
-  }
+/* LAYER 2 — Strong but clean gold contour */
+.nft-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  border: 3px solid rgba(212,165,55,0.85);
+  opacity: 0;
+  z-index: -1;
+  animation: nftOutline 3.2s infinite ease-out;
+}
+
+/* Glow pulse */
+@keyframes nftGlow {
+  0%   { transform: scale(1);   opacity: .95; }
+  55%  { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1);   opacity: 0; }
+}
+
+/* Outline pulse */
+@keyframes nftOutline {
+  0%   { transform: scale(1);     opacity: .9; }
+  65%  { transform: scale(1.18);   opacity: 0; }
+  100% { transform: scale(1);     opacity: 0; }
 }
 
 /* View Filters */
