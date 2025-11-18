@@ -7,7 +7,7 @@ fetch('nft_ledger.json', { cache: "no-store" })
     renderCards("all");
   });
 
-/* Render featured NFT (first unverified or first certified) */
+/* Render featured NFT (first certified > verified > unverified) */
 function renderFeatured() {
   const wrap = document.getElementById("featuredNFT");
 
@@ -25,8 +25,13 @@ function renderFeatured() {
     return;
   }
 
+  let featuredLogo =
+    featured.logo && featured.logo.startsWith("/")
+      ? featured.logo
+      : "/assets/RAD_ledger.png";
+
   wrap.innerHTML = `
-    <img src="${featured.logo.startsWith('/') ? featured.logo : '/assets/RAD_ledger.png'}">
+    <img src="${featuredLogo}">
     <h3>${featured.collection_name}</h3>
     <p>${featured.artist_name}</p>
   `;
@@ -44,9 +49,11 @@ function renderCards(filter) {
 
   tiers.forEach(tier => {
     nftData[tier].forEach(item => {
+
       const card = document.createElement("div");
       card.className = "card";
 
+      // ALWAYS prefer absolute paths like /assets/RAD_ledger.png
       let logoPath =
         item.logo && item.logo.startsWith("/")
           ? item.logo
