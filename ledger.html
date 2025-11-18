@@ -83,7 +83,7 @@ header p{
 }
 .legend span{display:block;margin:4px 0}
 
-/* === RAD ACTION BUTTONS (Style A) === */
+/* ACTION BUTTON WRAPPERS */
 .rad-actions {
   display:flex;
   justify-content:center;
@@ -93,6 +93,7 @@ header p{
   border-bottom:2px solid #d7e7ff;
 }
 
+/* DEFAULT RAD BUTTON */
 .rad-btn {
   background:#0A74D0;
   color:#fff;
@@ -112,18 +113,41 @@ header p{
   transform:translateY(-2px);
 }
 
-/* NFT Featured Button */
+/* NFT LISTINGS BUTTON — GOLD BASE + BLUE CORE + PULSE */
 .nft-btn{
-  background:#d4a537 !important;
-  color:#fff !important;
   font-weight:800 !important;
+  color:#fff !important;
+  background:
+    linear-gradient(145deg, #d4a537 30%, #0A74D0 100%) !important;
   border:2px solid #b88f2d !important;
-  box-shadow:0 2px 8px rgba(212,165,55,.45) !important;
+  box-shadow:
+    0 0 12px rgba(212,165,55,0.45),
+    0 0 24px rgba(212,165,55,0.35),
+    inset 0 0 12px rgba(10,116,208,0.45) !important;
+  animation: nftPulse 2.2s infinite ease-in-out;
 }
-.nft-btn:hover{
-  background:#b88f2d !important;
-  transform:translateY(-2px);
+
+@keyframes nftPulse {
+  0% {
+    box-shadow:
+      0 0 10px rgba(212,165,55,0.45),
+      0 0 18px rgba(212,165,55,0.35),
+      inset 0 0 8px rgba(10,116,208,0.45);
+  }
+  50% {
+    box-shadow:
+      0 0 16px rgba(212,165,55,0.75),
+      0 0 32px rgba(212,165,55,0.45),
+      inset 0 0 12px rgba(10,116,208,0.65);
+  }
+  100% {
+    box-shadow:
+      0 0 10px rgba(212,165,55,0.45),
+      0 0 18px rgba(212,165,55,0.35),
+      inset 0 0 8px rgba(10,116,208,0.45);
+  }
 }
+
 .primary-actions{
   padding-top:26px;
   padding-bottom:6px;
