@@ -19,26 +19,26 @@ body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-ser
 .banner{
   background:linear-gradient(90deg,#0A74D0,#083c80);
   color:#fff;text-align:center;
-  padding:20px 10px 18px;
-  font-size:1.05rem;font-weight:600;line-height:1.4;
+  padding:18px 10px 16px;
+  font-size:1rem;font-weight:600;line-height:1.35;
   border-bottom:2px solid #062a5c;
   box-shadow:0 4px 10px rgba(0,0,0,.25)
 }
 .banner em{
-  display:block;margin-top:6px;
+  display:block;margin-top:4px;
   font-style:italic;font-weight:500;opacity:.85
 }
 
 /* Header */
 header{
   text-align:center;
-  padding:42px 10px 16px;
+  padding:38px 10px 16px;
   background:#eaf3ff;
   border-bottom:2px solid #d7e7ff;
   position:relative
 }
 header h1{
-  font-size:2rem;
+  font-size:1.9rem;
   margin:0;
   color:#0A74D0
 }
@@ -53,11 +53,9 @@ header p{
   background:#0A74D0;color:#fff;
   padding:6px 10px;border-radius:6px;
   text-decoration:none;font-weight:600;font-size:.8rem;
-  transition:opacity .2s ease,transform .2s ease
+  transition:.2s ease
 }
-.back-btn:hover{
-  opacity:.9;transform:translateY(-1px)
-}
+.back-btn:hover{opacity:.9;transform:translateY(-1px)}
 
 /* Annual Notice */
 .annual{
@@ -98,7 +96,7 @@ header p{
   border:none;border-radius:999px;padding:4px 12px;
   font-size:.85rem;cursor:pointer;background:#e5e7eb;
   color:#111827;font-weight:600;
-  transition:background .15s ease,transform .15s ease
+  transition:.15s ease
 }
 .view-pill:hover{background:#d4d4d8;transform:translateY(-1px)}
 .view-pill.active{background:#0A74D0;color:#f9fafb}
@@ -111,7 +109,7 @@ header p{
   text-align:center
 }
 .search-box{
-  width:90%;
+  width:88%;
   max-width:520px;
   padding:10px 14px;
   border-radius:8px;
@@ -121,25 +119,30 @@ header p{
 
 main{
   max-width:860px;
-  margin:30px auto;
-  padding:0 14px
+  margin:26px auto;
+  padding:0 12px
 }
 h2{
   color:#0A74D0;
   border-bottom:1px solid #cbd5e1;
   padding-bottom:4px;
-  font-size:1.3rem;
-  margin-bottom:14px
+  font-size:1.25rem;
+  margin-bottom:12px
 }
-h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
+h3{
+  color:#0A74D0;
+  font-size:1.05rem;
+  margin:12px 0 6px;
+  padding-left:2px
+}
 
+/* Entries */
 ul{list-style:none;padding:0;margin:0}
-
 li.entry{
-  margin:6px 0;
-  padding:10px 12px;
+  margin:4px 0;
+  padding:9px 12px;
   border-bottom:1px dashed #cbd5e1;
-  font-size:.95rem;
+  font-size:.93rem;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -148,20 +151,12 @@ li.entry{
   transition:background .15s ease
 }
 li.entry:hover{background:#f1f7ff}
-li span{color:#475569;font-size:.85rem}
-
-footer{
-  text-align:center;
-  padding:20px;
-  border-top:2px solid #d7e7ff;
-  color:#475569;
-  font-size:.9rem
-}
+li span{color:#475569;font-size:.83rem}
 
 /* Modal */
 .modal{
   display:none;position:fixed;z-index:999;
-  left:0;top:0;width:100%;height:100%;
+  inset:0;
   background:rgba(0,0,0,.55)
 }
 .modal-content{
@@ -179,7 +174,15 @@ footer{
 .modal-content a{
   color:#0A74D0;text-decoration:none;font-weight:bold
 }
-.checkmark{color:#0A74D0;font-weight:bold}
+
+footer{
+  text-align:center;
+  padding:20px;
+  border-top:2px solid #d7e7ff;
+  color:#475569;
+  font-size:.9rem
+}
+
 </style>
 </head>
 
@@ -199,9 +202,7 @@ footer{
 
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
-  <p style="margin:8px 0 4px">
-    The RAD Ledger separates <strong>Certified</strong> projects from <strong>Verified</strong> projects.
-  </p>
+  <p>The RAD Ledger separates <strong>Certified</strong> projects from <strong>Verified</strong> projects.</p>
   <ul>
     <li><strong>Certified</strong> listings are permanent.</li>
     <li><strong>Verified</strong> listings must renew annually.</li>
@@ -243,7 +244,8 @@ footer{
   <div class="modal-content">
     <span class="close">&times;</span>
 
-    <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
+    <div id="modalLogoWrap"
+         style="text-align:center;margin-bottom:8px;display:none;">
       <img id="modalLogo" src="" alt="Project Logo"
            style="max-width:80px;max-height:80px;border-radius:12px;
                   box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
@@ -258,25 +260,25 @@ footer{
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> |
+       <a id="modalTG" href="#" target="_blank">Telegram</a></p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
 
-  <script>
+<script>
 let allProjects = [];
 let currentFilter = "all";
-let modal = null;
 let searchTerm = "";
 
-/* EXPIRATION CHECK */
+/* Expired Checker */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
-/* CATEGORY */
+/* Category */
 function getCategory(entry){
   const tier = (entry.tier || "").toLowerCase();
   if(tier === "certified") return "certified";
@@ -284,7 +286,7 @@ function getCategory(entry){
   return "unverified";
 }
 
-/* META LINE */
+/* Meta line */
 function getMeta(entry){
   const t = (entry.tier || "").toLowerCase();
   const issuers = entry.issuers || [];
@@ -301,30 +303,34 @@ function getMeta(entry){
   return "";
 }
 
-/* ICON */
-function getIcon(category){
-  if(category === "certified") return "🟡";
-  if(category === "verified") return "🔷";
-  if(category === "expired") return "⬛";
-  return "⚫";
-}
-
-/* SEARCH FILTER */
+/* Search Match */
 function matchesSearch(entry){
   if(!searchTerm) return true;
 
-  const t = (entry.token || "").toLowerCase();
-  const iss = (entry.issuer || "").toLowerCase();
-  const list = (entry.issuers || []).map(i => i.issuer.toLowerCase());
+  const token = (entry.token || "").replace(/^\$/,"").toLowerCase();
+  const t = (entry.token || "").toLowerCase(); // keep raw also
+  const singleIssuer = (entry.issuer || "").toLowerCase();
+  const issuerList = (entry.issuers || []).map(i => i.issuer.toLowerCase());
+  const domainList = (entry.issuers || []).map(i => (i.domain || "").toLowerCase());
 
   return (
+    token.includes(searchTerm) ||
     t.includes(searchTerm) ||
-    iss.includes(searchTerm) ||
-    list.some(i => i.includes(searchTerm))
+    singleIssuer.includes(searchTerm) ||
+    issuerList.some(i => i.includes(searchTerm)) ||
+    domainList.some(d => d.includes(searchTerm))
   );
 }
 
-/* RENDER LEDGER */
+/* ICONS */
+function getIcon(cat){
+  if(cat === "certified") return "🟡";
+  if(cat === "verified") return "🔷";
+  if(cat === "expired") return "⬛";
+  return "⚫";
+}
+
+/* Render Ledger */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   ledger.innerHTML = "";
@@ -344,7 +350,10 @@ function renderLedger(){
 
   const letters = Object.keys(grouped).sort();
   if(!letters.length){
-    ledger.innerHTML = '<p style="text-align:center;color:#64748b;margin-top:20px;">Nothing matches your search.</p>';
+    ledger.innerHTML = `
+      <p style="text-align:center;color:#64748b;margin-top:20px;">
+        Nothing matches your search.
+      </p>`;
     return;
   }
 
@@ -371,13 +380,10 @@ function renderLedger(){
 
       const issuers = entry.issuers || [];
 
-      /* Certified + Verified → Standard Modal */
       if(tier === "certified" || tier === "verified"){
-        const encoded = JSON.stringify(entry).replace(/'/g,"&#39;");
-        li.setAttribute("data-token", encoded);
+        li.dataset.token = JSON.stringify(entry).replace(/'/g,"&#39;");
       }
 
-      /* Unverified logic */
       if(tier === "unverified"){
         if(issuers.length === 0){
           li.onclick = () => openUndefinedIssuer(entry);
@@ -398,7 +404,7 @@ function renderLedger(){
   });
 }
 
-/* UNVERIFIED: MULTI-ISSUER EXPANSION */
+/* Expand Multi-Issuer */
 function toggleIssuerGroup(entry){
   const id = "issuer-group-" + entry.token;
   const exist = document.getElementById(id);
@@ -413,8 +419,8 @@ function toggleIssuerGroup(entry){
   (entry.issuers || []).forEach(iss => {
     const encoded = JSON.stringify(iss).replace(/'/g,"&#39;");
     html += `
-      <div style="padding:10px;margin-top:8px;
-      border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
+      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;
+      border-radius:8px;background:#f9fbff;">
         <div><strong>Issuer:</strong> ${iss.issuer}</div>
         <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
 
@@ -439,13 +445,12 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* UNVERIFIED: ZERO-ISSUER CARD */
+/* Undefined Issuer Card */
 function openUndefinedIssuer(entry){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
   document.getElementById("modalLogoWrap").style.display = "none";
-
   document.getElementById("modalToken").textContent =
     `${entry.token} — Issuer: undefined`;
 
@@ -470,12 +475,13 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalNFT").textContent = "—";
 }
 
-/* OPEN CERTIFIED / VERIFIED CARD */
+/* Certified / Verified Modal */
 document.addEventListener("click", e => {
   const li = e.target.closest(".entry");
   if(!li || !li.dataset.token) return;
 
   let data = JSON.parse(li.dataset.token.replace(/&#39;/g,"'"));
+
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
@@ -513,10 +519,12 @@ document.addEventListener("click", e => {
   document.getElementById("modalTG").href = data.tg || "#";
 
   const nft = document.getElementById("modalNFT");
-  nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
+  nft.innerHTML = data.nft
+    ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>`
+    : "—";
 });
 
-/* SEARCH INPUT */
+/* Search Input */
 document.addEventListener("input", e => {
   if(e.target.id === "searchBox"){
     searchTerm = e.target.value.trim().toLowerCase();
@@ -524,7 +532,7 @@ document.addEventListener("input", e => {
   }
 });
 
-/* LOAD LEDGER */
+/* Load Ledger JSON */
 async function loadLedger(){
   const res = await fetch("ledger.json",{cache:"no-store"});
   const data = await res.json();
@@ -537,9 +545,9 @@ async function loadLedger(){
   renderLedger();
 }
 
-/* INIT */
+/* Modal & Filters Init */
 document.addEventListener("DOMContentLoaded", () => {
-  modal = document.getElementById("tokenModal");
+  const modal = document.getElementById("tokenModal");
 
   document.querySelector(".close").onclick = () => {
     modal.style.display = "none";
