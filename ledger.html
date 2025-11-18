@@ -91,11 +91,7 @@ header p{
   padding:18px 10px;
   background:#f8fbff;
   border-bottom:2px solid #d7e7ff;
-}
-
-/* FIX: allow pulse rings to show */
-.primary-actions {
-  overflow:visible !important;
+  overflow:visible !important;      /* REQUIRED FOR PULSE */
 }
 
 /* BASE RAD BUTTON */
@@ -118,39 +114,38 @@ header p{
   transform:translateY(-2px);
 }
 
-/* NFT LISTINGS BUTTON — BLUE + GOLD OUTLINE + GOLD PULSE */
+/* NFT BUTTON FIX — TRUE GOLD PULSE */
 .nft-btn {
   background:#0A74D0 !important;
   color:#fff !important;
   border:3px solid #d4a537 !important;
   border-radius:10px !important;
   font-weight:800 !important;
-  position:relative;
-  z-index:20;
+  position:relative !important;
+  z-index:100 !important;
   overflow:visible !important;
 }
 
-/* GOLD PULSE RING — MATCHES MAIN PAGE BEHAVIOR */
+/* GOLD RING PULSE — EXACT MAIN PAGE BEHAVIOR */
 .nft-btn::after {
   content:"";
   position:absolute;
   top:50%;
   left:50%;
-  width:40px;
-  height:40px;
+  width:12px;
+  height:12px;
+  transform:translate(-50%, -50%);
   border-radius:50%;
-  transform:translate(-50%,-50%);
-  box-shadow:0 0 0 0 rgba(212,165,55,0.55);
-  animation:nftPulse 2.5s infinite ease-out;
-  pointer-events:none;
+  box-shadow:0 0 0 0 rgba(212,165,55,0.65);
+  animation:nftPulse 2.6s infinite ease-out;
   z-index:-1;
 }
 
 @keyframes nftPulse {
   0% {
-    width:40px;
-    height:40px;
-    opacity:0.85;
+    width:12px;
+    height:12px;
+    opacity:1;
     box-shadow:0 0 0 0 rgba(212,165,55,0.65);
   }
   70% {
@@ -160,8 +155,8 @@ header p{
     box-shadow:0 0 0 40px rgba(212,165,55,0);
   }
   100% {
-    width:40px;
-    height:40px;
+    width:12px;
+    height:12px;
     opacity:0;
   }
 }
@@ -249,7 +244,6 @@ footer{
 .checkmark{color:#0A74D0;font-weight:bold}
 </style>
 </head>
-
 <body>
 
 <div class="banner">
@@ -283,7 +277,7 @@ footer{
   <span>⬛ Expired — Renewal Required</span>
 </div>
 
-<!-- UPDATED BUTTONS -->
+<!-- NFT BUTTON — PULSE FIX APPLIES FROM PART 1 -->
 <div class="rad-actions primary-actions">
   <a href="nfts.html" class="rad-btn nft-btn">✨ NFT Listings</a>
 </div>
@@ -332,7 +326,10 @@ footer{
     <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
     <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-    <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
+    <p><strong>Social:</strong> 
+      <a id="modalX" href="#" target="_blank">𝕏</a> | 
+      <a id="modalTG" href="#" target="_blank">Telegram</a>
+    </p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
   </div>
 </div>
@@ -444,7 +441,7 @@ function renderLedger(){
   });
 }
 
-/* MULTI ISSUER EXPANSION */
+/* MULTI ISSUER EXPAND */
 function toggleIssuerGroup(entry){
   const id = "issuer-group-" + entry.token;
   const exist = document.getElementById(id);
