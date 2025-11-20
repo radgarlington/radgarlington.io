@@ -1,0 +1,17 @@
+{
+  "name": "RAD Ledger — Certified Token Seal",
+  "description": "Official RAD Ledger certification seal for XRPL tokens that have completed full verification and earned Certified status.",
+  "image": "ipfs://bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa",
+  "project": "RAD Ledger",
+  "type": "Certification Seal",
+  "attributes": [
+    {
+      "trait_type": "Certification",
+      "value": "RAD Certified"
+    },
+    {
+      "trait_type": "Standard",
+      "value": "XRPL"
+    }
+  ]
+}
