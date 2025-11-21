@@ -355,7 +355,8 @@
     "logo_url": "/assets/logos/bag_logo.webp",
     "registered_at": "2025-11-12",
     "expires_at": null,
-    "doxxed": true
+    "doxxed": true,
+    "nft_image": "https://orange-general-wasp-945.mypinata.cloud/ipfs/bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa"
   },
   {
     "token": "$BANKER",
@@ -7144,7 +7145,8 @@
     "logo_url": "/assets/logos/rad_logo.webp",
     "registered_at": "2025-11-12",
     "expires_at": null,
-    "doxxed": true
+    "doxxed": true,
+    "nft_image": "https://orange-general-wasp-945.mypinata.cloud/ipfs/bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa"
   },
   {
     "token": "$RBT",
@@ -7217,7 +7219,8 @@
     "logo_url": "",
     "registered_at": "2025-11-12",
     "expires_at": null,
-    "doxxed": true
+    "doxxed": true,
+    "nft_image": "https://orange-general-wasp-945.mypinata.cloud/ipfs/bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa"
   },
   {
     "token": "$RMB",
@@ -7912,7 +7915,8 @@
     "logo_url": "/assets/logos/trls_logo.webp",
     "registered_at": "2025-11-15",
     "expires_at": null,
-    "doxxed": true
+    "doxxed": true,
+    "nft_image": "https://orange-general-wasp-945.mypinata.cloud/ipfs/bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa"
   },
   {
     "token": "$UCB",
@@ -9618,7 +9622,8 @@
     "logo_url": "/assets/logos/wck_logo.webp",
     "registered_at": "2025-11-12",
     "expires_at": null,
-    "doxxed": true
+    "doxxed": true,
+    "nft_image": "https://orange-general-wasp-945.mypinata.cloud/ipfs/bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa"
   },
   {
     "token": "$WOW",
@@ -9990,7 +9995,8 @@
     "logo_url": "",
     "registered_at": "2025-11-12",
     "expires_at": null,
-    "doxxed": true
+    "doxxed": true,
+    "nft_image": "https://orange-general-wasp-945.mypinata.cloud/ipfs/bafybeidl5od2vpkmap2r63voldwsvhia4fjats5eldmc4ygwxlg5mchxqa"
   },
   {
     "token": "$XRPLANET",
