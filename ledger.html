@@ -359,6 +359,14 @@ footer{
     <p><strong>Email:</strong> <span id="modalEmail"></span></p>
     <p><strong>Social:</strong> <a id="modalX" href="#" target="_blank">𝕏</a> | <a id="modalTG" href="#" target="_blank">Telegram</a></p>
     <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
+    <p><strong>Seal Image:</strong> <span id="modalNFTImage"></span></p>
+
+    <div id="modalNFTPreviewWrap" style="display:none;text-align:center;margin-top:10px;">
+      <img id="modalNFTPreview"
+           src=""
+           alt="Seal NFT Image"
+           style="max-width:100%;width:260px;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.25);">
+    </div>
   </div>
 </div>
 <script>
@@ -540,7 +548,16 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
   document.getElementById("modalTG").href = "#";
+
   document.getElementById("modalNFT").textContent = "—";
+  const nftImg = document.getElementById("modalNFTImage");
+  if (nftImg) nftImg.textContent = "—";
+  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
+  const nftPrev = document.getElementById("modalNFTPreview");
+  if (nftPrevWrap && nftPrev) {
+    nftPrevWrap.style.display = "none";
+    nftPrev.src = "";
+  }
 }
 
 /* VERIFIED / CERTIFIED CARD */
@@ -582,7 +599,29 @@ function openVerifiedCard(data){
   document.getElementById("modalTG").href = data.tg || "#";
 
   const nft = document.getElementById("modalNFT");
-  nft.innerHTML = data.nft ? `<a href="${data.nft}" target="_blank">View Seal NFT</a>` : "—";
+  const nftImgSpan = document.getElementById("modalNFTImage");
+  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
+  const nftPrev = document.getElementById("modalNFTPreview");
+
+  if (data.nft) {
+    nft.innerHTML = `<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
+  } else {
+    nft.textContent = "—";
+  }
+
+  if (data.nft_image) {
+    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+    if (nftPrevWrap && nftPrev) {
+      nftPrevWrap.style.display = "block";
+      nftPrev.src = data.nft_image;
+    }
+  } else {
+    nftImgSpan.textContent = "—";
+    if (nftPrevWrap && nftPrev) {
+      nftPrevWrap.style.display = "none";
+      nftPrev.src = "";
+    }
+  }
 }
 
 /* SINGLE ISSUER CARD */
@@ -612,7 +651,16 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
   document.getElementById("modalTG").href = "#";
+
   document.getElementById("modalNFT").textContent = "—";
+  const nftImg = document.getElementById("modalNFTImage");
+  if (nftImg) nftImg.textContent = "—";
+  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
+  const nftPrev = document.getElementById("modalNFTPreview");
+  if (nftPrevWrap && nftPrev) {
+    nftPrevWrap.style.display = "none";
+    nftPrev.src = "";
+  }
 }
 
 /* INIT */
