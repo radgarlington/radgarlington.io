@@ -72,8 +72,15 @@
     .darktrust{background:#0A74D0;color:#fff}
     .darktrust:hover{background:#094f90}
 
-    .btn-primary{background:#fff;color:#0A74D0}
+    .btn-primary{background:#fff;color:#0A74D0;box-shadow:0 6px 20px rgba(255,255,255,.2)}
     .btn-primary:hover{background:#f2f2f2}
+    .pulse{animation:pulse 2.5s infinite}
+
+    @keyframes pulse{
+      0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
+      70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
+      100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+    }
 
     .launch{background:var(--card);padding:6vh 5vw}
     .launch .wrap{max-width:900px;margin:0 auto;text-align:center}
@@ -130,14 +137,11 @@
     <section class="ledger-section">
       <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
       <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
-      <a href="/ledger.html" class="btn btn-primary">VIEW THE RAD LEDGER</a>
+      <a href="/ledger.html" class="btn btn-primary pulse">VIEW THE RAD LEDGER</a>
     </section>
 
     <section class="launch">
       <div class="wrap">
-        <h2>$RAD AMM LIVE — XRPL DEX</h2>
-        <p>Live market-making now active on XRPL AMM.</p>
-
         <a href="/ledger.html" target="_blank" rel="noopener">
           <img src="/assets/ledger.png" alt="The RAD Ledger Preview" class="launch-image" />
         </a>
@@ -150,7 +154,7 @@
 
     <div class="disclaimer-block">
       <strong>🛡 Legal Disclaimer</strong><br><br>
-      $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).
+      $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).<br>
       It is not affiliated with Ripple Labs, Brad Garlinghouse, or related entities.<br>
       All references to “Rad,” “Garlington,” or similar terms are part of a fictional meme narrative.
     </div>
