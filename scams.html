@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RAD Ledger — Scam & Threat Intelligence</title>
+<title>RAD Ledger — Scam Intel & Defense Playbook</title>
 
 <style>
 *{box-sizing:border-box;}
@@ -13,6 +13,7 @@ body{
   color:#0f172a;
   font-family:Arial,system-ui,sans-serif;
   line-height:1.55;
+  scroll-behavior:smooth;
 }
 
 /* Banner */
@@ -20,33 +21,39 @@ body{
   background:linear-gradient(90deg,#0A74D0,#083c80);
   color:#fff;
   text-align:center;
-  padding:26px 10px 22px;
-  font-size:1.45rem;
+  padding:32px 10px 26px;
+  font-size:1.55rem;
   font-weight:700;
   border-bottom:2px solid #062a5c;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  box-shadow:0 4px 10px rgba(0,0,0,.28);
 }
 
-/* Section */
-.section{
+/* Main Container */
+.content{
   max-width:900px;
   margin:40px auto;
   padding:0 18px;
 }
 
+/* Section */
+.section{
+  margin-bottom:50px;
+}
+
 .section h2{
-  font-size:1.4rem;
-  margin-bottom:12px;
+  font-size:1.45rem;
   color:#083c80;
+  margin-bottom:14px;
   font-weight:700;
 }
 
 .section p{
+  margin-bottom:16px;
   font-size:1rem;
-  margin-bottom:14px;
 }
 
-img.scam-img{
+/* Images */
+.scam-img{
   width:100%;
   border:1px solid #ccc;
   border-radius:6px;
@@ -54,6 +61,102 @@ img.scam-img{
   box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
 
+/* Subheaders in Playbook */
+.subhead{
+  font-size:1.15rem;
+  color:#0A74D0;
+  margin:28px 0 10px;
+  font-weight:700;
+}
+
+/* ----------------------------------
+   FLOATING SIDEBAR
+---------------------------------- */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:0;
+  height:100%;
+  width:240px;
+  background:#062a5c;
+  padding:20px 14px;
+  box-shadow:4px 0 18px rgba(0,0,0,.35);
+  overflow-y:auto;
+  z-index:999;
+}
+
+.sidebar-title{
+  font-size:1.1rem;
+  font-weight:700;
+  color:#4dc6ff;
+  margin-bottom:16px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.navlink{
+  display:block;
+  background:#0A74D0;
+  color:#fff;
+  padding:10px 12px;
+  border-radius:6px;
+  margin-bottom:10px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:.95rem;
+  letter-spacing:.3px;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+  transition:all .2s ease;
+}
+
+.navlink:hover{
+  background:#0c5faa;
+  transform:translateX(4px);
+}
+
+.navlink.active{
+  background:#4dc6ff;
+  color:#062a5c;
+}
+
+/* Push main content when sidebar exists */
+.page{
+  margin-left:260px;
+}
+
+/* Mobile Sidebar Button */
+.mobile-toggle{
+  display:none;
+  position:fixed;
+  top:12px;
+  left:12px;
+  background:#0A74D0;
+  color:#fff;
+  padding:10px 12px;
+  border-radius:6px;
+  font-weight:700;
+  z-index:1000;
+  box-shadow:0 2px 8px rgba(0,0,0,.3);
+}
+
+/* Mobile Responsiveness */
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-260px);
+    transition:transform .3s ease;
+  }
+  .sidebar.open{
+    transform:translateX(0);
+  }
+  .mobile-toggle{
+    display:block;
+  }
+  .page{
+    margin-left:0;
+    padding-top:60px;
+  }
+}
+  
 /* Footer */
 .footer{
   text-align:center;
@@ -62,81 +165,181 @@ img.scam-img{
   color:#444;
 }
 </style>
-
 </head>
+
 <body>
 
-<div class="banner">
-  The RAD Ledger — Threats, Tricks & Tactics
-  <div style="font-size:.95rem;font-weight:400;opacity:.9;margin-top:6px;">
-    Real on-ledger behavior. Real protection. Free education.
-  </div>
+<!-- MOBILE BUTTON -->
+<div class="mobile-toggle" onclick="toggleSidebar()">THREAT NAVIGATION</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-title">THREAT NAVIGATION</div>
+
+  <a href="#sec1" class="navlink">1. Partial Payment Manipulation</a>
+  <a href="#sec2" class="navlink">2. Fake Pathfinding / Dust Probes</a>
+  <a href="#sec3" class="navlink">3. Mint Testing / Probe TXs</a>
+  <a href="#sec4" class="navlink">4. AMM Sniping Attempts</a>
+  <a href="#sec5" class="navlink">5. Disappearing Wallet Behavior</a>
+  <a href="#sec6" class="navlink">6. OTC Replay / Bait Attempts</a>
+  <a href="#playbook" class="navlink">7. Defense Playbook</a>
 </div>
 
-<div class="section">
+<!-- MAIN PAGE -->
+<div class="page">
+
+<div class="banner">
+  RAD Ledger — Scam Intel & The Defense Playbook
+</div>
+
+<div class="content">
+
+<!-- ===================== SECTIONS ===================== -->
+
+<div class="section" id="sec1">
   <h2>1. Partial Payment Manipulation Attempts</h2>
   <p>
-    One of the oldest XRPL games. Attackers try to send a tiny amount of XRP but
-    spoof a massive “instructed delivery” amount in hopes something misreads it.
-    RAD ignores this garbage instantly.
+    Attackers spoof huge “instructed delivery” values while only sending dust.
+    They rely on weak code or sloppy validation. RAD rejects this instantly.
   </p>
 
-  <img class="scam-img" src="data:image/jpeg;base64,
-  r/AOCQnwNi/wCCafw7sfFv7QH7QUs2rXdzNZrdz/Y7ZDNICGeL5I4xtUFwq5zgkiDmGAcKM885xmN+1bP7c37TWu6/6l/o9ndpY2mC6fLryyxbS3V3QQp5GOh6nepR8jPY1yqKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAOf8A7R/2lv2cND0R49P8ADf8A7PeIx6as9j1uL5W96hZfySfDCmNwKuPirrtLK0srRQvGHKckRuk9f8R1P7F/wb4+1z7R4ttb7ULq21qfX68z3VnaxiWu5PNGT7CsFH4n2pfRtC3XWbWSaTctes0UU3urSgAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK8s8SfCvUrjxVq1yqI477bXWpeLs56cFj/ErEHEwRjiWb147KuV6iigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z
-  ">
-
+  <img class="scam-img" src="/assets/img/scam1.jpeg">
 </div>
 
-<div class="section">
+<div class="section" id="sec2">
   <h2>2. Fake Pathfinding & Dust Probes</h2>
   <p>
-    Scanners use dust-value sends, incorrect paths, and route probing to see if
-    any token, mint, or AMM has a weak spot. RAD logs it, rejects it, and archives it.
+    Small-value transactions used to test for mispriced pools, broken AMMs, or
+    unprotected paths. RAD logs every attempt and exposes the route.
   </p>
 
-  <img class="scam-img" src="data:image/jpeg;base64,
-  r/AACAf/AAJ5P/AMJx/9J7zW1tfGasbW0tLR0tJBvf8HeUNtqKLaq7pE/E0u2L4P7zXXXTPc2s8MsY5jSnj3dA6f8A1T7139W7e7t7u7W4v0Nbuo7q5Y5qQ1uPdnnlXhRsSP2r8H5jV9XXx/8Ag5Z/uPJvdgeIC2U5nzC7RlKjHC3/AxW+vDiiv/2Q==
-  ">
+  <img class="scam-img" src="/assets/img/scam2.jpeg">
 </div>
 
-<div class="section">
+<div class="section" id="sec3">
   <h2>3. Mint Testing & Probe Transactions</h2>
   <p>
-    Some actors ping mint wallets with zero-value or misleading routes to see if
-    anything triggers. A desperate way to find weak automation. RAD shuts this
-    down instantly — nothing fires, nothing leaks.
+    Attackers ping mints with incorrect data or empty instructions, hoping a
+    misfire produces value. RAD discards these silently.
   </p>
 </div>
 
-<div class="section">
+<div class="section" id="sec4">
   <h2>4. AMM Sniping Attempts</h2>
   <p>
-    New pools attract opportunists looking for mispriced entries. They test
-    execution paths, liquidity depth, and timing windows. RAD pools are hardened:
-    no misfires, no free entries, no slip-throughs.
+    New pools get scanned by bots hunting mispricing. RAD’s liquidity structure
+    and pool logic make these attempts useless.
   </p>
 </div>
 
-<div class="section">
+<div class="section" id="sec5">
   <h2>5. Disappearing Wallet Behavior</h2>
   <p>
-    Attackers often vanish from explorers after a failed attempt, hoping no
-    one logs the transaction. The ledger logs everything — and RAD captures it.
+    When a probe fails, the wallet often hides from explorers. RAD logs the entire
+    chain history and archives it anyway.
   </p>
 </div>
 
-<div class="section">
-  <h2>6. OTC Bait & Replay Attempts</h2>
+<div class="section" id="sec6">
+  <h2>6. OTC Replay / Bait Attempts</h2>
   <p>
-    Scammers eventually try spoofed TXIDs, fake refunds, or replayed payment
-    attempts. RAD’s OTC system is one-way. Their tricks fail on arrival.
+    Scammers try fake TXIDs or refund requests to extract tokens. RAD’s OTC is
+    one-way, immutable, and replay-proof.
   </p>
+</div>
+
+<!-- ===================== PLAYBOOK ===================== -->
+
+<div class="section" id="playbook">
+  <h2>7. The RAD Defense Playbook</h2>
+  <p>
+    The most complete XRPL protection guide available. Built for builders,
+    investors, and anyone securing value on-ledger.
+  </p>
+
+  <div class="subhead">7.1 Wallet Architecture</div>
+  <p>
+    • Separate mint / treasury / reserve / liquidity.<br>
+    • Use proper flags.<br>
+    • Disable master keys where safe.<br>
+    • Harden access flow.
+  </p>
+
+  <div class="subhead">7.2 AMM Defense</div>
+  <p>
+    • Reject partial payment attempts.<br>
+    • Harden first liquidity seed.<br>
+    • Watch dust probes.<br>
+    • Keep AMM wallet isolated.
+  </p>
+
+  <div class="subhead">7.3 Mint Protection</div>
+  <p>
+    • Verify tags.<br>
+    • Reject unknown hits.<br>
+    • Validate metadata.<br>
+    • Log all activity.
+  </p>
+
+  <div class="subhead">7.4 Token Defense</div>
+  <p>
+    • Understand rippling.<br>
+    • Monitor copycat tickers.<br>
+    • Track inbound threats.<br>
+    • Maintain a RAD-style audit log.
+  </p>
+
+  <div class="subhead">7.5 OTC & Presale Defense</div>
+  <p>
+    • Verify TXIDs.<br>
+    • Reject fake refund claims.<br>
+    • Never negotiate OTC.<br>
+    • Maintain buyer mapping.
+  </p>
+
+  <div class="subhead">7.6 Community Defense</div>
+  <p>
+    • Teach holders how to verify.<br>
+    • Publish safe channels.<br>
+    • Warn about drainer links.<br>
+    • Implement RAD-style security culture.
+  </p>
+</div>
+
 </div>
 
 <div class="footer">
-  The ledger never lies.<br>
-  RAD watches everything.
+  The ledger never lies. RAD keeps the receipts.
 </div>
+
+</div><!-- end page -->
+
+<script>
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// Active link highlight on scroll
+const sections=document.querySelectorAll(".section");
+const navlinks=document.querySelectorAll(".navlink");
+
+window.addEventListener("scroll",()=>{
+  let current="";
+  sections.forEach(sec=>{
+    const top=window.scrollY;
+    const offset=sec.offsetTop-140;
+    const height=sec.offsetHeight;
+    if(top>=offset && top<offset+height){ current=sec.getAttribute("id"); }
+  });
+
+  navlinks.forEach(link=>{
+    link.classList.remove("active");
+    if(link.getAttribute("href")==="#"+current){
+      link.classList.add("active");
+    }
+  });
+});
+</script>
 
 </body>
 </html>
