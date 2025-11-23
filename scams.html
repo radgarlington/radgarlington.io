@@ -32,9 +32,77 @@ ul{margin-left:20px;}
   font-style:italic;font-weight:500;opacity:.85;
 }
 
+
+/* Toggle Button (Option A - Ledger Style) */
+.toggle-btn {
+  position:fixed;
+  top:120px;
+  left:60px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:6px;
+  font-weight:700;
+  font-size:.85rem;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  cursor:pointer;
+  z-index:2000;
+}
+.toggle-btn:hover{
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
+/* Collapsible Sidebar */
+.sidebar {
+  transition: transform .3s ease;
+}
+.sidebar.collapsed {
+  transform: translateX(-260px);
+}
+
+/* Adjust page when collapsed */
+.page {
+  transition: margin-left .3s ease;
+}
+.page.full {
+  margin-left: 0 !important;
+}
+
+
+.drawer-tab-removed {
+ position: fixed;
+ top: 100px;
+ left: 0;
+ background: #0A74D0;
+ color: #fff;
+ padding: 10px 12px;
+ border-top-right-radius: 8px;
+ border-bottom-right-radius: 8px;
+ font-weight: 700;
+ cursor: pointer;
+ z-index: 3000;
+ box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+}
+.sidebar {
+ transition: transform .3s ease;
+}
+.sidebar.collapsed {
+ transform: translateX(-260px);
+}
+.page {
+ transition: margin-left .3s ease;
+}
+.page.full {
+ margin-left: 0 !important;
+}
+
 </style>
 </head>
 <body>
+
+
 <div class="banner">
   RAD Ledger — Protocol Intelligence Division<br>
   <em>Threat Analysis. Verification. Defense.</em>
@@ -43,8 +111,8 @@ ul{margin-left:20px;}
 
 <a href="https://radgarlington.io/ledger.html" class="backbtn" style="left:10px;right:auto;">← BACK TO LEDGER</a>
 
-<div class="sidebar">
-<div class="sidebar-title">THREAT NAVIGATION</div>
+<div class="sidebar" id="sidebar" id="sidebar">
+<div class="sidebar-title"><button onclick="toggleSidebar()" style="background:#0A74D0;color:#fff;padding:6px 10px;border:none;border-radius:6px;font-weight:700;cursor:pointer;">☰ NAV</button></div>
 <a href="#s2" class="navlink">TX Attacks</a>
 <a href="#s3" class="navlink">Wallet Threats</a>
 <a href="#s4" class="navlink">AMM Threats</a>
@@ -208,6 +276,46 @@ If the builder complies → the scammer now has double the payout.</p>
 <div style="text-align:center;padding:40px 0;color:#444;font-size:.9rem;border-top:1px solid #ddd;margin-top:60px;">
   RAD Ledger — The Protocol That Sees Everything.
 </div>
+
+
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const openBtn = document.querySelector('.open-nav-btn');
+
+function openNav(){
+  sidebar.classList.add('open');
+  openBtn.style.opacity = '0';
+  openBtn.style.pointerEvents = 'none';
+}
+
+function closeNav(){
+  sidebar.classList.remove('open');
+  openBtn.style.opacity = '1';
+  openBtn.style.pointerEvents = 'auto';
+}
+</script>
+
+
+
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const openBtn = document.querySelector('.open-nav-btn');
+
+function openNav(){
+  sidebar.classList.add('open');
+  openBtn.style.opacity = '0';
+  openBtn.style.pointerEvents = 'none';
+}
+
+function closeNav(){
+  sidebar.classList.remove('open');
+  openBtn.style.opacity = '1';
+  openBtn.style.pointerEvents = 'auto';
+}
+</script>
+
 
 </body>
 </html>
