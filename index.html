@@ -69,21 +69,33 @@
     .ledger-section p{opacity:.95}
 
     .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;font:600 17px system-ui;border-radius:10px;text-decoration:none;cursor:pointer;border:none}
+
     .darktrust{background:#0A74D0;color:#fff}
     .darktrust:hover{background:#094f90}
 
     .btn-primary{background:#fff;color:#0A74D0;box-shadow:0 6px 20px rgba(255,255,255,.2)}
     .btn-primary:hover{background:#f2f2f2}
-    .pulse{animation:pulse 2.5s infinite}
 
     @keyframes pulse{
       0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
       70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
       100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
     }
+    .pulse{animation:pulse 2.5s infinite}
+
+    .btn-ghost{
+      background:transparent;
+      color:#0A74D0;
+      border:1px solid #cfe3ff;
+      transition:0.2s ease;
+    }
+    .btn-ghost:hover{
+      background:#eaf3ff;
+    }
 
     .launch{background:var(--card);padding:6vh 5vw}
     .launch .wrap{max-width:900px;margin:0 auto;text-align:center}
+
     .launch-image{display:block;margin:40px auto 0;width:90%;max-width:900px;border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.25);border:2px solid #d7e7ff}
 
     .footer{text-align:center;padding:18px 10px;font-size:.85rem;color:var(--muted);margin-top:auto}
@@ -106,6 +118,7 @@
         <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
       </p>
 
+      <!-- AMM button (top only) -->
       <div style="text-align:center;margin-top:14px;">
         <a class="btn darktrust"
            href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
