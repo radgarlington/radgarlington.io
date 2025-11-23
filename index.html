@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="manifest" href="/assets/site.webmanifest">
 
-  <!-- Theme + App Settings -->
+  <!-- App Settings -->
   <meta name="theme-color" content="#0A74D0">
   <meta name="application-name" content="$RAD">
   <meta name="apple-mobile-web-app-title" content="$RAD">
@@ -20,7 +20,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="msapplication-TileColor" content="#0A74D0">
 
-  <!-- Unified Description -->
+  <!-- Description -->
   <meta name="description" content="The RAD Ledger — Verified projects, certified devs, and real accountability on XRPL. Powered by $RAD, the meme coin with a ledger.">
   <meta name="keywords" content="RAD Garlington,RAD Ledger,XRPL,XRP Ledger,crypto verification,ledger meme,verified XRPL projects,Rad Garlington">
 
@@ -38,51 +38,95 @@
   <meta name="twitter:description" content="Verified projects. Certified devs. Real accountability on XRPL — built by $RAD.">
   <meta name="twitter:image" content="https://radgarlington.io/assets/rad-ledger-og-v10.png?v=99">
 
+  <!-- Force X cache refresh -->
   <meta name="robots" content="noarchive, max-image-preview:large">
 
   <style>
     *{box-sizing:border-box}
     html,body{height:100%}
-    :root{--bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;--card:#f4f7fb}
-    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif;line-height:1.5;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+    :root{
+      --bg:#ffffff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --blue:#0A74D0;
+      --card:#f4f7fb;
+    }
+    body{
+      margin:0;background:var(--bg);color:var(--ink);
+      font-family:Arial,sans-serif;line-height:1.5;
+      overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column
+    }
     main{flex:1 0 auto}
+    p{margin:0 0 10px}
 
-    .hero{text-align:center;padding:6vh 5vw 2vh;background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
-    .hero-img{width:55%;max-width:320px;margin:0 auto 14px;display:block}
+    .hero{
+      text-align:center;padding:6vh 5vw 2vh;
+      background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;
+      max-width:960px;margin:20px auto;
+      box-shadow:0 6px 20px rgba(2,32,71,.08)
+    }
+    .hero-img{width:55%;max-width:320px;height:auto;margin:0 auto 14px;display:block}
     h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
-    .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px}
+    .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px;padding:0 10px}
 
     .social{text-align:center;margin-top:14px}
     .social img{width:28px;height:28px}
 
     .verify{text-align:center;margin-top:8px;font-size:.95rem}
-    .verify a{color:#0A74D0;font-weight:bold;text-decoration:none;margin:0 8px}
+    .verify a{color:var(--blue);font-weight:bold;text-decoration:none;margin:0 8px}
 
-    .utility{text-align:center;padding:4vh 5vw 6vh;background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;max-width:960px;margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)}
-    .utility h2{font-size:clamp(1.5rem,5vw,2rem)}
-    .utility p{font-size:clamp(1rem,4vw,1.2rem);color:var(--muted)}
+    .utility{
+      text-align:center;padding:4vh 5vw 6vh;
+      background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;
+      max-width:960px;margin:20px auto;
+      box-shadow:0 6px 20px rgba(2,32,71,.08)
+    }
+    .utility h2{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
+    .utility p{font-size:clamp(1rem,4vw,1.2rem);color:var(--muted);margin:6px 0}
 
-    .ledger-section{text-align:center;margin:40px auto;max-width:960px;padding:48px 20px;background:linear-gradient(180deg,#0A74D0,#094f90);color:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.2)}
-    .ledger-section h2{font-size:clamp(1.6rem,5vw,2.2rem)}
-    .ledger-section p{opacity:.95}
+    .ledger-section{
+      text-align:center;margin:40px auto;max-width:960px;padding:48px 20px;
+      background:linear-gradient(180deg,#0A74D0,#094f90);color:#fff;
+      border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.2);
+      border:2px solid #083c80
+    }
+    .ledger-section h2{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:10px}
+    .ledger-section p{font-size:1.05rem;margin-bottom:20px;opacity:.95}
 
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:14px 28px;
-      font:600 17px system-ui;
-      border-radius:10px;
-      text-decoration:none;
-      cursor:pointer;
-      border:none;
+      display:inline-flex;align-items:center;justify-content:center;
+      gap:.5rem;padding:14px 28px;border-radius:10px;
+      text-decoration:none;font:600 17px/1.1 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      cursor:pointer;transition:transform .12s ease,box-shadow .12s ease;border:none
+    }
+    .btn-primary{
+      background:#fff;color:#0A74D0;box-shadow:0 6px 20px rgba(255,255,255,.2)
+    }
+    .btn-primary:hover{
+      transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,.25)
     }
 
-    .darktrust{background:#0A74D0;color:#fff}
-    .darktrust:hover{background:#094f90}
+    .darktrust{background:#0A74D0;color:#fff;box-shadow:0 6px 20px rgba(10,116,208,.25)}
+    .darktrust:hover{background:#094f90;box-shadow:0 10px 30px rgba(10,116,208,.35)}
 
-    .btn-primary{background:#fff;color:#0A74D0;box-shadow:0 6px 20px rgba(255,255,255,.2)}
-    .btn-primary:hover{background:#f2f2f2}
+    /* Lite Paper Button */
+    .lite-btn{
+      background:#eaf3ff;
+      color:#0A74D0;
+      border:1px solid #cfe3ff;
+      padding:10px 18px;
+      font-size:0.9rem;
+      border-radius:10px;
+      font-weight:600;
+      display:inline-block;
+      text-decoration:none;
+      transition:all .12s ease;
+    }
+    .lite-btn:hover{
+      background:#dcecff;
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(10,116,208,.25);
+    }
 
     @keyframes pulse{
       0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
@@ -91,37 +135,30 @@
     }
     .pulse{animation:pulse 2.5s infinite}
 
-    /* ★ Smaller Lite Paper button */
-    .btn-lite{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:10px 20px; /* smaller */
-      font:600 15px system-ui; /* slightly smaller font */
-      border-radius:8px;
-      background:transparent;
-      color:#0A74D0;
-      border:2px solid #0A74D0;
-      text-decoration:none;
-      cursor:pointer;
-      transition:0.2s ease;
+    .launch{
+      background:var(--card);color:var(--ink);
+      padding:6vh 5vw;text-align:center
     }
-    .btn-lite:hover{
-      background:#eaf3ff;
+    .launch .wrap{max-width:900px;margin:0 auto;padding:0 12px}
+
+    .launch-image{
+      display:block;margin:40px auto 0;width:90%;max-width:900px;
+      border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.25);
+      border:2px solid #d7e7ff
     }
 
-    .launch{background:var(--card);padding:6vh 5vw}
-    .launch .wrap{max-width:900px;margin:0 auto;text-align:center}
-    .launch-image{
-      display:block;margin:40px auto 0;
-      width:90%;max-width:900px;
-      border-radius:12px;
-      box-shadow:0 6px 20px rgba(0,0,0,.25);
-      border:2px solid #d7e7ff;
+    .section-divider{
+      width:80%;max-width:640px;height:2px;
+      background:linear-gradient(90deg,transparent,#c3d9f8,transparent);
+      margin:40px auto 20px;border:none
     }
 
     .footer{text-align:center;padding:18px 10px;font-size:.85rem;color:var(--muted);margin-top:auto}
-    .disclaimer-block{max-width:820px;margin:20px auto 32px;text-align:center;font-size:.82rem;color:#475569;line-height:1.45}
+
+    .disclaimer-block{
+      max-width:820px;margin:20px auto 32px;text-align:center;
+      font-size:.82rem;color:#475569;line-height:1.45
+    }
   </style>
 </head>
 <body>
@@ -140,25 +177,34 @@
         <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
       </p>
 
-      <!-- AMM button -->
+      <!-- AMM BUTTON -->
       <div style="text-align:center;margin-top:14px;">
         <a class="btn darktrust"
            href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
-           target="_blank">
+           target="_blank" rel="noopener">
            🚀 Enter the $RAD AMM Pool
+        </a>
+      </div>
+
+      <!-- LITE PAPER BUTTON -->
+      <div style="text-align:center;margin-top:14px;">
+        <a class="lite-btn"
+           href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md"
+           target="_blank" rel="noopener">
+          📄 Read the Lite Paper
         </a>
       </div>
     </div>
 
     <div class="social">
-      <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
-      <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
+      <a href="https://x.com/radgarlington" target="_blank" rel="noopener"><img src="/assets/x.png" alt="X"></a>
+      <a href="https://t.me/radgarlington" target="_blank" rel="noopener"><img src="/assets/telegram.png" alt="Telegram"></a>
     </div>
 
     <div class="verify">
       🔍 Verify on:
-      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">Bithomp</a>
-      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
+      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">Bithomp</a>
+      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank" rel="noopener">XRPSCAN</a>
     </div>
 
     <div class="utility">
@@ -177,32 +223,28 @@
 
     <section class="launch">
       <div class="wrap">
-        <a href="/ledger.html" target="_blank">
+        <a href="/ledger.html" target="_blank" rel="noopener">
           <img src="/assets/ledger.png" alt="The RAD Ledger Preview" class="launch-image" />
         </a>
       </div>
     </section>
 
-    <div style="text-align:center;margin:16px 0 6px;">
-      <a class="btn-lite" href="https://github.com/radgarlington/radgarlington.io/blob/main/litepaper.md" target="_blank">
-        📄 Read the Lite Paper
-      </a>
-    </div>
+    <hr class="section-divider">
 
     <div class="disclaimer-block">
       <strong>🛡 Legal Disclaimer</strong><br><br>
-      $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).<br>
-      It is not affiliated with Ripple Labs, Brad Garlinghouse, or related entities.<br>
-      All references to “Rad,” “Garlington,” or similar terms are part of a fictional meme narrative.
+      $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).
+      It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related entities.<br>
+      All references to “Rad,” “Garlington,” or related terms are part of a fictional blockchain meme narrative developed by the $RAD team.
     </div>
   </main>
 
   <div class="footer">
     © 2025 RAD GARLINGTON | The RAD Ledger | Powered by XRP
     <br>
-    <a href="https://x.com/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">𝕏 @radgarlington</a>
+    <a href="https://x.com/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold;">𝕏 @radgarlington</a>
     |
-    <a href="https://t.me/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">Telegram @radgarlington</a>
+    <a href="https://t.me/radgarlington" target="_blank" rel="noopener" style="color:#0A74D0;text-decoration:none;font-weight:bold;">Telegram @radgarlington</a>
   </div>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" crossorigin="anonymous"></script>
