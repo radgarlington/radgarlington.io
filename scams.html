@@ -2,344 +2,212 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<title>RAD Threat Intelligence Dossier — Military Depth Expansion</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RAD Ledger — Scam Intel & Defense Playbook</title>
-
 <style>
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  background:#ffffff;
-  color:#0f172a;
-  font-family:Arial,system-ui,sans-serif;
-  line-height:1.55;
-  scroll-behavior:smooth;
-}
+body{margin:0;font-family:Arial,system-ui,sans-serif;background:#ffffff;color:#0f172a;line-height:1.65;}
+.sidebar{position:fixed;top:0;left:0;height:100%;width:140px;background:#062a5c;padding:12px;overflow-y:auto;box-shadow:3px 0 12px rgba(0,0,0,.35);margin-top:60px;}
+.sidebar-title{color:#4dc6ff;font-weight:700;margin-bottom:12px;font-size:.9rem;text-transform:uppercase;}
+.navlink{display:block;color:#fff;padding:6px 8px;margin-bottom:6px;border-radius:4px;background:#0A74D0;font-size:.75rem;font-weight:700;text-decoration:none;}
+.navlink:hover{background:#0c5faa;}
+.backbtn{position:fixed;top:10px;left:10px;background:#0A74D0;color:#fff;padding:4px 10px;border-radius:6px;font-weight:700;font-size:.75rem;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.18);}
+.page{margin-left:170px;padding:30px 20px;max-width:900px;}
+h2{color:#083c80;font-size:1.45rem;margin-top:50px;}
+.sub{color:#0A74D0;font-weight:700;margin-top:22px;font-size:1.1rem;}
+.callout{background:#fff3cd;border-left:5px solid #ffcc00;padding:12px 16px;margin:14px 0;border-radius:6px;}
+.code{background:#f4f4f4;border:1px solid #ddd;padding:10px;font-family:Consolas,monospace;font-size:.9rem;border-radius:6px;white-space:pre-wrap;}
+ul{margin-left:20px;}
 
 /* Banner */
 .banner{
   background:linear-gradient(90deg,#0A74D0,#083c80);
-  color:#fff;
-  text-align:center;
-  padding:32px 10px 26px;
-  font-size:1.55rem;
-  font-weight:700;
+  color:#fff;text-align:center;
+  padding:18px 10px 16px;
+  font-size:1.05rem;font-weight:700;
   border-bottom:2px solid #062a5c;
-  box-shadow:0 4px 10px rgba(0,0,0,.28);
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+}
+.banner em{
+  display:block;margin-top:6px;
+  font-style:italic;font-weight:500;opacity:.85;
 }
 
-/* Main Container */
-.content{
-  max-width:900px;
-  margin:40px auto;
-  padding:0 18px;
-}
-
-/* Section */
-.section{
-  margin-bottom:50px;
-}
-
-.section h2{
-  font-size:1.45rem;
-  color:#083c80;
-  margin-bottom:14px;
-  font-weight:700;
-}
-
-.section p{
-  margin-bottom:16px;
-  font-size:1rem;
-}
-
-/* Images */
-.scam-img{
-  width:100%;
-  border:1px solid #ccc;
-  border-radius:6px;
-  margin:14px 0 26px;
-  box-shadow:0 3px 10px rgba(0,0,0,.15);
-}
-
-/* Subheaders in Playbook */
-.subhead{
-  font-size:1.15rem;
-  color:#0A74D0;
-  margin:28px 0 10px;
-  font-weight:700;
-}
-
-/* ----------------------------------
-   FLOATING SIDEBAR
----------------------------------- */
-.sidebar{
-  position:fixed;
-  top:0;
-  left:0;
-  height:100%;
-  width:240px;
-  background:#062a5c;
-  padding:20px 14px;
-  box-shadow:4px 0 18px rgba(0,0,0,.35);
-  overflow-y:auto;
-  z-index:999;
-}
-
-.sidebar-title{
-  font-size:1.1rem;
-  font-weight:700;
-  color:#4dc6ff;
-  margin-bottom:16px;
-  text-transform:uppercase;
-  letter-spacing:1px;
-}
-
-.navlink{
-  display:block;
-  background:#0A74D0;
-  color:#fff;
-  padding:10px 12px;
-  border-radius:6px;
-  margin-bottom:10px;
-  text-decoration:none;
-  font-weight:700;
-  font-size:.95rem;
-  letter-spacing:.3px;
-  box-shadow:0 2px 6px rgba(0,0,0,.2);
-  transition:all .2s ease;
-}
-
-.navlink:hover{
-  background:#0c5faa;
-  transform:translateX(4px);
-}
-
-.navlink.active{
-  background:#4dc6ff;
-  color:#062a5c;
-}
-
-/* Push main content when sidebar exists */
-.page{
-  margin-left:260px;
-}
-
-/* Mobile Sidebar Button */
-.mobile-toggle{
-  display:none;
-  position:fixed;
-  top:12px;
-  left:12px;
-  background:#0A74D0;
-  color:#fff;
-  padding:10px 12px;
-  border-radius:6px;
-  font-weight:700;
-  z-index:1000;
-  box-shadow:0 2px 8px rgba(0,0,0,.3);
-}
-
-/* Mobile Responsiveness */
-@media(max-width:900px){
-  .sidebar{
-    transform:translateX(-260px);
-    transition:transform .3s ease;
-  }
-  .sidebar.open{
-    transform:translateX(0);
-  }
-  .mobile-toggle{
-    display:block;
-  }
-  .page{
-    margin-left:0;
-    padding-top:60px;
-  }
-}
-  
-/* Footer */
-.footer{
-  text-align:center;
-  font-size:.9rem;
-  padding:40px 0 60px;
-  color:#444;
-}
 </style>
 </head>
-
 <body>
-
-<!-- MOBILE BUTTON -->
-<div class="mobile-toggle" onclick="toggleSidebar()">THREAT NAVIGATION</div>
-
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
-  <div class="sidebar-title">THREAT NAVIGATION</div>
-
-  <a href="#sec1" class="navlink">1. Partial Payment Manipulation</a>
-  <a href="#sec2" class="navlink">2. Fake Pathfinding / Dust Probes</a>
-  <a href="#sec3" class="navlink">3. Mint Testing / Probe TXs</a>
-  <a href="#sec4" class="navlink">4. AMM Sniping Attempts</a>
-  <a href="#sec5" class="navlink">5. Disappearing Wallet Behavior</a>
-  <a href="#sec6" class="navlink">6. OTC Replay / Bait Attempts</a>
-  <a href="#playbook" class="navlink">7. Defense Playbook</a>
+<div class="banner">
+  RAD Ledger — Protocol Intelligence Division<br>
+  <em>Threat Analysis. Verification. Defense.</em>
 </div>
 
-<!-- MAIN PAGE -->
+
+<a href="https://radgarlington.io/ledger.html" class="backbtn" style="left:10px;right:auto;">← BACK TO LEDGER</a>
+
+<div class="sidebar">
+<div class="sidebar-title">THREAT NAVIGATION</div>
+<a href="#s2" class="navlink">TX Attacks</a>
+<a href="#s3" class="navlink">Wallet Threats</a>
+<a href="#s4" class="navlink">AMM Threats</a>
+<a href="#s7" class="navlink">OTC Threats</a>
+<a href="#s8" class="navlink">Social Threats</a>
+<a href="#s9" class="navlink">Defense Matrix</a>
+</div>
+
 <div class="page">
 
-<div class="banner">
-  RAD Ledger — Scam Intel & The Defense Playbook
+<h1>RAD Threat Intelligence Dossier — Military-Depth Expansion</h1>
+<p>This edition expands critical sections into full military-grade intelligence analysis. These are the deepest and most accurate breakdowns of hostile XRPL behavior available anywhere.</p>
+
+
+<!-- ============================= -->
+<!-- 2. TRANSACTION MANIPULATION  -->
+<!-- ============================= -->
+<h2 id="s2">2. Transaction Manipulation — Military Depth</h2>
+
+<div class="sub">Overview</div>
+<p>Transaction manipulation is the most common attack vector on XRPL. It is low-cost, low-risk, ledger-native, and requires no special access. Attackers rely on weak validation logic, misinterpreted fields, and pathfinding quirks that unsuspecting builders routinely ignore. These attacks happen every day. Most go undetected unless a system like RAD logs and correlates them.</p>
+
+<div class="sub">Threat Type: Partial Payment Exploit</div>
+<p>Attackers weaponize the <strong>PartialPayment</strong> flag to spoof massive “Instructed Amounts” while only delivering tiny dust payments. The scam works when a builder incorrectly trusts the instructed amount instead of XRPL’s delivered_amount field. This is the #1 reason XRP Ledger projects are compromised.</p>
+
+<p><strong>Attacker Workflow:</strong></p>
+<ul>
+<li>Chooses target with weak validation</li>
+<li>Sends payment with <code>tfPartialPayment</code> flag</li>
+<li>Sets instructed amount extremely high</li>
+<li>Delivers only dust</li>
+<li>If the system credits based on the wrong field → it’s over</li>
+</ul>
+
+<div class="callout"><strong>Red Alert:</strong> Any project reading the “Amount” field in a partial payment is already compromised.</div>
+
+<div class="sub">Defense Code</div>
+<div class="code">
+if tx.get("Flags") & 0x00020000:  # tfPartialPayment
+    delivered = meta.get("delivered_amount")
+    if delivered is None or delivered == "0":
+        reject()
 </div>
 
-<div class="content">
+<div class="sub">Threat Type: Fake Pathfinding</div>
+<p>Attackers exploit XRPL’s flexible pathfinding by forcing your system to accept routes through unwanted currencies or IOUs. If you do not explicitly reject paths, someone else can choose them for you.</p>
 
-<!-- ===================== SECTIONS ===================== -->
+<p><strong>Attack Example:</strong>  
+An attacker sends a payment to your AMM or token using a path through an asset you never intended to support. If you do not reject unexpected paths, you may accept a payment in something worthless.</p>
 
-<div class="section" id="sec1">
-  <h2>1. Partial Payment Manipulation Attempts</h2>
-  <p>
-    Attackers spoof huge “instructed delivery” values while only sending dust.
-    They rely on weak code or sloppy validation. RAD rejects this instantly.
-  </p>
+<div class="callout"><strong>Protocol Note:</strong> Always whitelist accepted path currencies.</div>
 
-  <img class="scam-img" src="/assets/img/scam1.jpeg">
+<div class="sub">Threat Type: Dust Probing</div>
+<p>Dust probes are reconnaissance missions. Attackers send tiny-value transactions to measure your system’s speed, error messages, logging habits, and automated responses. Dust probes reveal your internal logic.</p>
+
+<p><strong>Behavior Indicators:</strong></p>
+<ul>
+<li>Repeated tiny payments from the same wallet</li>
+<li>Changing tags between probes</li>
+<li>Probes at increasing intervals</li>
+<li>Switching to a new wallet when rejected</li>
+</ul>
+
+<div class="callout"><strong>Critical:</strong> Dust probes almost always precede a larger attack pattern.</div>
+
+
+<!-- ============================= -->
+<!-- 3. WALLET IDENTITY THREATS   -->
+<!-- ============================= -->
+<h2 id="s3">3. Wallet Identity Threats — Military Depth</h2>
+
+<p>Wallet identity is behavioral, not numerical. Hostile wallets rarely operate with a single identity. Instead, they rotate burner accounts, disappear after failed attempts, misalign their transaction patterns, and test multiple surfaces at once.</p>
+
+<div class="sub">Behavioral Clustering</div>
+<p>RAD clusters hostile wallets by:</p>
+<ul>
+<li>Time-of-day pattern</li>
+<li>Dust probe frequency</li>
+<li>Pathing preferences</li>
+<li>Amount modulation patterns</li>
+<li>Retry behavior after failure</li>
+</ul>
+
+<div class="sub">Burner Rotation Attack</div>
+<p>Attackers use multiple wallets to disguise a coordinated probing campaign. RAD’s behavioral clustering exposes them by linking actions, not addresses.</p>
+
+<div class="callout"><strong>Warning:</strong> If a wallet disappears after failed probes, it was not a user — it was an attacker.</div>
+
+
+<!-- ============================= -->
+<!-- 4. AMM EXPLOIT THREATS       -->
+<!-- ============================= -->
+<h2 id="s4">4. AMM Exploit Threats — Military Depth</h2>
+
+<p>XRPL AMMs are high-value targets. Attackers test your pool the moment it opens. They attempt sniper entries, ratio manipulation, slippage exploitation, and liquidity misalignment.</p>
+
+<div class="sub">Threat Type: Initialization Sniping</div>
+<p>During the first seconds of AMM creation, your pool is vulnerable. Attackers use automated bots to detect mispriced initial deposits.</p>
+
+<p><strong>Attacker Flow:</strong></p>
+<ul>
+<li>Attacker monitors new liquidity events</li>
+<li>Finds AMM with unbalanced ratios</li>
+<li>Executes instantaneous swap</li>
+<li>Extracts profit before you see the chart update</li>
+</ul>
+
+<div class="callout"><strong>Solution:</strong> Seed pools with correct ratios and minimum liquidity thresholds.</div>
+
+<div class="sub">Threat Type: Dust Ratio Testing</div>
+<p>Attackers send tiny swaps to measure your pricing curve. These swaps are reconnaissance events that reveal pool weakness.</p>
+
+
+<!-- ============================= -->
+<!-- 7. OTC THREATS — DEEP        -->
+<!-- ============================= -->
+<h2 id="s7">7. OTC Threat Playbook — Military Depth</h2>
+
+<p>OTC transactions are the most socially engineered part of XRPL. Attackers rely on panic, confusion, and trust. OTC scams can destroy projects that aren’t prepared.</p>
+
+<div class="sub">Threat Type: Fake TXID Injection</div>
+<p>Attackers send you a legitimate-looking TXID that actually belongs to someone else, or to themselves in a different context. If you don’t verify details, you’re exposed.</p>
+
+<div class="sub">Threat Type: Tag Switch Attack</div>
+<p>Scammer says: “Oops wrong tag, can you resend?”  
+If the builder complies → the scammer now has double the payout.</p>
+
+<div class="callout"><strong>OTC Rule:</strong> No refunds. No reversals. No exceptions.</div>
+
+
+<!-- ============================= -->
+<!-- 8. SOCIAL ENGINEERING — DEEP -->
+<!-- ============================= -->
+<h2 id="s8">8. Social Engineering Threats — Military Depth</h2>
+
+<p>Social engineering is the #1 cause of crypto losses. Attackers prey on fear, urgency, confusion, and authority spoofing.</p>
+
+<div class="sub">Threat Type: Admin Impersonation</div>
+<p>Scammers clone your profile, your Telegram channel, your exact brand identity. They DM your holders pretending to be you.</p>
+
+<div class="callout"><strong>Defense:</strong> RAD uses zero-DM policy. If someone DMs your community — assume compromise.</div>
+
+
+<!-- ============================= -->
+<!-- 9. DEFENSE MATRIX            -->
+<!-- ============================= -->
+<h2 id="s9">9. RAD Defense Matrix (Military Mapping)</h2>
+<p>This matrix links attacks → countermeasures → RAD actions.</p>
+
+<ul>
+<li>Partial Payments → delivered_amount enforcement</li>
+<li>Sniping → slippage enforcement</li>
+<li>Fake TXIDs → full ledger verification</li>
+<li>Burner threats → behavioral clustering</li>
+<li>Dust probes → pattern escalation</li>
+</ul>
+
+
 </div>
 
-<div class="section" id="sec2">
-  <h2>2. Fake Pathfinding & Dust Probes</h2>
-  <p>
-    Small-value transactions used to test for mispriced pools, broken AMMs, or
-    unprotected paths. RAD logs every attempt and exposes the route.
-  </p>
-
-  <img class="scam-img" src="/assets/img/scam2.jpeg">
+<div style="text-align:center;padding:40px 0;color:#444;font-size:.9rem;border-top:1px solid #ddd;margin-top:60px;">
+  RAD Ledger — The Protocol That Sees Everything.
 </div>
-
-<div class="section" id="sec3">
-  <h2>3. Mint Testing & Probe Transactions</h2>
-  <p>
-    Attackers ping mints with incorrect data or empty instructions, hoping a
-    misfire produces value. RAD discards these silently.
-  </p>
-</div>
-
-<div class="section" id="sec4">
-  <h2>4. AMM Sniping Attempts</h2>
-  <p>
-    New pools get scanned by bots hunting mispricing. RAD’s liquidity structure
-    and pool logic make these attempts useless.
-  </p>
-</div>
-
-<div class="section" id="sec5">
-  <h2>5. Disappearing Wallet Behavior</h2>
-  <p>
-    When a probe fails, the wallet often hides from explorers. RAD logs the entire
-    chain history and archives it anyway.
-  </p>
-</div>
-
-<div class="section" id="sec6">
-  <h2>6. OTC Replay / Bait Attempts</h2>
-  <p>
-    Scammers try fake TXIDs or refund requests to extract tokens. RAD’s OTC is
-    one-way, immutable, and replay-proof.
-  </p>
-</div>
-
-<!-- ===================== PLAYBOOK ===================== -->
-
-<div class="section" id="playbook">
-  <h2>7. The RAD Defense Playbook</h2>
-  <p>
-    The most complete XRPL protection guide available. Built for builders,
-    investors, and anyone securing value on-ledger.
-  </p>
-
-  <div class="subhead">7.1 Wallet Architecture</div>
-  <p>
-    • Separate mint / treasury / reserve / liquidity.<br>
-    • Use proper flags.<br>
-    • Disable master keys where safe.<br>
-    • Harden access flow.
-  </p>
-
-  <div class="subhead">7.2 AMM Defense</div>
-  <p>
-    • Reject partial payment attempts.<br>
-    • Harden first liquidity seed.<br>
-    • Watch dust probes.<br>
-    • Keep AMM wallet isolated.
-  </p>
-
-  <div class="subhead">7.3 Mint Protection</div>
-  <p>
-    • Verify tags.<br>
-    • Reject unknown hits.<br>
-    • Validate metadata.<br>
-    • Log all activity.
-  </p>
-
-  <div class="subhead">7.4 Token Defense</div>
-  <p>
-    • Understand rippling.<br>
-    • Monitor copycat tickers.<br>
-    • Track inbound threats.<br>
-    • Maintain a RAD-style audit log.
-  </p>
-
-  <div class="subhead">7.5 OTC & Presale Defense</div>
-  <p>
-    • Verify TXIDs.<br>
-    • Reject fake refund claims.<br>
-    • Never negotiate OTC.<br>
-    • Maintain buyer mapping.
-  </p>
-
-  <div class="subhead">7.6 Community Defense</div>
-  <p>
-    • Teach holders how to verify.<br>
-    • Publish safe channels.<br>
-    • Warn about drainer links.<br>
-    • Implement RAD-style security culture.
-  </p>
-</div>
-
-</div>
-
-<div class="footer">
-  The ledger never lies. RAD keeps the receipts.
-</div>
-
-</div><!-- end page -->
-
-<script>
-function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
-}
-
-// Active link highlight on scroll
-const sections=document.querySelectorAll(".section");
-const navlinks=document.querySelectorAll(".navlink");
-
-window.addEventListener("scroll",()=>{
-  let current="";
-  sections.forEach(sec=>{
-    const top=window.scrollY;
-    const offset=sec.offsetTop-140;
-    const height=sec.offsetHeight;
-    if(top>=offset && top<offset+height){ current=sec.getAttribute("id"); }
-  });
-
-  navlinks.forEach(link=>{
-    link.classList.remove("active");
-    if(link.getAttribute("href")==="#"+current){
-      link.classList.add("active");
-    }
-  });
-});
-</script>
 
 </body>
 </html>
