@@ -92,7 +92,7 @@ The standard RAD model:
 ### **🔵 Treasury — 70% (700B RAD)**  
 Fuel for:
 - Airdrops  
-- OTC allocations  
+- Community rewards  
 - Community tools  
 - Ledger development  
 - Growth cycles  
@@ -168,4 +168,4 @@ This document is not financial, legal, or tax advice
 All references to “Rad” or “Garlington” are part of a fictional meme narrative  
 
 The ledger speaks  
-You decide how to interpret it  
+You decide how to interpret it
