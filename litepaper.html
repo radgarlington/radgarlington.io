@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>$RAD — Litepaper | The Meme Coin With a Ledger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="$RAD — The meme coin with a ledger. Built on XRPL to bring order, clarity, and verification to the chain." />
+  <style>
+    :root {
+      --bg: #05070a;
+      --card-bg: #0b0f16;
+      --text: #f4f4f7;
+      --muted: #a4acb9;
+      --accent: #4fc3ff;
+      --border: #1c2330;
+      --divider: #151b24;
+      --heading: #ffffff;
+      --link: #4fc3ff;
+      --link-hover: #8ee0ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #10172a 0, #05070a 45%, #020308 100%);
+      color: var(--text);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 860px;
+      background: linear-gradient(145deg, #05070a, #0b0f16);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      padding: 28px 20px 32px;
+      box-shadow:
+        0 18px 60px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(79, 195, 255, 0.08);
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        padding: 32px 40px 40px;
+      }
+    }
+
+    .logo-wrap {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .subtitle-block {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 0.98rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .subtitle-block span {
+      display: block;
+      margin: 2px 0;
+    }
+
+    .tagline {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    h1, h2, h3 {
+      color: var(--heading);
+      margin: 0 0 10px;
+      line-height: 1.25;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 26px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 18px;
+    }
+
+    p {
+      margin: 6px 0 10px;
+      line-height: 1.7;
+      font-size: 0.98rem;
+      color: var(--text);
+    }
+
+    .section {
+      border-top: 1px solid var(--divider);
+      padding-top: 18px;
+      margin-top: 18px;
+    }
+
+    .section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    .check-list h3 {
+      margin-bottom: 6px;
+    }
+
+    ul {
+      margin: 6px 0 10px 20px;
+      padding: 0;
+      font-size: 0.96rem;
+    }
+
+    li {
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+
+    .core-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px 24px;
+      font-size: 0.96rem;
+      margin-top: 8px;
+    }
+
+    .core-stats-item strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .tokenomics-group {
+      margin-top: 10px;
+    }
+
+    .tokenomics-block {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      margin-bottom: 10px;
+    }
+
+    .tokenomics-block h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tokenomics-block h3 span {
+      font-size: 1.1rem;
+    }
+
+    .principles-list {
+      list-style: none;
+      margin-left: 0;
+    }
+
+    .principles-list li::before {
+      content: "•";
+      display: inline-block;
+      width: 1em;
+      margin-left: 0;
+      color: var(--accent);
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    .links-list {
+      list-style: none;
+      margin-left: 0;
+      font-size: 0.96rem;
+    }
+
+    .links-list li {
+      margin-bottom: 4px;
+    }
+
+    .code-inline {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.9rem;
+      padding: 1px 4px;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .disclaimer {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 8px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <article class="card">
+
+      <div class="logo-wrap">
+        <img src="https://github.com/radgarlington/radgarlington.io/blob/main/assets/logo.png?raw=true"
+             alt="$RAD Logo" width="180" />
+      </div>
+
+      <div class="tagline">$RAD — The Meme Coin With a Ledger</div>
+
+      <h1>$RAD Litepaper</h1>
+
+      <div class="subtitle-block">
+        <span>📖 <em>The Ledger’s most loyal believer</em></span>
+        <span>⚡ <em>Powered by XRPL</em></span>
+        <span>🧾 <em>Where the meme meets accountability</em></span>
+      </div>
+
+      <!-- Identity -->
+      <section class="section">
+        <h2>Identity</h2>
+        <p>$RAD isn’t a joke token.</p>
+        <p>It’s a <strong>ledger-first identity</strong> — a brand built on accountability, verification, and signal.</p>
+        <p>It exists for one purpose:</p>
+        <h3>To bring order, clarity, and verification to XRPL.</h3>
+        <p>The RAD Ledger — a public index of verified, certified, and unverified XRPL projects — is the backbone of this mission.</p>
+        <p>
+          $RAD is the meme coin that <strong>doesn’t hide</strong>.<br />
+          It doesn’t beg.<br />
+          It doesn’t chase.<br />
+          It <strong>documents</strong>.
+        </p>
+        <p>A meme with a ledger is a meme with teeth.</p>
+      </section>
+
+      <!-- RAD Ledger Purpose -->
+      <section class="section">
+        <h2>The RAD Ledger — Purpose</h2>
+        <p>The RAD Ledger was built to clean up the ecosystem:</p>
+
+        <div class="check-list">
+          <h3>✔ Filter the noise</h3>
+          <h3>✔ Expose the trash</h3>
+          <h3>✔ Highlight real builders</h3>
+          <h3>✔ Give the XRPL a source of truth</h3>
+          <h3>✔ Keep scammers uncomfortable</h3>
+          <h3>✔ Give projects a place to be verified or certified</h3>
+        </div>
+
+        <p>It’s a growing registry of:</p>
+        <ul>
+          <li>Verified tokens</li>
+          <li>Certified developers</li>
+          <li>Rug reports</li>
+          <li>NFT certifications</li>
+          <li>Blacklisted wallets</li>
+          <li>Project grouping</li>
+          <li>Accuracy checks</li>
+          <li>Full XRPL project categorization</li>
+        </ul>
+        <p>
+          This is <strong>the first real attempt</strong> to map the XRPL transparently — using culture, identity,
+          and a meme character with conviction.
+        </p>
+      </section>
+
+      <!-- Core Stats -->
+      <section class="section">
+        <h2>Core Stats</h2>
+        <div class="core-stats">
+          <div class="core-stats-item">
+            <strong>Name:</strong> RAD
+          </div>
+          <div class="core-stats-item">
+            <strong>Ticker:</strong> $RAD
+          </div>
+          <div class="core-stats-item">
+            <strong>Chain:</strong> XRP Ledger (XRPL)
+          </div>
+          <div class="core-stats-item">
+            <strong>Supply:</strong> 1,000,000,000,000 (1T)
+          </div>
+          <div class="core-stats-item">
+            <strong>Decimals:</strong> 6
+          </div>
+          <div class="core-stats-item">
+            <strong>Issuer:</strong>
+            <span class="code-inline">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Belief -->
+      <section class="section">
+        <h2>Belief</h2>
+        <p>Markets swing.<br />Narratives shift.<br />Pretenders disappear.</p>
+        <p>The ledger remains — final, fast, cheap, trustless.</p>
+        <p>$RAD was built on that principle. Not hype — <strong>protocol</strong>.</p>
+      </section>
+
+      <!-- Tokenomics -->
+      <section class="section">
+        <h2>Tokenomics — 70 / 20 / 10 Model</h2>
+        <p>The standard RAD model:</p>
+
+        <div class="tokenomics-group">
+          <div class="tokenomics-block">
+            <h3>🔵 <span>Treasury — 70% (700B RAD)</span></h3>
+            <p>Fuel for:</p>
+            <ul>
+              <li>Airdrops</li>
+              <li>OTC allocations</li>
+              <li>Community tools</li>
+              <li>Ledger development</li>
+              <li>Growth cycles</li>
+            </ul>
+          </div>
+
+          <div class="tokenomics-block">
+            <h3>🟣 <span>Reserve — 20% (200B RAD)</span></h3>
+            <p>Long-term positioning:</p>
+            <ul>
+              <li>Strategic holdings</li>
+              <li>Security buffer</li>
+              <li>Optional burns</li>
+              <li>Ledger infrastructure</li>
+            </ul>
+          </div>
+
+          <div class="tokenomics-block">
+            <h3>🟢 <span>Liquidity — 10% (100B RAD)</span></h3>
+            <p>AMM seed only.<br />Paired with XRP.<br />Never sold.<br />Permanent depth.</p>
+          </div>
+        </div>
+
+        <p>This structure keeps $RAD aligned with the XRPL, not against it.</p>
+      </section>
+
+      <!-- AMM Launch -->
+      <section class="section">
+        <h2>AMM Launch</h2>
+        <p>$RAD entered the XRPL AMM clean:</p>
+        <ul>
+          <li>Public RAD/XRP pool</li>
+          <li>Fair, open, transparent trading</li>
+          <li>No artificial gating</li>
+          <li>No bonding curves</li>
+          <li>No fake scarcity</li>
+          <li>Just <strong>ledger math</strong></li>
+        </ul>
+        <p>This is <strong>how a meme coin behaves when it respects the chain.</strong></p>
+      </section>
+
+      <!-- Principles -->
+      <section class="section">
+        <h2>Principles</h2>
+        <ul class="principles-list">
+          <li>Believe in protocol</li>
+          <li>Document the truth</li>
+          <li>Move with the ledger, not the herd</li>
+          <li>Precision over popularity</li>
+          <li>Signal over noise</li>
+        </ul>
+      </section>
+
+      <!-- Brand Notes -->
+      <section class="section">
+        <h2>Brand Notes</h2>
+        <ul>
+          <li>Ledger-blue color identity</li>
+          <li>Pixar-style RAD character renders</li>
+          <li>Official banner: vault door + RAD ledger</li>
+          <li>Focus: verification, accountability, culture</li>
+          <li>Mobile-first, minimal, clean UI</li>
+          <li>Every asset reinforces <strong>ledger identity</strong></li>
+        </ul>
+      </section>
+
+      <!-- Links -->
+      <section class="section">
+        <h2>Links</h2>
+        <ul class="links-list">
+          <li><strong>𝕏:</strong> <a href="https://x.com/radgarlington" target="_blank" rel="noopener">https://x.com/radgarlington</a></li>
+          <li><strong>Telegram:</strong> <a href="https://t.me/radgarlington" target="_blank" rel="noopener">https://t.me/radgarlington</a></li>
+          <li><strong>Website:</strong> <a href="https://radgarlington.io" target="_blank" rel="noopener">https://radgarlington.io</a></li>
+          <li><strong>AMM Pool:</strong> <a href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet" target="_blank" rel="noopener">
+            RAD / XRP Pool on XMAGNETIC
+          </a></li>
+        </ul>
+      </section>
+
+      <!-- Disclaimer -->
+      <section class="section">
+        <h2>Disclaimer</h2>
+        <p class="disclaimer">
+          $RAD is a community-driven meme token built on the XRP Ledger. There are no promises, no guarantees, and no financial claims.
+          This document is not financial, legal, or tax advice. All references to “Rad” or “Garlington” are part of a fictional meme narrative.
+        </p>
+        <p class="disclaimer">
+          The ledger speaks. You decide how to interpret it.
+        </p>
+      </section>
+
+      <div class="footer-note">
+        &copy; <span id="year"></span> RAD GARLINGTON — The Meme Coin With a Ledger.
+      </div>
+    </article>
+  </div>
+
+  <script>
+    // Year stamp
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
