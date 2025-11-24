@@ -57,7 +57,7 @@
     .hero{
       text-align:center;padding:6vh 5vw 2vh;
       background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;
-      max-width:960px;margin:20px auto;
+      max-width:960px;margin:120px auto 20px;
       box-shadow:0 6px 20px rgba(2,32,71,.08)
     }
     .hero-img{width:55%;max-width:320px;margin:0 auto 14px;display:block}
@@ -94,6 +94,35 @@
       text-decoration:none;cursor:pointer;border:none;
       transition:transform .12s ease,box-shadow .12s ease;
     }
+
+    .amm-section{
+      text-align:center;margin:40px auto;max-width:960px;padding:40px 20px;
+      background:#fffdee;
+      border:2px solid #f5d463;
+      border-radius:14px;
+      box-shadow:0 8px 26px rgba(0,0,0,.18);
+    }
+    .amm-section h2{
+      font-size:clamp(1.6rem,5vw,2.2rem);
+      margin-bottom:14px;
+      color:#b38700;
+    }
+    .amm-section p{
+      font-size:1.05rem;
+      color:#6d5400;
+      margin-bottom:22px;
+    }
+    .amm-btn{
+      background:#b38700;
+      color:#fff;
+      box-shadow:0 6px 20px rgba(179,135,0,.35);
+    }
+    .amm-btn:hover{
+      background:#8c6900;
+      transform:translateY(-2px);
+      box-shadow:0 12px 28px rgba(179,135,0,.45);
+    }
+
     .btn-primary{
       background:#fff;color:#0A74D0;
       box-shadow:0 6px 20px rgba(255,255,255,.2)
@@ -102,15 +131,14 @@
       transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,.25)
     }
 
-    .darktrust{background:#0A74D0;color:#fff;box-shadow:0 6px 20px rgba(10,116,208,.25)}
-    .darktrust:hover{background:#094f90}
-
+    .pulse{
+      animation:pulse 2.5s infinite;
+    }
     @keyframes pulse{
       0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
       70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
       100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
     }
-    .pulse{animation:pulse 2.5s infinite}
 
     .launch{text-align:center;padding:6vh 5vw}
     .launch-image{
@@ -150,7 +178,18 @@
     }
   </style>
 </head>
+
 <body>
+
+<!-- RAD Certified Badge – Static, No Extra Spacing -->
+<div style="position:absolute; top:20px; left:20px; z-index:50;">
+  <a href="https://radgarlington.io/ledger.html" target="_blank" rel="noopener">
+    <img src="/assets/rad_ledger_certified.png"
+         alt="RAD Certified"
+         style="width:90px;height:auto;">
+  </a>
+</div>
+
 
   <main>
 
@@ -167,21 +206,13 @@
         <strong>Issuer:</strong>
         <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
       </p>
-
-      <!-- AMM BUTTON (ONLY ONE) -->
-      <div style="margin-top:14px;">
-        <a class="btn darktrust"
-           href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
-           target="_blank" rel="noopener">
-          🚀 Enter the $RAD AMM Pool
-        </a>
-      </div>
     </div>
 
     <!-- SOCIAL -->
     <div class="social">
       <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
       <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
+      <a href="https://t.me/TheLedgerRoom" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
     </div>
 
     <!-- VERIFY -->
@@ -207,6 +238,17 @@
       <a href="/ledger.html" class="btn btn-primary pulse">VIEW THE RAD LEDGER</a>
     </section>
 
+    <!-- AMM SECTION -->
+    <section class="amm-section">
+      <h2>🚀 ENTER THE $RAD AMM POOL</h2>
+      <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
+      <a class="btn amm-btn"
+         href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
+         target="_blank" rel="noopener">
+         Open AMM Pool
+      </a>
+    </section>
+
     <!-- LEDGER IMAGE -->
     <section class="launch">
       <div class="wrap">
@@ -219,15 +261,12 @@
     <!-- DIVIDER -->
     <hr class="section-divider">
 
-<!-- LITE PAPER BUTTON (BACK IN ORIGINAL SPOT) -->
-<div class="litepaper-wrap">
-  <a class="lite-btn"
-     href="/litepaper.html"
-     target="_blank" rel="noopener">
-    📄 Read the Lite Paper
-  </a>
-</div>
-
+    <!-- LITE PAPER -->
+    <div class="litepaper-wrap">
+      <a class="lite-btn" href="/litepaper.html" target="_blank" rel="noopener">
+        📄 Read the Lite Paper
+      </a>
+    </div>
 
     <!-- DISCLAIMER -->
     <div class="disclaimer-block">
@@ -243,9 +282,10 @@
   <div class="footer">
     © 2025 RAD GARLINGTON | The RAD Ledger | Powered by XRP<br>
     <a href="https://x.com/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">𝕏 @radgarlington</a> |
-    <a href="https://t.me/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">Telegram @radgarlington</a>
+    <a href="https://t.me/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">Telegram @radgarlington</a> |
+    <a href="https://t.me/TheLedgerRoom" target="_blank" style="color:#0A74D0;font-weight:bold;">The Ledger Room</a>
   </div>
 
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
