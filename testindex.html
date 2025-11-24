@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>The RAD Ledger — Powered by $RAD</title>
 
   <!-- Favicons -->
@@ -42,7 +42,16 @@
 
   <style>
     *{box-sizing:border-box}
-    html,body{height:100%}
+
+    /* 🔒 TRUE ZOOM LOCKDOWN */
+    html, body {
+      height:100%;
+      touch-action: manipulation;
+    }
+    * {
+      touch-action: pan-x pan-y;
+    }
+
     :root{
       --bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;
       --card:#f4f7fb;
@@ -61,6 +70,7 @@
       box-shadow:0 6px 20px rgba(2,32,71,.08)
     }
     .hero-img{width:55%;max-width:320px;margin:0 auto 14px;display:block}
+
     h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
     .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px}
 
@@ -181,7 +191,7 @@
 
 <body>
 
-<!-- RAD Certified Badge – Static, No Extra Spacing -->
+<!-- RAD Certified Badge – Static, No Glow, No Spacing -->
 <div style="position:absolute; top:20px; left:20px; z-index:50;">
   <a href="https://radgarlington.io/ledger.html" target="_blank" rel="noopener">
     <img src="/assets/rad_ledger_certified.png"
@@ -190,102 +200,101 @@
   </a>
 </div>
 
+<main>
 
-  <main>
+  <!-- HERO -->
+  <div class="hero">
+    <img src="/assets/logo.webp" alt="$RAD Logo" class="hero-img" />
+    <h1>The RAD Ledger — Powered by $RAD</h1>
+    <p class="tagline">Verified Projects. Certified Devs. Real Accountability.</p>
 
-    <!-- HERO -->
-    <div class="hero">
-      <img src="/assets/logo.webp" alt="$RAD Logo" class="hero-img" />
-      <h1>The RAD Ledger — Powered by $RAD</h1>
-      <p class="tagline">Verified Projects. Certified Devs. Real Accountability.</p>
-
-      <p style="margin-top:8px;">
-        <strong>Token:</strong>
-        <span style="color:#0A74D0;font-size:1.2em;font-weight:bold;">$RAD</span>
-        &nbsp;—&nbsp;
-        <strong>Issuer:</strong>
-        <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
-      </p>
-    </div>
-
-    <!-- SOCIAL -->
-    <div class="social">
-      <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
-      <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
-      <a href="https://t.me/TheLedgerRoom" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
-    </div>
-
-    <!-- VERIFY -->
-    <div class="verify">
-      🔍 Verify on:
-      <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">Bithomp</a>
-      <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
-    </div>
-
-    <!-- UTILITY -->
-    <div class="utility">
-      <h2>The meme coin with a ledger. Built for XRPL accountability.</h2>
-      <p>⚡ Instant Transfers</p>
-      <p>💸 Low Fees</p>
-      <p>🔒 Trustless Movement</p>
-      <p>$RAD carries XRPL’s real utility.</p>
-    </div>
-
-    <!-- LEDGER SECTION -->
-    <section class="ledger-section">
-      <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
-      <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
-      <a href="/ledger.html" class="btn btn-primary pulse">VIEW THE RAD LEDGER</a>
-    </section>
-
-    <!-- AMM SECTION -->
-    <section class="amm-section">
-      <h2>🚀 ENTER THE $RAD AMM POOL</h2>
-      <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
-      <a class="btn amm-btn"
-         href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
-         target="_blank" rel="noopener">
-         Open AMM Pool
-      </a>
-    </section>
-
-    <!-- LEDGER IMAGE -->
-    <section class="launch">
-      <div class="wrap">
-        <a href="/ledger.html" target="_blank">
-          <img src="/assets/ledger.png" alt="The RAD Ledger Preview" class="launch-image" />
-        </a>
-      </div>
-    </section>
-
-    <!-- DIVIDER -->
-    <hr class="section-divider">
-
-    <!-- LITE PAPER -->
-    <div class="litepaper-wrap">
-      <a class="lite-btn" href="/litepaper.html" target="_blank" rel="noopener">
-        📄 Read the Lite Paper
-      </a>
-    </div>
-
-    <!-- DISCLAIMER -->
-    <div class="disclaimer-block">
-      <strong>🛡 Legal Disclaimer</strong><br><br>
-      $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).
-      It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related entities.<br>
-      All references to “Rad,” “Garlington,” or related terms are part of a fictional blockchain meme narrative developed by the $RAD team.
-    </div>
-
-  </main>
-
-  <!-- FOOTER -->
-  <div class="footer">
-    © 2025 RAD GARLINGTON | The RAD Ledger | Powered by XRP<br>
-    <a href="https://x.com/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">𝕏 @radgarlington</a> |
-    <a href="https://t.me/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">Telegram @radgarlington</a> |
-    <a href="https://t.me/TheLedgerRoom" target="_blank" style="color:#0A74D0;font-weight:bold;">The Ledger Room</a>
+    <p style="margin-top:8px;">
+      <strong>Token:</strong>
+      <span style="color:#0A74D0;font-size:1.2em;font-weight:bold;">$RAD</span>
+      &nbsp;—&nbsp;
+      <strong>Issuer:</strong>
+      <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
+    </p>
   </div>
 
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
+  <!-- SOCIAL -->
+  <div class="social">
+    <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
+    <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
+    <a href="https://t.me/TheLedgerRoom" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
+  </div>
+
+  <!-- VERIFY -->
+  <div class="verify">
+    🔍 Verify on:
+    <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">Bithomp</a>
+    <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
+  </div>
+
+  <!-- UTILITY -->
+  <div class="utility">
+    <h2>The meme coin with a ledger. Built for XRPL accountability.</h2>
+    <p>⚡ Instant Transfers</p>
+    <p>💸 Low Fees</p>
+    <p>🔒 Trustless Movement</p>
+    <p>$RAD carries XRPL’s real utility.</p>
+  </div>
+
+  <!-- LEDGER SECTION -->
+  <section class="ledger-section">
+    <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
+    <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
+    <a href="/ledger.html" class="btn btn-primary pulse">VIEW THE RAD LEDGER</a>
+  </section>
+
+  <!-- AMM SECTION -->
+  <section class="amm-section">
+    <h2>🚀 ENTER THE $RAD AMM POOL</h2>
+    <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
+    <a class="btn amm-btn"
+       href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
+       target="_blank" rel="noopener">
+       Open AMM Pool
+    </a>
+  </section>
+
+  <!-- LEDGER IMAGE -->
+  <section class="launch">
+    <div class="wrap">
+      <a href="/ledger.html" target="_blank">
+        <img src="/assets/ledger.png" alt="The RAD Ledger Preview" class="launch-image" />
+      </a>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <hr class="section-divider">
+
+  <!-- LITE PAPER -->
+  <div class="litepaper-wrap">
+    <a class="lite-btn" href="/litepaper.html" target="_blank" rel="noopener">
+      📄 Read the Lite Paper
+    </a>
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer-block">
+    <strong>🛡 Legal Disclaimer</strong><br><br>
+    $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).
+    It is not affiliated with, endorsed by, or associated with Ripple Labs Inc., Brad Garlinghouse, or any related entities.<br>
+    All references to “Rad,” “Garlington,” or related terms are part of a fictional blockchain meme narrative developed by the $RAD team.
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<div class="footer">
+  © 2025 RAD GARLINGTON | The RAD Ledger | Powered by XRP<br>
+  <a href="https://x.com/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">𝕏 @radgarlington</a> |
+  <a href="https://t.me/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">Telegram @radgarlington</a> |
+  <a href="https://t.me/TheLedgerRoom" target="_blank" style="color:#0A74D0;font-weight:bold;">The Ledger Room</a>
+</div>
+
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
