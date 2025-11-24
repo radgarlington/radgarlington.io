@@ -114,7 +114,17 @@
       transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,.25)
     }
 
-    /* GOLD PULSE ANIMATION - AMM BUTTON */
+    /* WHITE LEDGER GLOW – ORIGINAL */
+    @keyframes pulse-ledger {
+      0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
+      70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
+      100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+    }
+    .pulse-ledger {
+      animation:pulse-ledger 2.5s infinite;
+    }
+
+    /* GOLD AMM GLOW */
     @keyframes pulse-amm {
       0% { box-shadow:0 0 0 0 rgba(179,135,0,.55); }
       70% { box-shadow:0 0 0 22px rgba(179,135,0,0); }
@@ -193,7 +203,7 @@
 
 <body>
 
-<!-- RAD Certified Badge – Static, Clean, No Glow -->
+<!-- RAD Certified Badge – Static, Clean -->
 <div style="position:absolute; top:20px; left:20px; z-index:50;">
   <a href="https://radgarlington.io/ledger.html" target="_blank" rel="noopener">
     <img src="/assets/rad_ledger_certified.png"
@@ -246,7 +256,7 @@
   <section class="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
     <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
-    <a href="/ledger.html" class="btn btn-primary pulse">VIEW THE RAD LEDGER</a>
+    <a href="/ledger.html" class="btn btn-primary pulse-ledger">VIEW THE RAD LEDGER</a>
   </section>
 
   <!-- AMM SECTION -->
