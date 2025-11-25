@@ -1,155 +1,138 @@
-body {
-  background:#f7f9ff;
-  margin:0;
-  font-family:Arial,system-ui;
-  color:#0f172a;
+/* =========================================================
+   RAD NFT LISTINGS — Core JS
+   Clean, synced with CSS, WCK Featured NFT enabled
+   ========================================================= */
+
+/* ============================
+   NFT DATA
+   ============================ */
+const nftData = [
+
+  /* ======== FEATURED NFT: WCK ======== */
+  {
+    token: "$WCK",
+    name: "CONTINENTAL WICK",
+    status: "certified",
+    droppingSoon: true,
+    image: "assets/logos/wck_logo.webp",
+    desc: "Protocol Enforcement Collection — Dropping Soon."
+  },
+
+  /* ======== SAMPLE XRPL COLLECTION (Add more here as needed) ======== */
+  {
+    token: "$RAD",
+    name: "RAD Certified Seal",
+    status: "certified",
+    droppingSoon: false,
+    image: "assets/logos/rad_logo.webp",
+    desc: "The Ledger’s official certification seal."
+  },
+
+  {
+    token: "$BAG",
+    name: "BAG Certified Artifact",
+    status: "verified",
+    droppingSoon: false,
+    image: "assets/logos/bag_logo.webp",
+    desc: "XRPL’s heaviest meme — Verified Asset Icon."
+  }
+
+];
+
+
+/* =========================================================
+   FEATURED NFT RENDERING
+   ========================================================= */
+function renderFeatured() {
+  const featuredWrap = document.getElementById("featuredNFT");
+  if (!featuredWrap) return;
+
+  const featured = nftData[0]; // WCK always at index 0
+
+  featuredWrap.innerHTML = `
+    <div class="featured-card">
+      <img src="${featured.image}" alt="${featured.name}">
+      <h3>${featured.name}</h3>
+      <p>${featured.desc}</p>
+      ${featured.droppingSoon ? `<div style="
+        background:#b41010;
+        color:#fff;
+        font-weight:800;
+        padding:6px 10px;
+        border-radius:8px;
+        margin-top:8px;
+        display:inline-block;
+      ">DROPPING SOON</div>` : ""}
+    </div>
+  `;
 }
 
-/* Banner */
-.banner {
-  background:#0A74D0;
-  color:#fff;
-  text-align:center;
-  padding:18px 10px;
-  font-size:1.1rem;
-  font-weight:700;
+
+/* =========================================================
+   GRID RENDERING
+   ========================================================= */
+function renderGrid(filter = "all") {
+  const grid = document.getElementById("nftGrid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  const filtered = nftData.filter(item => {
+    if (filter === "all") return true;
+    return item.status === filter;
+  });
+
+  filtered.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      ${item.droppingSoon ? `<div style="
+        background:#b41010;
+        color:#fff;
+        font-weight:800;
+        padding:4px 8px;
+        border-radius:6px;
+        position:absolute;
+        top:12px;
+        right:12px;
+        font-size:.75rem;
+        box-shadow:0 2px 6px rgba(0,0,0,.25);
+      ">DROPPING SOON</div>` : ""}
+
+      <img src="${item.image}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p>${item.desc}</p>
+    `;
+
+    grid.appendChild(card);
+  });
 }
 
-/* Back Button (LEFT ALIGNED) */
-.back-wrap {
-  text-align:left;
-  margin:14px 0 0 14px;
+
+/* =========================================================
+   FILTER LOGIC
+   ========================================================= */
+function initFilters() {
+  const buttons = document.querySelectorAll(".filter-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+      renderGrid(filter);
+    });
+  });
 }
 
-.back-btn {
-  background:#0A74D0;
-  color:#fff;
-  padding:10px 18px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:700;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-  display:inline-block;
-}
 
-/* Submit button block */
-.submit-callout {
-  text-align:center;
-  background:#f0f6ff;
-  padding:24px 10px;
-  border-bottom:2px solid #d7e7ff;
-}
-
-.submit-btn {
-  background:#0A74D0;
-  color:#fff;
-  padding:12px 20px;
-  border-radius:10px;
-  font-weight:700;
-  border:3px solid #d4a537;
-  text-decoration:none;
-  display:inline-block;
-}
-
-/* Featured NFT section */
-.featured-wrap {
-  max-width:960px;
-  margin:28px auto;
-  background:#fffef7;
-  border:3px solid #d4a537;
-  border-radius:14px;
-  padding:22px;
-  box-shadow:0 4px 16px rgba(0,0,0,.1);
-}
-
-.featured-title {
-  text-align:center;
-  font-size:1.3rem;
-  font-weight:800;
-  color:#0A74D0;
-  margin-bottom:12px;
-}
-
-.featured-card img {
-  width:110px;
-  height:110px;
-  object-fit:contain;
-  border-radius:12px;
-  border:3px solid #0A74D0;
-  background:#fff;
-  display:block;
-  margin:0 auto 12px;
-}
-
-/* Filters */
-.filters {
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  margin:20px auto;
-}
-
-.filter-btn {
-  background:#e5e7eb;
-  padding:8px 16px;
-  border-radius:8px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.filter-btn.active {
-  background:#0A74D0;
-  color:#fff;
-}
-
-/* NFT Grid */
-.grid {
-  max-width:1100px;
-  margin:0 auto 50px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:22px;
-  padding:0 14px;
-}
-
-/* Cards */
-.card {
-  background:#fff;
-  padding:18px;
-  border-radius:14px;
-  box-shadow:0 4px 12px rgba(0,0,0,.08);
-  text-align:center;
-}
-
-.card img {
-  width:110px;
-  height:110px;
-  object-fit:contain;
-  border-radius:12px;
-  border:3px solid #0A74D0;
-  background:#fff;
-  display:block;
-  margin:0 auto 12px;
-}
-
-.card h3 {
-  margin:10px 0 4px;
-  font-size:1.1rem;
-  color:#083c80;
-}
-
-.card p {
-  margin:4px 0 12px;
-  color:#475569;
-}
-
-.card .btn {
-  display:block;
-  margin:6px auto;
-  background:#0A74D0;
-  color:#fff;
-  padding:8px 14px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:700;
-}
+/* =========================================================
+   INIT
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  renderFeatured();
+  renderGrid("all");
+  initFilters();
+});
