@@ -350,34 +350,44 @@
 
     let isPlaying = false;
 
-    // Low volume for background feel
-    audio.volume = 0.25;
+    // Slightly higher volume
+    audio.volume = 0.4;
 
     function updateIcon(){
       btn.textContent = isPlaying ? '🔊' : '🔇';
       btn.classList.toggle('is-muted', !isPlaying);
     }
 
-    // Try autoplay on load
-    window.addEventListener('DOMContentLoaded', function(){
+    function tryPlay(){
+      if (isPlaying) return;
+
       audio.play().then(function(){
         isPlaying = true;
         updateIcon();
-      }).catch(function(){
-        // Autoplay blocked – stay muted until user toggles
-        isPlaying = false;
-        updateIcon();
+      }).catch(function(e){
+        console.warn('RAD audio blocked:', e);
       });
+    }
+
+    // Try autoplay on load (some browsers will allow, some won't)
+    window.addEventListener('DOMContentLoaded', function(){
+      tryPlay();
     });
 
-    btn.addEventListener('click', function(){
+    // 🔥 Force play on first user interaction (first touch/click)
+    const firstInteraction = function(){
+      tryPlay();
+      window.removeEventListener('click', firstInteraction);
+      window.removeEventListener('touchstart', firstInteraction);
+    };
+    window.addEventListener('click', firstInteraction, { passive: true });
+    window.addEventListener('touchstart', firstInteraction, { passive: true });
+
+    // Toggle button manual control
+    btn.addEventListener('click', function(e){
+      e.stopPropagation(); // don't double-trigger window click
       if(!isPlaying){
-        audio.play().then(function(){
-          isPlaying = true;
-          updateIcon();
-        }).catch(function(e){
-          console.warn('RAD audio blocked:', e);
-        });
+        tryPlay();
       } else {
         audio.pause();
         isPlaying = false;
@@ -388,6 +398,7 @@
     updateIcon();
   })();
 </script>
+
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
 </body>
