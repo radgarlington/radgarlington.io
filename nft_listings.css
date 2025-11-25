@@ -5,6 +5,8 @@
 /* Premium Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap');
 
+* { box-sizing: border-box; }
+
 body {
   background:#f7f9ff;
   margin:0;
