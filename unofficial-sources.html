@@ -24,30 +24,74 @@ body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-h
 .container{max-width:900px;margin:30px auto;padding:0 14px}
 
 .section-title{
-  font-size:1.32rem;
-  font-weight:700;
+  font-size:1.48rem;
+  font-weight:800;
   margin-bottom:16px;
   color:#a87400;
+  text-transform:uppercase;
+  letter-spacing:.04em;
 }
 
-.sub-title{
-  font-size:1.1rem;
-  font-weight:700;
-  margin:26px 0 10px;
-  color:#0f172a;
-}
-
-.card{
-  background:#fffdf3;
-  border-left:5px solid #d69e00;
-  padding:16px 20px;
+.danger-title{
+  font-size:1.48rem;
+  font-weight:800;
   margin-bottom:16px;
-  border-radius:6px;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  color:#b41010;
+  text-transform:uppercase;
+  letter-spacing:.04em;
 }
-.card strong{font-weight:700;color:#a87400}
-.card span{color:#555;font-size:.93rem}
 
+/* Warning Cards */
+.card-warning{
+  background:#fff6f6;
+  border-left:6px solid #b41010;
+  padding:18px 22px;
+  margin-bottom:18px;
+  border-radius:6px;
+  box-shadow:0 2px 7px rgba(0,0,0,.18);
+}
+.card-warning strong{
+  color:#b41010;
+  font-size:1.02rem;
+  font-weight:800;
+}
+.card-warning span{
+  color:#333;
+  font-size:.94rem;
+  display:block;
+  margin-top:4px;
+}
+
+/* Official Cards */
+.card-good{
+  background:#f7fbff;
+  border-left:6px solid #0A74D0;
+  padding:18px 22px;
+  margin-bottom:18px;
+  border-radius:6px;
+  box-shadow:0 2px 7px rgba(0,0,0,.12);
+}
+.card-good strong{
+  color:#0A74D0;
+  font-size:1.02rem;
+  font-weight:800;
+}
+.card-good span{
+  color:#333;
+  font-size:.94rem;
+  display:block;
+  margin-top:4px;
+}
+.card-good a{
+  color:#0A74D0;
+  font-weight:700;
+  text-decoration:none;
+}
+.card-good a:hover{
+  text-decoration:underline;
+}
+
+/* Buttons */
 .back-btn{
   display:inline-block;
   background:#d69e00;
@@ -87,80 +131,86 @@ footer{
 
   <a href="https://radgarlington.io/ledger.html" class="back-btn">⬅ Back to The Ledger</a>
 
-  <!-- OFFICIAL SOURCES SECTION -->
-  <div class="sub-title">✅ Official XRPL Data Sources</div>
+  <!-- DANGER SECTION FIRST -->
+  <div class="danger-title">🚨 HIGH-RISK UNOFFICIAL / INACCURATE PLATFORMS</div>
 
-  <div class="card">
-    <strong>XRPL.org</strong><br>
-    <span>The canonical repository for XRP Ledger documentation, mechanics, and verified network behavior.</span>
+  <div class="card-warning">
+    <strong>DexScreener</strong>
+    <span>Incorrect AMM pools, spoofable charts, and non-canonical XRPL data.</span>
   </div>
 
-  <div class="card">
-    <strong>XRPSCAN</strong><br>
-    <span>The most reliable public explorer. Reads canonical ledger data directly from XRPL infrastructure.</span>
+  <div class="card-warning">
+    <strong>GeckoTerminal</strong>
+    <span>Frequent chart errors, wrong supplies, and no AMM recognition.</span>
   </div>
 
-  <div class="card">
-    <strong>Bithomp</strong><br>
-    <span>Well-established XRPL explorer with accurate ledger parsing and verified issuer information.</span>
+  <div class="card-warning">
+    <strong>CoinMarketCap (CMC)</strong>
+    <span>Not XRPL-native — displays aggregated off-chain data, no AMM indexing.</span>
   </div>
 
-  <div class="card">
-    <strong>Xumm / Xaman Ecosystem</strong><br>
-    <span>Trusted signing layer and wallet ecosystem built directly on XRPL standards.</span>
+  <div class="card-warning">
+    <strong>CoinGecko</strong>
+    <span>Does not index XRPL directly — uses unreliable third-party feeds.</span>
   </div>
 
-  <div class="card">
-    <strong>The RAD Ledger</strong><br>
-    <span>Verified token metadata, certification, renewals, project records, and community enforcement.</span>
+  <div class="card-warning">
+    <strong>LiveCoinWatch</strong>
+    <span>Wrong supplies, wrong decimals, incorrect liquidity — not canonical.</span>
   </div>
 
-  <!-- UNOFFICIAL SOURCES SECTION -->
-  <div class="section-title">⚠️ Unofficial / Inaccurate Platforms</div>
-
-  <div class="card">
-    <strong>DexScreener</strong><br>
-    <span>Incorrect AMM pools, spoofable charts, and non-canonical XRPL data. High-risk for misinformation.</span>
+  <div class="card-warning">
+    <strong>Sologenic (Old Token Pages)</strong>
+    <span>Legacy pages show dead pools and outdated trustline data.</span>
   </div>
 
-  <div class="card">
-    <strong>GeckoTerminal</strong><br>
-    <span>Frequent chart errors, incorrect supplies, and missing XRPL AMM recognition.</span>
+  <div class="card-warning">
+    <strong>XRPLCoins.com</strong>
+    <span>Outdated AMM data and stale token entries — high inaccuracy.</span>
   </div>
 
-  <div class="card">
-    <strong>CoinMarketCap (CMC)</strong><br>
-    <span>Not XRPL-native. Displays aggregated off-chain data, wrong supplies, and no AMM integration.</span>
+  <div class="card-warning">
+    <strong>BXRPL Explorer Clones</strong>
+    <span>Multiple fake variants with incorrect supply parsing and spoofed charts.</span>
   </div>
 
-  <div class="card">
-    <strong>CoinGecko</strong><br>
-    <span>Does not index XRPL directly. Relies on external feeds with inaccurate token metrics.</span>
+  <div class="card-warning">
+    <strong>Discord / Reddit Token Lists</strong>
+    <span>User-fed JSON with zero verification — highly dangerous.</span>
   </div>
 
-  <div class="card">
-    <strong>LiveCoinWatch</strong><br>
-    <span>Incorrect supplies, decimals, and liquidity figures. Not canonical.</span>
+
+  <!-- OFFICIAL SOURCES BELOW -->
+  <div class="section-title">✅ Official XRPL Data Sources</div>
+
+  <div class="card-good">
+    <strong>XRPL.org</strong>
+    <span>The canonical XRPL documentation & reference hub.</span>
+    <a href="https://xrpl.org" target="_blank">Visit XRPL.org →</a>
   </div>
 
-  <div class="card">
-    <strong>Sologenic (Old Token Pages)</strong><br>
-    <span>Legacy token pages show dead pools and outdated trustline data.</span>
+  <div class="card-good">
+    <strong>XRPSCAN</strong>
+    <span>The most reliable public explorer — reads directly from the ledger.</span>
+    <a href="https://xrpscan.com" target="_blank">Visit XRPSCAN →</a>
   </div>
 
-  <div class="card">
-    <strong>XRPLCoins.com</strong><br>
-    <span>Stale token pages and inaccurate AMM data. Not recommended.</span>
+  <div class="card-good">
+    <strong>Bithomp</strong>
+    <span>Verified, long-standing XRPL explorer with accurate data parsing.</span>
+    <a href="https://bithomp.com" target="_blank">Visit Bithomp →</a>
   </div>
 
-  <div class="card">
-    <strong>BXRPL Explorer clones</strong><br>
-    <span>Multiple variants exist with wrong supply calculations and spoofed chart modules.</span>
+  <div class="card-good">
+    <strong>Xaman (Xumm)</strong>
+    <span>Trusted XRPL signing layer & wallet integration ecosystem.</span>
+    <a href="https://xumm.app" target="_blank">Visit Xaman →</a>
   </div>
 
-  <div class="card">
-    <strong>Discord/Reddit Token Lists</strong><br>
-    <span>User-uploaded JSON with zero verification. Extremely unreliable.</span>
+  <div class="card-good">
+    <strong>The RAD Ledger</strong>
+    <span>Verified metadata, certifications, renewals, and community enforcement.</span>
+    <a href="https://radgarlington.io/ledger.html" target="_blank">Visit The RAD Ledger →</a>
   </div>
 
 </div>
