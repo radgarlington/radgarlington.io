@@ -7,21 +7,42 @@
 <style>
 body{margin:0;font-family:Arial,system-ui,sans-serif;background:#ffffff;color:#0f172a;line-height:1.65;}
 
-
-
-
 .backbtn{position:fixed;top:10px;left:10px;background:#0A74D0;color:#fff;padding:4px 10px;border-radius:6px;font-weight:700;font-size:.75rem;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.18);}
+
+/* Centered page container */
 .page{
   padding:30px 20px;
   max-width:900px;
-  margin:0 auto;        /* <-- Centers the entire page */
-  text-align:left;      /* <-- Keeps text clean and normal */
+  margin:0 auto;
+  text-align:left;
 }
+
 h2{color:#083c80;font-size:1.45rem;margin-top:50px;}
 .sub{color:#0A74D0;font-weight:700;margin-top:22px;font-size:1.1rem;}
 .callout{background:#fff3cd;border-left:5px solid #ffcc00;padding:12px 16px;margin:14px 0;border-radius:6px;}
 .code{background:#f4f4f4;border:1px solid #ddd;padding:10px;font-family:Consolas,monospace;font-size:.9rem;border-radius:6px;white-space:pre-wrap;}
-ul{margin-left:20px;}
+
+/* Diamond bullet style */
+ul {
+  list-style:none;
+  margin-left:0;
+  padding-left:0;
+}
+
+ul li {
+  position:relative;
+  padding-left:22px;
+  margin:8px 0;
+}
+
+ul li::before {
+  content:"◆";
+  color:#0A74D0;
+  font-weight:900;
+  position:absolute;
+  left:0;
+  top:0;
+}
 
 /* Banner */
 .banner{
@@ -37,88 +58,7 @@ ul{margin-left:20px;}
   font-style:italic;font-weight:500;opacity:.85;
 }
 
-
-/* Toggle Button (Option A - Ledger Style) */
-.toggle-btn {
-  position:fixed;
-  top:120px;
-  left:60px;
-  background:#0A74D0;
-  color:#fff;
-  padding:6px 12px;
-  border-radius:6px;
-  font-weight:700;
-  font-size:.85rem;
-  text-decoration:none;
-  box-shadow:0 2px 6px rgba(0,0,0,.18);
-  cursor:pointer;
-  z-index:2000;
-}
-.toggle-btn:hover{
-  opacity:.9;
-  transform:translateY(-1px);
-}
-
-/* Collapsible Sidebar */
-
-
-
-/* Adjust page when collapsed */
-.page {
-  transition: margin-left .3s ease;
-}
-.page.full {
-  margin-left: 0 !important;
-}
-
-
-.drawer-tab-removed {
- position: fixed;
- top: 100px;
- left: 0;
- background: #0A74D0;
- color: #fff;
- padding: 10px 12px;
- border-top-right-radius: 8px;
- border-bottom-right-radius: 8px;
- font-weight: 700;
- cursor: pointer;
- z-index: 3000;
- box-shadow: 2px 2px 6px rgba(0,0,0,0.25);
-}
-
-
-.page {
- transition: margin-left .3s ease;
-}
-.page.full {
- margin-left: 0 !important;
-}
-
-
-.open-nav-btn{
- position:fixed;
- top:80px;
- left:0;
- background:#0A74D0;
- color:#fff;
- padding:10px;
- border-radius:4px 4px 4px 4px;
- font-size:1.2rem;
- z-index:9999;
- border:none;
- cursor:pointer;
-}
-
-
-
-
-
-
-
-
-
-
+/* Back Button */
 .back-btn{
   display:inline-block;
   background:#0A74D0;
@@ -134,27 +74,16 @@ ul{margin-left:20px;}
 .back-btn:hover{
   opacity:.9;
 }
-
 </style>
 </head>
+
 <body>
+
 <a href="/ledger.html" class="back-btn">← Back</a>
 
 <div class="banner">
   RAD Ledger — Protocol Intelligence Division<br>
   <em>Threat Analysis. Verification. Defense.</em>
-</div>
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
 <div class="page">
@@ -166,7 +95,7 @@ ul{margin-left:20px;}
 <!-- ============================= -->
 <!-- 2. TRANSACTION MANIPULATION  -->
 <!-- ============================= -->
-<h2 id="s2">2. Transaction Manipulation — Military Depth</h2>
+<h2 id="s2">Transaction Manipulation — Military Depth</h2>
 
 <div class="sub">Overview</div>
 <p>Transaction manipulation is the most common attack vector on XRPL. It is low-cost, low-risk, ledger-native, and requires no special access. Attackers rely on weak validation logic, misinterpreted fields, and pathfinding quirks that unsuspecting builders routinely ignore. These attacks happen every day. Most go undetected unless a system like RAD logs and correlates them.</p>
@@ -218,7 +147,7 @@ An attacker sends a payment to your AMM or token using a path through an asset y
 <!-- ============================= -->
 <!-- 3. WALLET IDENTITY THREATS   -->
 <!-- ============================= -->
-<h2 id="s3">3. Wallet Identity Threats — Military Depth</h2>
+<h2 id="s3">Wallet Identity Threats — Military Depth</h2>
 
 <p>Wallet identity is behavioral, not numerical. Hostile wallets rarely operate with a single identity. Instead, they rotate burner accounts, disappear after failed attempts, misalign their transaction patterns, and test multiple surfaces at once.</p>
 
@@ -241,7 +170,7 @@ An attacker sends a payment to your AMM or token using a path through an asset y
 <!-- ============================= -->
 <!-- 4. AMM EXPLOIT THREATS       -->
 <!-- ============================= -->
-<h2 id="s4">4. AMM Exploit Threats — Military Depth</h2>
+<h2 id="s4">AMM Exploit Threats — Military Depth</h2>
 
 <p>XRPL AMMs are high-value targets. Attackers test your pool the moment it opens. They attempt sniper entries, ratio manipulation, slippage exploitation, and liquidity misalignment.</p>
 
@@ -265,7 +194,7 @@ An attacker sends a payment to your AMM or token using a path through an asset y
 <!-- ============================= -->
 <!-- 7. OTC THREATS — DEEP        -->
 <!-- ============================= -->
-<h2 id="s7">7. OTC Threat Playbook — Military Depth</h2>
+<h2 id="s7">OTC Threat Playbook — Military Depth</h2>
 
 <p>OTC transactions are the most socially engineered part of XRPL. Attackers rely on panic, confusion, and trust. OTC scams can destroy projects that aren’t prepared.</p>
 
@@ -282,7 +211,7 @@ If the builder complies → the scammer now has double the payout.</p>
 <!-- ============================= -->
 <!-- 8. SOCIAL ENGINEERING — DEEP -->
 <!-- ============================= -->
-<h2 id="s8">8. Social Engineering Threats — Military Depth</h2>
+<h2 id="s8">Social Engineering Threats — Military Depth</h2>
 
 <p>Social engineering is the #1 cause of crypto losses. Attackers prey on fear, urgency, confusion, and authority spoofing.</p>
 
@@ -295,7 +224,8 @@ If the builder complies → the scammer now has double the payout.</p>
 <!-- ============================= -->
 <!-- 9. DEFENSE MATRIX            -->
 <!-- ============================= -->
-<h2 id="s9">9. RAD Defense Matrix (Military Mapping)</h2>
+<h2 id="s9">RAD Defense Matrix (Military Mapping)</h2>
+
 <p>This matrix links attacks → countermeasures → RAD actions.</p>
 
 <ul>
@@ -305,7 +235,6 @@ If the builder complies → the scammer now has double the payout.</p>
 <li>Burner threats → behavioral clustering</li>
 <li>Dust probes → pattern escalation</li>
 </ul>
-
 
 </div>
 
