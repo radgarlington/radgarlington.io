@@ -1,249 +1,244 @@
-/* ========================================= */
-/*  RAD PREMIUM NFT REGISTRY – UPGRADED CSS  */
-/* ========================================= */
+/* ================================
+   RAD NFT REGISTRY — PREMIUM UI
+   ================================ */
 
-/* Premium Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  background:#f7f9ff;
-  margin:0;
-  font-family:'Inter',system-ui;
-  color:#0f172a;
-  letter-spacing:0.2px;
+  margin: 0;
+  font-family: 'Inter', system-ui, Arial, sans-serif;
+  background: #f7f9ff;
+  color: #0f172a;
+  line-height: 1.55;
 }
 
-/* Banner */
+/* ================================
+   BANNER
+   ================================ */
 .banner {
-  background:#0A74D0;
-  color:#fff;
-  text-align:center;
-  padding:20px 12px;
-  font-size:1.2rem;
-  font-weight:800;
-  text-shadow:0 2px 6px rgba(0,0,0,.25);
-  box-shadow:0 4px 12px rgba(0,0,0,.18);
+  background: linear-gradient(90deg,#0A74D0,#083c80);
+  color: #fff;
+  text-align: center;
+  padding: 22px 12px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.2);
 }
 
-/* Back button */
+/* ================================
+   BACK BUTTON
+   ================================ */
 .back-btn {
-  position:absolute;
-  top:16px;
-  left:16px;
-  background:#0A74D0;
-  color:#fff;
-  padding:9px 16px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:700;
-  box-shadow:0 2px 8px rgba(0,0,0,.25);
-  transition:all .18s ease;
-}
-.back-btn:hover {
-  background:#094d9d;
-  transform:translateY(-2px);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #0A74D0;
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: .9rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  transition: .2s;
 }
 
-/* Submit button block */
+.back-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ================================
+   SUBMIT SECTION
+   ================================ */
 .submit-callout {
-  text-align:center;
-  background:#eef4ff;
-  padding:32px 12px;
-  border-bottom:2px solid #c9ddff;
+  text-align: center;
+  background: #fffef4;
+  padding: 26px 10px;
+  border-bottom: 2px solid #e8d68b;
 }
 
 .submit-btn {
-  background:linear-gradient(90deg,#0A74D0,#083c80);
-  color:#fff;
-  padding:14px 26px;
-  border-radius:12px;
-  font-weight:800;
-  border:3px solid #d4a537;
-  text-decoration:none;
-  display:inline-block;
-  box-shadow:0 4px 14px rgba(0,0,0,.18);
-  transition:all .22s ease;
+  background: #0A74D0;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 3px solid #d4a537;
+  font-size: 1rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,.1);
+  transition: .2s;
 }
 
 .submit-btn:hover {
-  transform:translateY(-3px);
-  box-shadow:0 6px 18px rgba(0,0,0,.25);
+  filter: brightness(1.12);
 }
 
-/* Featured NFT section */
+/* ================================
+   FEATURED NFT
+   ================================ */
 .featured-wrap {
-  max-width:960px;
-  margin:34px auto;
-  background:#fffdf4;
-  border:3px solid #d4a537;
-  border-radius:16px;
-  padding:28px;
-  box-shadow:0 6px 20px rgba(0,0,0,.14);
+  max-width: 960px;
+  margin: 32px auto;
+  background: #fffdf5;
+  border: 3px solid #d4a537;
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.15);
 }
 
 .featured-title {
-  text-align:center;
-  font-size:1.45rem;
-  font-weight:800;
-  color:#0A74D0;
-  margin-bottom:18px;
-  font-family:'Space Grotesk',sans-serif;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0A74D0;
+  margin-bottom: 16px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
 }
 
 .featured-card {
-  text-align:center;
+  text-align: center;
+  animation: fadeIn .5s ease;
 }
 
-/* Featured NFT image glow */
 .featured-card img {
-  width:130px;
-  height:130px;
-  object-fit:contain;
-  border-radius:16px;
-  border:3px solid #0A74D0;
-  background:#fff;
-  margin:0 auto 14px;
-  animation:pulseGlow 3s infinite ease-in-out;
+  width: 130px;
+  height: 130px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 14px;
+  border: 3px solid #d4a537;
+  margin-bottom: 14px;
+  box-shadow: 0 0 18px rgba(212,165,55,0.55);
+  animation: goldPulse 3s infinite ease-in-out;
 }
 
-@keyframes pulseGlow {
-  0% { box-shadow:0 0 0px rgba(212,165,55,0.0); }
-  50% { box-shadow:0 0 24px rgba(212,165,55,0.65); }
-  100% { box-shadow:0 0 0px rgba(212,165,55,0.0); }
+@keyframes goldPulse {
+  0% { box-shadow: 0 0 0 rgba(212,165,55,0); }
+  50% { box-shadow: 0 0 24px rgba(212,165,55,0.7); }
+  100% { box-shadow: 0 0 0 rgba(212,165,55,0); }
 }
 
-/* Filters */
+.featured-card h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #6b4d00;
+}
+
+.featured-card p {
+  font-size: .98rem;
+  color: #3e3200;
+}
+
+/* ================================
+   FILTERS
+   ================================ */
 .filters {
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  margin:24px auto 32px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin: 20px auto;
+  padding: 10px;
 }
 
 .filter-btn {
-  background:#e5e7eb;
-  padding:10px 20px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-  transition:all .18s ease;
-}
-
-.filter-btn:hover {
-  background:#d7dae0;
-  transform:translateY(-2px);
+  background: #e5e7eb;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 2px solid #0A74D0;
+  color: #0A74D0;
+  transition: .2s;
 }
 
 .filter-btn.active {
-  background:#0A74D0;
-  color:#fff;
-  box-shadow:0 4px 12px rgba(0,0,0,.18);
+  background: #0A74D0;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(0,0,0,.15);
 }
 
-/* Grid */
+/* ================================
+   GRID
+   ================================ */
 .grid {
-  max-width:1100px;
-  margin:0 auto 70px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:26px;
-  padding:0 18px;
+  max-width: 1100px;
+  margin: 0 auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 26px;
+  padding: 0 20px;
 }
 
-/* Card Styling */
+/* ================================
+   NFT CARD
+   ================================ */
 .card {
-  background:#ffffff;
-  padding:24px;
-  border-radius:16px;
-  box-shadow:0 4px 14px rgba(0,0,0,.12);
-  text-align:center;
-  transition:all .25s ease;
-  position:relative;
-  border:1px solid #e1e8f5;
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  text-align: center;
+  border: 2px solid #d4e2ff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  transition: .25s;
+  animation: fadeIn .45s ease;
 }
 
 .card:hover {
-  transform:translateY(-8px);
-  box-shadow:0 10px 26px rgba(0,0,0,.22);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.22);
 }
 
-/* NFT logo */
 .card img {
-  width:120px;
-  height:120px;
-  object-fit:contain;
-  border-radius:14px;
-  border:3px solid #0A74D0;
-  background:#fff;
-  margin:0 auto 14px;
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  border: 3px solid #0A74D0;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  background: #fff;
 }
 
-/* Title */
 .card h3 {
-  margin:10px 0 4px;
-  font-size:1.2rem;
-  font-weight:800;
-  color:#083c80;
-  font-family:'Space Grotesk',sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #083c80;
 }
 
-/* Subtitle */
 .card p {
-  margin:4px 0 14px;
-  color:#475569;
-  font-size:.9rem;
-  font-weight:600;
+  font-size: .9rem;
+  color: #475569;
+  margin-bottom: 14px;
 }
 
-/* Button */
+/* View BTN */
 .card .btn {
-  display:block;
-  margin:10px auto 0;
-  background:linear-gradient(90deg,#0A74D0,#083c80);
-  color:#fff;
-  padding:10px 18px;
-  border-radius:10px;
-  text-decoration:none;
-  font-weight:700;
-  box-shadow:0 2px 8px rgba(0,0,0,.2);
-  transition:all .18s ease;
+  background: #0A74D0;
+  color: #fff;
+  padding: 10px 16px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: .9rem;
+  display: inline-block;
+  border: 2px solid #083c80;
+  transition: .2s;
 }
 
 .card .btn:hover {
-  transform:translateY(-3px);
-  box-shadow:0 4px 14px rgba(0,0,0,.28);
+  filter: brightness(1.15);
 }
 
-/* Status Badges */
-.status-badge {
-  position:absolute;
-  top:12px;
-  left:12px;
-  padding:5px 10px;
-  font-size:.7rem;
-  font-weight:800;
-  border-radius:8px;
-  color:#fff;
-  text-transform:uppercase;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-}
-
-.status-certified { background:#d4a537; }
-.status-verified { background:#0A74D0; }
-.status-unverified { background:#475569; }
-
-/* Dropping Soon Badge */
-.drop-badge {
-  position:absolute;
-  top:12px;
-  right:12px;
-  padding:5px 10px;
-  font-size:.7rem;
-  font-weight:800;
-  border-radius:8px;
-  background:#b41010;
-  color:#fff;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
+/* ================================
+   ANIMATIONS
+   ================================ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
