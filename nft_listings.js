@@ -15,10 +15,10 @@ body {
   font-weight:700;
 }
 
-/* Back Button (FIXED POSITIONING) */
+/* Back Button (LEFT ALIGNED) */
 .back-wrap {
-  text-align:center;
-  margin:14px 0;
+  text-align:left;
+  margin:14px 0 0 14px;
 }
 
 .back-btn {
