@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Threat Actors Directory — The RAD Ledger</title>
+<title>Unofficial Data Sources — The RAD Ledger</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
 <style>
@@ -10,26 +10,22 @@
 body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-height:1.45}
 
 .banner{
-  background:linear-gradient(90deg,#7f0f0f,#b41010);
+  background:linear-gradient(90deg,#d69e00,#a87400);
   color:#fff;text-align:center;
   padding:22px 10px 20px;
   font-size:1.17rem;font-weight:700;
-  border-bottom:3px solid #5a0b0b;
+  border-bottom:3px solid #7a5600;
   box-shadow:0 4px 12px rgba(0,0,0,.25);
 }
 .banner em{
-  display:block;
-  margin-top:6px;
-  font-style:italic;
-  font-weight:500;
-  opacity:.85;
+  display:block;margin-top:6px;font-style:italic;font-weight:500;opacity:.85;
 }
 
 .container{max-width:900px;margin:30px auto;padding:0 14px}
 
 .back-btn{
   display:inline-block;
-  background:#0A74D0;
+  background:#d69e00;
   color:#fff;
   padding:9px 18px;
   border-radius:6px;
@@ -37,52 +33,66 @@ body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-h
   font-weight:700;
   font-size:.92rem;
   margin-bottom:26px;
-  border:1.5px solid #084a8c;
+  border:1.5px solid #a87400;
   box-shadow:0 2px 6px rgba(0,0,0,.25);
   transition:.15s;
 }
-.back-btn:hover{background:#095eb3}
+.back-btn:hover{background:#b88500}
 
 .section-title{
   font-size:1.32rem;
   font-weight:700;
   margin-bottom:16px;
-  color:#7f0f0f;
+  color:#a87400;
 }
 
 .card{
-  background:#fafafa;
-  border-left:5px solid #b41010;
+  background:#fffdf3;
+  border-left:5px solid #d69e00;
   padding:16px 20px;
   margin-bottom:16px;
   border-radius:6px;
   box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
-.card strong{font-weight:700;color:#7f0f0f}
+.card strong{font-weight:700;color:#a87400}
 .card span{color:#555;font-size:.93rem}
 
+footer{
+  margin-top:40px;
+  padding:22px 10px;
+  text-align:center;
+  background:#fff7e0;
+  color:#333;
+  font-size:.85rem;
+  border-top:2px solid #d69e00;
+}
 </style>
 </head>
 
 <body>
 
 <div class="banner">
-  🚫🔥 THREAT ACTORS DIRECTORY  
-  <em>Behavior logged. Permanently.</em>
+  ⚠️📉 UNOFFICIAL DATA SOURCES
+  <em>Viewer beware — these platforms are not pulling canonical XRPL data.</em>
 </div>
 
 <div class="container">
 
   <a href="https://radgarlington.io/ledger.html" class="back-btn">⬅ Back to The Ledger</a>
 
-  <div class="section-title">Logged Individuals</div>
+  <div class="section-title">Platforms With Inaccurate or Misleading Data</div>
 
-  <!-- FIRST ENTRY (LIVE) -->
   <div class="card">
-    <strong>@xray_romeo_papa</strong><br>
-    <span>Added: Today — Reason: Telegram disruption, ban evasion, improper conduct.</span>
+    <strong>DexScreener</strong><br>
+    <span>Issue: Displays incorrect $XRP charts, spoofable AMM data, and non-canonical XRPL pools.<br>
+    Status: Unofficial — not an authoritative XRPL source.</span>
   </div>
 
 </div>
+
+<footer>
+  THE RAD LEDGER — Source of Truth on XRPL. © 2025 radgarlington.io
+</footer>
+
 </body>
 </html>
