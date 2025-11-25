@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>RAD NFT Listings — XRPL Registry</title>
 
-<link rel="stylesheet" href="static/css/nft_listings.css">
+<!-- FIXED CSS PATH -->
+<link rel="stylesheet" href="nft_listings.css">
 
 <style>
 /* Back Button Wrapper — now LEFT ALIGNED */
@@ -14,7 +15,7 @@
   margin:12px 0 0 14px;
 }
 
-/* RAD Back Button — Theme Match, NO GOLD OUTLINE */
+/* RAD Back Button — Theme Match */
 .back-btn {
   display:inline-block;
   background:#0A74D0;
@@ -68,7 +69,7 @@
   box-shadow:0 6px 18px rgba(0,0,0,.20);
 }
 
-/* Fade-in smooth animations */
+/* Fade-in animation */
 @keyframes fadeIn {
   from { opacity:0; transform:translateY(8px); }
   to { opacity:1; transform:translateY(0); }
@@ -108,7 +109,6 @@
   color:#fff;
   box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
-
 </style>
 
 </head>
@@ -125,11 +125,13 @@
   <a href="submit-nft.html" class="submit-btn">Submit Your NFT</a>
 </div>
 
+<!-- FEATURED SECTION -->
 <div class="featured-wrap">
   <div class="featured-title">Featured NFT</div>
   <div id="featuredNFT" class="featured-card"></div>
 </div>
 
+<!-- FILTERS -->
 <div class="filters">
   <div class="filter-btn active" data-filter="all">All</div>
   <div class="filter-btn" data-filter="certified">Certified</div>
@@ -137,9 +139,11 @@
   <div class="filter-btn" data-filter="unverified">Unverified</div>
 </div>
 
+<!-- GRID -->
 <div id="nftGrid" class="grid"></div>
 
-<script src="static/js/nft_listings.js"></script>
+<!-- JS (correct path) -->
+<script src="nft_listings.js"></script>
 
 </body>
 </html>
