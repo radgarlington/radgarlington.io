@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ledger Briefing — AMM & Price Mechanics</title>
+
+<style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body {
+        font-family: Arial, system-ui, sans-serif;
+        background:#ffffff;
+        color:#0f172a;
+        line-height:1.55;
+    }
+
+    /* Banner */
+    .banner {
+        background:linear-gradient(90deg,#0A74D0,#083c80);
+        color:#fff;
+        padding:26px 12px;
+        text-align:center;
+        font-size:1.32rem;
+        font-weight:700;
+        border-bottom:3px solid #062a5c;
+        box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    /* Container */
+    .container {
+        max-width:900px;
+        margin:30px auto;
+        padding:0 18px;
+    }
+
+    h2 {
+        margin-top:32px;
+        margin-bottom:10px;
+        font-size:1.45rem;
+        font-weight:800;
+        color:#0A74D0;
+    }
+
+    p {
+        margin-bottom:16px;
+        font-size:1rem;
+        font-weight:500;
+    }
+
+    .strong {
+        font-weight:800;
+        color:#0A74D0;
+    }
+
+    ul {
+        margin:14px 0 20px 22px;
+    }
+    ul li {
+        margin-bottom:12px;
+        font-size:1rem;
+    }
+
+    /* Back button */
+    .back-btn {
+        display:inline-block;
+        margin:20px 0;
+        padding:10px 22px;
+        background:linear-gradient(90deg,#ffd700,#e0b600);
+        color:#18171a;
+        font-weight:700;
+        border-radius:8px;
+        border:1.5px solid #ffe083;
+        text-decoration:none;
+        box-shadow:0 2px 8px rgba(0,0,0,0.25);
+        transition:.15s;
+    }
+    .back-btn:hover {
+        filter:brightness(1.05);
+    }
+</style>
+
+</head>
+<body>
+
+<div class="banner">
+    THE LEDGER BRIEFING — AMM & PRICE MECHANICS
+</div>
+
+<div class="container">
+
+    <a href="/" class="back-btn">← Back</a>
+
+    <h2>Why This Page Exists</h2>
+    <p>
+        Too many people see a strange swap, a routed trade, or an AMM bounce and think something’s wrong.
+        This briefing kills that confusion permanently. If you trade RAD or anything on XRPL, this is your foundation.
+    </p>
+
+    <h2>XRPL AMMs Are Not Like CEX Trading</h2>
+    <p>
+        You’re not trading in one isolated pool. You’re trading across <span class="strong">multiple paths</span> the XRPL routes through.
+        That means:
+    </p>
+
+    <ul>
+        <li>Different pools can have slightly different prices.</li>
+        <li>Swaps can move through several routes in one transaction.</li>
+        <li>Chart movement doesn’t always reflect routed trades.</li>
+    </ul>
+
+    <h2>Why Some Swaps Look Like “Losses” But Aren’t</h2>
+    <p>
+        Example: a wallet buys with 418 XRP and the next route returns 335 XRP.
+        People panic. But this isn’t a trader losing money — it’s simply the AMM choosing
+        different liquidity paths. Different pools = different slippage.
+    </p>
+
+    <p>
+        It’s internal math, not human error.
+    </p>
+
+    <h2>Why Some Trades Look Like “Instant Profit”</h2>
+    <p>
+        If you see a 25 XRP buy turn into 108 XRP, that’s not a jackpot. That’s the AMM bouncing through
+        mixed liquidity and filling orders using whatever path gives the best result.
+    </p>
+
+    <p>
+        Looks wild. Means nothing.
+    </p>
+
+    <h2>Why the Chart Doesn’t Always Move</h2>
+    <p>
+        Most users expect every swap to hit one pool like XMagnetic.
+        But routed trades can spill across multiple pools, meaning the main chart barely twitches.
+        This is normal for early AMMs with light liquidity.
+    </p>
+
+    <h2>Why RAD Cannot Be Rugged</h2>
+    <p>
+        • Immutable supply  
+        • No “drain function”  
+        • Wallets separated and public  
+        • No hidden mint logic  
+        • Ledger-verified structure  
+    </p>
+
+    <p>
+        RAD was built ledger-first, not cash-out-first. Structure beats fear every time.
+    </p>
+
+    <h2>What You Should Ignore</h2>
+    <ul>
+        <li>Unofficial tools like DEX Screener showing weird charts</li>
+        <li>Random bots showing “profit/loss” on routed swaps</li>
+        <li>People assuming manipulation because numbers look strange</li>
+    </ul>
+
+    <h2>Final Word</h2>
+    <p>
+        Routed trades aren’t losses.  
+        Routed trades aren’t winnings.  
+        They’re simply how XRPL moves value through its AMM system.
+    </p>
+
+    <p>
+        Trust the math. Trust the ledger. RAD is exactly where it should be.
+    </p>
+
+</div>
+
+</body>
+</html>
