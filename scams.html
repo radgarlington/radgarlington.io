@@ -7,9 +7,6 @@
 <style>
 body{margin:0;font-family:Arial,system-ui,sans-serif;background:#ffffff;color:#0f172a;line-height:1.65;}
 
-.backbtn{position:fixed;top:10px;left:10px;background:#0A74D0;color:#fff;padding:4px 10px;border-radius:6px;font-weight:700;font-size:.75rem;text-decoration:none;box-shadow:0 2px 6px rgba(0,0,0,.18);}
-
-/* Centered page container */
 .page{
   padding:30px 20px;
   max-width:900px;
@@ -22,19 +19,17 @@ h2{color:#083c80;font-size:1.45rem;margin-top:50px;}
 .callout{background:#fff3cd;border-left:5px solid #ffcc00;padding:12px 16px;margin:14px 0;border-radius:6px;}
 .code{background:#f4f4f4;border:1px solid #ddd;padding:10px;font-family:Consolas,monospace;font-size:.9rem;border-radius:6px;white-space:pre-wrap;}
 
-/* Diamond bullet style */
+/* Diamond bullets */
 ul {
   list-style:none;
   margin-left:0;
   padding-left:0;
 }
-
 ul li {
   position:relative;
   padding-left:22px;
   margin:8px 0;
 }
-
 ul li::before {
   content:"◆";
   color:#0A74D0;
@@ -71,8 +66,19 @@ ul li::before {
   box-shadow:0 2px 6px rgba(0,0,0,.2);
   margin:16px 20px;
 }
-.back-btn:hover{
-  opacity:.9;
+.back-btn:hover{opacity:.9;}
+
+/* 🔥 RED THREAT LABEL */
+.threat-label{
+  background:#b41010;
+  color:#fff;
+  padding:8px 12px;
+  border-radius:6px;
+  font-weight:800;
+  margin:22px 0 10px;
+  display:inline-block;
+  box-shadow:0 2px 6px rgba(0,0,0,.22);
+  font-size:1rem;
 }
 </style>
 </head>
@@ -98,50 +104,46 @@ ul li::before {
 <h2 id="s2">Transaction Manipulation — Military Depth</h2>
 
 <div class="sub">Overview</div>
-<p>Transaction manipulation is the most common attack vector on XRPL. It is low-cost, low-risk, ledger-native, and requires no special access. Attackers rely on weak validation logic, misinterpreted fields, and pathfinding quirks that unsuspecting builders routinely ignore. These attacks happen every day. Most go undetected unless a system like RAD logs and correlates them.</p>
+<p>Transaction manipulation is the most common attack vector on XRPL. It is low-cost, low-risk, ledger-native, and requires no special access.</p>
 
-<div class="sub">Threat Type: Partial Payment Exploit</div>
-<p>Attackers weaponize the <strong>PartialPayment</strong> flag to spoof massive “Instructed Amounts” while only delivering tiny dust payments. The scam works when a builder incorrectly trusts the instructed amount instead of XRPL’s delivered_amount field. This is the #1 reason XRP Ledger projects are compromised.</p>
+<div class="threat-label">🔺 Threat Type: Partial Payment Exploit</div>
+<p>Attackers weaponize the <strong>PartialPayment</strong> flag to spoof massive instructed amounts…</p>
 
 <p><strong>Attacker Workflow:</strong></p>
 <ul>
 <li>Chooses target with weak validation</li>
-<li>Sends payment with <code>tfPartialPayment</code> flag</li>
+<li>Sends payment with tfPartialPayment</li>
 <li>Sets instructed amount extremely high</li>
-<li>Delivers only dust</li>
-<li>If the system credits based on the wrong field → it’s over</li>
+<li>Delivers dust</li>
+<li>If system trusts instructed amount → compromised</li>
 </ul>
 
-<div class="callout"><strong>Red Alert:</strong> Any project reading the “Amount” field in a partial payment is already compromised.</div>
+<div class="callout"><strong>Red Alert:</strong> Any project using the “Amount” field in a partial payment is compromised.</div>
 
 <div class="sub">Defense Code</div>
 <div class="code">
-if tx.get("Flags") & 0x00020000:  # tfPartialPayment
+if tx.get("Flags") & 0x00020000:
     delivered = meta.get("delivered_amount")
     if delivered is None or delivered == "0":
         reject()
 </div>
 
-<div class="sub">Threat Type: Fake Pathfinding</div>
-<p>Attackers exploit XRPL’s flexible pathfinding by forcing your system to accept routes through unwanted currencies or IOUs. If you do not explicitly reject paths, someone else can choose them for you.</p>
+<div class="threat-label">🔺 Threat Type: Fake Pathfinding</div>
+<p>Attackers exploit XRPL’s flexible pathfinding to force unwanted IOU routes…</p>
 
-<p><strong>Attack Example:</strong>  
-An attacker sends a payment to your AMM or token using a path through an asset you never intended to support. If you do not reject unexpected paths, you may accept a payment in something worthless.</p>
+<div class="callout"><strong>Protocol Note:</strong> Whitelist accepted path currencies.</div>
 
-<div class="callout"><strong>Protocol Note:</strong> Always whitelist accepted path currencies.</div>
+<div class="threat-label">🔺 Threat Type: Dust Probing</div>
+<p>Dust probes are micro-transactions used to fingerprint your validation logic…</p>
 
-<div class="sub">Threat Type: Dust Probing</div>
-<p>Dust probes are reconnaissance missions. Attackers send tiny-value transactions to measure your system’s speed, error messages, logging habits, and automated responses. Dust probes reveal your internal logic.</p>
-
-<p><strong>Behavior Indicators:</strong></p>
 <ul>
-<li>Repeated tiny payments from the same wallet</li>
-<li>Changing tags between probes</li>
-<li>Probes at increasing intervals</li>
-<li>Switching to a new wallet when rejected</li>
+<li>Repeated tiny payments</li>
+<li>Tag cycling</li>
+<li>Interval escalation</li>
+<li>New wallet after rejection</li>
 </ul>
 
-<div class="callout"><strong>Critical:</strong> Dust probes almost always precede a larger attack pattern.</div>
+<div class="callout"><strong>Critical:</strong> Dust probes almost always precede a real attack.</div>
 
 
 <!-- ============================= -->
@@ -149,22 +151,20 @@ An attacker sends a payment to your AMM or token using a path through an asset y
 <!-- ============================= -->
 <h2 id="s3">Wallet Identity Threats — Military Depth</h2>
 
-<p>Wallet identity is behavioral, not numerical. Hostile wallets rarely operate with a single identity. Instead, they rotate burner accounts, disappear after failed attempts, misalign their transaction patterns, and test multiple surfaces at once.</p>
+<p>Wallet identity is behavioral, not numerical.</p>
 
 <div class="sub">Behavioral Clustering</div>
-<p>RAD clusters hostile wallets by:</p>
 <ul>
-<li>Time-of-day pattern</li>
+<li>Time-of-day patterns</li>
 <li>Dust probe frequency</li>
 <li>Pathing preferences</li>
-<li>Amount modulation patterns</li>
-<li>Retry behavior after failure</li>
+<li>Retry behavior</li>
 </ul>
 
-<div class="sub">Burner Rotation Attack</div>
-<p>Attackers use multiple wallets to disguise a coordinated probing campaign. RAD’s behavioral clustering exposes them by linking actions, not addresses.</p>
+<div class="threat-label">🔺 Threat Type: Burner Rotation Attack</div>
+<p>Attackers rotate burner wallets to hide coordinated probing campaigns…</p>
 
-<div class="callout"><strong>Warning:</strong> If a wallet disappears after failed probes, it was not a user — it was an attacker.</div>
+<div class="callout"><strong>Warning:</strong> If a wallet vanishes after failure, it's an attacker.</div>
 
 
 <!-- ============================= -->
@@ -172,53 +172,46 @@ An attacker sends a payment to your AMM or token using a path through an asset y
 <!-- ============================= -->
 <h2 id="s4">AMM Exploit Threats — Military Depth</h2>
 
-<p>XRPL AMMs are high-value targets. Attackers test your pool the moment it opens. They attempt sniper entries, ratio manipulation, slippage exploitation, and liquidity misalignment.</p>
+<p>AMMs are high-value targets.</p>
 
-<div class="sub">Threat Type: Initialization Sniping</div>
-<p>During the first seconds of AMM creation, your pool is vulnerable. Attackers use automated bots to detect mispriced initial deposits.</p>
+<div class="threat-label">🔺 Threat Type: Initialization Sniping</div>
+<p>Attackers snipe your initial pool before you see the first UI update…</p>
 
-<p><strong>Attacker Flow:</strong></p>
 <ul>
-<li>Attacker monitors new liquidity events</li>
-<li>Finds AMM with unbalanced ratios</li>
-<li>Executes instantaneous swap</li>
-<li>Extracts profit before you see the chart update</li>
+<li>Monitor new liquidity</li>
+<li>Detect imbalance</li>
+<li>Execute swap instantly</li>
 </ul>
 
-<div class="callout"><strong>Solution:</strong> Seed pools with correct ratios and minimum liquidity thresholds.</div>
+<div class="callout"><strong>Solution:</strong> Correct ratios + minimum liquidity thresholds.</div>
 
-<div class="sub">Threat Type: Dust Ratio Testing</div>
-<p>Attackers send tiny swaps to measure your pricing curve. These swaps are reconnaissance events that reveal pool weakness.</p>
+<div class="threat-label">🔺 Threat Type: Dust Ratio Testing</div>
+<p>Attackers send tiny swaps to identify pricing curve weaknesses.</p>
 
 
 <!-- ============================= -->
-<!-- 7. OTC THREATS — DEEP        -->
+<!-- 7. OTC THREATS       -->
 <!-- ============================= -->
 <h2 id="s7">OTC Threat Playbook — Military Depth</h2>
 
-<p>OTC transactions are the most socially engineered part of XRPL. Attackers rely on panic, confusion, and trust. OTC scams can destroy projects that aren’t prepared.</p>
+<div class="threat-label">🔺 Threat Type: Fake TXID Injection</div>
+<p>Attackers send TXIDs belonging to unrelated transactions…</p>
 
-<div class="sub">Threat Type: Fake TXID Injection</div>
-<p>Attackers send you a legitimate-looking TXID that actually belongs to someone else, or to themselves in a different context. If you don’t verify details, you’re exposed.</p>
-
-<div class="sub">Threat Type: Tag Switch Attack</div>
-<p>Scammer says: “Oops wrong tag, can you resend?”  
-If the builder complies → the scammer now has double the payout.</p>
+<div class="threat-label">🔺 Threat Type: Tag Switch Attack</div>
+<p>“Oops wrong tag, resend.”</p>
 
 <div class="callout"><strong>OTC Rule:</strong> No refunds. No reversals. No exceptions.</div>
 
 
 <!-- ============================= -->
-<!-- 8. SOCIAL ENGINEERING — DEEP -->
+<!-- 8. SOCIAL ENGINEERING        -->
 <!-- ============================= -->
 <h2 id="s8">Social Engineering Threats — Military Depth</h2>
 
-<p>Social engineering is the #1 cause of crypto losses. Attackers prey on fear, urgency, confusion, and authority spoofing.</p>
+<div class="threat-label">🔺 Threat Type: Admin Impersonation</div>
+<p>Scammers clone your identity and DM your holders…</p>
 
-<div class="sub">Threat Type: Admin Impersonation</div>
-<p>Scammers clone your profile, your Telegram channel, your exact brand identity. They DM your holders pretending to be you.</p>
-
-<div class="callout"><strong>Defense:</strong> RAD uses zero-DM policy. If someone DMs your community — assume compromise.</div>
+<div class="callout"><strong>Defense:</strong> RAD runs zero-DM policy.</div>
 
 
 <!-- ============================= -->
@@ -226,14 +219,12 @@ If the builder complies → the scammer now has double the payout.</p>
 <!-- ============================= -->
 <h2 id="s9">RAD Defense Matrix (Military Mapping)</h2>
 
-<p>This matrix links attacks → countermeasures → RAD actions.</p>
-
 <ul>
 <li>Partial Payments → delivered_amount enforcement</li>
 <li>Sniping → slippage enforcement</li>
-<li>Fake TXIDs → full ledger verification</li>
-<li>Burner threats → behavioral clustering</li>
-<li>Dust probes → pattern escalation</li>
+<li>Fake TXIDs → ledger verification</li>
+<li>Burner wallets → behavioral clustering</li>
+<li>Dust probes → threat escalation</li>
 </ul>
 
 </div>
