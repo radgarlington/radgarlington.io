@@ -75,8 +75,29 @@
     h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
     .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px}
 
-    .social{text-align:center;margin-top:14px}
-    .social img{width:28px;height:28px}
+    .social{
+      margin-top:14px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+    }
+    .social img{
+      width:28px;
+      height:28px;
+      display:block;
+    }
+    .ledger-chat{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:32px;
+      height:32px;
+      font-size:24px;
+      line-height:1;
+      text-decoration:none;
+      vertical-align:middle;
+    }
 
     .verify{text-align:center;margin-top:10px;font-size:.95rem}
     .verify a{color:var(--blue);font-weight:bold;text-decoration:none;margin:0 8px}
@@ -267,7 +288,7 @@
   <div class="social">
     <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
     <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
-    <a href="https://t.me/TheLedgerRoom" target="_blank" style="font-size:26px;line-height:1;text-decoration:none;">💬</a>
+    <a href="https://t.me/TheLedgerRoom" target="_blank" class="ledger-chat">💬</a>
   </div>
 
   <!-- VERIFY -->
@@ -398,7 +419,6 @@
     updateIcon();
   })();
 </script>
-
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
 </body>
