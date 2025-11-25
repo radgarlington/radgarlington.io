@@ -23,6 +23,31 @@ body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-h
 
 .container{max-width:900px;margin:30px auto;padding:0 14px}
 
+.section-title{
+  font-size:1.32rem;
+  font-weight:700;
+  margin-bottom:16px;
+  color:#a87400;
+}
+
+.sub-title{
+  font-size:1.1rem;
+  font-weight:700;
+  margin:26px 0 10px;
+  color:#0f172a;
+}
+
+.card{
+  background:#fffdf3;
+  border-left:5px solid #d69e00;
+  padding:16px 20px;
+  margin-bottom:16px;
+  border-radius:6px;
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
+}
+.card strong{font-weight:700;color:#a87400}
+.card span{color:#555;font-size:.93rem}
+
 .back-btn{
   display:inline-block;
   background:#d69e00;
@@ -39,24 +64,6 @@ body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-h
 }
 .back-btn:hover{background:#b88500}
 
-.section-title{
-  font-size:1.32rem;
-  font-weight:700;
-  margin-bottom:16px;
-  color:#a87400;
-}
-
-.card{
-  background:#fffdf3;
-  border-left:5px solid #d69e00;
-  padding:16px 20px;
-  margin-bottom:16px;
-  border-radius:6px;
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
-}
-.card strong{font-weight:700;color:#a87400}
-.card span{color:#555;font-size:.93rem}
-
 footer{
   margin-top:40px;
   padding:22px 10px;
@@ -72,7 +79,7 @@ footer{
 <body>
 
 <div class="banner">
-  ⚠️📉 UNOFFICIAL DATA SOURCES
+  ⚠️📉 UNOFFICIAL DATA SOURCES  
   <em>Viewer beware — these platforms are not pulling canonical XRPL data.</em>
 </div>
 
@@ -80,12 +87,80 @@ footer{
 
   <a href="https://radgarlington.io/ledger.html" class="back-btn">⬅ Back to The Ledger</a>
 
-  <div class="section-title">Platforms With Inaccurate or Misleading Data</div>
+  <!-- OFFICIAL SOURCES SECTION -->
+  <div class="sub-title">✅ Official XRPL Data Sources</div>
+
+  <div class="card">
+    <strong>XRPL.org</strong><br>
+    <span>The canonical repository for XRP Ledger documentation, mechanics, and verified network behavior.</span>
+  </div>
+
+  <div class="card">
+    <strong>XRPSCAN</strong><br>
+    <span>The most reliable public explorer. Reads canonical ledger data directly from XRPL infrastructure.</span>
+  </div>
+
+  <div class="card">
+    <strong>Bithomp</strong><br>
+    <span>Well-established XRPL explorer with accurate ledger parsing and verified issuer information.</span>
+  </div>
+
+  <div class="card">
+    <strong>Xumm / Xaman Ecosystem</strong><br>
+    <span>Trusted signing layer and wallet ecosystem built directly on XRPL standards.</span>
+  </div>
+
+  <div class="card">
+    <strong>The RAD Ledger</strong><br>
+    <span>Verified token metadata, certification, renewals, project records, and community enforcement.</span>
+  </div>
+
+  <!-- UNOFFICIAL SOURCES SECTION -->
+  <div class="section-title">⚠️ Unofficial / Inaccurate Platforms</div>
 
   <div class="card">
     <strong>DexScreener</strong><br>
-    <span>Issue: Displays incorrect $XRP charts, spoofable AMM data, and non-canonical XRPL pools.<br>
-    Status: Unofficial — not an authoritative XRPL source.</span>
+    <span>Incorrect AMM pools, spoofable charts, and non-canonical XRPL data. High-risk for misinformation.</span>
+  </div>
+
+  <div class="card">
+    <strong>GeckoTerminal</strong><br>
+    <span>Frequent chart errors, incorrect supplies, and missing XRPL AMM recognition.</span>
+  </div>
+
+  <div class="card">
+    <strong>CoinMarketCap (CMC)</strong><br>
+    <span>Not XRPL-native. Displays aggregated off-chain data, wrong supplies, and no AMM integration.</span>
+  </div>
+
+  <div class="card">
+    <strong>CoinGecko</strong><br>
+    <span>Does not index XRPL directly. Relies on external feeds with inaccurate token metrics.</span>
+  </div>
+
+  <div class="card">
+    <strong>LiveCoinWatch</strong><br>
+    <span>Incorrect supplies, decimals, and liquidity figures. Not canonical.</span>
+  </div>
+
+  <div class="card">
+    <strong>Sologenic (Old Token Pages)</strong><br>
+    <span>Legacy token pages show dead pools and outdated trustline data.</span>
+  </div>
+
+  <div class="card">
+    <strong>XRPLCoins.com</strong><br>
+    <span>Stale token pages and inaccurate AMM data. Not recommended.</span>
+  </div>
+
+  <div class="card">
+    <strong>BXRPL Explorer clones</strong><br>
+    <span>Multiple variants exist with wrong supply calculations and spoofed chart modules.</span>
+  </div>
+
+  <div class="card">
+    <strong>Discord/Reddit Token Lists</strong><br>
+    <span>User-uploaded JSON with zero verification. Extremely unreliable.</span>
   </div>
 
 </div>
