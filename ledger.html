@@ -492,6 +492,7 @@ function openVerifiedCard(data){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
 
+  // Logo
   const wrap = document.getElementById("modalLogoWrap");
   const img = document.getElementById("modalLogo");
 
@@ -503,49 +504,62 @@ function openVerifiedCard(data){
     img.src = defaultUnverifiedLogo;
   }
 
+  // Basic fields
   document.getElementById("modalToken").textContent = data.token;
   document.getElementById("modalCert").textContent = data.cert || "—";
   document.getElementById("modalTier").textContent = data.tier || "—";
   document.getElementById("modalDev").textContent = data.dev || "—";
 
+  // Developer X
   const dx = document.getElementById("modalDevX");
   dx.href = data.devx || "#";
   dx.textContent = data.devx ? data.devx.replace("https://x.com/","@") : "";
 
+  // Doxxed
   document.getElementById("modalDoxxed").innerHTML =
     data.doxxed ? "✅ Doxxed" : "❌ Undoxxed";
 
+  // Issuer
   document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
+  // Website
   const web = document.getElementById("modalWebsite");
   web.textContent = data.website || "—";
   web.href = data.website || "#";
 
+  // Email
   document.getElementById("modalEmail").textContent = data.email || "—";
+
+  // Socials
   document.getElementById("modalX").href = data.x || "#";
   document.getElementById("modalTG").href = data.tg || "#";
 
+  // NFT links
   const nft = document.getElementById("modalNFT");
-  const nftImgSpan = document.getElementById("modalNFTImage");
-  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
-  const nftPrev = document.getElementById("modalNFTPreview");
-
   if(data.nft){
     nft.innerHTML = `<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
   } else {
     nft.textContent = "—";
   }
 
-  if(data.nft_image){
-    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+  // Seal Image (Certified Only)
+  const nftImgSpan = document.getElementById("modalNFTImage");
+  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
+  const nftPrev = document.getElementById("modalNFTPreview");
+
+  const seal = data.certified_seal || data.nft_image;
+
+  if(seal){
+    nftImgSpan.innerHTML = `<a href="${seal}" target="_blank">View NFT Image</a>`;
     nftPrevWrap.style.display = "block";
-    nftPrev.src = data.nft_image;
+    nftPrev.src = seal;
   } else {
     nftImgSpan.textContent = "—";
     nftPrevWrap.style.display = "none";
     nftPrev.src = "";
   }
 }
+
 
 /* Multi-Issuer Dropdown */
 function toggleIssuerGroup(entry){
