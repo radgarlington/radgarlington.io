@@ -112,12 +112,12 @@ header p{
   border-bottom:2px solid #d7e7ff;
 }
 .briefing-img{
-  width:310px;
+  width:210px;
   max-width:90%;
   height:auto;
   display:block;
   margin:auto;
-  image-rendering:auto;
+  cursor:pointer;
 }
 
 /* ACTION BUTTON WRAPPERS */
@@ -285,9 +285,11 @@ footer{
   <span>⬛ Expired — Renewal Required</span>
 </div>
 
-<!-- NEW LEDGER BRIEFING PIXAR IMAGE -->
+<!-- LEDGER BRIEFING PIXAR IMAGE — CLICKABLE -->
 <div class="briefing-img-wrap">
-  <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
+  <a href="ledger-briefing.html">
+    <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
+  </a>
 </div>
 
 <!-- HERO & ACTION BUTTONS -->
@@ -296,9 +298,7 @@ footer{
     ✨ NFT Listings
   </a>
 
-  <a href="ledger-briefing.html" class="rad-btn" style="background:#0A74D0;">
-    📘 Ledger Briefing
-  </a>
+  <!-- REMOVED old Ledger Briefing button -->
 
   <a href="unofficial-sources.html" class="rad-btn" style="background:#d69e00;">
     ⚠️ Unofficial Data Sources
@@ -530,7 +530,9 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalLogoWrap").style.display = "block";
   document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
+  document.getElementById("modalToken").textContent =
+    `${entry.token} — Issuer: undefined`;
+
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
@@ -580,7 +582,8 @@ function openVerifiedCard(data){
   document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
   const web = document.getElementById("modalWebsite");
-  web.textContent = data.website || "—"; web.href = data.website || "#";
+  web.textContent = data.website || "—";
+  web.href = data.website || "#";
 
   document.getElementById("modalEmail").textContent = data.email || "—";
   document.getElementById("modalX").href = data.x || "#";
@@ -596,7 +599,8 @@ function openVerifiedCard(data){
   } else nft.textContent = "—";
 
   if(data.nft_image){
-    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+    nftImgSpan.innerHTML =
+      `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
     nftPrevWrap.style.display = "block";
     nftPrev.src = data.nft_image;
   } else {
@@ -613,7 +617,9 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalLogoWrap").style.display = "block";
   document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
+  document.getElementById("modalToken").textContent =
+    `${token} — ${issuer.issuer}`;
+
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
