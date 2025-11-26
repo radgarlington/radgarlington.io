@@ -1,7 +1,6 @@
 /* =========================================================
    RAD NFT LISTINGS — Core JS
    WCK Featured + RAD_ledger placeholders
-   DROPPING SOON stays on cards only
    ========================================================= */
 
 /* ============================
@@ -14,29 +13,30 @@ const nftData = [
     token: "$WCK",
     name: "CONTINENTAL WICK",
     status: "certified",
-    droppingSoon: true, // used only for badge on cards
+    droppingSoon: true, // badge on cards
     image: "assets/logos/wck_logo.webp",
     desc: "Protocol Enforcement Collection.",
     showInGrid: true
   },
 
-  /* ======== PLACEHOLDER SLOTS (RAD_ledger image only) ======== */
+  /* ======== PLACEHOLDER 2 — RAD_ledger image ======== */
   {
     token: "",
     name: "",
     status: "certified",
     droppingSoon: false,
-    image: "assets/RAD_ledger.png",
+    image: "assets/RAD_ledger.png",   // ✅ placeholder image
     desc: "",
     showInGrid: true
   },
 
+  /* ======== PLACEHOLDER 3 — RAD_ledger image ======== */
   {
     token: "",
     name: "",
     status: "verified",
     droppingSoon: false,
-    image: "assets/RAD_ledger.png",
+    image: "assets/RAD_ledger.png",   // ✅ placeholder image
     desc: "",
     showInGrid: true
   }
@@ -51,7 +51,7 @@ function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
   if (!featuredWrap) return;
 
-  const featured = nftData[0]; // WCK always at index 0
+  const featured = nftData[0]; // WCK index 0
 
   featuredWrap.innerHTML = `
     <div class="featured-card">
@@ -81,7 +81,7 @@ function renderFeatured() {
 
 
 /* =========================================================
-   GRID RENDERING (no filters)
+   GRID RENDERING
    ========================================================= */
 function renderGrid() {
   const grid = document.getElementById("nftGrid");
@@ -128,6 +128,6 @@ function renderGrid() {
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeatured();  // WCK hero with badge in its card
-  renderGrid();      // WCK + 2 RAD_ledger placeholders, badge only on WCK
+  renderFeatured();
+  renderGrid();
 });
