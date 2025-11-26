@@ -236,6 +236,43 @@ body {
 }
 
 /* ================================
+   CARD META + LINK BUTTONS
+   ================================ */
+.card-meta {
+  font-size: .8rem;
+  color: #64748b;
+  margin: 10px 0 6px;
+  line-height: 1.4;
+}
+.card-meta strong {
+  color: #0A74D0;
+}
+
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.card-links a {
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: .78rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #cbd5f5;
+  color: #0A74D0;
+  background: #e5edff;
+  transition: .15s ease;
+}
+
+.card-links a:hover {
+  background: #d7e4ff;
+}
+
+/* ================================
    ANIMATIONS
    ================================ */
 @keyframes fadeIn {
