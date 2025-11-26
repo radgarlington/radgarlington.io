@@ -112,7 +112,7 @@ header p{
   border-bottom:2px solid #d7e7ff;
 }
 .briefing-img{
-  width:240px;
+  width:220px;
   max-width:85%;
   height:auto;
   display:block;
@@ -278,18 +278,20 @@ footer{
   </p>
 </section>
 
+<!-- NEW PIXAR LEDGER BRIEFING IMAGE BLOCK -->
+<div class="briefing-img-wrap">
+  <a href="ledger-briefing.html">
+    <img src="assets/ledger_briefing.webp"
+         alt="Ledger Briefing"
+         class="briefing-img">
+  </a>
+</div>
+
 <div class="legend">
   <span>🟡 Certified — Doxxed + Seal NFT</span>
   <span>🔷 Verified — Non-Doxxed</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
   <span>⬛ Expired — Renewal Required</span>
-</div>
-
-<!-- NEW LEDGER BRIEFING PIXAR IMAGE (clickable) -->
-<div class="briefing-img-wrap">
-  <a href="ledger-briefing.html">
-    <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
-  </a>
 </div>
 
 <!-- ADMIN SECTION -->
@@ -310,7 +312,7 @@ footer{
   <a href="blacklist.html" class="rad-btn" style="background:#111;">🚫 Blacklist</a>
 </div>
 
-<!-- NFT Listings (moved to its own line BELOW enforcement) -->
+<!-- NFT Listings (moved to its own full row) -->
 <div class="rad-actions" style="background:#f8fbff;border-bottom:2px solid #d7e7ff;">
   <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
     ✨ NFT Listings
@@ -480,7 +482,7 @@ function toggleIssuerGroup(entry){
 
   const div = document.createElement("div");
   div.id = id;
-  div.style.padding = "10px 20px 14px";
+  div.style.padding = "10px 14px 14px";
 
   let html = `<div style="margin-top:6px;">`;
 
@@ -656,7 +658,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function loadLedger(){
-  const res = await fetch("ledger.json",{cache:"no-store"});  /* FIXED */
+  const res = await fetch("/ledger.json",{cache:"no-store"});
   const data = await res.json();
 
   allProjects = data.map(e => ({
