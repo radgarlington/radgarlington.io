@@ -104,16 +104,16 @@ header p{
 }
 .legend span{display:block;margin:4px 0}
 
-/* Ledger Briefing Image */
+/* Ledger Briefing Pixar Image */
 .briefing-img-wrap{
   text-align:center;
   background:#eaf3ff;
-  padding:28px 10px 10px;
+  padding:26px 10px 6px;
   border-bottom:2px solid #d7e7ff;
 }
 .briefing-img{
   width:240px;
-  max-width:90%;
+  max-width:85%;
   height:auto;
   display:block;
   margin:auto;
@@ -189,6 +189,7 @@ h2{
   border-bottom:1px solid #cbd5e1;
   padding-bottom:4px;
   font-size:1.3rem;
+  margin-bottom:14px
 }
 h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
 
@@ -284,34 +285,32 @@ footer{
   <span>⬛ Expired — Renewal Required</span>
 </div>
 
-<!-- NEW PIXAR LEDGER BRIEFING IMAGE - CLICKABLE -->
+<!-- NEW LEDGER BRIEFING PIXAR IMAGE (clickable) -->
 <div class="briefing-img-wrap">
   <a href="ledger-briefing.html">
     <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
   </a>
 </div>
 
-<!-- ACTION BUTTONS -->
-<div class="rad-actions" style="padding:28px 10px;">
-  <a href="unofficial-sources.html" class="rad-btn" style="background:#d69e00;">
-    ⚠️ Unofficial Data Sources
-  </a>
-
-  <a href="scams.html" class="rad-btn" style="background:#f59e0b;">
-    📒 Scam Intelligence Dossier
-  </a>
-
+<!-- ADMIN SECTION -->
+<div class="rad-actions" style="background:#f1f7ff;border-bottom:2px solid #c9ddff;">
   <a href="submit.html" class="rad-btn" style="background:#3b82f6;">➕ Submit Token</a>
   <a href="submit.html" class="rad-btn" style="background:#2563eb;">🔄 Renew Listing</a>
+</div>
 
+<!-- HUMAN ENFORCEMENT -->
+<div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
   <a href="shills.html" class="rad-btn" style="background:#6366f1;">📢 Shills</a>
   <a href="threat-actors.html" class="rad-btn" style="background:#b41010;">🚫 Threat Actors Directory</a>
+</div>
 
+<!-- PROJECT ENFORCEMENT -->
+<div class="rad-actions" style="background:#fff5f5;border-bottom:2px solid #e8b3b3;">
   <a href="rugreport.html" class="rad-btn" style="background:#8f0d0d;">🧨 Rug Report</a>
   <a href="blacklist.html" class="rad-btn" style="background:#111;">🚫 Blacklist</a>
 </div>
 
-<!-- NFT LISTINGS — ON ITS OWN ROW -->
+<!-- NFT Listings (moved to its own line BELOW enforcement) -->
 <div class="rad-actions" style="background:#f8fbff;border-bottom:2px solid #d7e7ff;">
   <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
     ✨ NFT Listings
@@ -335,12 +334,48 @@ footer{
   </section>
 </main>
 
-<!-- FOOTER -->
 <footer>
   © 2025 The RAD Ledger | Verified by Rad Garlington
 </footer>
 
-<!-- MODAL + JS -->
+<!-- MODAL -->
+<div id="tokenModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+
+    <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
+      <img id="modalLogo" src="" alt="Project Logo"
+           style="max-width:80px;max-height:80px;border-radius:12px;
+           box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
+    </div>
+
+    <h2 id="modalToken">$RAD</h2>
+
+    <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
+    <p><strong>Tier:</strong> <span id="modalTier"></span></p>
+    <p><strong>Developer:</strong> <span id="modalDev"></span></p>
+    <p><strong>Developer 𝕏:</strong> <a id="modalDevX" href="#" target="_blank"></a></p>
+    <p><strong>Doxxed:</strong> <span id="modalDoxxed"></span></p>
+    <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
+    <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
+    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+
+    <p><strong>Social:</strong>
+      <a id="modalX" href="#" target="_blank">𝕏</a> |
+      <a id="modalTG" href="#" target="_blank">Telegram</a>
+    </p>
+
+    <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
+    <p><strong>Seal Image:</strong> <span id="modalNFTImage"></span></p>
+
+    <div id="modalNFTPreviewWrap" style="display:none;text-align:center;margin-top:10px;">
+      <img id="modalNFTPreview" src="" alt="Seal NFT Image"
+           style="max-width:100%;width:260px;border-radius:10px;
+           box-shadow:0 4px 14px rgba(0,0,0,.25);">
+    </div>
+  </div>
+</div>
+
 <script>
 let allProjects = [];
 let currentFilter = "all";
@@ -405,10 +440,9 @@ function renderLedger(){
       const li = document.createElement("li");
       li.className = "entry";
 
-      const tier = (entry.tier || "").toLowerCase();
       const icon = getIcon(entry.category);
       const meta = getMeta(entry);
-      const isCertified = tier === "certified";
+      const isCertified = (entry.tier || "").toLowerCase() === "certified";
 
       li.innerHTML = `
         <span class="${isCertified ? "certified-bold" : ""}">
@@ -419,7 +453,7 @@ function renderLedger(){
 
       const issuers = entry.issuers || [];
 
-      if(tier === "certified" || tier === "verified"){
+      if(entry.tier === "certified" || entry.tier === "verified"){
         li.onclick = () => openVerifiedCard(entry);
       } else {
         if(issuers.length === 0){
@@ -485,7 +519,8 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalLogoWrap").style.display = "block";
   document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
+  document.getElementById("modalToken").textContent =
+    `${entry.token} — Issuer: undefined`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
@@ -534,15 +569,15 @@ function openVerifiedCard(data){
 
   document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
-  const web = document.getElementById("modalWebsite");
-  web.textContent = data.website || "—"; web.href = data.website || "#";
+  const w = document.getElementById("modalWebsite");
+  w.textContent = data.website || "—"; w.href = data.website || "#";
 
   document.getElementById("modalEmail").textContent = data.email || "—";
   document.getElementById("modalX").href = data.x || "#";
   document.getElementById("modalTG").href = data.tg || "#";
 
   const nft = document.getElementById("modalNFT");
-  const nftImgSpan = document.getElementById("modalNFTImage");
+  const nftImage = document.getElementById("modalNFTImage");
   const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
   const nftPrev = document.getElementById("modalNFTPreview");
 
@@ -551,11 +586,12 @@ function openVerifiedCard(data){
   } else nft.textContent = "—";
 
   if(data.nft_image){
-    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+    nftImage.innerHTML =
+      `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
     nftPrevWrap.style.display = "block";
     nftPrev.src = data.nft_image;
   } else {
-    nftImgSpan.textContent = "—";
+    nftImage.textContent = "—";
     nftPrevWrap.style.display = "none";
     nftPrev.src = "";
   }
@@ -568,7 +604,8 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalLogoWrap").style.display = "block";
   document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
+  document.getElementById("modalToken").textContent =
+    `${token} — ${issuer.issuer}`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
@@ -619,7 +656,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function loadLedger(){
-  const res = await fetch("ledger.json",{cache:"no-store"});
+  const res = await fetch("/ledger.json",{cache:"no-store"});
   const data = await res.json();
 
   allProjects = data.map(e => ({
