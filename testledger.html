@@ -656,7 +656,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function loadLedger(){
-  const res = await fetch("/ledger.json",{cache:"no-store"});
+  const res = await fetch("ledger.json",{cache:"no-store"});  /* FIXED */
   const data = await res.json();
 
   allProjects = data.map(e => ({
