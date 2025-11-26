@@ -29,7 +29,6 @@ header{
   padding:42px 10px 18px;
   background:#eaf3ff;
   border-bottom:2px solid #d7e7ff;
-  position:relative
 }
 header h1{
   font-size:2rem;
@@ -41,12 +40,17 @@ header p{
   color:#334155
 }
 
-/* Back Button */
+/* Back Button ABOVE banner */
 .back-btn{
-  position:absolute;top:10px;left:18px;
-  background:#0A74D0;color:#fff;
-  padding:6px 12px;border-radius:6px;
-  text-decoration:none;font-weight:700;font-size:.85rem;
+  display:inline-block;
+  margin:12px 0 6px 12px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:.85rem;
   box-shadow:0 2px 6px rgba(0,0,0,.18);
   transition:opacity .2s ease,transform .2s ease
 }
@@ -150,6 +154,8 @@ footer{
 
 <body>
 
+<a href="ledger.html" class="back-btn">← Back to Ledger</a>
+
 <div class="banner">
   🎓 Ledger Education Hub<br>
   Learn how the Ledger, AMMs, and threat intel really work.
@@ -157,8 +163,6 @@ footer{
 </div>
 
 <header>
-  <a href="ledger.html" class="back-btn">← Back to Ledger</a>
-
   <h1>Ledger Education Hub</h1>
   <p>One place for AMM mechanics, terminology, and threat intelligence.</p>
 </header>
