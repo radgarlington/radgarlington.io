@@ -64,6 +64,89 @@
     }
     main{flex:1 0 auto}
 
+    /* 🔹 Shared RAD glossy button base */
+    .rad-btn{
+      position:relative;
+      overflow:hidden;
+      color:#f9fafb;
+      font-weight:700;
+      padding:11px 20px;
+      font-size:.9rem;
+      border-radius:12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 3px 10px rgba(15,23,42,.25);
+      background:linear-gradient(145deg,#0f7cf0,#07418f);
+      border:1px solid #06336f;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+    }
+    .rad-btn::before{
+      content:"";
+      position:absolute;
+      top:-60%;
+      left:-10%;
+      width:130%;
+      height:80%;
+      background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+      opacity:.25;
+      transform:skewY(-12deg);
+      transition:transform .25s ease, opacity .2s ease;
+    }
+    .rad-btn span{
+      position:relative;
+      z-index:1;
+    }
+    .rad-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 18px rgba(15,23,42,.35);
+      filter:brightness(1.03);
+    }
+    .rad-btn:hover::before{
+      transform:skewY(-12deg) translateY(35%);
+      opacity:.35;
+    }
+
+    /* Variant — Ledger button (white, keep pulse-ledger) */
+    .rad-btn-ledger{
+      background:#ffffff;
+      color:#0A74D0;
+      border:1px solid #d7e7ff;
+      box-shadow:0 4px 14px rgba(255,255,255,.4);
+    }
+    .rad-btn-ledger:hover{
+      filter:brightness(1.03);
+      box-shadow:0 8px 24px rgba(255,255,255,.55);
+    }
+
+    /* Variant — AMM button (gold, keep amm glow) */
+    .rad-btn-amm{
+      background:linear-gradient(145deg,#f6c64b,#b38700);
+      color:#fff;
+      border:1px solid #8c6900;
+      box-shadow:0 6px 20px rgba(179,135,0,.35);
+    }
+    .rad-btn-amm:hover{
+      filter:brightness(1.02);
+      box-shadow:0 12px 28px rgba(179,135,0,.45);
+    }
+
+    /* Variant — Lite paper button (soft blue) */
+    .rad-btn-lite{
+      background:#eaf3ff;
+      color:#0A74D0;
+      border:1px solid #cfe3ff;
+      box-shadow:0 4px 12px rgba(10,116,208,.25);
+      padding:10px 18px;
+      font-size:.9rem;
+    }
+    .rad-btn-lite:hover{
+      filter:brightness(1.03);
+      box-shadow:0 6px 16px rgba(10,116,208,.30);
+    }
+
     .hero{
       text-align:center;padding:6vh 5vw 2vh;
       background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;
@@ -120,22 +203,7 @@
     .ledger-section h2{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:10px}
     .ledger-section p{font-size:1.05rem;margin-bottom:20px;opacity:.95}
 
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:14px 28px;border-radius:10px;font:600 17px/1;
-      text-decoration:none;cursor:pointer;border:none;
-      transition:transform .12s ease,box-shadow .12s ease;
-    }
-
-    .btn-primary{
-      background:#fff;color:#0A74D0;
-      box-shadow:0 6px 20px rgba(255,255,255,.2)
-    }
-    .btn-primary:hover{
-      transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,255,255,.25)
-    }
-
-    /* WHITE LEDGER GLOW – ORIGINAL */
+    /* WHITE LEDGER GLOW – keep original */
     @keyframes pulse-ledger {
       0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
       70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
@@ -145,7 +213,7 @@
       animation:pulse-ledger 2.5s infinite;
     }
 
-    /* GOLD AMM GLOW */
+    /* GOLD AMM GLOW – keep original */
     @keyframes pulse-amm {
       0% { box-shadow:0 0 0 0 rgba(179,135,0,.55); }
       70% { box-shadow:0 0 0 22px rgba(179,135,0,0); }
@@ -172,16 +240,6 @@
       color:#6d5400;
       margin-bottom:22px;
     }
-    .amm-btn{
-      background:var(--gold);
-      color:#fff;
-      box-shadow:0 6px 20px rgba(179,135,0,.35);
-    }
-    .amm-btn:hover{
-      background:#8c6900;
-      transform:translateY(-2px);
-      box-shadow:0 12px 28px rgba(179,135,0,.45);
-    }
 
     .launch{text-align:center;padding:6vh 5vw}
     .launch-image{
@@ -191,22 +249,6 @@
     }
 
     .litepaper-wrap{text-align:center;margin:40px 0 20px}
-    .lite-btn{
-      background:#eaf3ff;
-      color:#0A74D0;
-      border:1px solid #cfe3ff;
-      padding:10px 18px;
-      font-weight:600;
-      border-radius:10px;
-      font-size:.9rem;
-      text-decoration:none;
-      transition:all .15s ease;
-    }
-    .lite-btn:hover{
-      background:#dcecff;
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(10,116,208,.25);
-    }
 
     .section-divider{
       width:80%;max-width:640px;margin:40px auto;
@@ -311,17 +353,19 @@
   <section class="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
     <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
-    <a href="/ledger.html" class="btn btn-primary pulse-ledger">VIEW THE RAD LEDGER</a>
+    <a href="/ledger.html" class="rad-btn rad-btn-ledger pulse-ledger">
+      <span>VIEW THE RAD LEDGER</span>
+    </a>
   </section>
 
   <!-- AMM SECTION -->
   <section class="amm-section">
     <h2>🚀 ENTER THE $RAD AMM POOL</h2>
     <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
-    <a class="btn amm-btn amm-pulse"
+    <a class="rad-btn rad-btn-amm amm-pulse"
        href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
        target="_blank" rel="noopener">
-       Open AMM Pool
+       <span>Open AMM Pool</span>
     </a>
   </section>
 
@@ -339,8 +383,8 @@
 
   <!-- LITE PAPER -->
   <div class="litepaper-wrap">
-    <a class="lite-btn" href="/litepaper.html" target="_blank" rel="noopener">
-      📄 Read the Lite Paper
+    <a class="rad-btn rad-btn-lite" href="/litepaper.html" target="_blank" rel="noopener">
+      <span>📄 Read the Lite Paper</span>
     </a>
   </div>
 
