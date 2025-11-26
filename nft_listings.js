@@ -1,54 +1,50 @@
 /* =========================================================
-   RAD NFT LISTINGS — Core JS (LOCKED v4)
-   WCK Featured + WCK in grid + RAD-only placeholders
+   RAD NFT LISTINGS — Core JS
+   WCK Featured + RAD_ledger placeholders
    ========================================================= */
-
-console.log("RAD NFT LISTINGS — v4 (WCK + RAD placeholders)");
 
 /* ============================
    NFT DATA
    ============================ */
 const nftData = [
 
-  /* ======== FEATURED + GRID NFT: WCK ======== */
+  /* ======== FEATURED NFT: WCK (also shows in grid) ======== */
   {
-    id: "wck",
     token: "$WCK",
     name: "CONTINENTAL WICK",
     status: "certified",
     droppingSoon: true,
     image: "assets/logos/wck_logo.webp",
     desc: "Protocol Enforcement Collection — Dropping Soon.",
-    showInGrid: true      // ✅ SHOW IN GRID (first card)
+    showInGrid: true
   },
 
-  /* ======== PLACEHOLDER SLOTS (RAD ONLY) ======== */
+  /* ======== PLACEHOLDER SLOTS (RAD_ledger image only) ======== */
   {
-    id: "ph-1",
     token: "",
     name: "",
     status: "certified",
     droppingSoon: false,
-    image: "assets/RAD_ledger.png",   // ✅ RAD ledger art
+    image: "assets/RAD_ledger.png",
     desc: "",
-    showInGrid: true                  // ✅ Visible in grid
+    showInGrid: true
   },
 
   {
-    id: "ph-2",
     token: "",
     name: "",
     status: "verified",
     droppingSoon: false,
-    image: "assets/RAD_ledger.png",   // ✅ RAD ledger art
+    image: "assets/RAD_ledger.png",
     desc: "",
-    showInGrid: true                  // ✅ Visible in grid
+    showInGrid: true
   }
 
 ];
 
+
 /* =========================================================
-   FEATURED NFT RENDERING (WCK ONLY)
+   FEATURED NFT RENDERING
    ========================================================= */
 function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
@@ -74,88 +70,50 @@ function renderFeatured() {
   `;
 }
 
+
 /* =========================================================
-   GRID RENDERING
+   GRID RENDERING (no filters)
    ========================================================= */
-function renderGrid(filter = "all") {
+function renderGrid() {
   const grid = document.getElementById("nftGrid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  const filtered = nftData.filter(item => {
-    if (!item.showInGrid) return false;      // only grid-allowed
-    if (filter === "all") return true;
-    return item.status === filter;
-  });
+  const filtered = nftData.filter(item => item.showInGrid);
 
   filtered.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
 
-    let html = "";
+    card.innerHTML = `
+      ${item.droppingSoon ? `<div style="
+        background:#b41010;
+        color:#fff;
+        font-weight:800;
+        padding:4px 8px;
+        border-radius:6px;
+        position:absolute;
+        top:12px;
+        right:12px;
+        font-size:.75rem;
+        box-shadow:0 2px 6px rgba(0,0,0,.25);
+      ">DROPPING SOON</div>` : ""}
 
-    if (item.droppingSoon) {
-      html += `
-        <div style="
-          background:#b41010;
-          color:#fff;
-          font-weight:800;
-          padding:4px 8px;
-          border-radius:6px;
-          position:absolute;
-          top:12px;
-          right:12px;
-          font-size:.75rem;
-          box-shadow:0 2px 6px rgba(0,0,0,.25);
-        ">
-          DROPPING SOON
-        </div>
-      `;
-    }
-
-    // 🔒 Image only for placeholders – WCK gets its real logo
-    const imgSrc = item.image || "assets/RAD_ledger.png";
-
-    html += `
-      <img src="${imgSrc}" alt="${item.id === 'wck' ? item.name : 'RAD Ledger Placeholder NFT'}">
+      <img src="${item.image}" alt="">
+      <h3>${item.name || ""}</h3>
+      <p>${item.desc || ""}</p>
     `;
 
-    // Text only for WCK (placeholders stay nameless)
-    if (item.name) {
-      html += `<h3>${item.name}</h3>`;
-    }
-    if (item.desc) {
-      html += `<p>${item.desc}</p>`;
-    }
-
-    card.innerHTML = html;
     grid.appendChild(card);
   });
 }
 
-/* =========================================================
-   FILTER LOGIC
-   ========================================================= */
-function initFilters() {
-  const buttons = document.querySelectorAll(".filter-btn");
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const filter = btn.dataset.filter;
-      renderGrid(filter);
-    });
-  });
-}
 
 /* =========================================================
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeatured();    // WCK hero
-  renderGrid("all");   // WCK + 2 RAD placeholders
-  initFilters();
+  renderFeatured();  // WCK hero
+  renderGrid();      // WCK + 2 RAD_ledger placeholders
 });
