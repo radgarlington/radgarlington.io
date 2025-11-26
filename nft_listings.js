@@ -1,62 +1,62 @@
 /* =========================================================
    RAD NFT LISTINGS — Core JS
-   Clean, synced with CSS, WCK Featured NFT enabled
+   WCK Featured, neutral RAD placeholders in grid
    ========================================================= */
 
 /* ============================
    NFT DATA
    ============================ */
 const nftData = [
-
-  /* ======== FEATURED NFT: WCK (Featured Only) ======== */
+  // ======== FEATURED NFT: WCK (hero only) ========
   {
-    token: "$WCK",
-    name: "CONTINENTAL WICK",
+    id: "wck",
+    featured: true,
     status: "certified",
     droppingSoon: true,
     image: "assets/logos/wck_logo.webp",
-    desc: "Protocol Enforcement Collection — Dropping Soon.",
-    showInGrid: false   // ✅ FEATURED ONLY, NOT IN GRID
+    title: "CONTINENTAL WICK",
+    text: "Protocol Enforcement Collection — Dropping Soon."
   },
 
-  /* ======== PLACEHOLDER SLOTS (HIDDEN FOR NOW) ======== */
+  // ======== PLACEHOLDER SLOTS (no tokens / names, RAD_ledger.png only) ========
   {
-    token: "",
-    name: "",
+    id: "slot1",
+    featured: false,
     status: "certified",
-    droppingSoon: false,
-    image: "assets/RAD_ledger.png",
-    desc: "",
-    showInGrid: false   // ✅ NOT RENDERED IN GRID
+    showInGrid: true,
+    image: "assets/RAD_ledger.png"
   },
-
   {
-    token: "",
-    name: "",
+    id: "slot2",
+    featured: false,
     status: "verified",
-    droppingSoon: false,
-    image: "assets/RAD_ledger.png",
-    desc: "",
-    showInGrid: false   // ✅ NOT RENDERED IN GRID
+    showInGrid: true,
+    image: "assets/RAD_ledger.png"
+  },
+  {
+    id: "slot3",
+    featured: false,
+    status: "unverified",
+    showInGrid: true,
+    image: "assets/RAD_ledger.png"
   }
-
 ];
 
-
 /* =========================================================
-   FEATURED NFT RENDERING
+   FEATURED NFT RENDERING (WCK only)
    ========================================================= */
 function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
   if (!featuredWrap) return;
 
-  const featured = nftData[0]; // WCK always at index 0
+  const featured = nftData.find(item => item.featured);
+  if (!featured) return;
 
   featuredWrap.innerHTML = `
     <div class="featured-card">
-      <img src="${featured.image}" alt="${featured.name}">
-      <h3>${featured.name}</h3>
-      <p>${featured.desc}</p>
+      <img src="${featured.image}" alt="${featured.title}">
+      <h3>${featured.title}</h3>
+      <p>${featured.text}</p>
       ${featured.droppingSoon ? `<div style="
         background:#b41010;
         color:#fff;
@@ -70,9 +70,8 @@ function renderFeatured() {
   `;
 }
 
-
 /* =========================================================
-   GRID RENDERING
+   GRID RENDERING (RAD placeholders only, no names/tokens)
    ========================================================= */
 function renderGrid(filter = "all") {
   const grid = document.getElementById("nftGrid");
@@ -81,7 +80,10 @@ function renderGrid(filter = "all") {
   grid.innerHTML = "";
 
   const filtered = nftData.filter(item => {
-    if (!item.showInGrid) return false;         // ✅ Only items explicitly allowed
+    // never show the featured (WCK) in the grid
+    if (item.featured) return false;
+    if (!item.showInGrid) return false;
+
     if (filter === "all") return true;
     return item.status === filter;
   });
@@ -90,29 +92,14 @@ function renderGrid(filter = "all") {
     const card = document.createElement("div");
     card.className = "card";
 
+    // Pure visual placeholder: RAD_ledger.png only, no token text / names
     card.innerHTML = `
-      ${item.droppingSoon ? `<div style="
-        background:#b41010;
-        color:#fff;
-        font-weight:800;
-        padding:4px 8px;
-        border-radius:6px;
-        position:absolute;
-        top:12px;
-        right:12px;
-        font-size:.75rem;
-        box-shadow:0 2px 6px rgba(0,0,0,.25);
-      ">DROPPING SOON</div>` : ""}
-
-      <img src="${item.image}" alt="">
-      <h3>${item.name || ""}</h3>
-      <p>${item.desc || ""}</p>
+      <img src="assets/RAD_ledger.png" alt="RAD NFT placeholder">
     `;
 
     grid.appendChild(card);
   });
 }
-
 
 /* =========================================================
    FILTER LOGIC
@@ -131,12 +118,11 @@ function initFilters() {
   });
 }
 
-
 /* =========================================================
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   renderFeatured();    // WCK hero
-  renderGrid("all");   // Bottom grid (currently empty)
+  renderGrid("all");   // RAD placeholders only
   initFilters();
 });
