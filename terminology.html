@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledger Terminology Index — The RAD Ledger</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
+
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;text-align:center;
+  padding:20px 10px 18px;
+  font-size:1.05rem;font-weight:600;line-height:1.4;
+  border-bottom:2px solid #062a5c;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.banner em{
+  display:block;margin-top:6px;
+  font-style:italic;font-weight:500;opacity:.85
+}
+
+/* Header */
+header{
+  text-align:center;
+  padding:42px 10px 18px;
+  background:#eaf3ff;
+  border-bottom:2px solid #d7e7ff;
+  position:relative
+}
+header h1{
+  font-size:2rem;
+  margin:0;
+  color:#0A74D0
+}
+header p{
+  margin:8px 0 0;
+  color:#334155
+}
+
+/* Back Button */
+.back-btn{
+  position:absolute;top:10px;left:18px;
+  background:#0A74D0;color:#fff;
+  padding:6px 12px;border-radius:6px;
+  text-decoration:none;font-weight:700;font-size:.85rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:opacity .2s ease,transform .2s ease
+}
+.back-btn:hover{
+  opacity:.9;transform:translateY(-1px)
+}
+
+/* BUY RAD BUTTON — RIGHT SIDE */
+.buy-rad-btn {
+  position:absolute;
+  top:10px;
+  right:18px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 14px;
+  border-radius:6px;
+  font-weight:700;
+  font-size:.85rem;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:opacity .2s ease, transform .2s ease;
+}
+.buy-rad-btn:hover {
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
+/* Layout */
+main{
+  max-width:900px;
+  margin:24px auto 30px;
+  padding:0 16px 10px;
+}
+
+.section-intro{
+  background:#edf3ff;
+  border:1px solid #d4e1ff;
+  border-radius:10px;
+  padding:14px 16px;
+  font-size:.95rem;
+  line-height:1.5;
+  margin-bottom:20px;
+}
+
+.index-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:14px;
+  margin-bottom:26px;
+}
+
+.index-chip{
+  border-radius:999px;
+  border:1px solid #d4e1ff;
+  background:#f8fbff;
+  padding:6px 10px;
+  font-size:.85rem;
+  color:#0A74D0;
+  text-align:center;
+  font-weight:600;
+}
+
+.term-group{
+  margin-bottom:24px;
+}
+.term-group h2{
+  margin:18px 0 8px;
+  font-size:1.25rem;
+  color:#0A74D0;
+  border-bottom:1px solid #dbe3f0;
+  padding-bottom:4px;
+}
+.term{
+  margin-bottom:12px;
+}
+.term-title{
+  font-weight:700;
+  color:#0f172a;
+}
+.term-alias{
+  font-size:.85rem;
+  color:#64748b;
+}
+.term-body{
+  font-size:.9rem;
+  color:#111827;
+  margin-top:2px;
+  line-height:1.5;
+}
+.term-body em{
+  font-style:normal;
+  font-weight:600;
+  color:#0A74D0;
+}
+
+/* Footer */
+footer{
+  text-align:center;
+  padding:20px;
+  border-top:2px solid #d7e7ff;
+  color:#475569;
+  font-size:.9rem
+}
+</style>
+</head>
+
+<body>
+
+<div class="banner">
+  📙 Ledger Terminology Index — A–Z<br>
+  Every term you need before you touch an XRPL token.
+  <em>The Ledger never lies.</em>
+</div>
+
+<header>
+  <a href="education.html" class="back-btn">← Back to Education Hub</a>
+  <a href="index.html" class="buy-rad-btn">$BUY RAD</a>
+
+  <h1>Ledger Terminology Index — A–Z</h1>
+  <p>Language for AMMs, listings, and enforcement — all in one place.</p>
+</header>
+
+<main>
+  <section class="section-intro">
+    This index is the language layer of The RAD Ledger.
+    When you read token listings, AMM notes, or the Threat Intelligence Dossier,
+    every term here means something specific. No buzzwords. No marketing spin.
+  </section>
+
+  <section class="index-grid">
+    <div class="index-chip">AMM · LP · Pool Share</div>
+    <div class="index-chip">Certified · Verified · Unverified · Expired</div>
+    <div class="index-chip">Trustline · Issuer · Domain</div>
+    <div class="index-chip">Slippage · Routing · Pathfinding</div>
+    <div class="index-chip">Rug · Soft Rug · Liquidity Exit</div>
+    <div class="index-chip">Blacklist · Threat Actor · Shill</div>
+  </section>
+
+  <!-- A -->
+  <div class="term-group">
+    <h2>A</h2>
+
+    <div class="term">
+      <div class="term-title">AMM (Automated Market Maker)</div>
+      <div class="term-body">
+        A smart liquidity engine on XRPL that holds two assets in a pool and
+        quotes prices algorithmically. When you trade against the pool, you move
+        the price, not an order book. On The RAD Ledger, AMMs are the main route
+        for honest price discovery.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">AMM Pool</div>
+      <div class="term-body">
+        The specific pair of assets locked inside an AMM instance, for example
+        <em>$RAD/XRP</em>. The pool balance determines price, slippage, and depth.
+      </div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div class="term-group">
+    <h2>C</h2>
+
+    <div class="term">
+      <div class="term-title">Certified Listing</div>
+      <div class="term-body">
+        A project that has passed full RAD vetting and is backed by a
+        <em>vault-locked Seal NFT</em> held in the RAD certification wallet.
+        Certified listings are permanent unless the Seal is revoked for a
+        trust violation and optionally burned on-chain.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">Certified Seal NFT</div>
+      <div class="term-body">
+        The on-chain NFT that backs a Certified project on The RAD Ledger.
+        It is held in the RAD certification wallet, not by the project.
+        If the project violates trust, this Seal is revoked on the Ledger and
+        may be burned to signal final termination.
+      </div>
+    </div>
+  </div>
+
+  <!-- L -->
+  <div class="term-group">
+    <h2>L</h2>
+
+    <div class="term">
+      <div class="term-title">Ledger</div>
+      <div class="term-body">
+        In this context, <em>The RAD Ledger</em> — a curated index of XRPL tokens,
+        their status (Certified, Verified, Unverified, Expired), and any attached
+        threat intelligence, not a chain-wide explorer.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">Liquidity</div>
+      <div class="term-body">
+        The depth of assets available in an AMM pool or order book. More
+        liquidity means your trade moves price less. Thin liquidity is where
+        most retail gets nuked.
+      </div>
+    </div>
+  </div>
+
+  <!-- R -->
+  <div class="term-group">
+    <h2>R</h2>
+
+    <div class="term">
+      <div class="term-title">Rug (Rug Pull)</div>
+      <div class="term-body">
+        A deliberate extraction of value from holders, usually by removing
+        liquidity, abusing admin keys, or redirecting funds. On The RAD Ledger,
+        rugs and attempted rugs are documented in the <em>Rug Report</em>.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">Rug Attempt</div>
+      <div class="term-body">
+        A failed or intercepted rug. The intent was malicious, but execution
+        was blocked, reversed, or exposed early. Still documented. Still noted.
+      </div>
+    </div>
+  </div>
+
+  <!-- T -->
+  <div class="term-group">
+    <h2>T</h2>
+
+    <div class="term">
+      <div class="term-title">Threat Actor</div>
+      <div class="term-body">
+        An individual, wallet, or group identified as a direct risk to
+        XRPL holders. Repeated scams, exploits, or coordinated attacks
+        graduate addresses into the <em>Threat Actors Directory</em>.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">Trustline</div>
+      <div class="term-body">
+        An XRPL link between your wallet and a token’s issuer that allows you
+        to hold that asset. If you cannot set a trustline, you cannot receive
+        the token. The Ledger uses trustlines and issuer data to index projects.
+      </div>
+    </div>
+  </div>
+
+  <!-- V -->
+  <div class="term-group">
+    <h2>V</h2>
+
+    <div class="term">
+      <div class="term-title">Verified Listing</div>
+      <div class="term-body">
+        A project that has been manually reviewed, but without a vault-locked
+        Seal NFT. Verified listings must renew annually. If they do not renew
+        or fail review, they move to <em>Expired</em>.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">Verification Renewal</div>
+      <div class="term-body">
+        The annual process of refreshing a Verified project’s status, data,
+        and contact details. Failure to renew flags the listing as Expired
+        until a fresh review is completed.
+      </div>
+    </div>
+  </div>
+
+  <!-- U / X (catch-all) -->
+  <div class="term-group">
+    <h2>Other Terms</h2>
+
+    <div class="term">
+      <div class="term-title">Unverified Listing</div>
+      <div class="term-body">
+        A token auto-listed from XRPL with minimal or no project contact.
+        These are indexed for awareness, not endorsement. Treat them as
+        <em>unknown risk</em> until upgraded to Verified or Certified.
+      </div>
+    </div>
+
+    <div class="term">
+      <div class="term-title">XRPL (XRP Ledger)</div>
+      <div class="term-body">
+        The underlying chain for all RAD Ledger tracking — fast settlement,
+        low fees, and native AMMs. Everything on this site assumes XRPL-native
+        behavior unless stated otherwise.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 The RAD Ledger | Terminology Index
+</footer>
+
+</body>
+</html>
