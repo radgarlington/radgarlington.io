@@ -112,8 +112,8 @@ header p{
   border-bottom:2px solid #d7e7ff;
 }
 .briefing-img{
-  width:310px;
-  max-width:90%;
+  width:240px;
+  max-width:85%;
   height:auto;
   display:block;
   margin:auto;
@@ -224,6 +224,7 @@ footer{
   left:0;top:0;width:100%;height:100%;
   background:rgba(0,0,0,.55)
 }
+
 .modal-content{
   background:#fff;color:#0f172a;
   margin:5% auto;padding:20px;
@@ -232,10 +233,12 @@ footer{
   max-height:82vh;overflow-y:auto;
   box-shadow:0 10px 30px rgba(0,0,0,.25)
 }
+
 .close{
   float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0
 }
 .close:hover{color:#083c80}
+
 .modal-content a{
   color:#0A74D0;text-decoration:none;font-weight:bold
 }
@@ -285,19 +288,19 @@ footer{
   <span>⬛ Expired — Renewal Required</span>
 </div>
 
-<!-- LEDGER BRIEFING IMAGE -->
+<!-- NEW LEDGER BRIEFING PIXAR IMAGE -->
 <div class="briefing-img-wrap">
-  <a href="ledger-briefing.html">
-    <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
-  </a>
+  <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
 </div>
 
-<!-- HERO ACTION BUTTONS (WITHOUT NFT LISTINGS) -->
+<!-- ACTION BUTTONS -->
 <div class="rad-actions primary-actions" style="padding:28px 10px;">
+  <a href="ledger-briefing.html" class="rad-btn" style="background:#0A74D0;">
+    📘 Ledger Briefing
+  </a>
   <a href="unofficial-sources.html" class="rad-btn" style="background:#d69e00;">
     ⚠️ Unofficial Data Sources
   </a>
-
   <a href="scams.html" class="rad-btn" style="background:#f59e0b;">
     📒 Scam Intelligence Dossier
   </a>
@@ -321,11 +324,9 @@ footer{
   <a href="blacklist.html" class="rad-btn" style="background:#111;">🚫 Blacklist</a>
 </div>
 
-<!-- NFT LISTINGS — OWN FULL-WIDTH ROW -->
-<div class="rad-actions" style="background:#f8fbff;border-bottom:2px solid #d7e7ff;padding:30px 10px;">
-  <a href="nfts.html"
-     class="rad-btn nft-btn"
-     style="font-size:1.25rem;padding:18px 46px;width:100%;justify-content:center;max-width:420px;">
+<!-- NFT LISTINGS — moved to its own plane -->
+<div class="rad-actions" style="background:#f8fbff;border-bottom:2px solid #d7e7ff;">
+  <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
     ✨ NFT Listings
   </a>
 </div>
