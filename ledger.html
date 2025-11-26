@@ -115,33 +115,49 @@ header p{
   border-bottom:2px solid #d7e7ff;
 }
 
-/* BASE RAD BUTTON */
+/* GLOSSY RAD BUTTON */
 .rad-btn {
-  color:#fff;
+  position:relative;
+  overflow:hidden;
+  color:#f9fafb;
   font-weight:700;
-  padding:10px 18px;
+  padding:11px 20px;
   font-size:.9rem;
-  border-radius:10px;
+  border-radius:12px;
   text-decoration:none;
   display:flex;
   align-items:center;
-  gap:6px;
-  box-shadow:0 2px 6px rgba(0,0,0,.18);
-  transition:all .15s ease;
+  gap:8px;
+  box-shadow:0 3px 10px rgba(15,23,42,.25);
+  background:linear-gradient(145deg,#0f7cf0,#07418f);
+  border:1px solid #06336f;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
-.rad-btn:hover {
+.rad-btn::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-10%;
+  width:130%;
+  height:80%;
+  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+  opacity:.25;
+  transform:skewY(-12deg);
+  transition:transform .25s ease, opacity .2s ease;
+}
+.rad-btn span{
+  position:relative;
+  z-index:1;
+}
+.rad-btn:hover{
   transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(15,23,42,.35);
+  filter:brightness(1.03);
 }
-
-/* GOLD HERO NFT BUTTON */
-.nft-btn {
-  position: relative;
-  background:linear-gradient(90deg,#ffd700,#e6c200) !important;
-  color:#111 !important;
-  border:3px solid #b89600 !important;
-  border-radius:14px !important;
-  font-weight:900 !important;
-  box-shadow:0 0 20px rgba(255,215,0,0.55) !important;
+.rad-btn:hover::before{
+  transform:skewY(-12deg) translateY(35%);
+  opacity:.35;
 }
 
 /* FILTERS */
@@ -249,6 +265,30 @@ footer{
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
 
+<!-- EDUCATION HUB BUTTON IN ITS OWN BOX UNDER HEADER -->
+<div class="rad-actions" style="padding:20px 10px 6px;">
+  <a href="education.html" class="rad-btn">
+    <span>🎓 Ledger Education Hub — Learn the System</span>
+  </a>
+</div>
+
+<!-- ENFORCEMENT BOX DIRECTLY UNDER EDUCATION HUB -->
+<div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
+  <a href="rugreport.html" class="rad-btn">
+    <span>🧨 Rug Report</span>
+  </a>
+  <a href="blacklist.html" class="rad-btn">
+    <span>🚫 Blacklist</span>
+  </a>
+  <a href="threat-actors.html" class="rad-btn">
+    <span>🚫 Threat Actors Directory</span>
+  </a>
+  <a href="shills.html" class="rad-btn">
+    <span>📢 Shills</span>
+  </a>
+</div>
+
+<!-- LISTINGS / CERTIFICATION BOX -->
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
   <p style="margin:8px 0 4px">
@@ -267,49 +307,21 @@ footer{
   </p>
 </section>
 
+<!-- SUBMIT / RENEW UNDER THE LISTINGS BOX -->
+<div class="rad-actions" style="background:#f8fbff;border-top:0;border-bottom:2px solid #d7e7ff;">
+  <a href="submit.html" class="rad-btn">
+    <span>➕ Submit Token</span>
+  </a>
+  <a href="submit.html" class="rad-btn">
+    <span>🔄 Renew Listing</span>
+  </a>
+</div>
+
 <div class="legend">
   <span>🟡 Certified — Doxxed + Seal NFT</span>
   <span>🔷 Verified — Non-Doxxed</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
   <span>⬛ Expired — Renewal Required</span>
-</div>
-
-<!-- HERO GOLD NFT BUTTON -->
-<div class="rad-actions primary-actions" style="padding:28px 10px;">
-  <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
-    ✨ NFT Listings
-  </a>
-
-  <!-- NEW BUTTONS INSERTED HERE (PER YOUR REQUEST) -->
-  <a href="ledger-briefing.html" class="rad-btn" style="background:#0A74D0;">
-    📘 Ledger Briefing
-  </a>
-
-  <a href="unofficial-sources.html" class="rad-btn" style="background:#d69e00;border-color:#a87400;">
-    ⚠️ Unofficial Data Sources
-  </a>
-
-  <a href="scams.html" class="rad-btn" style="background:#f59e0b;border-color:#c77c05;">
-    📒 Scam Intelligence Dossier
-  </a>
-</div>
-
-<!-- ADMIN SECTION -->
-<div class="rad-actions" style="background:#f1f7ff;border-bottom:2px solid #c9ddff;">
-  <a href="submit.html" class="rad-btn" style="background:#3b82f6;">➕ Submit Token</a>
-  <a href="submit.html" class="rad-btn" style="background:#2563eb;">🔄 Renew Listing</a>
-</div>
-
-<!-- HUMAN ENFORCEMENT -->
-<div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
-  <a href="shills.html" class="rad-btn" style="background:#6366f1;">📢 Shills</a>
-  <a href="threat-actors.html" class="rad-btn" style="background:#b41010;border-color:#7f0f0f;">🚫 Threat Actors Directory</a>
-</div>
-
-<!-- PROJECT ENFORCEMENT -->
-<div class="rad-actions" style="background:#fff5f5;border-bottom:2px solid #e8b3b3;">
-  <a href="rugreport.html" class="rad-btn" style="background:#8f0d0d;border-color:#5f0909;">🧨 Rug Report</a>
-  <a href="blacklist.html" class="rad-btn" style="background:#111;color:#fff;">🚫 Blacklist</a>
 </div>
 
 <!-- FILTERS -->
@@ -320,6 +332,13 @@ footer{
   <button class="view-pill" data-filter="verified">Verified</button>
   <button class="view-pill" data-filter="unverified">Unverified</button>
   <button class="view-pill" data-filter="expired">Expired</button>
+</div>
+
+<!-- NFT LISTINGS IN ITS OWN BOX BELOW FILTERS -->
+<div class="rad-actions" style="padding:22px 10px 18px;background:#f8fbff;border-bottom:2px solid #d7e7ff;">
+  <a href="nfts.html" class="rad-btn">
+    <span>✨ NFT Listings</span>
+  </a>
 </div>
 
 <main>
