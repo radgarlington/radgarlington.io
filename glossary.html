@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>XRPL Glossary — The Ledger's Dictionary</title>
+<title>XRPL Glossary — The Ledger’s Dictionary</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="canonical" href="https://radgarlington.io/glossary">
-<meta name="description" content="The XRPL glossary — issuer addresses, trustlines, routing, AMMs, liquidity pools, and the real terminology behind the ledger. Built for clarity, not confusion.">
+<meta name="description" content="The XRPL glossary — issuer addresses, trustlines, routing, AMMs, liquidity pools, and all core terminology behind the ledger. Built for accuracy, not confusion.">
 
 <style>
 *{box-sizing:border-box;}
@@ -14,30 +14,47 @@ body{
   font-family:Arial,system-ui,sans-serif;
   background:#ffffff;
   color:#0f172a;
-  line-height:1.5;
+  line-height:1.55;
 }
 
-/* HEADER */
+/* HEADER / BANNER */
 .header{
   background:linear-gradient(90deg,#0A74D0,#083c80);
-  padding:24px 14px;
-  color:#fff;
+  padding:26px 12px;
   text-align:center;
+  color:#fff;
+  font-size:1.32rem;
+  font-weight:700;
   border-bottom:3px solid #062a5c;
-  font-size:1.9rem;
-  font-weight:800;
-  letter-spacing:0.6px;
-  text-transform:uppercase;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
 }
 
 /* WRAPPER */
 .wrap{
   max-width:900px;
   margin:30px auto;
-  padding:0 16px 60px;
+  padding:0 18px;
 }
 
-/* TERM BLOCKS */
+/* BACK BUTTON */
+.back-btn{
+  display:inline-block;
+  margin:20px 0;
+  padding:10px 22px;
+  background:linear-gradient(90deg,#ffd700,#e0b600);
+  color:#18171a;
+  font-weight:700;
+  border-radius:8px;
+  border:1.5px solid #ffe083;
+  text-decoration:none;
+  box-shadow:0 2px 8px rgba(0,0,0,0.25);
+  transition:.15s;
+}
+.back-btn:hover{
+  filter:brightness(1.05);
+}
+
+/* TERMS */
 .term{
   margin-bottom:30px;
   padding-bottom:18px;
@@ -45,33 +62,36 @@ body{
 }
 .term h2{
   margin:0 0 6px;
-  font-size:1.4rem;
+  font-size:1.45rem;
   font-weight:800;
   color:#0A74D0;
 }
 .term p{
   margin:0;
-  font-size:1.02rem;
-  color:#0f172a;
+  font-size:1rem;
+  font-weight:500;
 }
 
-/* BACK BUTTON */
-.back-btn{
-  position:static;
-  display:inline-block;
-  margin:22px 0;
-  padding:10px 22px;
-  font-size:0.95rem;
-  font-weight:700;
-  text-decoration:none;
-  background:#ffe083;
-  color:#1d1d1d;
-  border-radius:6px;
-  border:2px solid #e0b84c;
-  transition:.2s;
+/* RAD Logo Block */
+.rad-logo-wrap{
+  text-align:center;
+  margin:50px 0 12px;
 }
-.back-btn:hover{
-  filter:brightness(1.08);
+.rad-logo-wrap img{
+  width:78px;
+  height:auto;
+  border-radius:12px;
+}
+
+/* FOOTER */
+footer{
+  padding:24px 10px;
+  text-align:center;
+  background:#f1f5fb;
+  border-top:2px solid #d7e7ff;
+  color:#475569;
+  font-size:.9rem;
+  font-weight:600;
 }
 </style>
 </head>
@@ -82,90 +102,100 @@ body{
 
 <div class="wrap">
 
-<a class="back-btn" href="/">← Back to Main Page</a>
+<a href="/" class="back-btn">← Back to Main Page</a>
 
 <!-- TERMS -->
 
 <div class="term">
 <h2>Issuer Address</h2>
-<p>The wallet that *creates* the token. XRPL does not use contract addresses. Every asset originates from its issuer.</p>
+<p>The account that creates and issues the token. XRPL does not use contract addresses. Every asset is tied directly to its issuer.</p>
 </div>
 
 <div class="term">
 <h2>Currency Code</h2>
-<p>The token identifier (ticker). Can be 3-character or a full 160-bit hex code.</p>
+<p>The token ticker. Can be short (e.g., RAD, BAG) or a full 160-bit hexadecimal code.</p>
 </div>
 
 <div class="term">
 <h2>Trustline</h2>
-<p>A permission line allowing a wallet to hold a token from a specific issuer. No trustline means the token cannot enter the wallet.</p>
+<p>A permission line allowing a wallet to hold a specific token from a specific issuer. Without it, the token cannot be received.</p>
 </div>
 
 <div class="term">
 <h2>AMM (Automated Market Maker)</h2>
-<p>XRPL’s built-in liquidity engine. Enables swaps, trading, and pathfinding without smart contracts.</p>
+<p>The ledger’s built-in liquidity and swap engine. No smart contracts required.</p>
 </div>
 
 <div class="term">
 <h2>Liquidity Pool</h2>
-<p>A pool of XRP + a token. Defines price, depth, volatility resistance, and swap execution.</p>
+<p>A pool containing XRP + another asset. Determines price stability, depth, and execution quality.</p>
 </div>
 
 <div class="term">
 <h2>LP Tokens</h2>
-<p>Represent your percentage share in a liquidity pool. Earns a portion of fees and arbitrage rewards.</p>
+<p>Tokens representing your ownership percentage of a liquidity pool, earning a share of its fees.</p>
 </div>
 
 <div class="term">
 <h2>Routed Trade</h2>
-<p>A swap executed across multiple pools to get the best price. Charts often miss routed volume.</p>
+<p>A swap spanning multiple liquidity paths to achieve the best price. Often misunderstood by new users.</p>
 </div>
 
 <div class="term">
 <h2>Pathfinding</h2>
-<p>The algorithm XRPL uses to locate optimal trade routes through XRP, stablecoins, or other asset pairs.</p>
+<p>The XRPL routing algorithm that finds optimal swap routes through XRP, stablecoins, or other assets.</p>
 </div>
 
 <div class="term">
 <h2>DEX (On-Ledger)</h2>
-<p>The native XRPL decentralized exchange. No smart contracts, no dApps — everything is on-ledger.</p>
+<p>The native decentralized exchange built directly into XRPL. Everything happens on-ledger.</p>
 </div>
 
 <div class="term">
 <h2>Rippling</h2>
-<p>Allows assets with the same currency code to flow through trustlines. Usually disabled unless intentionally needed.</p>
+<p>Allows value with the same currency code to traverse trustlines. Usually disabled unless used intentionally.</p>
 </div>
 
 <div class="term">
 <h2>NFToken (XLS-20)</h2>
-<p>XRPL’s native NFT standard. Fast, cheap, on-ledger, and clean.</p>
+<p>The XRPL NFT standard. Ultra-fast, ultra-cheap, on-ledger.</p>
 </div>
 
 <div class="term">
 <h2>Memos</h2>
-<p>Metadata embedded in transactions — for instructions, IDs, or verification proofs.</p>
+<p>Metadata attached to transactions for verification, instructions, or proofs.</p>
 </div>
 
 <div class="term">
 <h2>Escrow</h2>
-<p>Time or condition-locked XRP. Used for delayed releases, guarantees, or timed payouts.</p>
+<p>Condition or time-locked XRP. Perfect for delayed releases or contracts without smart contracts.</p>
 </div>
 
 <div class="term">
 <h2>Clawback</h2>
-<p>An optional compliance flag allowing issuers to reclaim tokens under specific regulated conditions.</p>
+<p>An optional issuer-level compliance flag allowing token retrieval under regulated circumstances.</p>
 </div>
 
 <div class="term">
 <h2>AccountSet</h2>
-<p>A ledger-level configuration transaction used to modify account settings.</p>
+<p>Transaction type used to modify account configuration and flags.</p>
 </div>
 
 <div class="term">
 <h2>Hooks (Testnet)</h2>
-<p>Low-level programmable logic for conditional behavior. Not live on XRPL mainnet yet.</p>
+<p>Advanced programmable logic proposed for XRPL — not enabled on mainnet yet.</p>
 </div>
 
 </div>
+
+<!-- RAD LOGO ABOVE FOOTER -->
+<div class="rad-logo-wrap">
+    <img src="assets/RAD_ledger.png" alt="RAD Logo">
+</div>
+
+<footer>
+    © 2025 The RAD Ledger — Verified by Rad Garlington.
+</footer>
+
 </body>
 </html>
