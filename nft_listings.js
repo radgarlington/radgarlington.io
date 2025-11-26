@@ -1,6 +1,7 @@
 /* =========================================================
    RAD NFT LISTINGS — Core JS
    WCK Featured + RAD_ledger placeholders
+   DROPPING SOON stays on cards only
    ========================================================= */
 
 /* ============================
@@ -13,9 +14,9 @@ const nftData = [
     token: "$WCK",
     name: "CONTINENTAL WICK",
     status: "certified",
-    droppingSoon: true,
+    droppingSoon: true, // used only for badge on cards
     image: "assets/logos/wck_logo.webp",
-    desc: "Protocol Enforcement Collection — Dropping Soon.",
+    desc: "Protocol Enforcement Collection.",
     showInGrid: true
   },
 
@@ -54,18 +55,26 @@ function renderFeatured() {
 
   featuredWrap.innerHTML = `
     <div class="featured-card">
+      ${featured.droppingSoon ? `
+        <div style="
+          position:absolute;
+          top:12px;
+          right:12px;
+          padding:4px 8px;
+          font-size:.75rem;
+          font-weight:800;
+          border-radius:6px;
+          background:#b41010;
+          color:#fff;
+          box-shadow:0 2px 6px rgba(0,0,0,.25);
+        ">
+          DROPPING SOON
+        </div>
+      ` : ""}
+
       <img src="${featured.image}" alt="${featured.name}">
       <h3>${featured.name}</h3>
       <p>${featured.desc}</p>
-      ${featured.droppingSoon ? `<div style="
-        background:#b41010;
-        color:#fff;
-        font-weight:800;
-        padding:6px 10px;
-        border-radius:8px;
-        margin-top:8px;
-        display:inline-block;
-      ">DROPPING SOON</div>` : ""}
     </div>
   `;
 }
@@ -85,20 +94,25 @@ function renderGrid() {
   filtered.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
+    card.style.position = "relative";
 
     card.innerHTML = `
-      ${item.droppingSoon ? `<div style="
-        background:#b41010;
-        color:#fff;
-        font-weight:800;
-        padding:4px 8px;
-        border-radius:6px;
-        position:absolute;
-        top:12px;
-        right:12px;
-        font-size:.75rem;
-        box-shadow:0 2px 6px rgba(0,0,0,.25);
-      ">DROPPING SOON</div>` : ""}
+      ${item.droppingSoon ? `
+        <div style="
+          position:absolute;
+          top:12px;
+          right:12px;
+          padding:4px 8px;
+          font-size:.75rem;
+          font-weight:800;
+          border-radius:6px;
+          background:#b41010;
+          color:#fff;
+          box-shadow:0 2px 6px rgba(0,0,0,.25);
+        ">
+          DROPPING SOON
+        </div>
+      ` : ""}
 
       <img src="${item.image}" alt="">
       <h3>${item.name || ""}</h3>
@@ -114,6 +128,6 @@ function renderGrid() {
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeatured();  // WCK hero
-  renderGrid();      // WCK + 2 RAD_ledger placeholders
+  renderFeatured();  // WCK hero with badge in its card
+  renderGrid();      // WCK + 2 RAD_ledger placeholders, badge only on WCK
 });
