@@ -8,33 +8,36 @@
    ============================ */
 const nftData = [
 
-  /* ======== FEATURED NFT: WCK ======== */
+  /* ======== FEATURED NFT: WCK (Featured Only) ======== */
   {
     token: "$WCK",
     name: "CONTINENTAL WICK",
     status: "certified",
     droppingSoon: true,
     image: "assets/logos/wck_logo.webp",
-    desc: "Protocol Enforcement Collection — Dropping Soon."
+    desc: "Protocol Enforcement Collection — Dropping Soon.",
+    showInGrid: false   // ✅ FEATURED ONLY, NOT IN GRID
   },
 
-  /* ======== SAMPLE XRPL COLLECTION (Add more here as needed) ======== */
+  /* ======== PLACEHOLDER SLOTS (HIDDEN FOR NOW) ======== */
   {
-    token: "$RAD",
-    name: "RAD Certified Seal",
+    token: "",
+    name: "",
     status: "certified",
     droppingSoon: false,
-    image: "assets/logos/rad_logo.webp",
-    desc: "The Ledger’s official certification seal."
+    image: "assets/RAD_ledger.png",
+    desc: "",
+    showInGrid: false   // ✅ NOT RENDERED IN GRID
   },
 
   {
-    token: "$BAG",
-    name: "BAG Certified Artifact",
+    token: "",
+    name: "",
     status: "verified",
     droppingSoon: false,
-    image: "assets/logos/bag_logo.webp",
-    desc: "XRPL’s heaviest meme — Verified Asset Icon."
+    image: "assets/RAD_ledger.png",
+    desc: "",
+    showInGrid: false   // ✅ NOT RENDERED IN GRID
   }
 
 ];
@@ -78,6 +81,7 @@ function renderGrid(filter = "all") {
   grid.innerHTML = "";
 
   const filtered = nftData.filter(item => {
+    if (!item.showInGrid) return false;         // ✅ Only items explicitly allowed
     if (filter === "all") return true;
     return item.status === filter;
   });
@@ -100,9 +104,9 @@ function renderGrid(filter = "all") {
         box-shadow:0 2px 6px rgba(0,0,0,.25);
       ">DROPPING SOON</div>` : ""}
 
-      <img src="${item.image}" alt="${item.name}">
-      <h3>${item.name}</h3>
-      <p>${item.desc}</p>
+      <img src="${item.image}" alt="">
+      <h3>${item.name || ""}</h3>
+      <p>${item.desc || ""}</p>
     `;
 
     grid.appendChild(card);
@@ -132,7 +136,7 @@ function initFilters() {
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeatured();
-  renderGrid("all");
+  renderFeatured();    // WCK hero
+  renderGrid("all");   // Bottom grid (currently empty)
   initFilters();
 });
