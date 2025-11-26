@@ -2,116 +2,222 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>The Ledger Education Hub — RAD Ledger</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="canonical" href="https://radgarlington.io/education">
-<meta name="description" content="The Ledger Education Hub — XRPL terminology, AMM mechanics, and threat intelligence.">
+<title>Ledger Education Hub — The RAD Ledger</title>
 
 <style>
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  font-family:Arial,system-ui,sans-serif;
-  background:#ffffff;
-  color:#0f172a;
-  line-height:1.55;
+*{box-sizing:border-box}
+body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
+
+/* Banner */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;text-align:center;
+  padding:20px 10px 18px;
+  font-size:1.05rem;font-weight:600;line-height:1.4;
+  border-bottom:2px solid #062a5c;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.banner em{
+  display:block;margin-top:6px;
+  font-style:italic;font-weight:500;opacity:.85
 }
 
 /* Header */
-.header{
-  background:linear-gradient(90deg,#0A74D0,#083c80);
-  color:#fff;
-  padding:26px 12px;
+header{
   text-align:center;
-  font-size:1.35rem;
-  font-weight:800;
-  border-bottom:3px solid #062a5c;
-  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+  padding:42px 10px 18px;
+  background:#eaf3ff;
+  border-bottom:2px solid #d7e7ff;
+  position:relative
 }
-
-/* Wrapper */
-.wrap{
-  max-width:900px;
-  margin:30px auto;
-  padding:0 18px;
+header h1{
+  font-size:2rem;
+  margin:0;
+  color:#0A74D0
+}
+header p{
+  margin:8px 0 0;
+  color:#334155
 }
 
 /* Back Button */
 .back-btn{
-  display:inline-block;
-  padding:10px 22px;
-  background:linear-gradient(90deg,#ffd700,#e0b600);
-  color:#18171a;
-  font-weight:700;
-  border-radius:8px;
-  border:1.5px solid #ffe083;
-  text-decoration:none;
-  box-shadow:0 2px 8px rgba(0,0,0,0.25);
-  margin-bottom:24px;
-  transition:.15s;
+  position:absolute;top:10px;left:18px;
+  background:#0A74D0;color:#fff;
+  padding:6px 12px;border-radius:6px;
+  text-decoration:none;font-weight:700;font-size:.85rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:opacity .2s ease,transform .2s ease
 }
-.back-btn:hover{filter:brightness(1.05)}
+.back-btn:hover{
+  opacity:.9;transform:translateY(-1px)
+}
 
-/* Hub List */
-.hub-list a{
-  display:block;
-  padding:16px 20px;
-  background:#f8fbff;
-  border:2px solid #dce9ff;
-  border-radius:12px;
-  margin-bottom:16px;
-  font-size:1.1rem;
+/* BUY RAD BUTTON — RIGHT SIDE */
+.buy-rad-btn {
+  position:absolute;
+  top:10px;
+  right:18px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 14px;
+  border-radius:6px;
   font-weight:700;
+  font-size:.85rem;
+  text-decoration:none;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:opacity .2s ease, transform .2s ease;
+}
+.buy-rad-btn:hover {
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
+/* Intro block */
+.education-intro{
+  max-width:820px;
+  margin:22px auto 10px;
+  padding:14px 16px;
+  border-radius:10px;
+  border:1px solid #d4e1ff;
+  background:#edf3ff;
+  color:#0f172a;
+  font-size:.95rem;
+  line-height:1.5
+}
+.education-intro strong{
   color:#0A74D0;
-  text-decoration:none;
-  transition:.15s;
-}
-.hub-list a:hover{
-  background:#e9f3ff;
 }
 
-/* Logo + Footer */
-.rad-logo-wrap{text-align:center;margin:50px 0 12px;}
-.rad-logo-wrap img{width:78px;border-radius:12px;}
+/* ACTION BUTTON WRAPPER */
+.rad-actions{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:18px;
+  padding:26px 10px 30px;
+  background:#f8fbff;
+  border-bottom:2px solid #d7e7ff;
+}
+
+/* GLOSSY BUTTON (same system as ledger.html) */
+.rad-btn {
+  position:relative;
+  overflow:hidden;
+  color:#f9fafb;
+  font-weight:700;
+  padding:12px 22px;
+  font-size:.95rem;
+  border-radius:12px;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 3px 10px rgba(15,23,42,.25);
+  background:linear-gradient(145deg,#0f7cf0,#07418f);
+  border:1px solid #06336f;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.rad-btn::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-10%;
+  width:130%;
+  height:80%;
+  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+  opacity:.25;
+  transform:skewY(-12deg);
+  transition:transform .25s ease, opacity .2s ease;
+}
+.rad-btn span{
+  position:relative;
+  z-index:1;
+}
+.rad-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(15,23,42,.35);
+  filter:brightness(1.03);
+}
+.rad-btn:hover::before{
+  transform:skewY(-12deg) translateY(35%);
+  opacity:.35;
+}
+
+/* Layout */
+main{
+  max-width:860px;
+  margin:22px auto 30px;
+  padding:0 14px 10px;
+}
+.section-note{
+  margin-top:10px;
+  font-size:.9rem;
+  color:#475569;
+}
+
 footer{
-  padding:24px 10px;
   text-align:center;
-  background:#f1f5fb;
+  padding:20px;
   border-top:2px solid #d7e7ff;
   color:#475569;
-  font-size:.9rem;
-  font-weight:600;
+  font-size:.9rem
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">The Ledger Education Hub</div>
-
-<div class="wrap">
-
-<a href="https://radgarlington.io/ledger.html" class="back-btn">← Back to Ledger</a>
-
-<div class="hub-list">
-
-<!-- Put terminology first -->
-<a href="/ledger-index.html">📙 Ledger Terminology Index — A–Z</a>
-
-<a href="/ledger-briefing.html">📘 Ledger Briefing — AMM & Price Mechanics</a>
-
-<!-- Rename Scam Playbook -->
-<a href="/threat-intel.html">⚠️ Threat Intelligence Dossier — Scam & Exploit Awareness</a>
-
+<div class="banner">
+  🎓 Ledger Education Hub<br>
+  Learn how the Ledger, AMMs, and threat intel really work.
+  <em>— Rad</em>
 </div>
 
+<header>
+  <a href="ledger.html" class="back-btn">← Back to Ledger</a>
+  <a href="index.html" class="buy-rad-btn">$BUY RAD</a>
+
+  <h1>Ledger Education Hub</h1>
+  <p>One place for AMM mechanics, terminology, and threat intelligence.</p>
+</header>
+
+<section class="education-intro">
+  <strong>Know the system before you trust it.</strong>
+  <p style="margin-top:6px">
+    The Ledger Education Hub centralizes all XRPL education tied to The RAD Ledger.
+    Start with the Terminology Index to get your language right, then move into AMM mechanics and
+    threat intelligence so you actually understand what you are signing into.
+  </p>
+</section>
+
+<div class="rad-actions">
+  <a href="terminology.html" class="rad-btn">
+    <span>📙 Ledger Terminology Index — A–Z</span>
+  </a>
+
+  <a href="ledger-briefing.html" class="rad-btn">
+    <span>📘 Ledger Briefing — AMM &amp; Price Mechanics</span>
+  </a>
+
+  <a href="threat-intel.html" class="rad-btn">
+    <span>⚠️ Threat Intelligence Dossier — Scam &amp; Exploit Awareness</span>
+  </a>
 </div>
 
-<div class="rad-logo-wrap">
-<img src="assets/RAD_ledger.png" alt="RAD Logo">
-</div>
+<main>
+  <div class="section-note">
+    Use this hub as your starting point whenever you need to explain XRPL mechanics,
+    AMM routing, or scam detection to your community. Everything else on the Ledger
+    is enforcement. This is the classroom.
+  </div>
+</main>
 
-<footer>© 2025 The RAD Ledger — Verified by Rad Garlington.</footer>
+<footer>
+  © 2025 The RAD Ledger | Education Hub for XRPL Holders
+</footer>
 
 </body>
 </html>
