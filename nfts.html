@@ -99,10 +99,7 @@ body {
   padding:11px 24px;
 }
 
-/* ======================== */
-/* FEATURED NFT UPGRADE     */
-/* ======================== */
-
+/* Override featured layout slightly for this page */
 .featured-wrap{
   max-width:960px;
   margin:24px auto 10px;
@@ -140,61 +137,14 @@ body {
   100% { box-shadow:0 0 0px rgba(212,165,55,0.0); }
 }
 
-/* ======================== */
-/* GRID CARD HOVER EFFECTS  */
-/* ======================== */
-
-.card {
-  transition:transform .2s ease, box-shadow .2s ease;
-  position:relative;
-  animation:fadeIn 0.4s ease;
-  border-radius:16px;
-}
-
-.card:hover {
-  transform:translateY(-6px);
-  box-shadow:0 6px 18px rgba(0,0,0,.20);
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-  from { opacity:0; transform:translateY(8px); }
-  to { opacity:1; transform:translateY(0); }
-}
-
-/* ======================== */
-/* STATUS BADGES            */
-/* ======================== */
-
-.status-badge {
-  position:absolute;
-  top:12px;
-  left:12px;
-  padding:4px 8px;
-  font-size:.7rem;
-  font-weight:800;
-  border-radius:6px;
-  color:#fff;
-  text-transform:uppercase;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-}
-
-.status-certified { background:#d4a537; }
-.status-verified { background:#0A74D0; }
-.status-unverified { background:#475569; }
-
-/* DROPPING SOON BADGE */
-.drop-badge {
-  position:absolute;
-  top:12px;
-  right:12px;
-  padding:4px 8px;
-  font-size:.7rem;
-  font-weight:800;
-  border-radius:6px;
-  background:#b41010;
-  color:#fff;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
+/* Footer */
+.rad-footer{
+  text-align:center;
+  padding:18px 12px 26px;
+  font-size:.85rem;
+  color:#475569;
+  border-top:1px solid #d7e7ff;
+  background:#f8fbff;
 }
 
 /* 📱 Mobile tweaks */
@@ -214,17 +164,6 @@ body {
     width:120px;
     height:120px;
   }
-}
-
-/* Footer */
-.footer{
-  text-align:center;
-  padding:18px 10px 24px;
-  font-size:.85rem;
-  color:#475569;
-  border-top:1px solid #d7e7ff;
-  background:#f8fbff;
-  margin-top:30px;
 }
 </style>
 
@@ -253,24 +192,15 @@ body {
   <div id="featuredNFT" class="featured-card"></div>
 </div>
 
-<!-- FILTERS -->
-<div class="filters">
-  <div class="filter-btn active" data-filter="all">All</div>
-  <div class="filter-btn" data-filter="certified">Certified</div>
-  <div class="filter-btn" data-filter="verified">Verified</div>
-  <div class="filter-btn" data-filter="unverified">Unverified</div>
-</div>
-
-<!-- GRID -->
+<!-- GRID (no filters needed) -->
 <div id="nftGrid" class="grid"></div>
-
-<!-- FOOTER -->
-<div class="footer">
-  © 2025 The RAD Ledger — NFT Registry on XRPL.
-</div>
 
 <!-- JS (correct path) -->
 <script src="nft_listings.js"></script>
+
+<footer class="rad-footer">
+  THE RAD NFT REGISTRY — Source of Truth on XRPL. © 2025 radgarlington.io
+</footer>
 
 </body>
 </html>
