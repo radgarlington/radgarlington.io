@@ -38,6 +38,7 @@ body{
   text-decoration:none;
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:8px;
   box-shadow:0 3px 10px rgba(15,23,42,.25);
   background:linear-gradient(145deg,#0f7cf0,#07418f);
@@ -119,24 +120,12 @@ input:focus,textarea:focus{
   background:#f3f9ff;
 }
 
-/* SUBMIT BUTTON */
+/* SUBMIT BUTTON — glossy + full width */
 .pay-btn{
   width:100%;
   margin-top:20px;
-  padding:14px;
-  text-align:center;
-  background:#0A74D0;
-  border-radius:10px;
-  border:3px solid #d4a537;
-  color:#fff;
-  font-size:1.05rem;
-  font-weight:800;
-  cursor:pointer;
-  transition:.15s ease;
-}
-.pay-btn:hover{
-  background:#094d9d;
-  transform:translateY(-2px);
+  justify-content:center;
+  padding:14px 18px;
 }
 
 /* DISCLAIMER */
@@ -187,11 +176,13 @@ input:focus,textarea:focus{
     <label>Logo Filename (Must already be uploaded)</label>
     <input name="logo" placeholder="example.png" required>
 
-    <button type="button" class="pay-btn" onclick="pay()">Pay & Submit</button>
+    <button type="button" class="rad-btn pay-btn" onclick="pay()">
+      <span>Pay &amp; Submit</span>
+    </button>
   </form>
 
   <div class="disclaimer">
-    Payment is processed through Xaman.  
+    Payment is processed through Xaman.<br>
     After confirming, your NFT will be reviewed and added to the Registry.
   </div>
 </div>
