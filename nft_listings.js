@@ -1,6 +1,6 @@
 /* =========================================================
    RAD NFT LISTINGS — Core JS
-   Clean, synced with CSS, WCK Featured NFT enabled
+   WCK Featured + 2 RAD placeholder slots
    ========================================================= */
 
 /* ============================
@@ -8,7 +8,7 @@
    ============================ */
 const nftData = [
 
-  /* ======== FEATURED NFT: WCK (Featured Only) ======== */
+  /* ======== FEATURED + GRID NFT: WCK ======== */
   {
     token: "$WCK",
     name: "CONTINENTAL WICK",
@@ -16,9 +16,9 @@ const nftData = [
     droppingSoon: true,
     image: "assets/logos/wck_logo.webp",
     desc: "Protocol Enforcement Collection — Dropping Soon.",
-    showInGrid: false,  // ✅ FEATURED ONLY
+    showInGrid: true,   // ✅ show as first card in grid
 
-    // 🔹 Optional meta + links (fill these with real values when ready)
+    // 🔹 Fill these when you’re ready
     collection: "",     // e.g. "CONTINENTAL WICK — Series 1"
     issuer: "",         // e.g. "rXXXXXXXX..."
     xrpscan: "",        // e.g. "https://xrpscan.com/nft/..."
@@ -26,7 +26,7 @@ const nftData = [
     link: ""            // e.g. "https://wicktoken.net/nft"
   },
 
-  /* ======== PLACEHOLDER SLOTS (Hidden for now) ======== */
+  /* ======== PLACEHOLDER 1 ======== */
   {
     token: "",
     name: "",
@@ -34,9 +34,15 @@ const nftData = [
     droppingSoon: false,
     image: "assets/RAD_ledger.png",
     desc: "",
-    showInGrid: false
+    showInGrid: true,
+    collection: "",
+    issuer: "",
+    xrpscan: "",
+    bithomp: "",
+    link: ""
   },
 
+  /* ======== PLACEHOLDER 2 ======== */
   {
     token: "",
     name: "",
@@ -44,14 +50,19 @@ const nftData = [
     droppingSoon: false,
     image: "assets/RAD_ledger.png",
     desc: "",
-    showInGrid: false
+    showInGrid: true,
+    collection: "",
+    issuer: "",
+    xrpscan: "",
+    bithomp: "",
+    link: ""
   }
 
 ];
 
 
 /* =========================================================
-   FEATURED NFT RENDERING
+   FEATURED NFT RENDERING (top card)
    ========================================================= */
 function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
@@ -59,7 +70,7 @@ function renderFeatured() {
 
   const featured = nftData[0]; // WCK always at index 0
 
-  // Build meta line (only if data exists)
+  // Meta line (only if data exists)
   const metaPieces = [];
   if (featured.collection) metaPieces.push(`<strong>Collection:</strong> ${featured.collection}`);
   if (featured.issuer)     metaPieces.push(`<strong>Issuer:</strong> ${featured.issuer}`);
@@ -68,7 +79,7 @@ function renderFeatured() {
     ? `<div class="card-meta">${metaPieces.join(" &nbsp;•&nbsp; ")}</div>`
     : "";
 
-  // Build link buttons (only if URLs exist)
+  // Link buttons (only if URLs exist)
   const linkButtons = [];
   if (featured.xrpscan) {
     linkButtons.push(
@@ -91,46 +102,40 @@ function renderFeatured() {
     : "";
 
   featuredWrap.innerHTML = `
-    <div class="featured-card">
-      <img src="${featured.image}" alt="${featured.name}">
-      <h3>${featured.name}</h3>
-      <p>${featured.desc}</p>
-      ${metaHtml}
-      ${linksHtml}
-      ${featured.droppingSoon ? `<div style="
-        background:#b41010;
-        color:#fff;
-        font-weight:800;
-        padding:6px 10px;
-        border-radius:8px;
-        margin-top:10px;
-        display:inline-block;
-      ">DROPPING SOON</div>` : ""}
-    </div>
+    <img src="${featured.image}" alt="${featured.name}">
+    <h3>${featured.name}</h3>
+    <p>${featured.desc}</p>
+    ${metaHtml}
+    ${linksHtml}
+    ${featured.droppingSoon ? `<div style="
+      background:#b41010;
+      color:#fff;
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:8px;
+      margin-top:10px;
+      display:inline-block;
+    ">DROPPING SOON</div>` : ""}
   `;
 }
 
 
 /* =========================================================
-   GRID RENDERING
+   GRID RENDERING (bottom row)
    ========================================================= */
-function renderGrid(filter = "all") {
+function renderGrid() {
   const grid = document.getElementById("nftGrid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  const filtered = nftData.filter(item => {
-    if (!item.showInGrid) return false;  // ✅ Only items explicitly allowed
-    if (filter === "all") return true;
-    return item.status === filter;
-  });
+  const filtered = nftData.filter(item => item.showInGrid);
 
   filtered.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
 
-    // Meta line for grid cards
+    // Meta for grid
     const metaPieces = [];
     if (item.collection) metaPieces.push(`<strong>Collection:</strong> ${item.collection}`);
     if (item.issuer)     metaPieces.push(`<strong>Issuer:</strong> ${item.issuer}`);
@@ -138,7 +143,7 @@ function renderGrid(filter = "all") {
       ? `<div class="card-meta">${metaPieces.join(" &nbsp;•&nbsp; ")}</div>`
       : "";
 
-    // Link buttons for grid cards
+    // Link buttons for grid
     const linkButtons = [];
     if (item.xrpscan) {
       linkButtons.push(
@@ -187,28 +192,9 @@ function renderGrid(filter = "all") {
 
 
 /* =========================================================
-   FILTER LOGIC
-   ========================================================= */
-function initFilters() {
-  const buttons = document.querySelectorAll(".filter-btn");
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-
-      const filter = btn.dataset.filter;
-      renderGrid(filter);
-    });
-  });
-}
-
-
-/* =========================================================
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeatured();    // WCK hero
-  renderGrid("all");   // Bottom grid (currently empty until you set showInGrid:true somewhere)
-  initFilters();
+  renderFeatured();
+  renderGrid();
 });
