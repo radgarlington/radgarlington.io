@@ -9,7 +9,73 @@
 html,body{-webkit-text-size-adjust:100%;touch-action:manipulation}
 *{box-sizing:border-box}
 body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
-header{text-align:center;padding:52px 10px 20px;background:#eaf3ff;border-bottom:2px solid #d7e7ff;position:relative}
+
+/* 🔹 Shared RAD glossy button */
+.rad-btn{
+  position:relative;
+  overflow:hidden;
+  color:#f9fafb;
+  font-weight:700;
+  padding:11px 20px;
+  font-size:.9rem;
+  border-radius:12px;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 3px 10px rgba(15,23,42,.25);
+  background:linear-gradient(145deg,#0f7cf0,#07418f);
+  border:1px solid #06336f;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.rad-btn::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-10%;
+  width:130%;
+  height:80%;
+  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+  opacity:.25;
+  transform:skewY(-12deg);
+  transition:transform .25s ease, opacity .2s ease;
+}
+.rad-btn span{
+  position:relative;
+  z-index:1;
+}
+.rad-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(15,23,42,.35);
+  filter:brightness(1.03);
+}
+.rad-btn:hover::before{
+  transform:skewY(-12deg) translateY(35%);
+  opacity:.35;
+}
+
+/* Top strip for Back to Ledger (above header) */
+.top-strip{
+  max-width:960px;
+  margin:10px auto 6px;
+  padding:0 12px;
+  display:flex;
+  justify-content:flex-start;
+}
+.top-strip .rad-btn{
+  padding:8px 16px;
+  font-size:.85rem;
+  box-shadow:0 2px 8px rgba(15,23,42,.25);
+}
+
+header{
+  text-align:center;
+  padding:42px 10px 20px;
+  background:#eaf3ff;
+  border-bottom:2px solid #d7e7ff;
+  position:relative;
+}
 header h1{font-size:2rem;margin:0;color:#0A74D0}
 header p{margin:10px 0 0;color:#334155}
 main{max-width:720px;margin:40px auto;padding:24px;border:2px solid #d0e3ff;border-radius:12px;background:#f8fbff;box-shadow:0 6px 20px rgba(2,32,71,.08)}
@@ -24,8 +90,7 @@ button{background:#0A74D0;color:#fff;padding:10px 16px;border:none;border-radius
 button:hover{opacity:.9;transform:translateY(-1px)}
 .xrp-display{font-size:.9rem;color:#475569;margin-top:4px}
 footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
-.back-btn{position:absolute;top:10px;left:18px;background:#0A74D0;color:#fff;padding:6px 10px;border-radius:6px;text-decoration:none;font-weight:600;font-size:.8rem;letter-spacing:.2px;transition:opacity .2s ease,transform .2s ease}
-.back-btn:hover{opacity:.9;transform:translateY(-1px)}
+
 .info-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.55);z-index:999;animation:fadeIn .2s ease}
 .info-content{background:#fff;color:#0f172a;margin:15% auto;padding:20px;border-radius:10px;border:2px solid #d0e3ff;width:90%;max-width:400px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
 .info-content h3{margin-top:0;color:#0A74D0;font-size:1.2rem}
@@ -44,8 +109,14 @@ footer{text-align:center;font-size:.85rem;color:#475569;margin-top:30px}
 </head>
 <body>
 
+<!-- Glossy Back to Ledger button above header -->
+<div class="top-strip">
+  <a href="/ledger.html" class="rad-btn">
+    <span>← Back to Ledger</span>
+  </a>
+</div>
+
 <header>
-  <a href="/ledger.html" class="back-btn">← Back</a>
   <h1>Submit Your Token</h1>
   <p>Provide full details for verification and certification on <strong>The RAD Ledger</strong>.</p>
 </header>
@@ -200,13 +271,11 @@ function validateByTier(tier, values){
   if (tier === "certified") {
     if (!values.developer)  missing.push("Developer");
     if (!values.devTwitter) missing.push("Developer 𝕏 Handle");
-    // Telegram optional
-    // Seal NFT URL optional (issued after certification)
   }
 
-  // Renewal: lighter touch (just core already enforced: name, issuer, email)
+  // Renewal: lighter touch (core already enforced)
   if (tier === "renewal") {
-    // no extra fields enforced here
+    // nothing extra
   }
 
   return missing;
