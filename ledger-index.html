@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Ledger Terminology Index — RAD Ledger</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://radgarlington.io/ledger-index">
+<meta name="description" content="Alphabetized XRPL terminology index — every ledger term, trustline concept, AMM mechanic, and token architecture definition in one place.">
+
+<style>
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:#ffffff;
+  font-family:Arial,system-ui,sans-serif;
+  color:#0f172a;
+  line-height:1.55;
+}
+
+/* Header */
+.header{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  padding:26px 12px;
+  color:#fff;
+  text-align:center;
+  font-size:1.35rem;
+  font-weight:800;
+  border-bottom:3px solid #062a5c;
+  box-shadow:0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Wrapper */
+.wrap{
+  max-width:900px;
+  margin:30px auto;
+  padding:0 18px;
+}
+
+/* Back Button */
+.back-btn{
+  display:inline-block;
+  padding:10px 22px;
+  background:linear-gradient(90deg,#ffd700,#e0b600);
+  color:#18171a;
+  font-weight:700;
+  border-radius:8px;
+  border:1.5px solid #ffe083;
+  text-decoration:none;
+  box-shadow:0 2px 8px rgba(0,0,0,0.25);
+  margin-bottom:24px;
+  transition:.15s;
+}
+.back-btn:hover{filter:brightness(1.05)}
+
+/* Index Section */
+.index-block{
+  margin-bottom:50px;
+}
+.index-block h2{
+  font-size:1.8rem;
+  color:#0A74D0;
+  font-weight:800;
+  margin-bottom:18px;
+}
+
+.index-list{
+  columns:2;
+  column-gap:40px;
+}
+.index-list a{
+  display:block;
+  margin-bottom:12px;
+  text-decoration:none;
+  color:#0f172a;
+  font-size:1rem;
+  font-weight:600;
+}
+.index-list a:hover{
+  color:#0A74D0;
+}
+
+/* Section Anchors */
+.term-section{
+  padding-top:40px;
+  margin-bottom:30px;
+  border-bottom:1px solid #d7dbe0;
+}
+.term-section h3{
+  font-size:1.45rem;
+  margin-bottom:8px;
+  color:#0A74D0;
+  font-weight:800;
+}
+.term-section p{
+  margin-bottom:18px;
+  font-size:1rem;
+  font-weight:500;
+}
+
+/* Footer / Logo */
+.rad-logo-wrap{text-align:center;margin:50px 0 12px;}
+.rad-logo-wrap img{width:78px;border-radius:12px;}
+footer{
+  padding:24px 10px;
+  text-align:center;
+  background:#f1f5fb;
+  border-top:2px solid #d7e7ff;
+  color:#475569;
+  font-size:.9rem;
+  font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">The Ledger Terminology Index</div>
+
+<div class="wrap">
+
+<a href="https://radgarlington.io/ledger.html" class="back-btn">← Back to Ledger</a>
+
+<div class="index-block">
+<h2>A–Z Index</h2>
+
+<div class="index-list">
+<a href="#accountset">AccountSet</a>
+<a href="#amm">AMM</a>
+<a href="#clawback">Clawback</a>
+<a href="#currencycode">Currency Code</a>
+<a href="#dex">DEX</a>
+<a href="#escrow">Escrow</a>
+<a href="#hooks">Hooks</a>
+<a href="#issuer">Issuer Address</a>
+<a href="#lptokens">LP Tokens</a>
+<a href="#liquiditypool">Liquidity Pool</a>
+<a href="#memos">Memos</a>
+<a href="#nftoken">NFToken (XLS-20)</a>
+<a href="#pathfinding">Pathfinding</a>
+<a href="#rippling">Rippling</a>
+<a href="#routedtrade">Routed Trade</a>
+<a href="#trustline">Trustline</a>
+</div>
+</div>
+
+<!-- Sections -->
+<div id="issuer" class="term-section">
+<h3>Issuer Address</h3>
+<p>The account that issues the token. No contract addresses on XRPL — issuer + trustline = identity.</p>
+</div>
+
+<div id="currencycode" class="term-section">
+<h3>Currency Code</h3>
+<p>The token’s ticker or hex code. Used for trustline formation.</p>
+</div>
+
+<div id="trustline" class="term-section">
+<h3>Trustline</h3>
+<p>A required permission line allowing a wallet to hold a specific issued asset.</p>
+</div>
+
+<div id="amm" class="term-section">
+<h3>AMM (Automated Market Maker)</h3>
+<p>XRPL’s built-in liquidity engine — no contracts needed.</p>
+</div>
+
+<div id="liquiditypool" class="term-section">
+<h3>Liquidity Pool</h3>
+<p>Holds XRP + a issued token to power swap pricing.</p>
+</div>
+
+<div id="lptokens" class="term-section">
+<h3>LP Tokens</h3>
+<p>Representation of your pool ownership and fee share.</p>
+</div>
+
+<div id="routedtrade" class="term-section">
+<h3>Routed Trade</h3>
+<p>A multi-path swap used to optimize price across routes.</p>
+</div>
+
+<div id="pathfinding" class="term-section">
+<h3>Pathfinding</h3>
+<p>The algorithm that chooses the best trade path.</p>
+</div>
+
+<div id="dex" class="term-section">
+<h3>DEX</h3>
+<p>XRPL’s native decentralized exchange — fully on-ledger.</p>
+</div>
+
+<div id="rippling" class="term-section">
+<h3>Rippling</h3>
+<p>Transfer behavior across trustlines with identical currency codes.</p>
+</div>
+
+<div id="nftoken" class="term-section">
+<h3>NFToken (XLS-20)</h3>
+<p>The XRPL-native NFT standard.</p>
+</div>
+
+<div id="memos" class="term-section">
+<h3>Memos</h3>
+<p>Structured metadata on transactions.</p>
+</div>
+
+<div id="escrow" class="term-section">
+<h3>Escrow</h3>
+<p>Condition or time-locked XRP.</p>
+</div>
+
+<div id="clawback" class="term-section">
+<h3>Clawback</h3>
+<p>Optional regulatory feature.</p>
+</div>
+
+<div id="accountset" class="term-section">
+<h3>AccountSet</h3>
+<p>Transaction for setting account flags/config.</p>
+</div>
+
+<div id="hooks" class="term-section">
+<h3>Hooks (Testnet)</h3>
+<p>Low-level programmable behavior — not yet on mainnet.</p>
+</div>
+
+</div>
+
+<!-- Logo + Footer -->
+<div class="rad-logo-wrap">
+<img src="assets/RAD_ledger.png" alt="RAD Logo">
+</div>
+
+<footer>© 2025 The RAD Ledger — Verified by Rad Garlington.</footer>
+
+</body>
+</html>
