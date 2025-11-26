@@ -17,12 +17,9 @@ html,body{
   -webkit-text-size-adjust:100%;
   touch-action:manipulation;
 }
+*{box-sizing:border-box}
 
-*{
-  box-sizing:border-box;
-}
-
-body {
+body{
   margin:0;
   font-family:'Inter',system-ui,sans-serif;
   background:#f7f9ff;
@@ -99,24 +96,19 @@ body {
   padding:11px 24px;
 }
 
-/* ======================== */
-/* FEATURED NFT UPGRADE     */
-/* ======================== */
-
+/* FEATURED NFT block tweaks */
 .featured-wrap{
   max-width:960px;
   margin:24px auto 10px;
   padding:0 12px;
 }
-
 .featured-title{
   font-weight:800;
   font-size:1.1rem;
   margin-bottom:6px;
   color:#0A74D0;
 }
-
-.featured-card {
+.featured-card{
   position:relative;
   padding:20px;
   text-align:center;
@@ -125,88 +117,34 @@ body {
   border-radius:16px;
   box-shadow:0 4px 14px rgba(15,23,42,.08);
 }
-
-.featured-card img {
+.featured-card img{
   width:150px;
   height:150px;
   border-radius:14px;
   object-fit:contain;
   animation:pulseGlow 3s infinite ease-in-out;
 }
-
-@keyframes pulseGlow {
-  0% { box-shadow:0 0 0px rgba(212,165,55,0.0); }
-  50% { box-shadow:0 0 28px rgba(212,165,55,0.65); }
-  100% { box-shadow:0 0 0px rgba(212,165,55,0.0); }
+@keyframes pulseGlow{
+  0%{box-shadow:0 0 0px rgba(212,165,55,0.0);}
+  50%{box-shadow:0 0 28px rgba(212,165,55,0.65);}
+  100%{box-shadow:0 0 0px rgba(212,165,55,0.0);}
 }
 
-/* ======================== */
-/* GRID CARD HOVER EFFECTS  */
-/* ======================== */
-
-.card {
-  transition:transform .2s ease, box-shadow .2s ease;
-  position:relative;
-  animation:fadeIn 0.4s ease;
-  border-radius:16px;
+/* Fade-in animation (shared) */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
-.card:hover {
-  transform:translateY(-6px);
-  box-shadow:0 6px 18px rgba(0,0,0,.20);
-}
-
-/* Fade-in animation */
-@keyframes fadeIn {
-  from { opacity:0; transform:translateY(8px); }
-  to { opacity:1; transform:translateY(0); }
-}
-
-/* ======================== */
-/* STATUS BADGES            */
-/* ======================== */
-
-.status-badge {
-  position:absolute;
-  top:12px;
-  left:12px;
-  padding:4px 8px;
-  font-size:.7rem;
-  font-weight:800;
-  border-radius:6px;
-  color:#fff;
-  text-transform:uppercase;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-}
-
-.status-certified { background:#d4a537; }
-.status-verified { background:#0A74D0; }
-.status-unverified { background:#475569; }
-
-/* DROPPING SOON BADGE */
-.drop-badge {
-  position:absolute;
-  top:12px;
-  right:12px;
-  padding:4px 8px;
-  font-size:.7rem;
-  font-weight:800;
-  border-radius:6px;
-  background:#b41010;
-  color:#fff;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-}
-
-/* GALLERY IMAGES */
-.bottom-gallery {
+/* Bottom gallery responsive */
+.bottom-gallery{
   display:flex;
   justify-content:center;
   gap:22px;
   margin:50px auto;
   padding-bottom:60px;
 }
-
-.bottom-gallery img {
+.bottom-gallery img{
   width:260px;
   height:260px;
   object-fit:cover;
@@ -290,8 +228,79 @@ body {
   <img src="assets/RAD_ledger.png" alt="RAD Ledger NFT">
 </div>
 
-<!-- JS (correct path) -->
-<script src="nft_listings.js"></script>
+<!-- INLINE JS – no external caching nonsense -->
+<script>
+  /* FEATURED NFT (WCK ONLY) */
+  const featuredNFT = {
+    name: "CONTINENTAL WICK",
+    status: "certified",
+    droppingSoon: true,
+    image: "assets/logos/wck_logo.webp",
+    desc: "Protocol Enforcement Collection — Dropping Soon."
+  };
+
+  /* GRID PLACEHOLDERS – image only, no names/tickers */
+  const gridSlots = [
+    { status: "certified",  image: "assets/RAD_ledger.png" },
+    { status: "verified",   image: "assets/RAD_ledger.png" },
+    { status: "unverified", image: "assets/RAD_ledger.png" }
+  ];
+
+  function renderFeatured(){
+    const wrap = document.getElementById("featuredNFT");
+    if(!wrap) return;
+
+    const f = featuredNFT;
+    wrap.innerHTML = `
+      <img src="${f.image}" alt="${f.name}">
+      <h3>${f.name}</h3>
+      <p>${f.desc}</p>
+      ${
+        f.droppingSoon
+        ? '<div style="background:#b41010;color:#fff;font-weight:800;padding:6px 10px;border-radius:8px;margin-top:8px;display:inline-block;">DROPPING SOON</div>'
+        : ''
+      }
+    `;
+  }
+
+  function renderGrid(filter = "all"){
+    const grid = document.getElementById("nftGrid");
+    if(!grid) return;
+
+    grid.innerHTML = "";
+
+    const filtered = gridSlots.filter(slot => {
+      if(filter === "all") return true;
+      return slot.status === filter;
+    });
+
+    filtered.forEach(slot => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${slot.image}" alt="RAD Ledger NFT placeholder">
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function initFilters(){
+    const buttons = document.querySelectorAll(".filter-btn");
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        buttons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderGrid(btn.dataset.filter);
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    renderFeatured();
+    renderGrid("all");
+    initFilters();
+  });
+</script>
 
 </body>
 </html>
