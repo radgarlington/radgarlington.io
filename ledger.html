@@ -108,12 +108,12 @@ header p{
 .briefing-img-wrap{
   text-align:center;
   background:#eaf3ff;
-  padding:32px 10px 10px;
+  padding:28px 10px 10px;
   border-bottom:2px solid #d7e7ff;
 }
 .briefing-img{
   width:240px;
-  max-width:85%;
+  max-width:90%;
   height:auto;
   display:block;
   margin:auto;
@@ -189,7 +189,6 @@ h2{
   border-bottom:1px solid #cbd5e1;
   padding-bottom:4px;
   font-size:1.3rem;
-  margin-bottom:14px
 }
 h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
 
@@ -224,7 +223,6 @@ footer{
   left:0;top:0;width:100%;height:100%;
   background:rgba(0,0,0,.55)
 }
-
 .modal-content{
   background:#fff;color:#0f172a;
   margin:5% auto;padding:20px;
@@ -233,12 +231,10 @@ footer{
   max-height:82vh;overflow-y:auto;
   box-shadow:0 10px 30px rgba(0,0,0,.25)
 }
-
 .close{
   float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0
 }
 .close:hover{color:#083c80}
-
 .modal-content a{
   color:#0A74D0;text-decoration:none;font-weight:bold
 }
@@ -288,43 +284,34 @@ footer{
   <span>⬛ Expired — Renewal Required</span>
 </div>
 
-<!-- NEW LEDGER BRIEFING PIXAR IMAGE -->
+<!-- NEW PIXAR LEDGER BRIEFING IMAGE - CLICKABLE -->
 <div class="briefing-img-wrap">
-  <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
+  <a href="ledger-briefing.html">
+    <img src="assets/ledger_briefing.webp" alt="Ledger Briefing" class="briefing-img">
+  </a>
 </div>
 
 <!-- ACTION BUTTONS -->
-<div class="rad-actions primary-actions" style="padding:28px 10px;">
-  <a href="ledger-briefing.html" class="rad-btn" style="background:#0A74D0;">
-    📘 Ledger Briefing
-  </a>
+<div class="rad-actions" style="padding:28px 10px;">
   <a href="unofficial-sources.html" class="rad-btn" style="background:#d69e00;">
     ⚠️ Unofficial Data Sources
   </a>
+
   <a href="scams.html" class="rad-btn" style="background:#f59e0b;">
     📒 Scam Intelligence Dossier
   </a>
-</div>
 
-<!-- ADMIN SECTION -->
-<div class="rad-actions" style="background:#f1f7ff;border-bottom:2px solid #c9ddff;">
   <a href="submit.html" class="rad-btn" style="background:#3b82f6;">➕ Submit Token</a>
   <a href="submit.html" class="rad-btn" style="background:#2563eb;">🔄 Renew Listing</a>
-</div>
 
-<!-- HUMAN ENFORCEMENT -->
-<div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
   <a href="shills.html" class="rad-btn" style="background:#6366f1;">📢 Shills</a>
   <a href="threat-actors.html" class="rad-btn" style="background:#b41010;">🚫 Threat Actors Directory</a>
-</div>
 
-<!-- PROJECT ENFORCEMENT -->
-<div class="rad-actions" style="background:#fff5f5;border-bottom:2px solid #e8b3b3;">
   <a href="rugreport.html" class="rad-btn" style="background:#8f0d0d;">🧨 Rug Report</a>
   <a href="blacklist.html" class="rad-btn" style="background:#111;">🚫 Blacklist</a>
 </div>
 
-<!-- NFT LISTINGS — moved to its own plane -->
+<!-- NFT LISTINGS — ON ITS OWN ROW -->
 <div class="rad-actions" style="background:#f8fbff;border-bottom:2px solid #d7e7ff;">
   <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
     ✨ NFT Listings
@@ -348,48 +335,12 @@ footer{
   </section>
 </main>
 
+<!-- FOOTER -->
 <footer>
   © 2025 The RAD Ledger | Verified by Rad Garlington
 </footer>
 
-<!-- MODAL -->
-<div id="tokenModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-
-    <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
-      <img id="modalLogo" src="" alt="Project Logo"
-           style="max-width:80px;max-height:80px;border-radius:12px;
-           box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
-    </div>
-
-    <h2 id="modalToken">$RAD</h2>
-
-    <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
-    <p><strong>Tier:</strong> <span id="modalTier"></span></p>
-    <p><strong>Developer:</strong> <span id="modalDev"></span></p>
-    <p><strong>Developer 𝕏:</strong> <a id="modalDevX" href="#" target="_blank"></a></p>
-    <p><strong>Doxxed:</strong> <span id="modalDoxxed"></span></p>
-    <p><strong>Issuer:</strong> <span id="modalIssuer"></span></p>
-    <p><strong>Website:</strong> <a id="modalWebsite" href="#" target="_blank"></a></p>
-    <p><strong>Email:</strong> <span id="modalEmail"></span></p>
-
-    <p><strong>Social:</strong>
-      <a id="modalX" href="#" target="_blank">𝕏</a> |
-      <a id="modalTG" href="#" target="_blank">Telegram</a>
-    </p>
-
-    <p><strong>Seal NFT:</strong> <span id="modalNFT"></span></p>
-    <p><strong>Seal Image:</strong> <span id="modalNFTImage"></span></p>
-
-    <div id="modalNFTPreviewWrap" style="display:none;text-align:center;margin-top:10px;">
-      <img id="modalNFTPreview" src="" alt="Seal NFT Image"
-           style="max-width:100%;width:260px;border-radius:10px;
-           box-shadow:0 4px 14px rgba(0,0,0,.25);">
-    </div>
-  </div>
-</div>
-
+<!-- MODAL + JS -->
 <script>
 let allProjects = [];
 let currentFilter = "all";
