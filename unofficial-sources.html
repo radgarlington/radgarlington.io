@@ -9,6 +9,25 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-height:1.45}
 
+/* Back Button (same as education/terminology) */
+.back-btn{
+  display:inline-block;
+  margin:12px 0 6px 12px;
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 12px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:700;
+  font-size:.85rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  transition:opacity .2s ease,transform .2s ease;
+}
+.back-btn:hover{
+  opacity:.9;
+  transform:translateY(-1px);
+}
+
 .banner{
   background:linear-gradient(90deg,#d69e00,#a87400);
   color:#fff;text-align:center;
@@ -91,23 +110,6 @@ body{background:#fff;font-family:Arial,system-ui,sans-serif;color:#0f172a;line-h
   text-decoration:underline;
 }
 
-/* Buttons */
-.back-btn{
-  display:inline-block;
-  background:#d69e00;
-  color:#fff;
-  padding:9px 18px;
-  border-radius:6px;
-  text-decoration:none;
-  font-weight:700;
-  font-size:.92rem;
-  margin-bottom:26px;
-  border:1.5px solid #a87400;
-  box-shadow:0 2px 6px rgba(0,0,0,.25);
-  transition:.15s;
-}
-.back-btn:hover{background:#b88500}
-
 footer{
   margin-top:40px;
   padding:22px 10px;
@@ -122,14 +124,14 @@ footer{
 
 <body>
 
+<a href="education.html" class="back-btn">← Back to Education Hub</a>
+
 <div class="banner">
   ⚠️📉 UNOFFICIAL DATA SOURCES  
   <em>Viewer beware — these platforms are not pulling canonical XRPL data.</em>
 </div>
 
 <div class="container">
-
-  <a href="education.html" class="back-btn">← Back to Education Hub</a>
 
   <!-- DANGER SECTION FIRST -->
   <div class="danger-title">🚨 HIGH-RISK UNOFFICIAL / INACCURATE PLATFORMS</div>
