@@ -14,23 +14,63 @@
         line-height:1.55;
     }
 
-    /* Back Button (standard education style) */
-    .back-btn{
-      display:inline-block;
-      margin:12px 0 6px 12px;
-      background:#0A74D0;
-      color:#fff;
-      padding:6px 12px;
-      border-radius:6px;
-      text-decoration:none;
+    /* 🔹 Shared RAD glossy button */
+    .rad-btn{
+      position:relative;
+      overflow:hidden;
+      color:#f9fafb;
       font-weight:700;
-      font-size:.85rem;
-      box-shadow:0 2px 6px rgba(0,0,0,.18);
-      transition:opacity .2s ease,transform .2s ease;
+      padding:11px 20px;
+      font-size:.9rem;
+      border-radius:12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 3px 10px rgba(15,23,42,.25);
+      background:linear-gradient(145deg,#0f7cf0,#07418f);
+      border:1px solid #06336f;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
     }
-    .back-btn:hover{
-      opacity:.9;
-      transform:translateY(-1px);
+    .rad-btn::before{
+      content:"";
+      position:absolute;
+      top:-60%;
+      left:-10%;
+      width:130%;
+      height:80%;
+      background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+      opacity:.25;
+      transform:skewY(-12deg);
+      transition:transform .25s ease, opacity .2s ease;
+    }
+    .rad-btn span{
+      position:relative;
+      z-index:1;
+    }
+    .rad-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 18px rgba(15,23,42,.35);
+      filter:brightness(1.03);
+    }
+    .rad-btn:hover::before{
+      transform:skewY(-12deg) translateY(35%);
+      opacity:.35;
+    }
+
+    /* Top strip for back button (above banner) */
+    .top-strip{
+      max-width:960px;
+      margin:10px auto 6px;
+      padding:0 12px;
+      display:flex;
+      justify-content:flex-start;
+    }
+    .top-strip .rad-btn{
+      padding:8px 16px;
+      font-size:.85rem;
+      box-shadow:0 2px 8px rgba(15,23,42,.25);
     }
 
     /* Banner */
@@ -102,7 +142,12 @@
 </head>
 <body>
 
-<a href="education.html" class="back-btn">← Back to Education Hub</a>
+<!-- Glossy back button strip -->
+<div class="top-strip">
+  <a href="education.html" class="rad-btn">
+    <span>← Back to Education Hub</span>
+  </a>
+</div>
 
 <div class="banner">
     THE LEDGER BRIEFING — AMM & PRICE MECHANICS
