@@ -1,57 +1,54 @@
 /* =========================================================
    RAD NFT LISTINGS — Core JS
-   WCK Featured NFT only — grid intentionally empty for now
+   WCK Featured NFT + anonymous RAD placeholders in grid
    ========================================================= */
 
 /* ============================
-   NFT DATA
+   FEATURED NFT (HERO)
    ============================ */
-const nftData = [
-  // Featured NFT: CONTINENTAL WICK (hero only)
-  {
-    token: "$WCK",
-    name: "CONTINENTAL WICK",
-    status: "certified",
-    droppingSoon: true,
-    image: "assets/logos/wck_logo.webp",
-    desc: "Protocol Enforcement Collection — Dropping Soon."
-  },
+const featuredNFT = {
+  name: "CONTINENTAL WICK",
+  status: "certified",
+  droppingSoon: true,
+  image: "assets/logos/wck_logo.webp",
+  desc: "Protocol Enforcement Collection — Dropping Soon."
+};
 
-  // Placeholder slots kept for future use (not rendered)
+/* ============================
+   GRID PLACEHOLDERS
+   (NO TOKEN NAMES, NO PROJECT NAMES)
+   ============================ */
+const gridSlots = [
   {
-    token: "",
-    name: "",
     status: "certified",
-    droppingSoon: false,
-    image: "assets/RAD_ledger.png",
-    desc: ""
+    image: "assets/RAD_ledger.png"
   },
   {
-    token: "",
-    name: "",
     status: "verified",
-    droppingSoon: false,
-    image: "assets/RAD_ledger.png",
-    desc: ""
+    image: "assets/RAD_ledger.png"
+  },
+  {
+    status: "unverified",
+    image: "assets/RAD_ledger.png"
   }
 ];
 
 /* =========================================================
-   FEATURED NFT RENDERING (WCK ONLY)
+   FEATURED NFT RENDERING (WCK HERO)
    ========================================================= */
 function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
   if (!featuredWrap) return;
 
-  const featured = nftData[0]; // WCK hero
+  const f = featuredNFT;
 
   featuredWrap.innerHTML = `
     <div class="featured-card">
-      <img src="${featured.image}" alt="${featured.name}">
-      <h3>${featured.name}</h3>
-      <p>${featured.desc}</p>
+      <img src="${f.image}" alt="${f.name}">
+      <h3>${f.name}</h3>
+      <p>${f.desc}</p>
       ${
-        featured.droppingSoon
+        f.droppingSoon
           ? `<div style="
                 background:#b41010;
                 color:#fff;
@@ -68,14 +65,29 @@ function renderFeatured() {
 }
 
 /* =========================================================
-   GRID RENDERING (INTENTIONALLY EMPTY FOR NOW)
+   GRID RENDERING (RAD LEDGER PLACEHOLDERS ONLY)
    ========================================================= */
 function renderGrid(filter = "all") {
   const grid = document.getElementById("nftGrid");
   if (!grid) return;
 
-  // Hard-clear: no cards rendered until we start listing collections.
   grid.innerHTML = "";
+
+  const filtered = gridSlots.filter(slot => {
+    if (filter === "all") return true;
+    return slot.status === filter;
+  });
+
+  filtered.forEach(slot => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${slot.image}" alt="RAD Ledger NFT placeholder">
+    `;
+
+    grid.appendChild(card);
+  });
 }
 
 /* =========================================================
@@ -89,8 +101,6 @@ function initFilters() {
       buttons.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
 
-      // Still call renderGrid so the UI feels wired,
-      // but it will keep the grid empty.
       const filter = btn.dataset.filter;
       renderGrid(filter);
     });
@@ -102,6 +112,6 @@ function initFilters() {
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   renderFeatured();    // WCK hero only
-  renderGrid("all");   // bottom grid = empty
+  renderGrid("all");   // grid with RAD_ledger placeholders only
   initFilters();
 });
