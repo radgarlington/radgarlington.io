@@ -47,10 +47,7 @@
         font-weight:500;
     }
 
-    .strong {
-        font-weight:800;
-        color:#0A74D0;
-    }
+    .strong { font-weight:800; color:#0A74D0; }
 
     ul {
         margin:14px 0 20px 22px;
@@ -61,7 +58,7 @@
     }
 
     /* Back button */
-    .back-btn {
+    a.back-btn {
         display:inline-block;
         margin:20px 0;
         padding:10px 22px;
@@ -74,8 +71,28 @@
         box-shadow:0 2px 8px rgba(0,0,0,0.25);
         transition:.15s;
     }
-    .back-btn:hover {
-        filter:brightness(1.05);
+    a.back-btn:hover { filter:brightness(1.05); }
+
+    /* RAD Logo block */
+    .rad-logo-wrap {
+        text-align:center;
+        margin:50px 0 12px;
+    }
+    .rad-logo-wrap img {
+        width:78px;
+        height:auto;
+        border-radius:12px;
+    }
+
+    /* Footer */
+    footer {
+        padding:24px 10px;
+        text-align:center;
+        background:#f1f5fb;
+        border-top:2px solid #d7e7ff;
+        color:#475569;
+        font-size:.9rem;
+        font-weight:600;
     }
 </style>
 
@@ -88,7 +105,7 @@
 
 <div class="container">
 
-    <a href="/" class="back-btn">← Back</a>
+    <a href="https://radgarlington.io/ledger.html" class="back-btn">← Back</a>
 
     <h2>Why This Page Exists</h2>
     <p>
@@ -115,9 +132,7 @@
         different liquidity paths. Different pools = different slippage.
     </p>
 
-    <p>
-        It’s internal math, not human error.
-    </p>
+    <p>It’s internal math, not human error.</p>
 
     <h2>Why Some Trades Look Like “Instant Profit”</h2>
     <p>
@@ -125,29 +140,24 @@
         mixed liquidity and filling orders using whatever path gives the best result.
     </p>
 
-    <p>
-        Looks wild. Means nothing.
-    </p>
+    <p>Looks wild. Means nothing.</p>
 
     <h2>Why the Chart Doesn’t Always Move</h2>
     <p>
-        Most users expect every swap to hit one pool like XMagnetic.
-        But routed trades can spill across multiple pools, meaning the main chart barely twitches.
+        Routed trades can spill across multiple pools, meaning the main chart barely twitches.
         This is normal for early AMMs with light liquidity.
     </p>
 
     <h2>Why RAD Cannot Be Rugged</h2>
     <p>
-        • Immutable supply  
-        • No “drain function”  
-        • Wallets separated and public  
-        • No hidden mint logic  
-        • Ledger-verified structure  
+        • Immutable supply<br>
+        • No “drain function”<br>
+        • Wallets separated and public<br>
+        • No hidden mint logic<br>
+        • Ledger-verified structure
     </p>
 
-    <p>
-        RAD was built ledger-first, not cash-out-first. Structure beats fear every time.
-    </p>
+    <p>RAD was built ledger-first, not cash-out-first. Structure beats fear every time.</p>
 
     <h2>What You Should Ignore</h2>
     <ul>
@@ -158,16 +168,22 @@
 
     <h2>Final Word</h2>
     <p>
-        Routed trades aren’t losses.  
-        Routed trades aren’t winnings.  
+        Routed trades aren’t losses.<br>
+        Routed trades aren’t winnings.<br>
         They’re simply how XRPL moves value through its AMM system.
     </p>
 
-    <p>
-        Trust the math. Trust the ledger. RAD is exactly where it should be.
-    </p>
-
+    <p>Trust the math. Trust the ledger. RAD is exactly where it should be.</p>
 </div>
+
+<!-- RAD LOGO ABOVE FOOTER -->
+<div class="rad-logo-wrap">
+    <img src="assets/RAD_ledger.png" alt="RAD Logo">
+</div>
+
+<footer>
+    © 2025 The RAD Ledger — Verified by Rad Garlington.
+</footer>
 
 </body>
 </html>
