@@ -136,8 +136,40 @@ body {
   color: #3e3200;
 }
 
+/* Extra meta + link styling shared by featured + grid cards */
+.card-meta{
+  font-size:.8rem;
+  color:#6b7280;
+  margin:6px 0 10px;
+}
+
+.card-links{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:6px;
+}
+
+.card-links a{
+  background:#0A74D0;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.78rem;
+  font-weight:700;
+  text-decoration:none;
+  border:1px solid #083c80;
+  transition:.15s ease;
+}
+
+.card-links a:hover{
+  filter:brightness(1.12);
+  transform:translateY(-1px);
+}
+
 /* ================================
-   FILTERS
+   FILTERS (not used but harmless)
    ================================ */
 .filters {
   display: flex;
@@ -188,6 +220,7 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,.1);
   transition: .25s;
   animation: fadeIn .45s ease;
+  position:relative;
 }
 
 .card:hover {
@@ -214,10 +247,10 @@ body {
 .card p {
   font-size: .9rem;
   color: #475569;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 
-/* View BTN */
+/* View BTN (if you ever want a single CTA) */
 .card .btn {
   background: #0A74D0;
   color: #fff;
@@ -233,43 +266,6 @@ body {
 
 .card .btn:hover {
   filter: brightness(1.15);
-}
-
-/* ================================
-   CARD META + LINK BUTTONS
-   ================================ */
-.card-meta {
-  font-size: .8rem;
-  color: #64748b;
-  margin: 10px 0 6px;
-  line-height: 1.4;
-}
-.card-meta strong {
-  color: #0A74D0;
-}
-
-.card-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-.card-links a {
-  padding: 7px 12px;
-  border-radius: 999px;
-  font-size: .78rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: 1px solid #cbd5f5;
-  color: #0A74D0;
-  background: #e5edff;
-  transition: .15s ease;
-}
-
-.card-links a:hover {
-  background: #d7e4ff;
 }
 
 /* ================================
