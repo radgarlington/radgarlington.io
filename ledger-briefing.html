@@ -14,6 +14,25 @@
         line-height:1.55;
     }
 
+    /* Back Button (standard education style) */
+    .back-btn{
+      display:inline-block;
+      margin:12px 0 6px 12px;
+      background:#0A74D0;
+      color:#fff;
+      padding:6px 12px;
+      border-radius:6px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:.85rem;
+      box-shadow:0 2px 6px rgba(0,0,0,.18);
+      transition:opacity .2s ease,transform .2s ease;
+    }
+    .back-btn:hover{
+      opacity:.9;
+      transform:translateY(-1px);
+    }
+
     /* Banner */
     .banner {
         background:linear-gradient(90deg,#0A74D0,#083c80);
@@ -57,22 +76,6 @@
         font-size:1rem;
     }
 
-    /* Back button */
-    a.back-btn {
-        display:inline-block;
-        margin:20px 0;
-        padding:10px 22px;
-        background:linear-gradient(90deg,#ffd700,#e0b600);
-        color:#18171a;
-        font-weight:700;
-        border-radius:8px;
-        border:1.5px solid #ffe083;
-        text-decoration:none;
-        box-shadow:0 2px 8px rgba(0,0,0,0.25);
-        transition:.15s;
-    }
-    a.back-btn:hover { filter:brightness(1.05); }
-
     /* RAD Logo block */
     .rad-logo-wrap {
         text-align:center;
@@ -99,13 +102,13 @@
 </head>
 <body>
 
+<a href="education.html" class="back-btn">← Back to Education Hub</a>
+
 <div class="banner">
     THE LEDGER BRIEFING — AMM & PRICE MECHANICS
 </div>
 
 <div class="container">
-
-    <a href="education.html" class="back-btn">← Back to Education Hub</a>
 
     <h2>Why This Page Exists</h2>
     <p>
