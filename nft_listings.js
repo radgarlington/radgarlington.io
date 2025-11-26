@@ -1,6 +1,6 @@
 /* =========================================================
    RAD NFT LISTINGS — Core JS
-   WCK Featured + RAD_ledger placeholders + link buttons
+   Clean, synced with CSS, WCK Featured NFT enabled
    ========================================================= */
 
 /* ============================
@@ -8,30 +8,25 @@
    ============================ */
 const nftData = [
 
-  /* ======== FEATURED NFT: WCK (also shows in grid) ======== */
+  /* ======== FEATURED NFT: WCK (Featured Only) ======== */
   {
     token: "$WCK",
     name: "CONTINENTAL WICK",
     status: "certified",
-    droppingSoon: true, // badge on cards
+    droppingSoon: true,
     image: "assets/logos/wck_logo.webp",
-    desc: "Protocol Enforcement Collection.",
-    showInGrid: true,
+    desc: "Protocol Enforcement Collection — Dropping Soon.",
+    showInGrid: false,  // ✅ FEATURED ONLY
 
-    // Optional meta
-    issuer: "",       // XRPL issuer for the NFT collection (fill when ready)
-    artist: "",       // Artist / studio name
-
-    // Optional links (only render if non-empty)
-    links: {
-      xrpscan:   "",  // e.g. "https://xrpscan.com/nft/..."
-      bithomp:   "",  // e.g. "https://bithomp.com/nft/..."
-      collection:"",  // e.g. marketplace or gallery URL
-      website:   ""   // project site
-    }
+    // 🔹 Optional meta + links (fill these with real values when ready)
+    collection: "",     // e.g. "CONTINENTAL WICK — Series 1"
+    issuer: "",         // e.g. "rXXXXXXXX..."
+    xrpscan: "",        // e.g. "https://xrpscan.com/nft/..."
+    bithomp: "",        // e.g. "https://bithomp.com/nft/..."
+    link: ""            // e.g. "https://wicktoken.net/nft"
   },
 
-  /* ======== PLACEHOLDER 2 — RAD_ledger image ======== */
+  /* ======== PLACEHOLDER SLOTS (Hidden for now) ======== */
   {
     token: "",
     name: "",
@@ -39,19 +34,9 @@ const nftData = [
     droppingSoon: false,
     image: "assets/RAD_ledger.png",
     desc: "",
-    showInGrid: true,
-
-    issuer: "",
-    artist: "",
-    links: {
-      xrpscan:   "",
-      bithomp:   "",
-      collection:"",
-      website:   ""
-    }
+    showInGrid: false
   },
 
-  /* ======== PLACEHOLDER 3 — RAD_ledger image ======== */
   {
     token: "",
     name: "",
@@ -59,16 +44,7 @@ const nftData = [
     droppingSoon: false,
     image: "assets/RAD_ledger.png",
     desc: "",
-    showInGrid: true,
-
-    issuer: "",
-    artist: "",
-    links: {
-      xrpscan:   "",
-      bithomp:   "",
-      collection:"",
-      website:   ""
-    }
+    showInGrid: false
   }
 
 ];
@@ -81,56 +57,55 @@ function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
   if (!featuredWrap) return;
 
-  const featured = nftData[0]; // WCK index 0
+  const featured = nftData[0]; // WCK always at index 0
 
-  // Build meta + links blocks (same pattern as grid)
-  const metaHTML =
-    (featured.issuer || featured.artist)
-      ? `
-        <div class="card-meta">
-          ${featured.issuer ? `<div><strong>Issuer:</strong> ${featured.issuer}</div>` : ""}
-          ${featured.artist ? `<div><strong>Artist:</strong> ${featured.artist}</div>` : ""}
-        </div>
-      `
-      : "";
+  // Build meta line (only if data exists)
+  const metaPieces = [];
+  if (featured.collection) metaPieces.push(`<strong>Collection:</strong> ${featured.collection}`);
+  if (featured.issuer)     metaPieces.push(`<strong>Issuer:</strong> ${featured.issuer}`);
 
-  const links = featured.links || {};
-  const linksHTML =
-    (links.xrpscan || links.bithomp || links.collection || links.website)
-      ? `
-        <div class="card-links">
-          ${links.xrpscan ? `<a href="${links.xrpscan}" target="_blank" rel="noopener">XRPSCAN</a>` : ""}
-          ${links.bithomp ? `<a href="${links.bithomp}" target="_blank" rel="noopener">Bithomp</a>` : ""}
-          ${links.collection ? `<a href="${links.collection}" target="_blank" rel="noopener">Collection</a>` : ""}
-          ${links.website ? `<a href="${links.website}" target="_blank" rel="noopener">Website</a>` : ""}
-        </div>
-      `
-      : "";
+  const metaHtml = metaPieces.length
+    ? `<div class="card-meta">${metaPieces.join(" &nbsp;•&nbsp; ")}</div>`
+    : "";
+
+  // Build link buttons (only if URLs exist)
+  const linkButtons = [];
+  if (featured.xrpscan) {
+    linkButtons.push(
+      `<a href="${featured.xrpscan}" target="_blank" rel="noopener">XRPSCAN</a>`
+    );
+  }
+  if (featured.bithomp) {
+    linkButtons.push(
+      `<a href="${featured.bithomp}" target="_blank" rel="noopener">Bithomp</a>`
+    );
+  }
+  if (featured.link) {
+    linkButtons.push(
+      `<a href="${featured.link}" target="_blank" rel="noopener">View Collection</a>`
+    );
+  }
+
+  const linksHtml = linkButtons.length
+    ? `<div class="card-links">${linkButtons.join("")}</div>`
+    : "";
 
   featuredWrap.innerHTML = `
-    <div class="featured-card" style="position:relative;">
-      ${featured.droppingSoon ? `
-        <div style="
-          position:absolute;
-          top:12px;
-          right:12px;
-          padding:4px 8px;
-          font-size:.75rem;
-          font-weight:800;
-          border-radius:6px;
-          background:#b41010;
-          color:#fff;
-          box-shadow:0 2px 6px rgba(0,0,0,.25);
-        ">
-          DROPPING SOON
-        </div>
-      ` : ""}
-
+    <div class="featured-card">
       <img src="${featured.image}" alt="${featured.name}">
       <h3>${featured.name}</h3>
       <p>${featured.desc}</p>
-      ${metaHTML}
-      ${linksHTML}
+      ${metaHtml}
+      ${linksHtml}
+      ${featured.droppingSoon ? `<div style="
+        background:#b41010;
+        color:#fff;
+        font-weight:800;
+        padding:6px 10px;
+        border-radius:8px;
+        margin-top:10px;
+        display:inline-block;
+      ">DROPPING SOON</div>` : ""}
     </div>
   `;
 }
@@ -139,65 +114,71 @@ function renderFeatured() {
 /* =========================================================
    GRID RENDERING
    ========================================================= */
-function renderGrid() {
+function renderGrid(filter = "all") {
   const grid = document.getElementById("nftGrid");
   if (!grid) return;
 
   grid.innerHTML = "";
 
-  const filtered = nftData.filter(item => item.showInGrid);
+  const filtered = nftData.filter(item => {
+    if (!item.showInGrid) return false;  // ✅ Only items explicitly allowed
+    if (filter === "all") return true;
+    return item.status === filter;
+  });
 
   filtered.forEach(item => {
     const card = document.createElement("div");
     card.className = "card";
-    card.style.position = "relative";
 
-    const metaHTML =
-      (item.issuer || item.artist)
-        ? `
-          <div class="card-meta">
-            ${item.issuer ? `<div><strong>Issuer:</strong> ${item.issuer}</div>` : ""}
-            ${item.artist ? `<div><strong>Artist:</strong> ${item.artist}</div>` : ""}
-          </div>
-        `
-        : "";
+    // Meta line for grid cards
+    const metaPieces = [];
+    if (item.collection) metaPieces.push(`<strong>Collection:</strong> ${item.collection}`);
+    if (item.issuer)     metaPieces.push(`<strong>Issuer:</strong> ${item.issuer}`);
+    const metaHtml = metaPieces.length
+      ? `<div class="card-meta">${metaPieces.join(" &nbsp;•&nbsp; ")}</div>`
+      : "";
 
-    const links = item.links || {};
-    const linksHTML =
-      (links.xrpscan || links.bithomp || links.collection || links.website)
-        ? `
-          <div class="card-links">
-            ${links.xrpscan ? `<a href="${links.xrpscan}" target="_blank" rel="noopener">XRPSCAN</a>` : ""}
-            ${links.bithomp ? `<a href="${links.bithomp}" target="_blank" rel="noopener">Bithomp</a>` : ""}
-            ${links.collection ? `<a href="${links.collection}" target="_blank" rel="noopener">Collection</a>` : ""}
-            ${links.website ? `<a href="${links.website}" target="_blank" rel="noopener">Website</a>` : ""}
-          </div>
-        `
-        : "";
+    // Link buttons for grid cards
+    const linkButtons = [];
+    if (item.xrpscan) {
+      linkButtons.push(
+        `<a href="${item.xrpscan}" target="_blank" rel="noopener">XRPSCAN</a>`
+      );
+    }
+    if (item.bithomp) {
+      linkButtons.push(
+        `<a href="${item.bithomp}" target="_blank" rel="noopener">Bithomp</a>`
+      );
+    }
+    if (item.link) {
+      linkButtons.push(
+        `<a href="${item.link}" target="_blank" rel="noopener">View Collection</a>`
+      );
+    }
+
+    const linksHtml = linkButtons.length
+      ? `<div class="card-links">${linkButtons.join("")}</div>`
+      : "";
 
     card.innerHTML = `
-      ${item.droppingSoon ? `
-        <div style="
-          position:absolute;
-          top:12px;
-          right:12px;
-          padding:4px 8px;
-          font-size:.75rem;
-          font-weight:800;
-          border-radius:6px;
-          background:#b41010;
-          color:#fff;
-          box-shadow:0 2px 6px rgba(0,0,0,.25);
-        ">
-          DROPPING SOON
-        </div>
-      ` : ""}
+      ${item.droppingSoon ? `<div style="
+        background:#b41010;
+        color:#fff;
+        font-weight:800;
+        padding:4px 8px;
+        border-radius:6px;
+        position:absolute;
+        top:12px;
+        right:12px;
+        font-size:.75rem;
+        box-shadow:0 2px 6px rgba(0,0,0,.25);
+      ">DROPPING SOON</div>` : ""}
 
-      <img src="${item.image}" alt="">
+      <img src="${item.image}" alt="${item.name || ''}">
       <h3>${item.name || ""}</h3>
       <p>${item.desc || ""}</p>
-      ${metaHTML}
-      ${linksHTML}
+      ${metaHtml}
+      ${linksHtml}
     `;
 
     grid.appendChild(card);
@@ -206,9 +187,28 @@ function renderGrid() {
 
 
 /* =========================================================
+   FILTER LOGIC
+   ========================================================= */
+function initFilters() {
+  const buttons = document.querySelectorAll(".filter-btn");
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      buttons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const filter = btn.dataset.filter;
+      renderGrid(filter);
+    });
+  });
+}
+
+
+/* =========================================================
    INIT
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  renderFeatured();
-  renderGrid();
+  renderFeatured();    // WCK hero
+  renderGrid("all");   // Bottom grid (currently empty until you set showInGrid:true somewhere)
+  initFilters();
 });
