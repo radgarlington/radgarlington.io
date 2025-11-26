@@ -325,69 +325,97 @@
   const radChartCtx = document.getElementById("radChart").getContext("2d");
   const RAD_ISSUER = "rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V";
 
-  async function fetchPrice(){
-    try{
-      const res = await fetch("https://xrplcluster.com", {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body:JSON.stringify({
-          method:"amm_info",
-          params:[{
-            asset:{ currency:"XRP" },
-            asset2:{ currency:"RAD", issuer:RAD_ISSUER }
-          }]
-        })
-      });
+  async function getAMMPrice() {
+    const payloads = [
+      {
+        asset: { currency: "XRP" },
+        asset2: { currency: "RAD", issuer: RAD_ISSUER }
+      },
+      {
+        asset: { currency: "RAD", issuer: RAD_ISSUER },
+        asset2: { currency: "XRP" }
+      }
+    ];
 
-      const data = await res.json();
-      if(!data.result || !data.result.amm) return null;
+    for (let p of payloads) {
+      try {
+        const res = await fetch("https://xrplcluster.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            method: "amm_info",
+            params: [p]
+          })
+        });
 
-      const a = parseFloat(data.result.amm.amount);
-      const b = parseFloat(data.result.amm.amount2);
-      return a / b;
-    }catch(e){ return null; }
+        const data = await res.json();
+        if (!data.result || !data.result.amm) continue;
+
+        let a = parseFloat(data.result.amm.amount);
+        let b = parseFloat(data.result.amm.amount2);
+
+        if (!a || !b) continue;
+
+        let price;
+
+        // orientation A: XRP → RAD
+        if (p.asset.currency === "XRP") {
+          price = a / b;
+        }
+        // orientation B: RAD → XRP
+        else {
+          price = b / a;
+        }
+
+        return price;
+      } catch (e) {
+        continue;
+      }
+    }
+    return null;
   }
 
-  const chartData = { labels:[], prices:[] };
+  const chartData = { labels: [], prices: [] };
 
   const chart = new Chart(radChartCtx, {
-    type:"line",
-    data:{
+    type: "line",
+    data: {
       labels: chartData.labels,
-      datasets:[{
-        label:"$RAD Price (XRP)",
-        data: chartData.prices,
-        borderColor:"#0A74D0",
-        borderWidth:3,
-        tension:0.25,
-        pointRadius:0
-      }]
+      datasets: [
+        {
+          label: "$RAD Price (XRP)",
+          data: chartData.prices,
+          borderColor: "#0A74D0",
+          borderWidth: 3,
+          tension: 0.25,
+          pointRadius: 0
+        }
+      ]
     },
-    options:{
-      responsive:true,
-      scales:{
-        x:{ display:false },
-        y:{ ticks:{ callback:v => v.toFixed(6) } }
+    options: {
+      responsive: true,
+      scales: {
+        x: { display: false },
+        y: { ticks: { callback: v => v.toFixed(6) } }
       },
-      plugins:{ legend:{ display:false } }
+      plugins: { legend: { display: false } }
     }
   });
 
-  async function updateChart(){
-    const price = await fetchPrice();
+  async function updateChart() {
+    const price = await getAMMPrice();
     const display = document.getElementById("radPriceDisplay");
 
-    if(!price){
+    if (!price) {
       display.innerHTML = "No AMM pool detected.";
       return;
     }
 
     const now = new Date().toLocaleTimeString();
-
     chartData.labels.push(now);
     chartData.prices.push(price);
 
-    if(chartData.labels.length > 50){
+    if (chartData.labels.length > 50) {
       chartData.labels.shift();
       chartData.prices.shift();
     }
@@ -400,6 +428,5 @@
   setInterval(updateChart, 3000);
 </script>
 
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
