@@ -8,6 +8,65 @@
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 
+/* 🔹 Shared RAD glossy button (same as Education Hub) */
+.rad-btn{
+  position:relative;
+  overflow:hidden;
+  color:#f9fafb;
+  font-weight:700;
+  padding:11px 20px;
+  font-size:.9rem;
+  border-radius:12px;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 3px 10px rgba(15,23,42,.25);
+  background:linear-gradient(145deg,#0f7cf0,#07418f);
+  border:1px solid #06336f;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.rad-btn::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-10%;
+  width:130%;
+  height:80%;
+  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+  opacity:.25;
+  transform:skewY(-12deg);
+  transition:transform .25s ease, opacity .2s ease;
+}
+.rad-btn span{
+  position:relative;
+  z-index:1;
+}
+.rad-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(15,23,42,.35);
+  filter:brightness(1.03);
+}
+.rad-btn:hover::before{
+  transform:skewY(-12deg) translateY(35%);
+  opacity:.35;
+}
+
+/* Top strip above banner (left-aligned back button) */
+.top-strip{
+  max-width:960px;
+  margin:10px auto 6px;
+  padding:0 12px;
+  display:flex;
+  justify-content:flex-start;
+}
+.top-strip .rad-btn{
+  padding:8px 16px;
+  font-size:.85rem;
+  box-shadow:0 2px 8px rgba(15,23,42,.25);
+}
+
 /* Banner */
 .banner{
   background:linear-gradient(90deg,#b45309,#f97316);
@@ -50,19 +109,6 @@ header p{
   font-size:.9rem;
 }
 
-/* Back button */
-.back-btn{
-  position:absolute;top:10px;left:18px;
-  background:#b45309;color:#fff;
-  padding:6px 10px;border-radius:6px;
-  text-decoration:none;font-weight:600;font-size:.8rem;
-  letter-spacing:.2px;
-  transition:opacity .2s ease,transform .2s ease;
-}
-.back-btn:hover{
-  opacity:.9;transform:translateY(-1px);
-}
-
 /* List container */
 main{max-width:900px;margin:30px auto;padding:0 16px}
 h2{
@@ -94,13 +140,19 @@ footer{
 </head>
 <body>
 
+<!-- Top back button strip (same style as Education Hub) -->
+<div class="top-strip">
+  <a href="ledger.html" class="rad-btn">
+    <span>← Back to Ledger</span>
+  </a>
+</div>
+
 <div class="banner">
   🤡 THE SHILL LIST — Public. Embarrassing. No Credibility.
   <em>Logged by RAD Garlington</em>
 </div>
 
 <header>
-  <a href="/ledger.html" class="back-btn">← Back</a>
   <h1>THE SHILL LIST</h1>
   <p>Documenting the loudest, dumbest, most persistent chain parrots on social media.</p>
   <div class="disclaimer">
