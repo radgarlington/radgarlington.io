@@ -19,28 +19,63 @@ body {
   color:#0f172a;
 }
 
-/* Back Button Wrapper — LEFT ALIGNED */
-.back-wrap {
-  text-align:left;
-  margin:12px 0 0 14px;
+/* 🔹 Shared RAD glossy button */
+.rad-btn{
+  position:relative;
+  overflow:hidden;
+  color:#f9fafb;
+  font-weight:700;
+  padding:11px 20px;
+  font-size:.9rem;
+  border-radius:12px;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 3px 10px rgba(15,23,42,.25);
+  background:linear-gradient(145deg,#0f7cf0,#07418f);
+  border:1px solid #06336f;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.rad-btn::before{
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-10%;
+  width:130%;
+  height:80%;
+  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
+  opacity:.25;
+  transform:skewY(-12deg);
+  transition:transform .25s ease, opacity .2s ease;
+}
+.rad-btn span{
+  position:relative;
+  z-index:1;
+}
+.rad-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(15,23,42,.35);
+  filter:brightness(1.03);
+}
+.rad-btn:hover::before{
+  transform:skewY(-12deg) translateY(35%);
+  opacity:.35;
 }
 
-/* RAD Back Button */
-.back-btn {
-  display:inline-block;
-  background:#0A74D0;
-  color:#fff;
-  padding:10px 18px;
-  font-weight:700;
-  font-size:.9rem;
-  text-decoration:none;
-  border-radius:10px;
-  box-shadow:0 3px 8px rgba(0,0,0,.22);
-  transition:all .18s ease;
+/* Top strip for Back to Ledger (above banner) */
+.top-strip{
+  max-width:960px;
+  margin:10px auto 6px;
+  padding:0 12px;
+  display:flex;
+  justify-content:flex-start;
 }
-.back-btn:hover {
-  background:#094d9d;
-  transform:translateY(-2px);
+.top-strip .rad-btn{
+  padding:8px 16px;
+  font-size:.85rem;
+  box-shadow:0 2px 8px rgba(15,23,42,.25);
 }
 
 /* ======================== */
@@ -148,11 +183,14 @@ body {
 
 <body>
 
-<div class="banner">The RAD NFT Registry — Source of Truth</div>
-
-<div class="back-wrap">
-  <a href="ledger.html" class="back-btn">← Back</a>
+<!-- Glossy Back to Ledger button above banner -->
+<div class="top-strip">
+  <a href="ledger.html" class="rad-btn">
+    <span>← Back to Ledger</span>
+  </a>
 </div>
+
+<div class="banner">The RAD NFT Registry — Source of Truth</div>
 
 <div class="submit-callout">
   <a href="submit-nft.html" class="submit-btn">Submit Your NFT</a>
