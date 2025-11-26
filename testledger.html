@@ -60,7 +60,7 @@ header p{
   opacity:.9;transform:translateY(-1px)
 }
 
-/* BUY RAD BUTTON */
+/* BUY RAD BUTTON — RIGHT SIDE */
 .buy-rad-btn {
   position:absolute;
   top:10px;
@@ -104,22 +104,6 @@ header p{
 }
 .legend span{display:block;margin:4px 0}
 
-/* Ledger Briefing Pixar Image */
-.briefing-img-wrap{
-  text-align:center;
-  background:#eaf3ff;
-  padding:26px 10px 6px;
-  border-bottom:2px solid #d7e7ff;
-}
-.briefing-img{
-  width:220px;
-  max-width:85%;
-  height:auto;
-  display:block;
-  margin:auto;
-  image-rendering:auto;
-}
-
 /* ACTION BUTTON WRAPPERS */
 .rad-actions {
   display:flex;
@@ -151,6 +135,7 @@ header p{
 
 /* GOLD HERO NFT BUTTON */
 .nft-btn {
+  position: relative;
   background:linear-gradient(90deg,#ffd700,#e6c200) !important;
   color:#111 !important;
   border:3px solid #b89600 !important;
@@ -224,6 +209,7 @@ footer{
   left:0;top:0;width:100%;height:100%;
   background:rgba(0,0,0,.55)
 }
+
 .modal-content{
   background:#fff;color:#0f172a;
   margin:5% auto;padding:20px;
@@ -232,15 +218,18 @@ footer{
   max-height:82vh;overflow-y:auto;
   box-shadow:0 10px 30px rgba(0,0,0,.25)
 }
+
 .close{
   float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0
 }
 .close:hover{color:#083c80}
+
 .modal-content a{
   color:#0A74D0;text-decoration:none;font-weight:bold
 }
 
 .checkmark{color:#0A74D0;font-weight:bold}
+
 </style>
 </head>
 
@@ -278,20 +267,31 @@ footer{
   </p>
 </section>
 
-<!-- NEW PIXAR LEDGER BRIEFING IMAGE BLOCK -->
-<div class="briefing-img-wrap">
-  <a href="ledger-briefing.html">
-    <img src="assets/ledger_briefing.webp"
-         alt="Ledger Briefing"
-         class="briefing-img">
-  </a>
-</div>
-
 <div class="legend">
   <span>🟡 Certified — Doxxed + Seal NFT</span>
   <span>🔷 Verified — Non-Doxxed</span>
   <span>⚫ Unverified — Auto-Listed from XRPL</span>
   <span>⬛ Expired — Renewal Required</span>
+</div>
+
+<!-- HERO GOLD NFT BUTTON -->
+<div class="rad-actions primary-actions" style="padding:28px 10px;">
+  <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
+    ✨ NFT Listings
+  </a>
+
+  <!-- NEW BUTTONS INSERTED HERE (PER YOUR REQUEST) -->
+  <a href="ledger-briefing.html" class="rad-btn" style="background:#0A74D0;">
+    📘 Ledger Briefing
+  </a>
+
+  <a href="unofficial-sources.html" class="rad-btn" style="background:#d69e00;border-color:#a87400;">
+    ⚠️ Unofficial Data Sources
+  </a>
+
+  <a href="scams.html" class="rad-btn" style="background:#f59e0b;border-color:#c77c05;">
+    📒 Scam Intelligence Dossier
+  </a>
 </div>
 
 <!-- ADMIN SECTION -->
@@ -303,20 +303,13 @@ footer{
 <!-- HUMAN ENFORCEMENT -->
 <div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
   <a href="shills.html" class="rad-btn" style="background:#6366f1;">📢 Shills</a>
-  <a href="threat-actors.html" class="rad-btn" style="background:#b41010;">🚫 Threat Actors Directory</a>
+  <a href="threat-actors.html" class="rad-btn" style="background:#b41010;border-color:#7f0f0f;">🚫 Threat Actors Directory</a>
 </div>
 
 <!-- PROJECT ENFORCEMENT -->
 <div class="rad-actions" style="background:#fff5f5;border-bottom:2px solid #e8b3b3;">
-  <a href="rugreport.html" class="rad-btn" style="background:#8f0d0d;">🧨 Rug Report</a>
-  <a href="blacklist.html" class="rad-btn" style="background:#111;">🚫 Blacklist</a>
-</div>
-
-<!-- NFT Listings (moved to its own full row) -->
-<div class="rad-actions" style="background:#f8fbff;border-bottom:2px solid #d7e7ff;">
-  <a href="nfts.html" class="rad-btn nft-btn" style="font-size:1.15rem;padding:16px 34px;">
-    ✨ NFT Listings
-  </a>
+  <a href="rugreport.html" class="rad-btn" style="background:#8f0d0d;border-color:#5f0909;">🧨 Rug Report</a>
+  <a href="blacklist.html" class="rad-btn" style="background:#111;color:#fff;">🚫 Blacklist</a>
 </div>
 
 <!-- FILTERS -->
@@ -382,14 +375,17 @@ footer{
 let allProjects = [];
 let currentFilter = "all";
 
+/* DEFAULT LOGO */
 const defaultUnverifiedLogo = "assets/RAD_ledger.png";
 
+/* EXPIRATION CHECK */
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
+/* CATEGORY */
 function getCategory(entry){
   const t = (entry.tier || "").toLowerCase();
   if(t === "certified") return "certified";
@@ -397,6 +393,7 @@ function getCategory(entry){
   return "unverified";
 }
 
+/* META */
 function getMeta(entry){
   const t = (entry.tier || "").toLowerCase();
   const issuers = entry.issuers || [];
@@ -409,9 +406,11 @@ function getMeta(entry){
     if(issuers.length === 1) return `Issuer: ${issuers[0].issuer}`;
     return `Issuers: ${issuers.length}`;
   }
+
   return "";
 }
 
+/* ICON */
 function getIcon(cat){
   if(cat === "certified") return "🟡";
   if(cat === "verified") return "🔷";
@@ -419,13 +418,16 @@ function getIcon(cat){
   return "⚫";
 }
 
+/* RENDER LEDGER */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   ledger.innerHTML = "";
 
   const grouped = {};
+
   allProjects.forEach(p => {
     if(currentFilter !== "all" && p.category !== currentFilter) return;
+
     const letter = (p.token.replace("$","")[0] || "#").toUpperCase();
     if(!grouped[letter]) grouped[letter] = [];
     grouped[letter].push(p);
@@ -442,9 +444,10 @@ function renderLedger(){
       const li = document.createElement("li");
       li.className = "entry";
 
+      const tier = (entry.tier || "").toLowerCase();
       const icon = getIcon(entry.category);
       const meta = getMeta(entry);
-      const isCertified = (entry.tier || "").toLowerCase() === "certified";
+      const isCertified = tier === "certified";
 
       li.innerHTML = `
         <span class="${isCertified ? "certified-bold" : ""}">
@@ -455,7 +458,7 @@ function renderLedger(){
 
       const issuers = entry.issuers || [];
 
-      if(entry.tier === "certified" || entry.tier === "verified"){
+      if(tier === "certified" || tier === "verified"){
         li.onclick = () => openVerifiedCard(entry);
       } else {
         if(issuers.length === 0){
@@ -475,24 +478,32 @@ function renderLedger(){
   });
 }
 
+/* MULTI-ISSUER GROUP */
 function toggleIssuerGroup(entry){
   const id = "issuer-group-" + entry.token;
   const exist = document.getElementById(id);
-  if(exist){ exist.remove(); return; }
+
+  if(exist){
+    exist.remove();
+    return;
+  }
 
   const div = document.createElement("div");
   div.id = id;
-  div.style.padding = "10px 14px 14px";
+  div.style.padding = "10px 20px 14px";
 
   let html = `<div style="margin-top:6px;">`;
 
   entry.issuers.forEach(iss => {
     const encoded = JSON.stringify(iss).replace(/'/g,"&#39;");
+
     html += `
-      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;
-      border-radius:8px;background:#f9fbff;">
+      <div style="padding:10px;margin-top:8px;
+      border:1px solid #d3dced;border-radius:8px;
+      background:#f9fbff;">
         <div><strong>Issuer:</strong> ${iss.issuer}</div>
         <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
+
         <button onclick='openIssuerModal(${encoded},"${entry.token}")'
           style="margin-top:6px;padding:6px 10px;border-radius:6px;
           background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
@@ -514,6 +525,7 @@ function toggleIssuerGroup(entry){
   }
 }
 
+/* ZERO-ISSUER CARD */
 function openUndefinedIssuer(entry){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
@@ -521,20 +533,21 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalLogoWrap").style.display = "block";
   document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent =
-    `${entry.token} — Issuer: undefined`;
+  document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
 
   const dx = document.getElementById("modalDevX");
-  dx.textContent = ""; dx.href = "#";
+  dx.textContent = "";
+  dx.href = "#";
 
   document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
   document.getElementById("modalIssuer").textContent = "undefined";
 
   const w = document.getElementById("modalWebsite");
-  w.textContent = "—"; w.href = "#";
+  w.textContent = "—";
+  w.href = "#";
 
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
@@ -547,6 +560,7 @@ function openUndefinedIssuer(entry){
   document.getElementById("modalNFTPreview").src = "";
 }
 
+/* VERIFIED / CERTIFIED CARD */
 function openVerifiedCard(data){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
@@ -554,8 +568,13 @@ function openVerifiedCard(data){
   const wrap = document.getElementById("modalLogoWrap");
   const img = document.getElementById("modalLogo");
 
-  img.src = data.logo_url || defaultUnverifiedLogo;
-  wrap.style.display = "block";
+  if(data.logo_url){
+    wrap.style.display = "block";
+    img.src = data.logo_url;
+  } else {
+    wrap.style.display = "block";
+    img.src = defaultUnverifiedLogo;
+  }
 
   document.getElementById("modalToken").textContent = data.token;
   document.getElementById("modalCert").textContent = data.cert || "—";
@@ -571,34 +590,37 @@ function openVerifiedCard(data){
 
   document.getElementById("modalIssuer").textContent = data.issuer || "—";
 
-  const w = document.getElementById("modalWebsite");
-  w.textContent = data.website || "—"; w.href = data.website || "#";
+  const web = document.getElementById("modalWebsite");
+  web.textContent = data.website || "—";
+  web.href = data.website || "#";
 
   document.getElementById("modalEmail").textContent = data.email || "—";
   document.getElementById("modalX").href = data.x || "#";
   document.getElementById("modalTG").href = data.tg || "#";
 
   const nft = document.getElementById("modalNFT");
-  const nftImage = document.getElementById("modalNFTImage");
+  const nftImgSpan = document.getElementById("modalNFTImage");
   const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
   const nftPrev = document.getElementById("modalNFTPreview");
 
   if(data.nft){
     nft.innerHTML = `<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
-  } else nft.textContent = "—";
+  } else {
+    nft.textContent = "—";
+  }
 
   if(data.nft_image){
-    nftImage.innerHTML =
-      `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
     nftPrevWrap.style.display = "block";
     nftPrev.src = data.nft_image;
   } else {
-    nftImage.textContent = "—";
+    nftImgSpan.textContent = "—";
     nftPrevWrap.style.display = "none";
     nftPrev.src = "";
   }
 }
 
+/* SINGLE ISSUER CARD */
 function openIssuerModal(issuer, token){
   const modal = document.getElementById("tokenModal");
   modal.style.display = "block";
@@ -606,21 +628,21 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalLogoWrap").style.display = "block";
   document.getElementById("modalLogo").src = defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent =
-    `${token} — ${issuer.issuer}`;
+  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
   document.getElementById("modalCert").textContent = "XRPL-AUTO";
   document.getElementById("modalTier").textContent = "Unverified";
   document.getElementById("modalDev").textContent = "—";
 
   const dx = document.getElementById("modalDevX");
-  dx.textContent = ""; dx.href = "#";
+  dx.href = "#";
+  dx.textContent = "";
 
   document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
   document.getElementById("modalIssuer").textContent = issuer.issuer;
 
   const w = document.getElementById("modalWebsite");
   w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? `https://${issuer.domain}` : "#";
+  w.href = issuer.domain ? "https://"+issuer.domain : "#";
 
   document.getElementById("modalEmail").textContent = "—";
   document.getElementById("modalX").href = "#";
@@ -633,6 +655,7 @@ function openIssuerModal(issuer, token){
   document.getElementById("modalNFTPreview").src = "";
 }
 
+/* INIT */
 document.addEventListener("DOMContentLoaded", () => {
   modal = document.getElementById("tokenModal");
 
@@ -641,14 +664,15 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   window.onclick = e => {
-    if(e.target === modal){ modal.style.display = "none"; }
+    if(e.target === modal){
+      modal.style.display = "none";
+    }
   };
 
   document.querySelectorAll(".view-pill").forEach(pill => {
     pill.onclick = () => {
       currentFilter = pill.dataset.filter;
-      document.querySelectorAll(".view-pill")
-        .forEach(p => p.classList.remove("active"));
+      document.querySelectorAll(".view-pill").forEach(p => p.classList.remove("active"));
       pill.classList.add("active");
       renderLedger();
     };
@@ -657,8 +681,9 @@ document.addEventListener("DOMContentLoaded", () => {
   loadLedger();
 });
 
+/* LOAD JSON */
 async function loadLedger(){
-  const res = await fetch("/ledger.json",{cache:"no-store"});
+  const res = await fetch("ledger.json",{cache:"no-store"});
   const data = await res.json();
 
   allProjects = data.map(e => ({
