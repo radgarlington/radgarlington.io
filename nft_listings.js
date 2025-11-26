@@ -1,51 +1,54 @@
 /* =========================================================
-   RAD NFT LISTINGS — Core JS (LOCKED)
-   WCK Featured + RAD Ledger placeholders only
+   RAD NFT LISTINGS — Core JS (LOCKED v4)
+   WCK Featured + WCK in grid + RAD-only placeholders
    ========================================================= */
 
-console.log("RAD NFT LISTINGS — v3 (WCK + RAD placeholders only)");
+console.log("RAD NFT LISTINGS — v4 (WCK + RAD placeholders)");
 
 /* ============================
    NFT DATA
    ============================ */
 const nftData = [
 
-  /* ======== FEATURED NFT: WCK (FEATURED ONLY) ======== */
+  /* ======== FEATURED + GRID NFT: WCK ======== */
   {
+    id: "wck",
     token: "$WCK",
     name: "CONTINENTAL WICK",
     status: "certified",
     droppingSoon: true,
     image: "assets/logos/wck_logo.webp",
     desc: "Protocol Enforcement Collection — Dropping Soon.",
-    showInGrid: false        // ✅ FEATURED ONLY, NOT IN GRID
+    showInGrid: true      // ✅ SHOW IN GRID (first card)
   },
 
-  /* ======== PLACEHOLDER SLOTS (NO TOKEN NAMES) ======== */
+  /* ======== PLACEHOLDER SLOTS (RAD ONLY) ======== */
   {
+    id: "ph-1",
     token: "",
     name: "",
     status: "certified",
     droppingSoon: false,
-    image: "assets/RAD_ledger.png",   // ✅ RAD ledger art only
+    image: "assets/RAD_ledger.png",   // ✅ RAD ledger art
     desc: "",
-    showInGrid: true                  // ✅ Visible in grid as placeholder
+    showInGrid: true                  // ✅ Visible in grid
   },
 
   {
+    id: "ph-2",
     token: "",
     name: "",
     status: "verified",
     droppingSoon: false,
-    image: "assets/RAD_ledger.png",   // ✅ RAD ledger art only
+    image: "assets/RAD_ledger.png",   // ✅ RAD ledger art
     desc: "",
-    showInGrid: true                  // ✅ Visible in grid as placeholder
+    showInGrid: true                  // ✅ Visible in grid
   }
 
 ];
 
 /* =========================================================
-   FEATURED NFT RENDERING (WCK)
+   FEATURED NFT RENDERING (WCK ONLY)
    ========================================================= */
 function renderFeatured() {
   const featuredWrap = document.getElementById("featuredNFT");
@@ -72,7 +75,7 @@ function renderFeatured() {
 }
 
 /* =========================================================
-   GRID RENDERING (RAD PLACEHOLDERS ONLY)
+   GRID RENDERING
    ========================================================= */
 function renderGrid(filter = "all") {
   const grid = document.getElementById("nftGrid");
@@ -81,7 +84,7 @@ function renderGrid(filter = "all") {
   grid.innerHTML = "";
 
   const filtered = nftData.filter(item => {
-    if (!item.showInGrid) return false;      // only placeholders
+    if (!item.showInGrid) return false;      // only grid-allowed
     if (filter === "all") return true;
     return item.status === filter;
   });
@@ -111,12 +114,14 @@ function renderGrid(filter = "all") {
       `;
     }
 
-    // 🔒 Image only — no token names, no project names
+    // 🔒 Image only for placeholders – WCK gets its real logo
+    const imgSrc = item.image || "assets/RAD_ledger.png";
+
     html += `
-      <img src="${item.image}" alt="RAD Ledger Placeholder NFT">
+      <img src="${imgSrc}" alt="${item.id === 'wck' ? item.name : 'RAD Ledger Placeholder NFT'}">
     `;
 
-    // No name/desc added unless set (they're empty now)
+    // Text only for WCK (placeholders stay nameless)
     if (item.name) {
       html += `<h3>${item.name}</h3>`;
     }
@@ -151,6 +156,6 @@ function initFilters() {
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   renderFeatured();    // WCK hero
-  renderGrid("all");   // RAD ledger placeholders only
+  renderGrid("all");   // WCK + 2 RAD placeholders
   initFilters();
 });
