@@ -43,7 +43,6 @@
   <style>
     *{box-sizing:border-box}
 
-    /* 🔒 TRUE ZOOM LOCKDOWN */
     html, body {
       height:100%;
       touch-action: manipulation;
@@ -64,7 +63,6 @@
     }
     main{flex:1 0 auto}
 
-    /* 🔹 Shared RAD glossy button base */
     .rad-btn{
       position:relative;
       overflow:hidden;
@@ -95,10 +93,7 @@
       transform:skewY(-12deg);
       transition:transform .25s ease, opacity .2s ease;
     }
-    .rad-btn span{
-      position:relative;
-      z-index:1;
-    }
+    .rad-btn span{position:relative;z-index:1;}
     .rad-btn:hover{
       transform:translateY(-2px);
       box-shadow:0 6px 18px rgba(15,23,42,.35);
@@ -109,7 +104,6 @@
       opacity:.35;
     }
 
-    /* Variant — Ledger button (white, keep pulse-ledger) */
     .rad-btn-ledger{
       background:#ffffff;
       color:#0A74D0;
@@ -121,7 +115,6 @@
       box-shadow:0 8px 24px rgba(255,255,255,.55);
     }
 
-    /* Variant — AMM button (gold, keep amm glow) */
     .rad-btn-amm{
       background:linear-gradient(145deg,#f6c64b,#b38700);
       color:#fff;
@@ -133,7 +126,6 @@
       box-shadow:0 12px 28px rgba(179,135,0,.45);
     }
 
-    /* Variant — Lite paper button (soft blue) */
     .rad-btn-lite{
       background:#eaf3ff;
       color:#0A74D0;
@@ -141,10 +133,6 @@
       box-shadow:0 4px 12px rgba(10,116,208,.25);
       padding:10px 18px;
       font-size:.9rem;
-    }
-    .rad-btn-lite:hover{
-      filter:brightness(1.03);
-      box-shadow:0 6px 16px rgba(10,116,208,.30);
     }
 
     .hero{
@@ -165,11 +153,8 @@
       align-items:center;
       gap:10px;
     }
-    .social img{
-      width:28px;
-      height:28px;
-      display:block;
-    }
+    .social img{width:28px;height:28px;display:block}
+
     .ledger-chat{
       display:inline-flex;
       align-items:center;
@@ -178,8 +163,6 @@
       height:32px;
       font-size:24px;
       line-height:1;
-      text-decoration:none;
-      vertical-align:middle;
     }
 
     .verify{text-align:center;margin-top:10px;font-size:.95rem}
@@ -201,25 +184,6 @@
       border:2px solid #083c80
     }
     .ledger-section h2{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:10px}
-    .ledger-section p{font-size:1.05rem;margin-bottom:20px;opacity:.95}
-
-    @keyframes pulse-ledger {
-      0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
-      70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
-      100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
-    }
-    .pulse-ledger {
-      animation:pulse-ledger 2.5s infinite;
-    }
-
-    @keyframes pulse-amm {
-      0% { box-shadow:0 0 0 0 rgba(179,135,0,.55); }
-      70% { box-shadow:0 0 0 22px rgba(179,135,0,0); }
-      100% { box-shadow:0 0 0 0 rgba(179,135,0,0); }
-    }
-    .amm-pulse {
-      animation:pulse-amm 2.5s infinite;
-    }
 
     .amm-section{
       text-align:center;margin:40px auto;max-width:960px;padding:40px 20px;
@@ -233,17 +197,13 @@
       margin-bottom:14px;
       color:var(--gold);
     }
-    .amm-section p{
-      font-size:1.05rem;
-      color:#6d5400;
-      margin-bottom:22px;
-    }
 
     .launch{text-align:center;padding:6vh 5vw}
     .launch-image{
       width:90%;max-width:900px;margin:40px auto 0;
       display:block;border-radius:12px;
-      border:2px solid #d7e7ff;box-shadow:0 6px 20px rgba(0,0,0,.25)
+      border:2px solid #d7e7ff;
+      box-shadow:0 6px 20px rgba(0,0,0,.25)
     }
 
     .litepaper-wrap{text-align:center;margin:40px 0 20px}
@@ -260,7 +220,6 @@
       font-size:.82rem;color:#475569;line-height:1.45;
     }
 
-    /* RAD audio toggle – top-right floating */
     #rad-audio-toggle{
       position:fixed;
       top:18px;
@@ -277,39 +236,23 @@
       font-size:20px;
       cursor:pointer;
       box-shadow:0 4px 12px rgba(15,23,42,.18);
-      transition:transform .12s ease, box-shadow .12s ease, background .12s ease, opacity .12s ease;
-    }
-
-    #rad-audio-toggle:hover{
-      transform:translateY(-1px);
-      box-shadow:0 7px 18px rgba(15,23,42,.28);
-      background:#f1f5ff;
-    }
-
-    #rad-audio-toggle.is-muted{
-      opacity:.8;
     }
   </style>
 </head>
 
 <body>
 
-<!-- RAD Certified Badge – Static, Clean -->
 <div style="position:absolute; top:20px; left:20px; z-index:50;">
-  <a href="https://radgarlington.io/ledger.html" target="_blank" rel="noopener">
-    <img src="/assets/rad_ledger_certified.png"
-         alt="RAD Certified"
-         style="width:90px;height:auto;">
+  <a href="/ledger.html" target="_blank" rel="noopener">
+    <img src="/assets/rad_ledger_certified.png" alt="RAD Certified" style="width:90px;height:auto;">
   </a>
 </div>
 
-<!-- RAD Audio + Toggle -->
 <audio id="rad-audio" src="/assets/why_dont_you_do_right.mp3" preload="auto" loop></audio>
-<button id="rad-audio-toggle" aria-label="Toggle RAD music" title="Toggle music">🔊</button>
+<button id="rad-audio-toggle">🔊</button>
 
 <main>
 
-  <!-- HERO -->
   <div class="hero">
     <img src="/assets/logo.webp" alt="$RAD Logo" class="hero-img" />
     <h1>The RAD Ledger — Powered by $RAD</h1>
@@ -324,21 +267,18 @@
     </p>
   </div>
 
-  <!-- SOCIAL -->
   <div class="social">
     <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
     <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
     <a href="https://t.me/TheLedgerRoom" target="_blank" class="ledger-chat">💬</a>
   </div>
 
-  <!-- VERIFY -->
   <div class="verify">
     🔍 Verify on:
     <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">Bithomp</a>
     <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
   </div>
 
-  <!-- UTILITY -->
   <div class="utility">
     <h2>The meme coin with a ledger. Built for XRPL accountability.</h2>
     <p>⚡ Instant Transfers</p>
@@ -347,7 +287,7 @@
     <p>$RAD carries XRPL’s real utility.</p>
   </div>
 
-  <!-- 🔥 RAD INTRO SECTION (INSERTED HERE) -->
+  <!-- RAD INTRO -->
   <section style="padding:60px 0; text-align:center;">
     <h2 style="font-size:2rem; font-weight:800; color:#0A74D0; line-height:1.3; margin-bottom:20px;">
       He’s not Brad.<br>
@@ -360,16 +300,22 @@
       ⚡ Powered by XRPL | The Protocol’s most loyal believer
     </p>
 
-    <div style="display:flex; justify-content:center;">
+    <div style="display:flex; justify-content:center; margin-top:20px;">
       <img 
         src="/assets/rad_inked.webp"
         alt="Rad Garlington Tattoo"
-        style="width:auto; max-width:450px; height:auto; object-fit:contain;">
+        style="
+          width:40%;
+          max-width:300px;
+          transform:rotate(-3deg);
+          transform-origin:center;
+          height:auto;
+          object-fit:contain;
+        ">
     </div>
   </section>
   <!-- END RAD INTRO -->
 
-  <!-- LEDGER SECTION -->
   <section class="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
     <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
@@ -378,7 +324,6 @@
     </a>
   </section>
 
-  <!-- AMM SECTION -->
   <section class="amm-section">
     <h2>🚀 ENTER THE $RAD AMM POOL</h2>
     <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
@@ -389,7 +334,6 @@
     </a>
   </section>
 
-  <!-- LEDGER IMAGE -->
   <section class="launch">
     <div class="wrap">
       <a href="/ledger.html" target="_blank">
@@ -398,17 +342,14 @@
     </div>
   </section>
 
-  <!-- DIVIDER -->
   <hr class="section-divider">
 
-  <!-- LITE PAPER -->
   <div class="litepaper-wrap">
     <a class="rad-btn rad-btn-lite" href="/litepaper.html" target="_blank" rel="noopener">
       <span>📄 Read the Lite Paper</span>
     </a>
   </div>
 
-  <!-- DISCLAIMER -->
   <div class="disclaimer-block">
     <strong>🛡 Legal Disclaimer</strong><br><br>
     $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).
@@ -418,7 +359,6 @@
 
 </main>
 
-<!-- FOOTER -->
 <div class="footer">
   © 2025 RAD GARLINGTON | The RAD Ledger | Powered by XRP<br>
   <a href="https://x.com/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">𝕏 @radgarlington</a> |
@@ -427,58 +367,56 @@
 </div>
 
 <script>
-  (function(){
-    const audio = document.getElementById('rad-audio');
-    const btn   = document.getElementById('rad-audio-toggle');
+(function(){
+  const audio = document.getElementById('rad-audio');
+  const btn   = document.getElementById('rad-audio-toggle');
+  if(!audio || !btn) return;
 
-    if(!audio || !btn) return;
+  let isPlaying = false;
+  audio.volume = 0.4;
 
-    let isPlaying = false;
+  function updateIcon(){
+    btn.textContent = isPlaying ? '🔊' : '🔇';
+    btn.classList.toggle('is-muted', !isPlaying);
+  }
 
-    audio.volume = 0.4;
-
-    function updateIcon(){
-      btn.textContent = isPlaying ? '🔊' : '🔇';
-      btn.classList.toggle('is-muted', !isPlaying);
-    }
-
-    function tryPlay(){
-      if (isPlaying) return;
-      audio.play().then(function(){
-        isPlaying = true;
-        updateIcon();
-      }).catch(function(e){
-        console.warn('RAD audio blocked:', e);
-      });
-    }
-
-    window.addEventListener('DOMContentLoaded', function(){
-      tryPlay();
+  function tryPlay(){
+    if (isPlaying) return;
+    audio.play().then(function(){
+      isPlaying = true;
+      updateIcon();
+    }).catch(function(e){
+      console.warn('RAD audio blocked:', e);
     });
+  }
 
-    const firstInteraction = function(){
+  window.addEventListener('DOMContentLoaded', tryPlay);
+
+  const firstInteraction = function(){
+    tryPlay();
+    window.removeEventListener('click', firstInteraction);
+    window.removeEventListener('touchstart', firstInteraction);
+  };
+
+  window.addEventListener('click', firstInteraction, { passive: true });
+  window.addEventListener('touchstart', firstInteraction, { passive: true });
+
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(!isPlaying){
       tryPlay();
-      window.removeEventListener('click', firstInteraction);
-      window.removeEventListener('touchstart', firstInteraction);
-    };
-    window.addEventListener('click', firstInteraction, { passive: true });
-    window.addEventListener('touchstart', firstInteraction, { passive: true });
+    } else {
+      audio.pause();
+      isPlaying = false;
+      updateIcon();
+    }
+  });
 
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      if(!isPlaying){
-        tryPlay();
-      } else {
-        audio.pause();
-        isPlaying = false;
-        updateIcon();
-      }
-    });
-
-    updateIcon();
-  })();
+  updateIcon();
+})();
 </script>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" crossorigin="anonymous"></script>
+
 </body>
 </html>
