@@ -5,5 +5,12 @@
     "handle": "@CryptoxxxCoffee",
     "note": "Non-delivery, airdrop bait, engagement farming",
     "status": "BLACKLISTED"
+  },
+  {
+    "id": 2,
+    "name": "Bootleg 589CT00",
+    "handle": "@589CT00",
+    "note": "Impersonating @589CTO and attempting to sneak into the ecosystem",
+    "status": "BLACKLISTED"
   }
 ]
