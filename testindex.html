@@ -203,7 +203,6 @@
     .ledger-section h2{font-size:clamp(1.6rem,5vw,2.2rem);margin-bottom:10px}
     .ledger-section p{font-size:1.05rem;margin-bottom:20px;opacity:.95}
 
-    /* WHITE LEDGER GLOW – keep original */
     @keyframes pulse-ledger {
       0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
       70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
@@ -213,7 +212,6 @@
       animation:pulse-ledger 2.5s infinite;
     }
 
-    /* GOLD AMM GLOW – keep original */
     @keyframes pulse-amm {
       0% { box-shadow:0 0 0 0 rgba(179,135,0,.55); }
       70% { box-shadow:0 0 0 22px rgba(179,135,0,0); }
@@ -349,6 +347,28 @@
     <p>$RAD carries XRPL’s real utility.</p>
   </div>
 
+  <!-- 🔥 RAD INTRO SECTION (INSERTED HERE) -->
+  <section style="padding:60px 0; text-align:center;">
+    <h2 style="font-size:2rem; font-weight:800; color:#0A74D0; line-height:1.3; margin-bottom:20px;">
+      He’s not Brad.<br>
+      He’s RAD.<br>
+      And now he’s inked.
+    </h2>
+
+    <p style="font-size:1.15rem;font-weight:600;color:#0f172a;line-height:1.5;margin-bottom:28px;">
+      <span style="color:#0A74D0;font-weight:800;">$RAD</span> — The meme coin with a ledger.<br>
+      ⚡ Powered by XRPL | The Protocol’s most loyal believer
+    </p>
+
+    <div style="display:flex; justify-content:center;">
+      <img 
+        src="/assets/rad_inked.webp"
+        alt="Rad Garlington Tattoo"
+        style="width:auto; max-width:450px; height:auto; object-fit:contain;">
+    </div>
+  </section>
+  <!-- END RAD INTRO -->
+
   <!-- LEDGER SECTION -->
   <section class="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
@@ -415,7 +435,6 @@
 
     let isPlaying = false;
 
-    // Slightly higher volume
     audio.volume = 0.4;
 
     function updateIcon(){
@@ -425,7 +444,6 @@
 
     function tryPlay(){
       if (isPlaying) return;
-
       audio.play().then(function(){
         isPlaying = true;
         updateIcon();
@@ -434,12 +452,10 @@
       });
     }
 
-    // Try autoplay on load (some browsers will allow, some won't)
     window.addEventListener('DOMContentLoaded', function(){
       tryPlay();
     });
 
-    // 🔥 Force play on first user interaction (first touch/click)
     const firstInteraction = function(){
       tryPlay();
       window.removeEventListener('click', firstInteraction);
@@ -448,9 +464,8 @@
     window.addEventListener('click', firstInteraction, { passive: true });
     window.addEventListener('touchstart', firstInteraction, { passive: true });
 
-    // Toggle button manual control
     btn.addEventListener('click', function(e){
-      e.stopPropagation(); // don't double-trigger window click
+      e.stopPropagation();
       if(!isPlaying){
         tryPlay();
       } else {
