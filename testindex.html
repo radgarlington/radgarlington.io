@@ -47,11 +47,14 @@
       height:100%;
       touch-action: manipulation;
     }
-    * { touch-action: pan-x pan-y; }
+    * {
+      touch-action: pan-x pan-y;
+    }
 
     :root{
       --bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;
-      --card:#f4f7fb;--gold:#b38700;
+      --card:#f4f7fb;
+      --gold:#b38700;
     }
     body{
       margin:0;background:var(--bg);color:var(--ink);
@@ -60,132 +63,191 @@
     }
     main{flex:1 0 auto}
 
-    /* BUTTONS */
+    /* RAD BUTTONS */
     .rad-btn{
-      position:relative;overflow:hidden;color:#f9fafb;font-weight:700;
-      padding:11px 20px;font-size:.9rem;border-radius:12px;
-      text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+      position:relative;
+      overflow:hidden;
+      color:#f9fafb;
+      font-weight:700;
+      padding:11px 20px;
+      font-size:.9rem;
+      border-radius:12px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       box-shadow:0 3px 10px rgba(15,23,42,.25);
-      background:linear-gradient(145deg,#0f7cf0,#07418f);border:1px solid #06336f;
-      cursor:pointer;transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      background:linear-gradient(145deg,#0f7cf0,#07418f);
+      border:1px solid #06336f;
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
     }
     .rad-btn::before{
-      content:"";position:absolute;top:-60%;left:-10%;width:130%;height:80%;
+      content:"";
+      position:absolute;
+      top:-60%;
+      left:-10%;
+      width:130%;
+      height:80%;
       background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
-      opacity:.25;transform:skewY(-12deg);transition:transform .25s ease, opacity .2s ease;
+      opacity:.25;
+      transform:skewY(-12deg);
+      transition:transform .25s ease, opacity .2s ease;
     }
-    .rad-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(15,23,42,.35);filter:brightness(1.03);}
-    .rad-btn:hover::before{transform:skewY(-12deg) translateY(35%);opacity:.35;}
+    .rad-btn span{position:relative;z-index:1;}
+    .rad-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 6px 18px rgba(15,23,42,.35);
+      filter:brightness(1.03);
+    }
+    .rad-btn:hover::before{
+      transform:skewY(-12deg) translateY(35%);
+      opacity:.35;
+    }
 
     .rad-btn-ledger{
-      background:#ffffff;color:#0A74D0;border:1px solid #d7e7ff;
+      background:#ffffff;
+      color:#0A74D0;
+      border:1px solid #d7e7ff;
       box-shadow:0 4px 14px rgba(255,255,255,.4);
-    }
-    .rad-btn-ledger:hover{
-      filter:brightness(1.03);box-shadow:0 8px 24px rgba(255,255,255,.55);
     }
 
     .rad-btn-amm{
-      background:linear-gradient(145deg,#f6c64b,#b38700);color:#fff;border:1px solid #8c6900;
+      background:linear-gradient(145deg,#f6c64b,#b38700);
+      color:#fff;
+      border:1px solid #8c6900;
       box-shadow:0 6px 20px rgba(179,135,0,.35);
     }
-    .rad-btn-amm:hover{
-      filter:brightness(1.02);box-shadow:0 12px 28px rgba(179,135,0,.45);
-    }
 
-    /* PULSE ANIMATIONS */
+    /* Glow animations */
     @keyframes pulse-ledger {
       0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
       70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
       100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
     }
-    .pulse-ledger{animation:pulse-ledger 2.5s infinite;}
+    .pulse-ledger {
+      animation:pulse-ledger 2.5s infinite;
+    }
 
     @keyframes pulse-amm {
       0% { box-shadow:0 0 0 0 rgba(179,135,0,.55); }
       70% { box-shadow:0 0 0 22px rgba(179,135,0,0); }
       100% { box-shadow:0 0 0 0 rgba(179,135,0,0); }
     }
-    .amm-pulse{animation:pulse-amm 2.5s infinite;}
+    .amm-pulse {
+      animation:pulse-amm 2.5s infinite;
+    }
 
     .hero{
-      text-align:center;padding:6vh 5vw 2vh;background:#eaf3ff;
-      border:2px solid #d7e7ff;border-radius:12px;max-width:960px;
-      margin:120px auto 20px;box-shadow:0 6px 20px rgba(2,32,71,.08)
+      text-align:center;padding:6vh 5vw 2vh;
+      background:#eaf3ff;border:2px solid #d7e7ff;border-radius:12px;
+      max-width:960px;margin:120px auto 20px;
+      box-shadow:0 6px 20px rgba(2,32,71,.08)
     }
     .hero-img{width:55%;max-width:320px;margin:0 auto 14px;display:block}
 
     h1{font-size:clamp(1.8rem,6vw,2.8rem);margin-bottom:10px}
     .tagline{font-size:clamp(1rem,4vw,1.3rem);color:var(--muted);margin-bottom:4px}
 
-    .social{margin-top:14px;display:flex;justify-content:center;align-items:center;gap:10px;}
-    .social img{width:28px;height:28px}
+    .social{
+      margin-top:14px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:10px;
+    }
+    .social img{width:28px;height:28px;display:block}
+
+    /* FIXED — RESTORED LEDGER CHAT EMOJI STYLE */
+    .ledger-chat{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:32px;
+      height:32px;
+      font-size:24px;
+      line-height:1;
+      text-decoration:none;
+      vertical-align:middle;
+    }
 
     .verify{text-align:center;margin-top:10px;font-size:.95rem}
     .verify a{color:var(--blue);font-weight:bold;text-decoration:none;margin:0 8px}
 
     .utility{
-      text-align:center;padding:4vh 5vw 6vh;background:#f0f7ff;
-      border:2px solid #d0e3ff;border-radius:12px;max-width:960px;
-      margin:20px auto;box-shadow:0 6px 20px rgba(2,32,71,.08)
+      text-align:center;padding:4vh 5vw 6vh;
+      background:#f0f7ff;border:2px solid #d0e3ff;border-radius:12px;
+      max-width:960px;margin:20px auto;
+      box-shadow:0 6px 20px rgba(2,32,71,.08)
     }
-    .utility h2{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:15px}
 
     .ledger-section{
       text-align:center;margin:40px auto;max-width:960px;padding:48px 20px;
-      background:linear-gradient(180deg,#0A74D0,#094f90);color:#fff;border-radius:14px;
-      box-shadow:0 8px 30px rgba(0,0,0,.2);border:2px solid #083c80
+      background:linear-gradient(180deg,#0A74D0,#094f90);color:#fff;
+      border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.2);
+      border:2px solid #083c80
     }
 
     .amm-section{
       text-align:center;margin:40px auto;max-width:960px;padding:40px 20px;
-      background:#fffdee;border:2px solid #f5d463;border-radius:14px;
+      background:#fffdee;
+      border:2px solid #f5d463;
+      border-radius:14px;
       box-shadow:0 8px 26px rgba(0,0,0,.18);
     }
 
     .launch{text-align:center;padding:6vh 5vw}
     .launch-image{
-      width:90%;max-width:900px;margin:40px auto 0;display:block;
-      border-radius:12px;border:2px solid #d7e7ff;box-shadow:0 6px 20px rgba(0,0,0,.25)
+      width:90%;max-width:900px;margin:40px auto 0;
+      display:block;border-radius:12px;
+      border:2px solid #d7e7ff;box-shadow:0 6px 20px rgba(0,0,0,.25)
     }
+
+    .litepaper-wrap{text-align:center;margin:40px 0 20px}
 
     .section-divider{
       width:80%;max-width:640px;margin:40px auto;
       height:2px;background:linear-gradient(90deg,transparent,#c3d9f8,transparent);
     }
 
-    .litepaper-wrap{text-align:center;margin:40px 0 20px}
-
     .footer{text-align:center;padding:18px;color:var(--muted);font-size:.85rem}
 
-    .disclaimer-block{
-      text-align:center;max-width:820px;margin:20px auto 32px;
-      font-size:.82rem;color:#475569;line-height:1.45;
-    }
-
     #rad-audio-toggle{
-      position:fixed;top:18px;right:18px;z-index:80;width:40px;height:40px;
-      border-radius:999px;border:1px solid #d7e7ff;background:#ffffffee;
-      display:flex;align-items:center;justify-content:center;font-size:20px;
-      cursor:pointer;box-shadow:0 4px 12px rgba(15,23,42,.18);
+      position:fixed;
+      top:18px;
+      right:18px;
+      z-index:80;
+      width:40px;
+      height:40px;
+      border-radius:999px;
+      border:1px solid #d7e7ff;
+      background:#ffffffee;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(15,23,42,.18);
     }
   </style>
 </head>
 
 <body>
 
+<!-- RAD Certified -->
 <div style="position:absolute; top:20px; left:20px; z-index:50;">
   <a href="/ledger.html" target="_blank" rel="noopener">
     <img src="/assets/rad_ledger_certified.png" alt="RAD Certified" style="width:90px;height:auto;">
   </a>
 </div>
 
-<!-- UPDATED AUDIO -->
+<!-- Audio -->
 <audio id="rad-audio" src="/assets/sleek_panther.mp3" preload="auto" loop></audio>
 <button id="rad-audio-toggle">🔊</button>
 
 <main>
 
+  <!-- HERO -->
   <div class="hero">
     <img src="/assets/logo.webp" alt="$RAD Logo" class="hero-img" />
     <h1>The RAD Ledger — Powered by $RAD</h1>
@@ -200,18 +262,21 @@
     </p>
   </div>
 
+  <!-- SOCIAL -->
   <div class="social">
     <a href="https://x.com/radgarlington" target="_blank"><img src="/assets/x.png" alt="X"></a>
     <a href="https://t.me/radgarlington" target="_blank"><img src="/assets/telegram.png" alt="Telegram"></a>
     <a href="https://t.me/TheLedgerRoom" target="_blank" class="ledger-chat">💬</a>
   </div>
 
+  <!-- VERIFY -->
   <div class="verify">
     🔍 Verify on:
     <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">Bithomp</a>
     <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
   </div>
 
+  <!-- UTILITY -->
   <div class="utility">
     <h2>The meme coin with a ledger. Built for XRPL accountability.</h2>
     <p>⚡ Instant Transfers</p>
@@ -220,7 +285,7 @@
     <p>$RAD carries XRPL’s real utility.</p>
   </div>
 
-  <!-- RAD INTRO (unchanged location, updated size 70%) -->
+  <!-- RAD INTRO -->
   <section style="padding:60px 0; text-align:center;">
     <h2 style="font-size:2rem; font-weight:800; color:#0A74D0; line-height:1.3; margin-bottom:20px;">
       He’s not Brad.<br>
@@ -248,6 +313,7 @@
     </div>
   </section>
 
+  <!-- LEDGER SECTION -->
   <section class="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
     <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
@@ -256,6 +322,7 @@
     </a>
   </section>
 
+  <!-- AMM SECTION -->
   <section class="amm-section">
     <h2>🚀 ENTER THE $RAD AMM POOL</h2>
     <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
@@ -266,6 +333,7 @@
     </a>
   </section>
 
+  <!-- LEDGER PREVIEW -->
   <section class="launch">
     <div class="wrap">
       <a href="/ledger.html" target="_blank">
@@ -276,12 +344,14 @@
 
   <hr class="section-divider">
 
+  <!-- LITE PAPER -->
   <div class="litepaper-wrap">
     <a class="rad-btn rad-btn-lite" href="/litepaper.html" target="_blank" rel="noopener">
       <span>📄 Read the Lite Paper</span>
     </a>
   </div>
 
+  <!-- DISCLAIMER -->
   <div class="disclaimer-block">
     <strong>🛡 Legal Disclaimer</strong><br><br>
     $RAD is an independent community-driven token and verification project built on the XRP Ledger (XRPL).
@@ -291,6 +361,7 @@
 
 </main>
 
+<!-- FOOTER -->
 <div class="footer">
   © 2025 RAD GARLINGTON | The RAD Ledger | Powered by XRP<br>
   <a href="https://x.com/radgarlington" target="_blank" style="color:#0A74D0;font-weight:bold;">𝕏 @radgarlington</a> |
@@ -317,9 +388,7 @@
     audio.play().then(function(){
       isPlaying = true;
       updateIcon();
-    }).catch(function(e){
-      console.warn('RAD audio blocked:', e);
-    });
+    }).catch(function(e){});
   }
 
   window.addEventListener('DOMContentLoaded', tryPlay);
@@ -335,8 +404,13 @@
 
   btn.addEventListener('click', function(e){
     e.stopPropagation();
-    if(!isPlaying){ tryPlay(); }
-    else{ audio.pause(); isPlaying = false; updateIcon(); }
+    if(!isPlaying){
+      tryPlay();
+    } else {
+      audio.pause();
+      isPlaying = false;
+      updateIcon();
+    }
   });
 
   updateIcon();
