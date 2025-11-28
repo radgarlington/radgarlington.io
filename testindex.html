@@ -83,7 +83,7 @@
       background:linear-gradient(145deg,#0f7cf0,#07418f);
       border:1px solid #06336f;
       cursor:pointer;
-      transition:transform .15s.ease, box-shadow .15s.ease, filter .15s.ease;
+      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
     }
     .rad-btn::before{
       content:"";
@@ -95,7 +95,7 @@
       background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
       opacity:.25;
       transform:skewY(-12deg);
-      transition:transform .25s.ease, opacity .2s.ease;
+      transition:transform .25s ease, opacity .2s ease;
     }
     .rad-btn span{position:relative;z-index:1;}
     .rad-btn:hover{
@@ -193,7 +193,7 @@
     .verify a{color:var(--blue);font-weight:bold;text-decoration:none;margin:0 8px}
 
     .quick-cta{
-      margin:14px.auto 0;
+      margin:20px auto 0; /* bumped down for extra spacing */
       max-width:960px;
       padding:0 16px 8px;
       display:flex;
@@ -309,7 +309,7 @@
     <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
   </div>
 
-  <!-- QUICK CTAs (AMM only, now links out) -->
+  <!-- QUICK CTAs (AMM only, links out) -->
   <div class="quick-cta">
     <a class="rad-btn rad-btn-amm rad-btn-small amm-pulse"
        href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
@@ -320,7 +320,7 @@
 
   <!-- UTILITY -->
   <div class="utility">
-    <!-- Small pulsing Ledger jump button above the copy, now links to ledger.html -->
+    <!-- Small pulsing Ledger button above the copy, links to ledger.html -->
     <div style="margin-bottom:16px; display:flex; justify-content:center;">
       <a href="/ledger.html" class="rad-btn rad-btn-ledger rad-btn-small pulse-ledger" target="_blank" rel="noopener">
         <span>📜 View The RAD Ledger</span>
