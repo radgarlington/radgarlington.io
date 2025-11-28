@@ -50,6 +50,9 @@
     * {
       touch-action: pan-x pan-y;
     }
+    html{
+      scroll-behavior:smooth;
+    }
 
     :root{
       --bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;
@@ -80,7 +83,7 @@
       background:linear-gradient(145deg,#0f7cf0,#07418f);
       border:1px solid #06336f;
       cursor:pointer;
-      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      transition:transform .15s.ease, box-shadow .15s.ease, filter .15s.ease;
     }
     .rad-btn::before{
       content:"";
@@ -92,7 +95,7 @@
       background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
       opacity:.25;
       transform:skewY(-12deg);
-      transition:transform .25s ease, opacity .2s ease;
+      transition:transform .25s.ease, opacity .2s.ease;
     }
     .rad-btn span{position:relative;z-index:1;}
     .rad-btn:hover{
@@ -103,6 +106,13 @@
     .rad-btn:hover::before{
       transform:skewY(-12deg) translateY(35%);
       opacity:.35;
+    }
+
+    /* Smaller quick-CTA buttons */
+    .rad-btn-small{
+      padding:8px 14px;
+      font-size:.8rem;
+      border-radius:999px;
     }
 
     .rad-btn-ledger{
@@ -119,10 +129,11 @@
       box-shadow:0 6px 20px rgba(179,135,0,.35);
     }
 
+    /* Heavier blue glow for Ledger pulse */
     @keyframes pulse-ledger {
-      0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
-      70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
-      100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+      0%  { box-shadow:0 0 0 0 rgba(10,116,208,.75); }
+      70% { box-shadow:0 0 0 26px rgba(10,116,208,0); }
+      100%{ box-shadow:0 0 0 0 rgba(10,116,208,0); }
     }
     .pulse-ledger {
       animation:pulse-ledger 2.5s infinite;
@@ -180,6 +191,16 @@
 
     .verify{text-align:center;margin-top:10px;font-size:.95rem}
     .verify a{color:var(--blue);font-weight:bold;text-decoration:none;margin:0 8px}
+
+    .quick-cta{
+      margin:14px.auto 0;
+      max-width:960px;
+      padding:0 16px 8px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
 
     .utility{
       text-align:center;padding:4vh 5vw 6vh;
@@ -288,15 +309,31 @@
     <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
   </div>
 
+  <!-- QUICK CTAs (AMM only, now links out) -->
+  <div class="quick-cta">
+    <a class="rad-btn rad-btn-amm rad-btn-small amm-pulse"
+       href="https://xmagnetic.org/dex/RAD+rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V_XRP+XRP?network=mainnet"
+       target="_blank" rel="noopener">
+      <span>🚀 Enter The $RAD AMM Pool</span>
+    </a>
+  </div>
+
   <!-- UTILITY -->
   <div class="utility">
+    <!-- Small pulsing Ledger jump button above the copy, now links to ledger.html -->
+    <div style="margin-bottom:16px; display:flex; justify-content:center;">
+      <a href="/ledger.html" class="rad-btn rad-btn-ledger rad-btn-small pulse-ledger" target="_blank" rel="noopener">
+        <span>📜 View The RAD Ledger</span>
+      </a>
+    </div>
+
     <h2>The meme coin with a ledger. Built for XRPL accountability.</h2>
     <p>⚡ Instant Transfers</p>
     <p>💸 Low Fees</p>
     <p>🔒 Trustless Movement</p>
     <p>$RAD carries XRPL’s real utility.</p>
 
-    <!-- RAD Holiday Badge moved here -->
+    <!-- RAD Holiday Badge -->
     <div style="margin-top:20px; display:flex; justify-content:center;">
       <img
         src="/assets/happy_holidays_rad.webp"
@@ -334,16 +371,16 @@
   </section>
 
   <!-- LEDGER SECTION -->
-  <section class="ledger-section">
+  <section class="ledger-section" id="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
     <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
-    <a href="/ledger.html" class="rad-btn rad-btn-ledger pulse-ledger">
+    <a href="/ledger.html" class="rad-btn rad-btn-ledger pulse-ledger" target="_blank" rel="noopener">
       <span>VIEW THE RAD LEDGER</span>
     </a>
   </section>
 
   <!-- AMM SECTION -->
-  <section class="amm-section">
+  <section class="amm-section" id="amm-section">
     <h2>🚀 ENTER THE $RAD AMM POOL</h2>
     <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
     <a class="rad-btn rad-btn-amm amm-pulse"
