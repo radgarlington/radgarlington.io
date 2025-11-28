@@ -50,6 +50,9 @@
     * {
       touch-action: pan-x pan-y;
     }
+    html{
+      scroll-behavior:smooth;
+    }
 
     :root{
       --bg:#ffffff;--ink:#0f172a;--muted:#475569;--blue:#0A74D0;
@@ -103,6 +106,13 @@
     .rad-btn:hover::before{
       transform:skewY(-12deg) translateY(35%);
       opacity:.35;
+    }
+
+    /* Smaller quick-CTA buttons in hero */
+    .rad-btn-small{
+      padding:8px 14px;
+      font-size:.8rem;
+      border-radius:999px;
     }
 
     .rad-btn-ledger{
@@ -272,6 +282,16 @@
       <strong>Issuer:</strong>
       <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
     </p>
+
+    <!-- Quick jump buttons to Ledger + AMM -->
+    <div style="margin-top:18px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+      <a href="#ledger-section" class="rad-btn rad-btn-ledger rad-btn-small">
+        <span>📜 View The RAD Ledger</span>
+      </a>
+      <a href="#amm-section" class="rad-btn rad-btn-amm rad-btn-small">
+        <span>🚀 Enter The $RAD AMM Pool</span>
+      </a>
+    </div>
   </div>
 
   <!-- SOCIAL -->
@@ -296,7 +316,7 @@
     <p>🔒 Trustless Movement</p>
     <p>$RAD carries XRPL’s real utility.</p>
 
-    <!-- RAD Holiday Badge moved here -->
+    <!-- RAD Holiday Badge -->
     <div style="margin-top:20px; display:flex; justify-content:center;">
       <img
         src="/assets/happy_holidays_rad.webp"
@@ -334,7 +354,7 @@
   </section>
 
   <!-- LEDGER SECTION -->
-  <section class="ledger-section">
+  <section class="ledger-section" id="ledger-section">
     <h2>📜 THE RAD LEDGER — VERIFIED PROJECTS</h2>
     <p>Every verified XRPL project passes through here.<br>If it’s not on The RAD Ledger, it’s not certified.</p>
     <a href="/ledger.html" class="rad-btn rad-btn-ledger pulse-ledger">
@@ -343,7 +363,7 @@
   </section>
 
   <!-- AMM SECTION -->
-  <section class="amm-section">
+  <section class="amm-section" id="amm-section">
     <h2>🚀 ENTER THE $RAD AMM POOL</h2>
     <p>The official liquidity pit for $RAD on the XRPL. Deep, clean, and engineered for movement.</p>
     <a class="rad-btn rad-btn-amm amm-pulse"
