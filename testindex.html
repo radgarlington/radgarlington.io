@@ -129,11 +129,11 @@
       box-shadow:0 6px 20px rgba(179,135,0,.35);
     }
 
-    /* 🔵 Make ledger pulse visible on light background */
+    /* Ledger pulse back to white */
     @keyframes pulse-ledger {
-      0%  { box-shadow:0 0 0 0 rgba(10,116,208,.55); }
-      70% { box-shadow:0 0 0 20px rgba(10,116,208,0); }
-      100%{ box-shadow:0 0 0 0 rgba(10,116,208,0); }
+      0%  { box-shadow:0 0 0 0 rgba(255,255,255,.6); }
+      70% { box-shadow:0 0 0 20px rgba(255,255,255,0); }
+      100%{ box-shadow:0 0 0 0 rgba(255,255,255,0); }
     }
     .pulse-ledger {
       animation:pulse-ledger 2.5s infinite;
@@ -309,11 +309,8 @@
     <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
   </div>
 
-  <!-- QUICK CTAs (pulsing, above the fold) -->
+  <!-- QUICK CTAs (keep AMM here only) -->
   <div class="quick-cta">
-    <a href="#ledger-section" class="rad-btn rad-btn-ledger rad-btn-small pulse-ledger">
-      <span>📜 View The RAD Ledger</span>
-    </a>
     <a href="#amm-section" class="rad-btn rad-btn-amm rad-btn-small amm-pulse">
       <span>🚀 Enter The $RAD AMM Pool</span>
     </a>
@@ -321,6 +318,13 @@
 
   <!-- UTILITY -->
   <div class="utility">
+    <!-- Small pulsing Ledger jump button above the copy -->
+    <div style="margin-bottom:16px; display:flex; justify-content:center;">
+      <a href="#ledger-section" class="rad-btn rad-btn-ledger rad-btn-small pulse-ledger">
+        <span>📜 View The RAD Ledger</span>
+      </a>
+    </div>
+
     <h2>The meme coin with a ledger. Built for XRPL accountability.</h2>
     <p>⚡ Instant Transfers</p>
     <p>💸 Low Fees</p>
