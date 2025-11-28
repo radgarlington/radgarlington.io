@@ -46,7 +46,7 @@ header p{
   color:#334155
 }
 
-/* GLOSSY RAD BUTTON */
+/* BUTTON BAR */
 .rad-actions {
   display:flex;
   justify-content:center;
@@ -87,10 +87,7 @@ header p{
   transform:skewY(-12deg);
   transition:transform .25s ease, opacity .2s ease;
 }
-.rad-btn span{
-  position:relative;
-  z-index:1;
-}
+.rad-btn span{position:relative;z-index:1;}
 .rad-btn:hover{
   transform:translateY(-2px);
   box-shadow:0 6px 18px rgba(15,23,42,.35);
@@ -101,7 +98,7 @@ header p{
   opacity:.35;
 }
 
-/* TOP ACTION BUTTON BAR */
+/* TOP ACTIONS */
 .top-actions{
   display:flex;
   justify-content:space-between;
@@ -160,6 +157,7 @@ header p{
 .view-pill:hover{background:#d4d4d8;transform:translateY(-1px)}
 .view-pill.active{background:#0A74D0;color:#f9fafb}
 
+/* GENERAL */
 main{max-width:860px;margin:30px auto;padding:0 14px}
 h2{
   color:#0A74D0;
@@ -193,7 +191,7 @@ footer{
   font-size:.9rem
 }
 
-/* Modal */
+/* PROJECT MODAL */
 .modal{
   display:none;position:fixed;z-index:999;
   left:0;top:0;width:100%;height:100%;
@@ -209,13 +207,10 @@ footer{
 }
 .close{float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0}
 .close:hover{color:#083c80}
-.modal-content a{color:#0A74D0;text-decoration:none;font-weight:bold}
-.checkmark{color:#0A74D0;font-weight:bold}
 
-/* =============================== */
-/*     FULLSCREEN RAD TERMINAL     */
-/* =============================== */
-
+/* ================================= */
+/*         FULLSCREEN TERMINAL       */
+/* ================================= */
 #radTerminalOverlay {
   display:none;
   position:fixed;
@@ -235,10 +230,8 @@ footer{
   display:flex;
   flex-direction:column;
   box-shadow:0 0 40px rgba(0,255,100,0.25);
-  position:relative;
 }
 
-/* Terminal Header */
 #radTerminalHeader {
   display:flex;
   justify-content:space-between;
@@ -249,7 +242,6 @@ footer{
   margin-bottom:12px;
   color:#00ff6a;
   font-family:"Courier New",monospace;
-  font-size:14px;
 }
 
 #closeRadTerminal {
@@ -258,10 +250,8 @@ footer{
   color:#00ff6a;
   font-size:20px;
   cursor:pointer;
-  padding:2px 6px;
 }
 
-/* Terminal Body */
 #rad-terminal {
   flex:1;
   overflow-y:auto;
@@ -269,9 +259,8 @@ footer{
   font-family:"Courier New",monospace;
   font-size:15px;
   white-space:pre-wrap;
-  padding-bottom:10px;
-  line-height:1.4em;
   border:1px solid #0f0;
+  padding:10px;
 }
 
 .rad-input-line {
@@ -301,13 +290,14 @@ footer{
 
 .rad-line{animation:flicker .12s linear 1}
 @keyframes flicker{0%{opacity:.25}100%{opacity:1}}
+
 </style>
 </head>
 
 
 <body>
 
-<!-- TOP BUTTON BAR -->
+<!-- TOP ACTIONS -->
 <div class="top-actions">
   <a href="/" class="rad-btn"><span>← Back</span></a>
   <a href="index.html" class="rad-btn"><span>$BUY RAD</span></a>
@@ -324,14 +314,14 @@ footer{
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
 
-<!-- EDUCATION HUB -->
+<!-- EDUCATION -->
 <div class="rad-actions" style="padding:20px 10px 6px;">
   <a href="education.html" class="rad-btn">
     <span>🎓 Ledger Education Hub — Learn the System</span>
   </a>
 </div>
 
-<!-- ENFORCEMENT ROW -->
+<!-- ENFORCEMENT -->
 <div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
   <a href="rugreport.html" class="rad-btn"><span>🧨 Rug Report</span></a>
   <a href="blacklist.html" class="rad-btn"><span>🚫 Blacklist</span></a>
@@ -339,16 +329,18 @@ footer{
   <a href="shills.html" class="rad-btn"><span>📢 Shills</span></a>
 </div>
 
-<!-- =============================== -->
-<!--     LAUNCH TERMINAL BUTTON      -->
-<!-- =============================== -->
-<div class="rad-actions" style="background:#eef6ff;border-bottom:2px solid #d7e7ff;">
+<!-- ================================= -->
+<!--   NFT LISTINGS + TERMINAL BUTTON   -->
+<!-- ================================= -->
+<div class="rad-actions" style="padding:22px 10px 18px;background:#eef6ff;border-bottom:2px solid #d7e7ff;">
+  <a href="nfts.html" class="rad-btn"><span>✨ NFT Listings</span></a>
+
   <button id="openRadTerminal" class="rad-btn" style="cursor:pointer;">
-    <span>🖥️ Launch RAD Terminal — Query XRPL Tokens</span>
+    <span>🖥️ Launch RAD Terminal</span>
   </button>
 </div>
 
-<!-- LISTINGS / CERTIFICATION -->
+<!-- LISTING POLICY -->
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
   <p style="margin:8px 0 4px">
@@ -359,6 +351,7 @@ footer{
     <li><strong>Verified</strong> listings must renew annually.</li>
     <li>Expired listings must be re-reviewed.</li>
   </ul>
+
   <p style="margin:8px 0 0;">
     <strong>Certification Policy.</strong>
     Certified projects are backed by a vault-locked Seal NFT held in the RAD certification wallet.
@@ -389,13 +382,6 @@ footer{
   <button class="view-pill" data-filter="expired">Expired</button>
 </div>
 
-<!-- NFT LISTINGS BUTTON -->
-<div class="rad-actions" style="padding:22px 10px 18px;background:#f8fbff;border-bottom:2px solid #d7e7ff;">
-  <a href="nfts.html" class="rad-btn">
-    <span>✨ NFT Listings</span>
-  </a>
-</div>
-
 <main>
   <section id="ledger">
     <h2>📜 All Projects on The Ledger</h2>
@@ -413,7 +399,7 @@ footer{
     <span class="close">&times;</span>
 
     <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
-      <img id="modalLogo" src="" style="max-width:80px;max-height:80px;border-radius:12px;object-fit:contain;">
+      <img id="modalLogo" src="" style="max-width:80px;border-radius:12px;">
     </div>
 
     <h2 id="modalToken">$RAD</h2>
@@ -435,13 +421,13 @@ footer{
     <p><strong>Seal Image:</strong> <span id="modalNFTImage"></span></p>
 
     <div id="modalNFTPreviewWrap" style="display:none;text-align:center;margin-top:10px;">
-      <img id="modalNFTPreview" src="" style="max-width:100%;width:260px;border-radius:10px;">
+      <img id="modalNFTPreview" src="" style="max-width:100%;width:260px;">
     </div>
   </div>
 </div>
 
 <!-- =============================== -->
-<!--     FULLSCREEN RAD TERMINAL     -->
+<!--      FULLSCREEN RAD TERMINAL    -->
 <!-- =============================== -->
 <div id="radTerminalOverlay">
   <div id="radTerminalWindow">
@@ -461,22 +447,20 @@ footer{
   </div>
 </div>
 
-<!-- ================================= -->
-<!--             JAVASCRIPT            -->
-<!-- ================================= -->
 <script>
 let allProjects = [];
 let currentFilter = "all";
 const defaultUnverifiedLogo = "assets/RAD_ledger.png";
 
-/* =============================== */
-/*     TERMINAL LEDGER LOADER      */
-/* =============================== */
+/* ================================= */
+/*         TERMINAL LEDGER LOAD      */
+/* ================================= */
 let LEDGER_DB = {};
 
+// MUST load before boot:
 async function loadTerminalLedger() {
   try {
-    const res = await fetch("ledger.json", { cache: "no-store" });
+    const res = await fetch("ledger.json", { cache:"no-store" });
     const data = await res.json();
 
     data.forEach(e => {
@@ -492,22 +476,22 @@ async function loadTerminalLedger() {
       };
     });
   } catch(err){
-    console.error("Failed to load terminal ledger", err);
+    console.error("Terminal ledger load failed", err);
   }
 }
-loadTerminalLedger();
 
-/* =============================== */
-/*     TERMINAL DISPLAY LOGIC      */
-/* =============================== */
+/* ================================= */
+/*         TERMINAL INTERFACE         */
+/* ================================= */
 const overlay = document.getElementById("radTerminalOverlay");
 const openBtn = document.getElementById("openRadTerminal");
 const closeBtn = document.getElementById("closeRadTerminal");
 const terminal = document.getElementById("rad-terminal");
 const input = document.getElementById("rad-terminal-input");
 
-openBtn.onclick = () => {
+openBtn.onclick = async () => {
   overlay.style.display = "block";
+  await loadTerminalLedger();
   bootTerminal();
   input.focus();
 };
@@ -516,20 +500,19 @@ closeBtn.onclick = () => {
   overlay.style.display = "none";
 };
 
-/* Boot screen */
-function bootTerminal() {
+/* Boot */
+function bootTerminal(){
   terminal.innerHTML = "";
   printLine("[BOOT] Initializing RAD Terminal...");
   printLine("[BOOT] Accessing XRPL Ledger...");
-  printLine("[BOOT] Loading Certification Matrix...");
-  printLine("[BOOT] Ready.");
+  printLine("[BOOT] Certification Matrix Loaded.");
   printLine("");
   printLine("rad@ledger:~$ Type 'help' for commands");
   printLine("");
 }
 
 /* Printer */
-function printLine(t) {
+function printLine(t){
   const div = document.createElement("div");
   div.classList.add("rad-line");
   div.textContent = t;
@@ -537,25 +520,31 @@ function printLine(t) {
   terminal.scrollTop = terminal.scrollHeight;
 }
 
-/* Parse commands */
-function runCommand(cmdRaw) {
+/* Commands */
+input.addEventListener("keydown", e => {
+  if(e.key === "Enter"){
+    runCommand(input.value);
+    input.value = "";
+  }
+});
+
+function runCommand(cmdRaw){
   const cmd = cmdRaw.trim();
   if(!cmd) return;
-
   printLine("rad@ledger:~$ " + cmd);
 
   const parts = cmd.split(" ");
   const action = parts[0].toLowerCase();
   const arg = parts.slice(1).join(" ");
 
-  if(action === "clear"){ bootTerminal(); return; }
-  if(action === "help"){ showHelp(); return; }
-  if(action === "check"){ checkToken(arg); return; }
+  if(action === "help"){ return showHelp(); }
+  if(action === "clear"){ return bootTerminal(); }
+  if(action === "check"){ return checkToken(arg); }
 
   printLine("Unknown command. Type 'help'");
 }
 
-function showHelp() {
+function showHelp(){
   printLine("");
   printLine("Commands:");
   printLine("check <token>  — Query XRPL token");
@@ -592,16 +581,9 @@ function checkToken(raw){
   printLine("");
 }
 
-input.addEventListener("keydown", e => {
-  if(e.key === "Enter"){
-    runCommand(input.value);
-    input.value = "";
-  }
-});
-
-/* =============================== */
-/*         LEDGER JS BELOW         */
-/* =============================== */
+/* ================================= */
+/*           LEDGER DISPLAY          */
+/* ================================= */
 
 function isExpired(entry){
   if(!entry.expires_at) return false;
@@ -617,24 +599,24 @@ function getCategory(entry){
 }
 
 function getMeta(entry){
-  const t = (entry.tier || "").toLowerCase();
+  const t = (entry.tier||"").toLowerCase();
   const issuers = entry.issuers || [];
 
-  if(t === "certified") return "Certified · Unlimited";
-  if(t === "verified") return isExpired(entry) ? "Expired" : "Verified";
+  if(t==="certified") return "Certified · Unlimited";
+  if(t==="verified") return isExpired(entry) ? "Expired" : "Verified";
 
-  if(t === "unverified"){
-    if(issuers.length === 0) return "Issuer: undefined";
-    if(issuers.length === 1) return `Issuer: ${issuers[0].issuer}`;
+  if(t==="unverified"){
+    if(issuers.length===0) return "Issuer: undefined";
+    if(issuers.length===1) return `Issuer: ${issuers[0].issuer}`;
     return `Issuers: ${issuers.length}`;
   }
   return "";
 }
 
 function getIcon(cat){
-  if(cat === "certified") return "🟡";
-  if(cat === "verified") return "🔷";
-  if(cat === "expired") return "⬛";
+  if(cat==="certified") return "🟡";
+  if(cat==="verified") return "🔷";
+  if(cat==="expired") return "⬛";
   return "⚫";
 }
 
@@ -644,48 +626,46 @@ function renderLedger(){
 
   const grouped = {};
 
-  allProjects.forEach(p => {
-    if(currentFilter !== "all" && p.category !== currentFilter) return;
+  allProjects.forEach(p=>{
+    if(currentFilter!=="all" && p.category!==currentFilter) return;
 
-    const letter = (p.token.replace("$","")[0] || "#").toUpperCase();
-    if(!grouped[letter]) grouped[letter] = [];
+    const letter = (p.token.replace("$","")[0]||"#").toUpperCase();
+    if(!grouped[letter]) grouped[letter]=[];
     grouped[letter].push(p);
   });
 
-  const letters = Object.keys(grouped).sort();
-
-  letters.forEach(letter => {
+  Object.keys(grouped).sort().forEach(letter=>{
     const wrap = document.createElement("div");
     wrap.innerHTML = `<h3>${letter}</h3>`;
     const ul = document.createElement("ul");
 
-    grouped[letter].forEach(entry => {
+    grouped[letter].forEach(entry=>{
       const li = document.createElement("li");
-      li.className = "entry";
+      li.className="entry";
 
-      const tier = (entry.tier || "").toLowerCase();
-      const icon = getIcon(entry.category);
-      const meta = getMeta(entry);
-      const isCertified = tier === "certified";
+      const tier=(entry.tier||"").toLowerCase();
+      const icon=getIcon(entry.category);
+      const meta=getMeta(entry);
+      const isCertified=tier==="certified";
 
       li.innerHTML = `
-        <span class="${isCertified ? "certified-bold" : ""}">
+        <span class="${isCertified?"certified-bold":""}">
           ${icon} ${entry.token}
         </span>
         <span>${meta}</span>
       `;
 
-      const issuers = entry.issuers || [];
+      const issuers=entry.issuers||[];
 
-      if(tier === "certified" || tier === "verified"){
-        li.onclick = () => openVerifiedCard(entry);
+      if(tier==="certified"||tier==="verified"){
+        li.onclick=()=>openVerifiedCard(entry);
       } else {
-        if(issuers.length === 0){
-          li.onclick = () => openUndefinedIssuer(entry);
-        } else if(issuers.length === 1){
-          li.onclick = () => openIssuerModal(issuers[0], entry.token);
+        if(issuers.length===0){
+          li.onclick=()=>openUndefinedIssuer(entry);
+        } else if(issuers.length===1){
+          li.onclick=()=>openIssuerModal(issuers[0],entry.token);
         } else {
-          li.onclick = () => toggleIssuerGroup(entry);
+          li.onclick=()=>toggleIssuerGroup(entry);
         }
       }
 
@@ -697,41 +677,36 @@ function renderLedger(){
   });
 }
 
+/* issuer group, verified card, undefined card — unchanged below */
+
 function toggleIssuerGroup(entry){
-  const id = "issuer-group-" + entry.token;
-  const exist = document.getElementById(id);
+  const id="issuer-group-"+entry.token;
+  const exist=document.getElementById(id);
+  if(exist){exist.remove();return;}
 
-  if(exist){ exist.remove(); return; }
+  const div=document.createElement("div");
+  div.id=id;
+  div.style.padding="10px 20px 14px";
 
-  const div = document.createElement("div");
-  div.id = id;
-  div.style.padding = "10px 20px 14px";
+  let html=`<div style="margin-top:6px;">`;
 
-  let html = `<div style="margin-top:6px;">`;
-
-  entry.issuers.forEach(iss => {
-    const encoded = JSON.stringify(iss).replace(/'/g,"&#39;");
-    html += `
-      <div style="padding:10px;margin-top:8px;
-      border:1px solid #d3dced;border-radius:8px;
-      background:#f9fbff;">
+  entry.issuers.forEach(iss=>{
+    const encoded=JSON.stringify(iss).replace(/'/g,"&#39;");
+    html+=`
+      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
         <div><strong>Issuer:</strong> ${iss.issuer}</div>
-        <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
-
+        <div><strong>Domain:</strong> ${iss.domain||"—"}</div>
         <button onclick='openIssuerModal(${encoded},"${entry.token}")'
-          style="margin-top:6px;padding:6px 10px;border-radius:6px;
-          background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
+          style="margin-top:6px;padding:6px 10px;border-radius:6px;background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
           View Card
         </button>
-      </div>
-    `;
+      </div>`;
   });
 
-  html += `</div>`;
-  div.innerHTML = html;
+  html+=`</div>`;
+  div.innerHTML=html;
 
-  const rows = Array.from(document.querySelectorAll("li.entry"));
-
+  const rows=Array.from(document.querySelectorAll("li.entry"));
   for(const li of rows){
     if(li.innerText.includes(entry.token)){
       li.after(div);
@@ -741,148 +716,135 @@ function toggleIssuerGroup(entry){
 }
 
 function openUndefinedIssuer(entry){
-  const modal = document.getElementById("tokenModal");
-  modal.style.display = "block";
+  const modal=document.getElementById("tokenModal");
+  modal.style.display="block";
 
-  document.getElementById("modalLogoWrap").style.display = "block";
-  document.getElementById("modalLogo").src = defaultUnverifiedLogo;
+  document.getElementById("modalLogoWrap").style.display="block";
+  document.getElementById("modalLogo").src=defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
-  document.getElementById("modalCert").textContent = "XRPL-AUTO";
-  document.getElementById("modalTier").textContent = "Unverified";
-  document.getElementById("modalDev").textContent = "—";
+  document.getElementById("modalToken").textContent=`${entry.token} — Issuer: undefined`;
+  document.getElementById("modalCert").textContent="XRPL-AUTO";
+  document.getElementById("modalTier").textContent="Unverified";
+  document.getElementById("modalDev").textContent="—";
+  document.getElementById("modalDevX").textContent="";
+  document.getElementById("modalDevX").href="#";
 
-  const dx = document.getElementById("modalDevX");
-  dx.textContent = "";
-  dx.href = "#";
+  document.getElementById("modalDoxxed").innerHTML="❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent="undefined";
+  document.getElementById("modalWebsite").textContent="—";
+  document.getElementById("modalWebsite").href="#";
+  document.getElementById("modalEmail").textContent="—";
+  document.getElementById("modalX").href="#";
+  document.getElementById("modalTG").href="#";
+  document.getElementById("modalNFT").textContent="—";
+  document.getElementById("modalNFTImage").textContent="—";
 
-  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
-  document.getElementById("modalIssuer").textContent = "undefined";
-
-  const w = document.getElementById("modalWebsite");
-  w.textContent = "—";
-  w.href = "#";
-
-  document.getElementById("modalEmail").textContent = "—";
-  document.getElementById("modalX").href = "#";
-  document.getElementById("modalTG").href = "#";
-  document.getElementById("modalNFT").textContent = "—";
-  document.getElementById("modalNFTImage").textContent = "—";
-
-  document.getElementById("modalNFTPreviewWrap").style.display = "none";
-  document.getElementById("modalNFTPreview").src = "";
+  document.getElementById("modalNFTPreviewWrap").style.display="none";
+  document.getElementById("modalNFTPreview").src="";
 }
 
 function openVerifiedCard(data){
-  const modal = document.getElementById("tokenModal");
-  modal.style.display = "block";
+  const modal=document.getElementById("tokenModal");
+  modal.style.display="block";
 
-  const wrap = document.getElementById("modalLogoWrap");
-  const img = document.getElementById("modalLogo");
+  const wrap=document.getElementById("modalLogoWrap");
+  const img=document.getElementById("modalLogo");
 
   if(data.logo_url){
-    wrap.style.display = "block";
-    img.src = data.logo_url;
+    wrap.style.display="block";
+    img.src=data.logo_url;
   } else {
-    wrap.style.display = "block";
-    img.src = defaultUnverifiedLogo;
+    wrap.style.display="block";
+    img.src=defaultUnverifiedLogo;
   }
 
-  document.getElementById("modalToken").textContent = data.token;
-  document.getElementById("modalCert").textContent = data.cert || "—";
-  document.getElementById("modalTier").textContent = data.tier || "—";
-  document.getElementById("modalDev").textContent = data.dev || "—";
+  document.getElementById("modalToken").textContent=data.token;
+  document.getElementById("modalCert").textContent=data.cert||"—";
+  document.getElementById("modalTier").textContent=data.tier||"—";
+  document.getElementById("modalDev").textContent=data.dev||"—";
 
-  const dx = document.getElementById("modalDevX");
-  dx.href = data.devx || "#";
-  dx.textContent = data.devx ? data.devx.replace("https://x.com/","@") : "";
+  const dx=document.getElementById("modalDevX");
+  dx.href=data.devx||"#";
+  dx.textContent=data.devx?data.devx.replace("https://x.com/","@"):"";
 
-  document.getElementById("modalDoxxed").innerHTML =
-    data.doxxed ? "✅ Doxxed" : "❌ Undoxxed";
+  document.getElementById("modalDoxxed").innerHTML=data.doxxed?"✅ Doxxed":"❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent=data.issuer||"—";
 
-  document.getElementById("modalIssuer").textContent = data.issuer || "—";
+  const web=document.getElementById("modalWebsite");
+  web.textContent=data.website||"—";
+  web.href=data.website||"#";
 
-  const web = document.getElementById("modalWebsite");
-  web.textContent = data.website || "—";
-  web.href = data.website || "#";
+  document.getElementById("modalEmail").textContent=data.email||"—";
+  document.getElementById("modalX").href=data.x||"#";
+  document.getElementById("modalTG").href=data.tg||"#";
 
-  document.getElementById("modalEmail").textContent = data.email || "—";
-  document.getElementById("modalX").href = data.x || "#";
-  document.getElementById("modalTG").href = data.tg || "#";
-
-  const nft = document.getElementById("modalNFT");
-  const nftImgSpan = document.getElementById("modalNFTImage");
-  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
-  const nftPrev = document.getElementById("modalNFTPreview");
+  const nft=document.getElementById("modalNFT");
+  const nftImgSpan=document.getElementById("modalNFTImage");
+  const nftPrevWrap=document.getElementById("modalNFTPreviewWrap");
+  const nftPrev=document.getElementById("modalNFTPreview");
 
   if(data.nft){
-    nft.innerHTML = `<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
-  } else {
-    nft.textContent = "—";
-  }
+    nft.innerHTML=`<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
+  } else { nft.textContent="—"; }
 
   if(data.nft_image){
-    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
-    nftPrevWrap.style.display = "block";
-    nftPrev.src = data.nft_image;
+    nftImgSpan.innerHTML=`<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+    nftPrevWrap.style.display="block";
+    nftPrev.src=data.nft_image;
   } else {
-    nftImgSpan.textContent = "—";
-    nftPrevWrap.style.display = "none";
-    nftPrev.src = "";
+    nftImgSpan.textContent="—";
+    nftPrevWrap.style.display="none";
+    nftPrev.src="";
   }
 }
 
-function openIssuerModal(issuer, token){
-  const modal = document.getElementById("tokenModal");
-  modal.style.display = "block";
+function openIssuerModal(issuer,token){
+  const modal=document.getElementById("tokenModal");
+  modal.style.display="block";
 
-  document.getElementById("modalLogoWrap").style.display = "block";
-  document.getElementById("modalLogo").src = defaultUnverifiedLogo;
+  document.getElementById("modalLogoWrap").style.display="block";
+  document.getElementById("modalLogo").src=defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
-  document.getElementById("modalCert").textContent = "XRPL-AUTO";
-  document.getElementById("modalTier").textContent = "Unverified";
-  document.getElementById("modalDev").textContent = "—";
+  document.getElementById("modalToken").textContent=`${token} — ${issuer.issuer}`;
+  document.getElementById("modalCert").textContent="XRPL-AUTO";
+  document.getElementById("modalTier").textContent="Unverified";
+  document.getElementById("modalDev").textContent="—";
 
-  const dx = document.getElementById("modalDevX");
-  dx.href = "#";
-  dx.textContent = "";
+  const dx=document.getElementById("modalDevX");
+  dx.href="#";
+  dx.textContent="";
 
-  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
-  document.getElementById("modalIssuer").textContent = issuer.issuer;
+  document.getElementById("modalDoxxed").innerHTML="❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent=issuer.issuer;
 
-  const w = document.getElementById("modalWebsite");
-  w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? "https://"+issuer.domain : "#";
+  const w=document.getElementById("modalWebsite");
+  w.textContent=issuer.domain||"—";
+  w.href=issuer.domain?"https://"+issuer.domain:"#";
 
-  document.getElementById("modalEmail").textContent = "—";
-  document.getElementById("modalX").href = "#";
-  document.getElementById("modalTG").href = "#";
-  document.getElementById("modalNFT").textContent = "—";
-  document.getElementById("modalNFTImage").textContent = "—";
+  document.getElementById("modalEmail").textContent="—";
+  document.getElementById("modalX").href="#";
+  document.getElementById("modalTG").href="#";
+  document.getElementById("modalNFT").textContent="—";
+  document.getElementById("modalNFTImage").textContent="—";
 
-  document.getElementById("modalNFTPreviewWrap").style.display = "none";
-  document.getElementById("modalNFTPreview").src = "";
+  document.getElementById("modalNFTPreviewWrap").style.display="none";
+  document.getElementById("modalNFTPreview").src="";
 }
 
 /* INIT */
-document.addEventListener("DOMContentLoaded", () => {
-  modal = document.getElementById("tokenModal");
+document.addEventListener("DOMContentLoaded",()=>{
+  modal=document.getElementById("tokenModal");
 
-  document.querySelector(".close").onclick = () => {
-    modal.style.display = "none";
+  document.querySelector(".close").onclick=()=>modal.style.display="none";
+
+  window.onclick=e=>{
+    if(e.target===modal) modal.style.display="none";
   };
 
-  window.onclick = e => {
-    if(e.target === modal){
-      modal.style.display = "none";
-    }
-  };
-
-  document.querySelectorAll(".view-pill").forEach(pill => {
-    pill.onclick = () => {
-      currentFilter = pill.dataset.filter;
-      document.querySelectorAll(".view-pill").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".view-pill").forEach(pill=>{
+    pill.onclick=()=>{
+      currentFilter=pill.dataset.filter;
+      document.querySelectorAll(".view-pill").forEach(p=>p.classList.remove("active"));
       pill.classList.add("active");
       renderLedger();
     };
@@ -893,14 +855,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* LOAD JSON */
 async function loadLedger(){
-  const res = await fetch("ledger.json",{cache:"no-store"});
-  const data = await res.json();
+  const res=await fetch("ledger.json",{cache:"no-store"});
+  const data=await res.json();
 
-  allProjects = data.map(e => ({
-    ...e,
-    category: getCategory(e)
-  }));
-
+  allProjects=data.map(e=>({...e,category:getCategory(e)}));
   renderLedger();
 }
 </script>
