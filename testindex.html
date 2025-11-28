@@ -108,7 +108,7 @@
       opacity:.35;
     }
 
-    /* Smaller quick-CTA buttons in hero */
+    /* Smaller quick-CTA buttons */
     .rad-btn-small{
       padding:8px 14px;
       font-size:.8rem;
@@ -190,6 +190,16 @@
 
     .verify{text-align:center;margin-top:10px;font-size:.95rem}
     .verify a{color:var(--blue);font-weight:bold;text-decoration:none;margin:0 8px}
+
+    .quick-cta{
+      margin:14px auto 0;
+      max-width:960px;
+      padding:0 16px 8px;
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
 
     .utility{
       text-align:center;padding:4vh 5vw 6vh;
@@ -282,16 +292,6 @@
       <strong>Issuer:</strong>
       <span style="color:#0b3d78;">rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V</span>
     </p>
-
-    <!-- Quick jump buttons to Ledger + AMM -->
-    <div style="margin-top:18px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-      <a href="#ledger-section" class="rad-btn rad-btn-ledger rad-btn-small">
-        <span>📜 View The RAD Ledger</span>
-      </a>
-      <a href="#amm-section" class="rad-btn rad-btn-amm rad-btn-small">
-        <span>🚀 Enter The $RAD AMM Pool</span>
-      </a>
-    </div>
   </div>
 
   <!-- SOCIAL -->
@@ -306,6 +306,16 @@
     🔍 Verify on:
     <a href="https://bithomp.com/explorer/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">Bithomp</a>
     <a href="https://xrpscan.com/account/rKpaNoTRdXa48W7emkKgtCLz2MuhEroU7V" target="_blank">XRPSCAN</a>
+  </div>
+
+  <!-- QUICK CTAs (pulsing, above the fold) -->
+  <div class="quick-cta">
+    <a href="#ledger-section" class="rad-btn rad-btn-ledger rad-btn-small pulse-ledger">
+      <span>📜 View The RAD Ledger</span>
+    </a>
+    <a href="#amm-section" class="rad-btn rad-btn-amm rad-btn-small amm-pulse">
+      <span>🚀 Enter The $RAD AMM Pool</span>
+    </a>
   </div>
 
   <!-- UTILITY -->
