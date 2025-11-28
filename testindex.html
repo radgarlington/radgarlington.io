@@ -129,10 +129,11 @@
       box-shadow:0 6px 20px rgba(179,135,0,.35);
     }
 
+    /* 🔵 Make ledger pulse visible on light background */
     @keyframes pulse-ledger {
-      0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}
-      70%{box-shadow:0 0 0 20px rgba(255,255,255,0)}
-      100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+      0%  { box-shadow:0 0 0 0 rgba(10,116,208,.55); }
+      70% { box-shadow:0 0 0 20px rgba(10,116,208,0); }
+      100%{ box-shadow:0 0 0 0 rgba(10,116,208,0); }
     }
     .pulse-ledger {
       animation:pulse-ledger 2.5s infinite;
