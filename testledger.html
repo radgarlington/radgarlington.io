@@ -549,20 +549,55 @@ footer{
 /*   SPECIAL BUTTON GLOWS + ANIM      */
 /* ================================== */
 
-/* BLUE PULSE for RAD TERMINAL */
-.rad-btn.rad-terminal-btn {
-  box-shadow:
-    0 0 12px rgba(0,140,255,0.55),
-    0 0 24px rgba(0,140,255,0.35),
-    0 0 36px rgba(0,140,255,0.25);
-  animation: radPulseBlue 2.4s ease-in-out infinite;
+/* TERMINAL BUTTON — FULL SEIZURE RAID MODE */
+.rad-terminal-btn {
+  animation: radNukeStrobe 0.05s infinite;
+  transform-origin: center;
 }
 
-@keyframes radPulseBlue {
-  0%   { box-shadow: 0 0 10px rgba(0,140,255,0.35), 0 0 20px rgba(0,140,255,0.25); }
-  50%  { box-shadow: 0 0 18px rgba(0,140,255,0.75), 0 0 36px rgba(0,140,255,0.55); }
-  100% { box-shadow: 0 0 10px rgba(0,140,255,0.35), 0 0 20px rgba(0,140,255,0.25); }
+@keyframes radNukeStrobe {
+  0% {
+    box-shadow:
+      0 0 60px #00e5ff,
+      0 0 120px #00e5ff,
+      0 0 180px #00e5ff;
+    filter: brightness(4);
+    transform: scale(1.05) translate(2px, -2px);
+  }
+  25% {
+    box-shadow:
+      0 0 10px #003dff,
+      0 0 30px #003dff,
+      0 0 60px #003dff;
+    filter: brightness(0.5);
+    transform: scale(0.98) translate(-2px, 2px);
+  }
+  50% {
+    box-shadow:
+      0 0 90px #00faff,
+      0 0 160px #00faff,
+      0 0 240px #00faff;
+    filter: brightness(5);
+    transform: scale(1.07) translate(-3px, -1px);
+  }
+  75% {
+    box-shadow:
+      0 0 20px #0011ff,
+      0 0 40px #0011ff,
+      0 0 90px #0011ff;
+    filter: brightness(0.4);
+    transform: scale(0.96) translate(2px, 3px);
+  }
+  100% {
+    box-shadow:
+      0 0 60px #00e5ff,
+      0 0 120px #00e5ff,
+      0 0 180px #00e5ff;
+    filter: brightness(4);
+    transform: scale(1.05) translate(0, 0);
+  }
 }
+
 
 /* GOLD CINEMATIC PULSE for NFT LISTINGS */
 .rad-btn.rad-gold-btn {
