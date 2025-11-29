@@ -304,7 +304,7 @@ footer{
 <div class="rad-actions" style="padding:22px 10px 18px;background:#eef6ff;border-bottom:2px solid #d7e7ff;">
   <a href="nfts.html" class="rad-btn rad-gold-btn"><span>🃏 NFT Listings</span></a>
 
-  <button id="openRadTerminal" class="rad-btn rad-terminal-btn" style="cursor:pointer;">
+  <button id="openRadTerminal" class="rad-btn rad-terminal-btn rad-malfunction" style="cursor:pointer;">
     <span>🖥️ Launch RAD Terminal</span>
   </button>
 </div>
@@ -545,6 +545,19 @@ footer{
   font-size:14px;
 }
 
+.rad-malfunction {
+  animation: radMalfunction .14s infinite;
+}
+
+@keyframes radMalfunction {
+  0% { filter:brightness(1); transform:scale(1); }
+  25% { filter:brightness(.6); transform:scale(.98); }
+  50% { filter:brightness(1.3); transform:scale(1.03); }
+  75% { filter:brightness(.7); transform:scale(.97); }
+  100% { filter:brightness(1); transform:scale(1); }
+}
+
+  
   /* ================================== */
 /*   SPECIAL BUTTON GLOWS + ANIM      */
 /* ================================== */
@@ -583,19 +596,15 @@ footer{
 
 
 
-/* GOLD CINEMATIC PULSE for NFT LISTINGS */
 .rad-btn.rad-gold-btn {
   background: linear-gradient(145deg,#eac058,#a87c1f);
   border: 1px solid #d1a84a;
-  color:#121113 !important;
-  box-shadow:none !important;
-  filter:none !important;
+  color:#121113 !important; /* WCK black */
+  box-shadow:none !important; /* no glow */
+  filter:none !important; /* no halo */
+  animation:none !important; /* KILL ANIMATION */
 }
 
-.rad-btn.rad-gold-btn:hover {
-  box-shadow:none !important;
-  filter:none !important;
-}
 
 
 </style>
