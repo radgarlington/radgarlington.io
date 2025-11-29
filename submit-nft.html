@@ -20,13 +20,13 @@ body{
   color:#fff;
   text-align:center;
   padding:20px 10px;
-  font-size:1.1rem;
-  font-weight:700;
+  font-size:1.2rem;
+  font-weight:800;
   border-bottom:2px solid #062a5c;
   box-shadow:0 4px 10px rgba(0,0,0,.25);
 }
 
-/* 🔹 Shared RAD glossy button (match Ledger / NFT Registry) */
+/* Button */
 .rad-btn{
   position:relative;
   overflow:hidden;
@@ -44,35 +44,18 @@ body{
   background:linear-gradient(145deg,#0f7cf0,#07418f);
   border:1px solid #06336f;
   cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
 .rad-btn::before{
   content:"";
   position:absolute;
-  top:-60%;
-  left:-10%;
-  width:130%;
-  height:80%;
+  top:-60%;left:-10%;
+  width:130%;height:80%;
   background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
   opacity:.25;
   transform:skewY(-12deg);
-  transition:transform .25s ease, opacity .2s ease;
 }
-.rad-btn span{
-  position:relative;
-  z-index:1;
-}
-.rad-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 18px rgba(15,23,42,.35);
-  filter:brightness(1.03);
-}
-.rad-btn:hover::before{
-  transform:skewY(-12deg) translateY(35%);
-  opacity:.35;
-}
+.rad-btn span{position:relative;z-index:1;}
 
-/* Back Button — LEFT SIDE WRAP */
 .back-wrap{
   width:100%;
   padding:14px 0 0 0;
@@ -81,60 +64,57 @@ body{
   margin-left:16px;
 }
 
-/* Form container */
-.form-wrap{
-  max-width:480px;
+/* Lockout Box */
+.lockout-wrap{
+  max-width:520px;
   background:#fff;
   margin:40px auto;
-  padding:26px 22px;
-  border-radius:14px;
-  border:2px solid #d7e7ff;
-  box-shadow:0 6px 20px rgba(0,0,0,.1);
+  padding:34px 26px;
+  border-radius:16px;
+  border:2px solid #e8c16a;
+  box-shadow:0 6px 20px rgba(0,0,0,.12);
+  text-align:center;
+  background:#fff8df;
 }
 
-.form-wrap h2{
-  text-align:center;
-  margin:0 0 14px;
-  font-size:1.4rem;
-  color:#0A74D0;
+.lock-emoji{
+  font-size:3.4rem;
+  margin-bottom:12px;
+}
+
+.lock-title{
+  font-size:1.45rem;
   font-weight:800;
+  color:#b47a00;
+  margin-bottom:10px;
 }
 
-label{
-  display:block;
-  font-weight:700;
-  color:#083c80;
-  margin:14px 0 6px;
-}
-
-input,textarea{
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:2px solid #c2d9ff;
+.lock-text{
   font-size:1rem;
-  transition:.15s ease;
-}
-input:focus,textarea:focus{
-  border-color:#0A74D0;
-  background:#f3f9ff;
+  color:#5a4500;
+  line-height:1.45;
+  margin-bottom:14px;
 }
 
-/* SUBMIT BUTTON — glossy + full width */
-.pay-btn{
-  width:100%;
-  margin-top:20px;
-  justify-content:center;
-  padding:14px 18px;
+.lock-free{
+  font-size:1.2rem;
+  margin-top:18px;
+  font-weight:800;
+  color:#a10000;
 }
 
-/* DISCLAIMER */
-.disclaimer{
-  font-size:.8rem;
-  color:#475569;
-  margin-top:16px;
+.lock-dm{
+  margin-top:12px;
+  font-weight:700;
+  color:#0A74D0;
+  font-size:1rem;
+}
+
+footer{
   text-align:center;
-  line-height:1.4;
+  padding:20px 12px 30px;
+  font-size:.85rem;
+  color:#475569;
 }
 </style>
 
@@ -145,58 +125,37 @@ input:focus,textarea:focus{
 <div class="banner">Submit Your NFT to The RAD Registry</div>
 
 <div class="back-wrap">
-  <a href="nfts.html" class="rad-btn">
-    <span>← Back to NFT Registry</span>
-  </a>
+  <a href="nfts.html" class="rad-btn"><span>← Back to NFT Registry</span></a>
 </div>
 
-<div class="form-wrap">
-  <h2>List Your NFT</h2>
+<!-- 🔒 LOCKOUT CARD -->
+<div class="lockout-wrap">
 
-  <form id="nftForm">
+  <div class="lock-emoji">🔒</div>
 
-    <label>Collection Name</label>
-    <input name="collection_name" required>
+  <div class="lock-title">NFT Submissions Temporarily Paused</div>
 
-    <label>Artist Name</label>
-    <input name="artist_name" required>
+  <div class="lock-text">
+    The RAD NFT submission system is being wired into the new backend.
+    During this construction phase, on-site submissions and payments are
+    <strong>disabled</strong>.
+  </div>
 
-    <label>Issuer Address (XRPL)</label>
-    <input name="issuer" required>
+  <div class="lock-free">NFT Listings Are FREE During the Build</div>
 
-    <label>Collection Link</label>
-    <input name="collection_link" required>
+  <div class="lock-text">
+    If you'd like your NFT collection added manually while we're upgrading,
+    message <strong>Rad</strong> directly on 𝕏:
+  </div>
 
-    <label>Website (Optional)</label>
-    <input name="website">
+  <div class="lock-dm">@radgarlington</div>
 
-    <label>X Profile (Optional)</label>
-    <input name="social_x">
-
-    <label>Logo Filename (Must already be uploaded)</label>
-    <input name="logo" placeholder="example.png" required>
-
-    <button type="button" class="rad-btn pay-btn" onclick="pay()">
-      <span>Pay &amp; Submit</span>
-    </button>
-  </form>
-
-  <div class="disclaimer">
-    Payment is processed through Xaman.<br>
-    After confirming, your NFT will be reviewed and added to the Registry.
+  <div class="lock-text" style="opacity:.8;margin-top:8px;">
+    Provide: Collection name, logo file, issuer, and link.
   </div>
 </div>
 
-<script>
-async function pay(){
-  const resp = await fetch('/api/create-nft-payment', {
-    method:'POST'
-  });
-
-  const data = await resp.json();
-  window.location = data.next;
-}
-</script>
+<footer>© 2025 The RAD NFT Registry — Source of Truth on XRPL.</footer>
 
 </body>
 </html>
