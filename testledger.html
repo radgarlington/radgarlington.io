@@ -554,50 +554,56 @@ footer{
 /*      TERMINAL MALFUNCTION EFFECT       */
 /* ====================================== */
 
+/* =============================== */
+/*   RAD TERMINAL — BLACKOUT GLITCH */
+/* =============================== */
+
 .rad-terminal-btn {
-  animation: radFaultFlicker 4.5s infinite;
+  animation: radBlackoutGlitch 6.8s infinite steps(1);
+  position: relative;
+  overflow: hidden;
 }
 
-/* NO COLOR — only brightness, contrast + momentary blackout */
-@keyframes radFaultFlicker {
+/* KEYFRAMES */
+@keyframes radBlackoutGlitch {
 
-  /* baseline */
-  0%   { filter:brightness(1) contrast(1); transform:scale(1); }
+  /* Normal idle */
+  0%, 89%, 100% {
+    filter: brightness(1) contrast(1);
+    transform: none;
+  }
 
-  /* micro blackout */
-  4%   { filter:brightness(0) contrast(1.4); }
-  6%   { filter:brightness(1.1); }
+  /* BLACKOUT — quick full dark */
+  90% {
+    filter: brightness(0) contrast(1);
+    transform: scale(0.99);
+  }
 
-  /* soft surge (white, not blue) */
-  12%  { filter:brightness(1.6) contrast(1.15); transform:scale(1.02); }
-  14%  { filter:brightness(.15); transform:scale(.98); }
+  /* WHITE STATIC FLASH */
+  91% {
+    filter: brightness(2) contrast(3);
+    transform: scale(1.01);
+  }
 
-  /* idle */
-  22%  { filter:brightness(1); }
+  /* PARTIAL CORRUPTION */
+  92% {
+    filter: brightness(.3) contrast(1.4);
+    transform: skewX(1deg);
+  }
 
-  /* random stutter */
-  33%  { filter:brightness(.3); }
-  36%  { filter:brightness(1.1); }
+  /* MINI GLITCH */
+  93% {
+    filter: brightness(.6) contrast(1);
+    transform: skewX(-1deg);
+  }
 
-  /* low-power flicker */
-  48%  { filter:brightness(1.4) contrast(1.1); }
-  50%  { filter:brightness(0) contrast(1.4); }
-
-  /* long quiet zone */
-  60%  { filter:brightness(1); }
-
-  /* triple blackout — slow, dirty */
-  72%  { filter:brightness(.05); }
-  75%  { filter:brightness(1.2); }
-  78%  { filter:brightness(.1); }
-  82%  { filter:brightness(1); }
-
-  /* final glitch */
-  92%  { filter:brightness(.25); }
-  97%  { filter:brightness(1.3) contrast(1.1); }
-
-  100% { filter:brightness(1); transform:scale(1); }
+  /* Return to normal */
+  94% {
+    filter: brightness(1) contrast(1);
+    transform: none;
+  }
 }
+
 
 
 
