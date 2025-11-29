@@ -613,25 +613,37 @@ footer{
   animation: radGlitch 4.2s infinite steps(2,end);
 }
 
+/* REDUCED BLACKOUT + 25% WHITE FLICKER */
 @keyframes radGlitch {
   0%   { filter:none; }
-  8%   { filter:brightness(0.45); } /* softer dim */
+
+  /* small dark flicker */
+  8%   { filter:brightness(0.55); }
   9.5% { filter:none; }
 
-  22%  { filter:brightness(0.25); } /* one blackout blip */
-  23.5%{ filter:none; }
+  /* white tech flicker (replacing blackout #1) */
+  18%  { filter:brightness(1.45); }
+  19.5%{ filter:none; }
 
-  48%  { filter:brightness(0.38); } /* small glitch */
-  49.5%{ filter:none; }
+  /* remaining blackout flicker — reduced strength */
+  34%  { filter:brightness(0.40); }
+  35.5%{ filter:none; }
 
-  69%  { filter:brightness(0.30); } /* blackout micro flicker */
+  /* white flicker #2 —  quick micro-flash */
+  52%  { filter:brightness(1.35); }
+  53.2%{ filter:none; }
+
+  /* small dim flicker */
+  69%  { filter:brightness(0.50); }
   70.5%{ filter:none; }
 
-  92%  { filter:brightness(0.32); } /* tiny static flick */
-  93.5%{ filter:none; }
+  /* white flicker #3 — soft spark */
+  86%  { filter:brightness(1.30); }
+  87.3%{ filter:none; }
 
   100% { filter:none; }
 }
+
 
 
 
