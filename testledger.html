@@ -555,20 +555,32 @@ footer{
 /* ====================================== */
 
 .rad-terminal-btn {
-  animation: radMalfunction 1.8s infinite;
+  animation: radMalfunction 2.6s infinite;
 }
 
+
 @keyframes radMalfunction {
-  0%   { filter:brightness(1) contrast(1);   transform:scale(1); }
-  8%   { filter:brightness(.92);             transform:scale(.995); }
-  18%  { filter:brightness(0) contrast(1.4); transform:scale(.98); }   /* blackout */
-  30%  { filter:brightness(.95);             transform:scale(.99); }
-  48%  { filter:brightness(1.12);            transform:scale(1.01); }
-  62%  { filter:brightness(.85);             transform:scale(.99); }
-  74%  { filter:brightness(0) contrast(1.3); transform:scale(.97); }   /* blackout #2 */
-  88%  { filter:brightness(1.05);            transform:scale(1); }
-  100% { filter:brightness(1);               transform:scale(1); }
+  0%   { filter:brightness(1) contrast(1); transform:scale(1); }
+  
+  7%   { filter:brightness(.75) contrast(1.2); transform:scale(.995); }
+  
+  14%  { filter:brightness(0) contrast(1.3); transform:scale(.98); }  /* blackout */
+  
+  22%  { filter:brightness(.9) contrast(1.05); transform:scale(.995); }
+  
+  37%  { filter:brightness(1.15) contrast(1); transform:scale(1.01); }
+  
+  51%  { filter:brightness(.8) contrast(1.15); transform:scale(.99); }
+  
+  63%  { filter:brightness(.55) contrast(1.3); transform:scale(.985); } /* dim dip */
+  
+  78%  { filter:brightness(0) contrast(1.4); transform:scale(.975); }  /* second blackout */
+  
+  91%  { filter:brightness(1.05) contrast(1); transform:scale(1); }
+  
+  100% { filter:brightness(1) contrast(1); transform:scale(1); }
 }
+
 
 
 
