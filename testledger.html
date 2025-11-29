@@ -554,12 +554,14 @@ footer{
 /*      TERMINAL MALFUNCTION EFFECT       */
 /* ====================================== */
 
+
+  
 /* ===================================================== */
-/*     RAD TERMINAL BUTTON — SHEEN + ANIMATED SHEEN      */
-/*          + MALFUNCTION BLACKOUT GLITCH FLICKER         */
+/*   RAD TERMINAL BUTTON — REDUCED BLACKOUT FLICKER +    */
+/*        STRONGER + MORE FREQUENT ANIMATED SHEEN        */
 /* ===================================================== */
 
-/* 1) ORIGINAL SHEEN — restored */
+/* ORIGINAL STATIC SHEEN (KEEPING IT) */
 .rad-terminal-btn::before {
   content:"";
   position:absolute;
@@ -567,66 +569,66 @@ footer{
   left:-10%;
   width:130%;
   height:80%;
-  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
-  opacity:.25;
+  background:linear-gradient(120deg,rgba(255,255,255,.55),rgba(255,255,255,0));
+  opacity:.22;
   transform:skewY(-12deg);
   transition:transform .25s ease, opacity .2s ease;
   z-index:1;
 }
 
-/* 2) ANIMATED MOVING SHEEN */
+/* STRONGER + MORE FREQUENT ANIMATED SHEEN */
 .rad-terminal-btn::after {
   content:"";
   position:absolute;
   top:0;
-  left:-140%;
-  width:120%;
+  left:-150%;
+  width:130%;
   height:100%;
-  background:linear-gradient(115deg,
+  background:linear-gradient(
+    115deg,
     rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.18) 50%,
+    rgba(255,255,255,0.28) 45%,
+    rgba(255,255,255,0.45) 50%,
+    rgba(255,255,255,0.28) 55%,
     rgba(255,255,255,0) 100%
   );
   transform:skewX(-25deg);
-  animation: radAnimatedSheen 4.6s ease-in-out infinite;
+  animation: radAnimatedSheen 3.2s ease-in-out infinite;
   pointer-events:none;
   z-index:2;
 }
 
 @keyframes radAnimatedSheen {
-  0%   { left:-140%; opacity:0; }
-  45%  { left:-140%; opacity:0; }
-  50%  { left:80%;  opacity:0.8; }
-  55%  { left:130%; opacity:0; }
-  100% { left:130%; opacity:0; }
+  0%   { left:-150%; opacity:0; }
+  40%  { left:-150%; opacity:0; }
+  46%  { left:90%;  opacity:1; }
+  53%  { left:140%; opacity:0; }
+  100% { left:140%; opacity:0; }
 }
 
-/* 3) MALFUNCTIONING GLITCH FLICKER */
+/* REDUCED BLACKOUT + MORE NATURAL GLITCH */
 .rad-terminal-btn {
   position:relative;
   overflow:hidden;
-  animation: radMalfunction 3.2s infinite steps(2,end);
+  animation: radGlitch 4.2s infinite steps(2,end);
 }
 
-@keyframes radMalfunction {
+@keyframes radGlitch {
   0%   { filter:none; }
-  4%   { filter:brightness(0.15); }   /* blackout blip */
-  6%   { filter:none; }
+  8%   { filter:brightness(0.45); } /* softer dim */
+  9.5% { filter:none; }
 
-  14%  { filter:brightness(0.35); }   /* dim glitch */
-  16%  { filter:none; }
+  22%  { filter:brightness(0.25); } /* one blackout blip */
+  23.5%{ filter:none; }
 
-  34%  { filter:brightness(0.22); }   /* blackout spike */
-  36%  { filter:none; }
+  48%  { filter:brightness(0.38); } /* small glitch */
+  49.5%{ filter:none; }
 
-  52%  { filter:brightness(0.45); }   /* dim static */
-  54%  { filter:none; }
+  69%  { filter:brightness(0.30); } /* blackout micro flicker */
+  70.5%{ filter:none; }
 
-  72%  { filter:brightness(0.18); }   /* blackout flash */
-  74%  { filter:none; }
-
-  86%  { filter:brightness(0.3); }    /* minor flick */
-  88%  { filter:none; }
+  92%  { filter:brightness(0.32); } /* tiny static flick */
+  93.5%{ filter:none; }
 
   100% { filter:none; }
 }
