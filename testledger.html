@@ -555,8 +555,9 @@ footer{
 /* ====================================== */
 
 .rad-terminal-btn {
-  animation: radLightning 1.8s infinite;
+  animation: radLightning 4.5s infinite;
 }
+
 
 
 
@@ -564,39 +565,40 @@ footer{
   0%   { filter:brightness(1) contrast(1); transform:scale(1); }
 
   /* micro flicker */
-  6%   { filter:brightness(0) contrast(1.4); }
-  7%   { filter:brightness(1.4) contrast(1.1); }
+  4%   { filter:brightness(0); }
+  5%   { filter:brightness(1.3); }
 
-  /* harsh lightning pop */
-  13%  { filter:brightness(2.4) contrast(1.2); transform:scale(1.03); }
-  14%  { filter:brightness(0) contrast(1.5); transform:scale(.97); }
+  /* lightning pop */
+  11%  { filter:brightness(2.2) contrast(1.2); transform:scale(1.02); }
+  12%  { filter:brightness(0) contrast(1.5); transform:scale(.98); }
 
-  /* recover */
-  20%  { filter:brightness(1) contrast(1); transform:scale(1); }
+  /* idle recover */
+  22%  { filter:brightness(1); transform:scale(1); }
 
-  /* random static flick */
-  32%  { filter:brightness(.2) contrast(1.3); }
-  33%  { filter:brightness(1.3) contrast(1.1); }
+  /* random blackout flick */
+  34%  { filter:brightness(.2); }
+  36%  { filter:brightness(1.2); }
 
-  /* electric surge */
-  47%  { filter:brightness(2.1) contrast(1.25); transform:scale(1.02); }
-  48%  { filter:brightness(0) contrast(1.5); transform:scale(.98); }
+  /* surge pop */
+  48%  { filter:brightness(2.0) contrast(1.25); transform:scale(1.02); }
+  49%  { filter:brightness(0) contrast(1.5); transform:scale(.98); }
 
-  /* soft recover */
-  60%  { filter:brightness(1) contrast(1); transform:scale(1); }
+  /* long calm zone */
+  60%  { filter:brightness(1); }
 
-  /* triple blackout stutter */
-  72%  { filter:brightness(0); }
-  73%  { filter:brightness(1.6); }
+  /* triple blackout stutter (slower) */
+  70%  { filter:brightness(0); }
+  72%  { filter:brightness(1.4); }
   74%  { filter:brightness(0); }
-  75%  { filter:brightness(1.3); }
+  76%  { filter:brightness(1.2); }
 
-  /* final glitch before reset */
-  89%  { filter:brightness(.3) contrast(1.3); transform:scale(.99); }
-  95%  { filter:brightness(2.2) contrast(1.25); transform:scale(1.02); }
+  /* late glitch */
+  88%  { filter:brightness(.3); }
+  93%  { filter:brightness(2.0); }
 
   100% { filter:brightness(1); transform:scale(1); }
 }
+
 
 
 
