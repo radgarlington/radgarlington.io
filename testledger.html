@@ -555,22 +555,21 @@ footer{
 /* ====================================== */
 
 .rad-terminal-btn {
-  background:linear-gradient(145deg,#0f7cf0,#07418f);
-  border:1px solid #06336f;
-  animation:radMalfunction .13s infinite;
+  animation: radMalfunction 1.8s infinite;
 }
 
 @keyframes radMalfunction {
   0%   { filter:brightness(1) contrast(1);   transform:scale(1); }
-  12%  { filter:brightness(.92);             transform:scale(.995); }
-  20%  { filter:brightness(0) contrast(1.6); transform:scale(.98); }   /* blackout flash */
-  28%  { filter:brightness(.85);             transform:scale(.99); }
-  40%  { filter:brightness(1.15);            transform:scale(1.01); }
-  55%  { filter:brightness(.90);             transform:scale(.995); }
-  72%  { filter:brightness(0) contrast(1.4); transform:scale(.97); }   /* second blackout */
-  85%  { filter:brightness(1.05);            transform:scale(1); }
-  100% { filter:brightness(1) contrast(1);   transform:scale(1); }
+  8%   { filter:brightness(.92);             transform:scale(.995); }
+  18%  { filter:brightness(0) contrast(1.4); transform:scale(.98); }   /* blackout */
+  30%  { filter:brightness(.95);             transform:scale(.99); }
+  48%  { filter:brightness(1.12);            transform:scale(1.01); }
+  62%  { filter:brightness(.85);             transform:scale(.99); }
+  74%  { filter:brightness(0) contrast(1.3); transform:scale(.97); }   /* blackout #2 */
+  88%  { filter:brightness(1.05);            transform:scale(1); }
+  100% { filter:brightness(1);               transform:scale(1); }
 }
+
 
 
 /* ====================================== */
