@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+      content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Submit Token — The RAD Ledger</title>
+
 <style>
 html,body{-webkit-text-size-adjust:100%;touch-action:manipulation}
 *{box-sizing:border-box}
-body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
+body{
+  margin:0;
+  background:#ffffff;
+  color:#0f172a;
+  font-family:Arial,system-ui,sans-serif;
+}
 
 /* 🔹 Shared RAD glossy button */
 .rad-btn{
@@ -41,10 +47,7 @@ body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-
   transform:skewY(-12deg);
   transition:transform .25s ease, opacity .2s ease;
 }
-.rad-btn span{
-  position:relative;
-  z-index:1;
-}
+.rad-btn span{ position:relative; z-index:1; }
 .rad-btn:hover{
   transform:translateY(-2px);
   box-shadow:0 6px 18px rgba(15,23,42,.35);
@@ -55,7 +58,7 @@ body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-
   opacity:.35;
 }
 
-/* Top strip for Back to Ledger (above header) */
+/* Top strip */
 .top-strip{
   max-width:960px;
   margin:10px auto 6px;
@@ -69,16 +72,24 @@ body{margin:0;background:#ffffff;color:#0f172a;font-family:Arial,system-ui,sans-
   box-shadow:0 2px 8px rgba(15,23,42,.25);
 }
 
-/* Header & layout */
+/* Header */
 header{
   text-align:center;
   padding:42px 10px 20px;
   background:#eaf3ff;
   border-bottom:2px solid #d7e7ff;
-  position:relative;
 }
-header h1{font-size:2rem;margin:0;color:#0A74D0}
-header p{margin:10px 0 0;color:#334155}
+header h1{
+  font-size:2rem;
+  margin:0;
+  color:#0A74D0;
+}
+header p{
+  margin:10px 0 0;
+  color:#334155;
+}
+
+/* MAIN BOX */
 main{
   max-width:720px;
   margin:40px auto;
@@ -88,58 +99,43 @@ main{
   background:#f8fbff;
   box-shadow:0 6px 20px rgba(2,32,71,.08);
 }
-label{display:block;margin:10px 0 4px;font-weight:600;color:#0f172a}
-input,textarea{
-  width:100%;
-  padding:10px;
-  border:1px solid #cbd5e1;
-  border-radius:6px;
-  background:#fff;
-  font-size:.95rem;
-}
-input[readonly]{background:#f1f5f9;color:#64748b;cursor:not-allowed}
-textarea{min-height:80px;resize:vertical}
 
-.tier{
-  margin-top:24px;
-  padding:20px;
-  border:2px solid #d0e3ff;
-  border-radius:10px;
-  background:#eaf3ff;
-  position:relative;
+/* LOCKOUT BOX */
+.lockout-box{
+  text-align:center;
+  padding:32px 20px;
+  border-radius:14px;
+  background:#fff4d6;
+  border:2px solid #e8c16a;
+  box-shadow:0 4px 14px rgba(0,0,0,.15);
+  margin-bottom:32px;
 }
-.tier h2{
-  margin:0 0 6px;
-  font-size:1.1rem;
-  color:#0A74D0;
-  display:flex;
-  align-items:center;
-  gap:6px;
+.lock-emoji{
+  font-size:3rem;
+  margin-bottom:10px;
 }
-.info-icon{
-  font-size:.9rem;
-  background:#0A74D0;
-  color:#fff;
-  border-radius:50%;
-  width:18px;
-  height:18px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  font-weight:bold;
+.lockout-title{
+  font-size:1.4rem;
+  font-weight:800;
+  color:#b47a00;
+  margin-bottom:10px;
+}
+.lockout-text{
+  font-size:1rem;
+  color:#543d00;
+  line-height:1.45;
+}
+.lockout-warn{
+  margin-top:16px;
+  font-size:1.15rem;
+  font-weight:800;
+  color:#a10000;
 }
 
-/* RAD glossy Pay buttons inside tiers */
-.tier .rad-btn{
-  margin-top:10px;
-}
-
-/* XRP display text */
-.xrp-display{
-  font-size:.9rem;
-  color:#475569;
-  margin-top:4px;
+/* Hide the form while locked */
+.locked form,
+.locked .tier {
+  display:none !important;
 }
 
 footer{
@@ -148,66 +144,12 @@ footer{
   color:#475569;
   margin-top:30px;
 }
-
-/* Info / confirm modals */
-.info-modal{
-  display:none;
-  position:fixed;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,.55);
-  z-index:999;
-  animation:fadeIn .2s ease;
-}
-.info-content{
-  background:#fff;
-  color:#0f172a;
-  margin:15% auto;
-  padding:20px;
-  border-radius:10px;
-  border:2px solid #d0e3ff;
-  width:90%;
-  max-width:400px;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-.info-content h3{margin-top:0;color:#0A74D0;font-size:1.2rem}
-.info-content p{font-size:.95rem;color:#334155}
-.close-info{float:right;font-size:1.3rem;cursor:pointer;color:#0A74D0}
-.close-info:hover{color:#083c80}
-
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-.confirm-modal{
-  display:none;
-  position:fixed;
-  z-index:1000;
-  top:0;left:0;
-  width:100%;height:100%;
-  background:rgba(0,0,0,.7);
-  backdrop-filter:blur(4px);
-}
-.confirm-box{
-  background:linear-gradient(180deg,#0A74D0,#083c80);
-  color:#fff;
-  padding:40px 20px;
-  border-radius:16px;
-  text-align:center;
-  width:90%;
-  max-width:440px;
-  margin:20% auto;
-  box-shadow:0 0 20px rgba(0,0,0,.5);
-  animation:fadeIn .3s ease;
-}
-.confirm-box h2{font-size:1.5rem;margin-bottom:8px}
-.confirm-box p{margin:6px 0;color:#dce8ff}
-.confirm-box .check{font-size:2.5rem;color:#ffe175;margin-bottom:12px}
-.confirm-box a{color:#ffe175;text-decoration:none;font-weight:bold}
-.confirm-box a:hover{text-decoration:underline}
 </style>
 </head>
+
 <body>
 
-<!-- Glossy Back to Ledger button above header -->
+<!-- Back Button -->
 <div class="top-strip">
   <a href="/ledger.html" class="rad-btn">
     <span>← Back to Ledger</span>
@@ -216,288 +158,50 @@ footer{
 
 <header>
   <h1>Submit Your Token</h1>
-  <p>Provide full details for verification and certification on <strong>The RAD Ledger</strong>.</p>
+  <p>Provide details for verification & certification on <strong>The RAD Ledger</strong>.</p>
 </header>
 
-<main>
+<!-- MAIN -->
+<main class="locked">
+
+  <!-- 🔒 LOCKOUT BLOCK -->
+  <div class="lockout-box">
+    <div class="lock-emoji">🔒</div>
+
+    <div class="lockout-title">Submissions Temporarily Paused</div>
+
+    <div class="lockout-text">
+      The RAD Ledger submission system is currently being wired into the new backend.
+      Verification, certification, and renewal payments are
+      <strong>disabled</strong> during construction.
+    </div>
+
+    <div class="lockout-warn">
+      Listings Are FREE During the Build
+    </div>
+
+    <div class="lockout-text" style="margin-top:14px;">
+      If you'd like your token added while the system is under construction,
+      DM <strong>Rad</strong> directly on 𝕏:<br>
+      <strong>@radgarlington</strong>
+    </div>
+
+    <div class="lockout-text" style="font-size:.9rem;opacity:.85;margin-top:6px;">
+      Your listing will be added manually at no cost.
+    </div>
+  </div>
+
+  <!-- Everything below remains hidden until we turn off lockout -->
   <form id="verifyForm" onsubmit="return false;">
-    <label>Certificate Number (Auto-Assigned)</label>
-    <input type="text" id="certificate" value="Auto-Generated by RAD" readonly>
-
-    <label>Developer</label>
-    <input type="text" id="developer" placeholder="Full name or team name">
-
-    <label>Developer 𝕏 Handle</label>
-    <input type="text" id="devTwitter" placeholder="@username">
-
-    <label>Token Name</label>
-    <input type="text" id="tokenName" required>
-
-    <label>Token Symbol</label>
-    <input type="text" id="tokenSymbol" required>
-
-    <label>Issuer</label>
-    <input type="text" id="issuer" required>
-
-    <label>Website</label>
-    <input type="url" id="website" placeholder="https://">
-
-    <label>Email</label>
-    <input type="email" id="email" placeholder="example@email.com">
-
-    <label>Social (𝕏 Handle)</label>
-    <input type="text" id="twitter" placeholder="@username">
-
-    <label>Telegram</label>
-    <input type="text" id="telegram" placeholder="https://t.me/...">
-
-    <label>Seal NFT (if Certified)</label>
-    <input type="url" id="sealNFT" placeholder="https://xrpscan.com/nft/...">
+    <!-- Locked during build -->
   </form>
-
-  <div class="tier">
-    <h2>🔁 Renewal / Update — $5.89 USD <span class="info-icon" data-info="renew">ℹ️</span></h2>
-    <div id="xrp5" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="renewBtn" class="rad-btn">
-      <span>Pay with Xaman</span>
-    </button>
-  </div>
-
-  <div class="tier">
-    <h2>🧾 Standard Verification (Verified) — $25.89 USD <span class="info-icon" data-info="standard">ℹ️</span></h2>
-    <div id="xrp25" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="standardBtn" class="rad-btn">
-      <span>Pay with Xaman</span>
-    </button>
-  </div>
-
-  <div class="tier">
-    <h2>✅ Full Certified (Doxxed) — $58.90 USD <span class="info-icon" data-info="certified">ℹ️</span></h2>
-    <div id="xrp58" class="xrp-display">Fetching XRP conversion...</div>
-    <button id="certBtn" class="rad-btn">
-      <span>Pay with Xaman</span>
-    </button>
-  </div>
 
   <footer>© 2025 The RAD Ledger | Verified by Rad Garlington</footer>
 </main>
 
-<!-- Info Modals -->
-<div id="modal-renew" class="info-modal">
-  <div class="info-content">
-    <span class="close-info">&times;</span>
-    <h3>Renewal / Update</h3>
-    <p>Used to update existing listings or extend certification. No full re-review required, but token, issuer and contact details must still be accurate.</p>
-  </div>
-</div>
-
-<div id="modal-standard" class="info-modal">
-  <div class="info-content">
-    <span class="close-info">&times;</span>
-    <h3>Standard Verification (Verified)</h3>
-    <p>Verifies the token, issuer and project presence. Developer identity can remain off-ledger. This is the non-doxxed Verified tier.</p>
-  </div>
-</div>
-
-<div id="modal-certified" class="info-modal">
-  <div class="info-content">
-    <span class="close-info">&times;</span>
-    <h3>Full Certified (Doxxed)</h3>
-    <p>Full doxxing of the developer plus Seal NFT. Developer details are mandatory. Seal NFT is issued after certification and remains optional in this form.</p>
-  </div>
-</div>
-
-<!-- Payment Confirmation Modal (future use) -->
-<div id="confirmModal" class="confirm-modal">
-  <div class="confirm-box">
-    <div class="check">✅</div>
-    <h2>Payment Verified</h2>
-    <p id="amountLine">Amount: — XRP</p>
-    <p><a id="txLink" href="#" target="_blank">View Transaction</a></p>
-    <p>Transaction logged on The RAD Ledger.</p>
-  </div>
-</div>
-
-<script src="https://xumm.app/assets/cdn/xumm.min.js"></script>
 <script>
-const xumm = new Xumm("2a4001ce-0a75-42bc-8bd2-8ef096ac26d4"); // Live Xaman API key
-
-// ---------- XRP Conversion ----------
-async function updateRates(){
-  try{
-    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
-    const data = await res.json();
-    const price = data.ripple.usd;
-    document.getElementById("xrp5").textContent  = `≈ ${(5.89/price).toFixed(2)} XRP`;
-    document.getElementById("xrp25").textContent = `≈ ${(25.89/price).toFixed(2)} XRP`;
-    document.getElementById("xrp58").textContent = `≈ ${(58.90/price).toFixed(2)} XRP`;
-  }catch(e){
-    ["xrp5","xrp25","xrp58"].forEach(id=>{
-      document.getElementById(id).textContent = "Conversion unavailable";
-    });
-  }
-}
-updateRates();
-
-// ---------- Helpers ----------
-function getFormValues(){
-  return {
-    developer:      document.getElementById("developer").value.trim(),
-    devTwitter:     document.getElementById("devTwitter").value.trim(),
-    tokenName:      document.getElementById("tokenName").value.trim(),
-    tokenSymbol:    document.getElementById("tokenSymbol").value.trim(),
-    issuer:         document.getElementById("issuer").value.trim(),
-    website:        document.getElementById("website").value.trim(),
-    email:          document.getElementById("email").value.trim(),
-    twitter:        document.getElementById("twitter").value.trim(),
-    telegram:       document.getElementById("telegram").value.trim(),
-    sealNFT:        document.getElementById("sealNFT").value.trim()
-  };
-}
-
-// Tier-based validation
-function validateByTier(tier, values){
-  const missing = [];
-
-  // Core fields for everything
-  if (!values.tokenName)   missing.push("Token Name");
-  if (!values.issuer)      missing.push("Issuer");
-  if (!values.email)       missing.push("Email");
-
-  // Verified + Certified need full project presence
-  if (tier === "verified" || tier === "certified") {
-    if (!values.tokenSymbol) missing.push("Token Symbol");
-    if (!values.website)     missing.push("Website");
-    if (!values.twitter)     missing.push("Project 𝕏 Handle");
-  }
-
-  // Certified = doxxed dev (identity requirement)
-  if (tier === "certified") {
-    if (!values.developer)  missing.push("Developer");
-    if (!values.devTwitter) missing.push("Developer 𝕏 Handle");
-  }
-
-  // Renewal: lighter touch
-  if (tier === "renewal") {
-    // nothing extra
-  }
-
-  return missing;
-}
-
-async function logSubmission(tier, values){
-  const body = {
-    tier,
-    developer:        values.developer,
-    developer_x:      values.devTwitter,
-    token_name:       values.tokenName,
-    token_symbol:     values.tokenSymbol,
-    issuer:           values.issuer,
-    website:          values.website,
-    email:            values.email,
-    project_twitter:  values.twitter,
-    telegram:         values.telegram,
-    seal_nft:         values.sealNFT
-  };
-
-  const res = await fetch("/api/submit-token", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
-  });
-
-  const data = await res.json().catch(()=>({}));
-  if (!res.ok || !data.ok) {
-    throw new Error(data.error || "Submission logging failed");
-  }
-}
-
-// ---------- Payment ----------
-async function pay(amountUSD, memo){
-  try{
-    const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ripple&vs_currencies=usd");
-    const price = (await res.json()).ripple.usd;
-    const xrp = (amountUSD / price).toFixed(2);
-
-    const project = document.getElementById("tokenName").value.trim();
-    const issuer  = document.getElementById("issuer").value.trim();
-    if(!project || !issuer){
-      alert("Enter token name and issuer before payment.");
-      return;
-    }
-
-    const r = await fetch("/create_payload", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ project, issuer, amount: xrp })
-    });
-    const d = await r.json();
-
-    if (d.next && d.next.always) {
-      window.open(d.next.always, "_blank");
-    } else {
-      alert("Error creating payment payload.");
-      console.log(d);
-    }
-  }catch(err){
-    console.error("Payment error:", err);
-    alert("Payment initialization failed, check console for details.");
-  }
-}
-
-// ---------- Tier Handlers ----------
-async function handleTier(tier, amountUSD, memoLabel){
-  const values = getFormValues();
-  const missing = validateByTier(tier, values);
-
-  if (missing.length > 0) {
-    alert(
-      `To continue with ${memoLabel}, you must complete:\n\n` +
-      missing.join(", ")
-    );
-    return;
-  }
-
-  try {
-    await logSubmission(tier, values);
-  } catch (err) {
-    console.error("Submission log error:", err);
-    alert("Unable to log submission. Fix this before taking payments.");
-    return;
-  }
-
-  await pay(amountUSD, memoLabel);
-}
-
-// Button wiring
-document.getElementById("renewBtn").onclick = () =>
-  handleTier("renewal", 5.89, "RAD LEDGER - Renewal / Update");
-
-document.getElementById("standardBtn").onclick = () =>
-  handleTier("verified", 25.89, "RAD LEDGER - Standard Verification");
-
-document.getElementById("certBtn").onclick = () =>
-  handleTier("certified", 58.90, "RAD LEDGER - Certified (Doxxed)");
-
-// Info modals
-document.querySelectorAll(".info-icon").forEach(icon=>{
-  icon.addEventListener("click",()=>{
-    const id = icon.getAttribute("data-info");
-    const modal = document.getElementById(`modal-${id}`);
-    if (modal) modal.style.display = "block";
-  });
-});
-document.querySelectorAll(".close-info").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const modal = btn.closest(".info-modal");
-    if (modal) modal.style.display="none";
-  });
-});
-window.onclick = e=>{
-  if (e.target.classList && e.target.classList.contains("info-modal")) {
-    e.target.style.display="none";
-  }
-};
+/* No JS needed during lockout. Form & payment disabled intentionally. */
 </script>
+
 </body>
 </html>
