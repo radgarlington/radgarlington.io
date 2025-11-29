@@ -6,7 +6,6 @@
       content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>RAD NFT Listings — XRPL Registry</title>
 
-<!-- PREMIUM FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
@@ -14,30 +13,25 @@ html,body{
   -webkit-text-size-adjust:100%;
   touch-action:manipulation;
 }
+*{ box-sizing:border-box; }
 
-*{
-  box-sizing:border-box;
-}
-
-body {
+body{
   margin:0;
   font-family:'Inter',system-ui,sans-serif;
   background:#f7f9ff;
   color:#0f172a;
 }
 
-/* TOP STRIP (Back button) */
+/* BACK BUTTON */
 .top-strip{
   max-width:960px;
-  margin:10px auto 6px;
+  margin:14px auto 10px;
   padding:0 12px;
-  display:flex;
-  justify-content:flex-start;
 }
 .rad-btn{
   position:relative;
   overflow:hidden;
-  color:#f9fafb;
+  color:#fff;
   font-weight:700;
   padding:11px 20px;
   font-size:.9rem;
@@ -49,197 +43,197 @@ body {
   box-shadow:0 3px 10px rgba(15,23,42,.25);
   background:linear-gradient(145deg,#0f7cf0,#07418f);
   border:1px solid #06336f;
-  cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
-}
-.rad-btn::before{
-  content:"";
-  position:absolute;
-  top:-60%;
-  left:-10%;
-  width:130%;
-  height:80%;
-  background:linear-gradient(120deg,rgba(255,255,255,.6),rgba(255,255,255,0));
-  opacity:.25;
-  transform:skewY(-12deg);
-  transition:transform .25s ease, opacity .2s ease;
-}
-.rad-btn span{ position:relative; z-index:1; }
-.rad-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 18px rgba(15,23,42,.35);
-  filter:brightness(1.03);
-}
-.rad-btn:hover::before{
-  transform:skewY(-12deg) translateY(35%);
-  opacity:.35;
 }
 
-/* BANNER (Centered, premium) */
-.banner{
-  width:100%;
+/* BANNER CENTERED */
+.banner {
+  margin-top:12px;
   text-align:center;
-  font-size:1.4rem;
+  font-size:1.6rem;
   font-weight:800;
-  padding:26px 12px;
-  color:#ffffff;
-  background:linear-gradient(90deg,#0A74D0,#083c80);
-  border-bottom:3px solid #062a5c;
-  letter-spacing:0.5px;
-  text-shadow:0 2px 6px rgba(0,0,0,0.35);
-  box-shadow:0 4px 14px rgba(0,0,0,.25);
+  padding:20px 10px;
+  background:#eaf2ff;
+  color:#0A74D0;
+  border-bottom:2px solid #d7e7ff;
 }
 
-/* SUBMIT CALLOUT */
+/* SUBMIT */
 .submit-callout{
   text-align:center;
   background:#f8fbff;
   border-bottom:2px solid #d7e7ff;
   padding:16px 10px 18px;
 }
-.submit-callout .rad-btn{
-  padding:11px 24px;
-}
 
 /* FEATURED SECTION */
 .featured-wrap{
   max-width:960px;
-  margin:24px auto 10px;
+  margin:28px auto 20px;
   padding:0 12px;
 }
 .featured-title{
   font-weight:800;
-  font-size:1.1rem;
-  margin-bottom:6px;
+  font-size:1.2rem;
+  margin-bottom:10px;
   color:#0A74D0;
+  text-shadow:0 0 6px rgba(0,0,0,.15);
 }
-
-/* UPDATED WCK FEATURED BOX */
 .featured-card{
   position:relative;
-  padding:0;
-  border-radius:18px;
+  border-radius:20px;
   overflow:hidden;
-  box-shadow:0 6px 20px rgba(0,0,0,.12);
   background:#000;
+  box-shadow:0 6px 18px rgba(0,0,0,.20);
+  padding:0;
 }
 
-/* full background image */
+/* BACKGROUND IMAGE FULL COVER */
 .featured-bg{
-  width:100%;
-  height:260px;
+  position:absolute;
+  inset:0;
   background-size:cover;
   background-position:center;
-  background-repeat:no-repeat;
-  filter:brightness(0.92);
+  opacity:.45;
 }
 
-/* overlay text box */
 .featured-info{
-  padding:20px;
-  background:#ffffff;
-  border-top:3px solid #d7e7ff;
+  position:relative;
+  padding:30px 20px 32px;
   text-align:center;
 }
-.featured-info h3{
-  font-size:1.3rem;
-  font-weight:800;
-  margin:0 0 6px;
-  color:#d4a44a; /* WCK gold */
-}
-.featured-info p{
-  color:#475569;
-  font-size:.95rem;
-  margin:6px 0 12px;
+
+/* WCK LOGO */
+.featured-info img{
+  width:140px;
+  height:140px;
+  object-fit:contain;
+  margin-top:-60px;
+  margin-bottom:12px;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));
 }
 
-.featured-links a{
+/* GOLD TEXT */
+.featured-info h3{
+  font-size:1.6rem;
+  margin:10px 0 6px;
+  color:#dba32b;
+  font-weight:800;
+  text-shadow:0 0 8px rgba(0,0,0,.45);
+}
+
+/* DESCRIPTION */
+.featured-info p{
+  font-size:.95rem;
+  color:#fff;
+  opacity:.95;
+  line-height:1.45;
+  max-width:600px;
+  margin:0 auto 12px;
+}
+
+/* LINKS */
+.card-links {
+  margin-top:14px;
+}
+.card-links a{
   display:inline-block;
   margin:4px 8px;
-  padding:8px 14px;
-  font-weight:700;
-  font-size:.8rem;
-  border-radius:10px;
+  padding:8px 16px;
+  background:#0A74D0;
   color:#fff;
+  border-radius:10px;
+  font-weight:700;
   text-decoration:none;
-  background:linear-gradient(145deg,#0f7cf0,#07418f);
-  box-shadow:0 3px 10px rgba(15,23,42,.25);
+  box-shadow:0 3px 10px rgba(0,0,0,.25);
 }
 
-/* GRID — placeholders */
+/* GRID */
 .grid{
-  max-width:960px;
-  margin:24px auto 40px;
+  max-width:1080px;
+  margin:28px auto 40px;
   padding:0 12px;
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
   gap:20px;
+  grid-template-columns:repeat(3,1fr);
 }
 
-.placeholder-card{
-  background:#ffffff;
-  border-radius:14px;
-  padding:18px;
+/* GRID CARD */
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:16px;
   text-align:center;
   box-shadow:0 4px 14px rgba(0,0,0,.08);
-  border:1px solid #dbe4f2;
+  min-height:280px;
 }
-.placeholder-card img{
+
+/* LOGO */
+.card img{
   width:110px;
   height:110px;
-  opacity:0.4;
-  margin-bottom:12px;
+  object-fit:contain;
+  margin-bottom:10px;
 }
-.placeholder-card h4{
-  font-size:1rem;
+
+/* TITLE */
+.card h3{
+  font-size:1.1rem;
   font-weight:700;
+  margin:6px 0 6px;
   color:#0A74D0;
-  margin-bottom:6px;
-}
-.placeholder-card p{
-  color:#64748b;
-  font-size:.85rem;
-  line-height:1.4;
 }
 
-/* FOOTER */
-.rad-footer{
-  text-align:center;
-  padding:18px 12px 26px;
-  font-size:.85rem;
+/* DESC */
+.card p{
+  font-size:.9rem;
   color:#475569;
-  border-top:1px solid #d7e7ff;
-  background:#f8fbff;
+  margin:0 0 10px;
+  min-height:42px;
 }
 
-</style>
+/* LINKS in grid */
+.card-links a{
+  display:inline-block;
+  margin:3px 6px;
+  padding:6px 12px;
+  background:#0A74D0;
+  color:#fff;
+  border-radius:8px;
+  font-size:.8rem;
+  font-weight:700;
+  text-decoration:none;
+}
 
+/* MOBILE */
+@media(max-width:820px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media(max-width:540px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<!-- BACK TO LEDGER -->
 <div class="top-strip">
-  <a href="ledger.html" class="rad-btn">
-    <span>← Back to Ledger</span>
-  </a>
+  <a href="ledger.html" class="rad-btn">← Back to Ledger</a>
 </div>
 
-<!-- BANNER -->
-<div class="banner">The RAD NFT Registry — Source of Truth</div>
+<div class="banner">THE RAD NFT REGISTRY — SOURCE OF TRUTH</div>
 
-<!-- SUBMIT CALLOUT -->
 <div class="submit-callout">
-  <a href="submit-nft.html" class="rad-btn"><span>Submit Your NFT</span></a>
+  <a href="submit-nft.html" class="rad-btn">Submit Your NFT</a>
 </div>
 
-<!-- FEATURED SECTION -->
+<!-- FEATURED WCK -->
 <div class="featured-wrap">
   <div class="featured-title">Featured Collection</div>
-
-  <div class="featured-card" id="featuredNFT">
-    <!-- Filled by JS -->
-  </div>
+  <div id="featuredNFT" class="featured-card"></div>
 </div>
 
 <!-- GRID -->
@@ -249,67 +243,92 @@ body {
   THE RAD NFT REGISTRY — Source of Truth on XRPL. © 2025 radgarlington.io
 </footer>
 
-
 <script>
-/* ================================
-   WCK FEATURED COLLECTION DATA
-================================ */
-const featured = {
-  name: "CONTINENTAL WICK",
-  bg: "assets/vault_chaos_bg.webp",
-  desc: "Protocol folklore forged into collectible chaos. Enforcers, operatives, vault ghosts, and system anomalies captured as forbidden vectors pulled straight from the Continental archives.",
-  website: "https://www.continentalwick.com",
-  collection: "https://www.continentalwick.com/nft/vault.html",
-  twitter: "https://x.com/wcktoken"
-};
+/* =========================================================
+   NFT DATA
+   ========================================================= */
 
-/* ================================
-   BUILD FEATURED CARD
-================================ */
-function buildFeatured(){
+const nftData = [
+
+  /* WCK FEATURED — ALWAYS TOP */
+  {
+    token: "$WCK",
+    name: "CONTINENTAL WICK",
+    image: "assets/logos/wck_logo.webp",
+    bg: "assets/vault_chaos_bg.webp",
+    desc: "Protocol folklore forged into collectible chaos — operatives, enforcers, vault ghosts, and system anomalies captured in forbidden vector style.",
+    website: "https://www.continentalwick.com",
+    collection: "https://www.continentalwick.com/nft/vault.html",
+    twitter: "https://x.com/wcktoken",
+    showInGrid: false
+  },
+
+  /* SIX EMPTY PLACEHOLDERS */
+  ...Array.from({length:6}).map(() => ({
+    token:"",
+    name:"Coming Soon",
+    image:"assets/RAD_ledger.png",
+    desc:"Awaiting submission.",
+    website:"",
+    collection:"",
+    twitter:"",
+    showInGrid:true
+  }))
+
+];
+
+/* =========================================================
+   FEATURED RENDER
+   ========================================================= */
+function renderFeatured(){
   const box = document.getElementById("featuredNFT");
+  const f = nftData[0];
 
   box.innerHTML = `
-    <div class="featured-bg" style="background-image:url('${featured.bg}')"></div>
+    <div class="featured-bg" style="background-image:url('${f.bg}')"></div>
 
     <div class="featured-info">
-      <h3>${featured.name}</h3>
-      <p>${featured.desc}</p>
 
-      <div class="featured-links">
-        <a href="${featured.website}" target="_blank">Website</a>
-        <a href="${featured.collection}" target="_blank">View Collection</a>
-        <a href="${featured.twitter}" target="_blank">𝕏</a>
+      <img src="${f.image}" alt="${f.name}">
+
+      <h3>${f.name}</h3>
+
+      <p>${f.desc}</p>
+
+      <div class="card-links">
+        <a href="${f.website}" target="_blank">Website</a>
+        <a href="${f.collection}" target="_blank">View Collection</a>
+        <a href="${f.twitter}" target="_blank">𝕏</a>
       </div>
+
     </div>
   `;
 }
 
-/* ================================
-   PLACEHOLDER GRID (6 slots)
-================================ */
-function buildGrid(){
+/* =========================================================
+   GRID RENDER
+   ========================================================= */
+function renderGrid(){
   const grid = document.getElementById("nftGrid");
-  grid.innerHTML = "";
+  grid.innerHTML="";
 
-  for(let i=0;i<6;i++){
-    const card = document.createElement("div");
-    card.className = "placeholder-card";
-
-    card.innerHTML = `
-      <img src="assets/RAD_ledger.png">
-      <h4>Upcoming Collection</h4>
-      <p>Reserved listing. Once an artist submits artwork and metadata, the collection will appear here.</p>
-    `;
-
-    grid.appendChild(card);
-  }
+  nftData
+    .filter(n=>n.showInGrid)
+    .forEach(n=>{
+      const card = document.createElement("div");
+      card.className="card";
+      card.innerHTML = `
+        <img src="${n.image}">
+        <h3>${n.name}</h3>
+        <p>${n.desc}</p>
+      `;
+      grid.appendChild(card);
+    });
 }
 
-/* INIT */
 document.addEventListener("DOMContentLoaded",()=>{
-  buildFeatured();
-  buildGrid();
+  renderFeatured();
+  renderGrid();
 });
 </script>
 
