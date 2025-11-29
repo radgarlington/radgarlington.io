@@ -562,13 +562,16 @@ footer{
 
 @keyframes radMalfunction {
   0%   { filter:brightness(1) contrast(1);   transform:scale(1); }
-  15%  { filter:brightness(.55) contrast(1.4); transform:scale(.97); }
-  30%  { filter:brightness(1.45) contrast(1.3); transform:scale(1.04); }
-  45%  { filter:brightness(.65) contrast(1.7); transform:scale(.96); }
-  60%  { filter:brightness(1.35) contrast(1.2); transform:scale(1.03); }
-  75%  { filter:brightness(.70) contrast(1.5); transform:scale(.98); }
+  12%  { filter:brightness(.92);             transform:scale(.995); }
+  20%  { filter:brightness(0) contrast(1.6); transform:scale(.98); }   /* blackout flash */
+  28%  { filter:brightness(.85);             transform:scale(.99); }
+  40%  { filter:brightness(1.15);            transform:scale(1.01); }
+  55%  { filter:brightness(.90);             transform:scale(.995); }
+  72%  { filter:brightness(0) contrast(1.4); transform:scale(.97); }   /* second blackout */
+  85%  { filter:brightness(1.05);            transform:scale(1); }
   100% { filter:brightness(1) contrast(1);   transform:scale(1); }
 }
+
 
 /* ====================================== */
 /*       NFT BUTTON — GOLD SHEEN SWEEP    */
