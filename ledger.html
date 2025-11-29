@@ -9,54 +9,9 @@
 *{box-sizing:border-box}
 body{margin:0;background:#fff;color:#0f172a;font-family:Arial,system-ui,sans-serif}
 
-/* Certified tickers bold */
-.certified-bold {
-  font-weight:700;
-  color:#0A74D0;
-}
-
-/* Banner */
-.banner{
-  background:linear-gradient(90deg,#0A74D0,#083c80);
-  color:#fff;text-align:center;
-  padding:20px 10px 18px;
-  font-size:1.05rem;font-weight:600;line-height:1.4;
-  border-bottom:2px solid #062a5c;
-  box-shadow:0 4px 10px rgba(0,0,0,.25)
-}
-.banner em{
-  display:block;margin-top:6px;
-  font-style:italic;font-weight:500;opacity:.85
-}
-
-/* Header */
-header{
-  text-align:center;
-  padding:42px 10px 16px;
-  background:#eaf3ff;
-  border-bottom:2px solid #d7e7ff;
-}
-header h1{
-  font-size:2rem;
-  margin:0;
-  color:#0A74D0
-}
-header p{
-  margin:8px 0 0;
-  color:#334155
-}
-
-/* GLOSSY RAD BUTTON (shared) */
-.rad-actions {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:16px;
-  padding:18px 10px;
-  background:#f8fbff;
-  border-bottom:2px solid #d7e7ff;
-}
-
+/* ====================================== */
+/*            RAD BUTTONS (CLEAN)         */
+/* ====================================== */
 .rad-btn {
   position:relative;
   overflow:hidden;
@@ -87,10 +42,7 @@ header p{
   transform:skewY(-12deg);
   transition:transform .25s ease, opacity .2s ease;
 }
-.rad-btn span{
-  position:relative;
-  z-index:1;
-}
+.rad-btn span{position:relative;z-index:1;}
 .rad-btn:hover{
   transform:translateY(-2px);
   box-shadow:0 6px 18px rgba(15,23,42,.35);
@@ -101,7 +53,9 @@ header p{
   opacity:.35;
 }
 
-/* TOP ACTION BUTTON BAR (above banner) */
+/* ====================================== */
+/*          TOP ACTION BAR                */
+/* ====================================== */
 .top-actions{
   display:flex;
   justify-content:space-between;
@@ -113,10 +67,64 @@ header p{
 .top-actions .rad-btn{
   padding:8px 16px;
   font-size:.85rem;
-  box-shadow:0 2px 8px rgba(15,23,42,.25);
 }
 
-/* Annual Notice */
+/* ====================================== */
+/*                BANNER                  */
+/* ====================================== */
+.banner{
+  background:linear-gradient(90deg,#0A74D0,#083c80);
+  color:#fff;text-align:center;
+  padding:20px 10px 18px;
+  font-size:1.05rem;font-weight:600;line-height:1.4;
+  border-bottom:2px solid #062a5c;
+  box-shadow:0 4px 10px rgba(0,0,0,.25)
+}
+.banner em{
+  display:block;margin-top:6px;
+  font-style:italic;font-weight:500;opacity:.85
+}
+
+/* ====================================== */
+/*               HEADER                   */
+/* ====================================== */
+header{
+  text-align:center;
+  padding:42px 10px 16px;
+  background:#eaf3ff;
+  border-bottom:2px solid #d7e7ff;
+}
+header h1{
+  font-size:2rem;margin:0;color:#0A74D0
+}
+header p{
+  margin:8px 0 0;color:#334155
+}
+
+/* ====================================== */
+/*      BUTTON ACTION AREAS (NEW LAYOUT)  */
+/* ====================================== */
+.rad-actions {
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:16px;
+  padding:18px 10px;
+  background:#f8fbff;
+  border-bottom:2px solid #d7e7ff;
+}
+
+/* SECTION HEADS */
+.section-title {
+  font-weight:700;
+  font-size:1rem;
+  margin-bottom:6px;
+  color:#0A74D0;
+}
+
+/* ====================================== */
+/*          LISTING POLICY BOX            */
+/* ====================================== */
 .annual{
   max-width:820px;
   margin:20px auto 24px;
@@ -126,21 +134,28 @@ header p{
   background:#edf3ff;
   color:#0f172a;
   font-size:.95rem;
-  line-height:1.5
+  line-height:1.5;
 }
 .annual ul{margin:6px 0 6px 18px;padding:0;list-style:disc}
 
-/* Legend */
+/* ====================================== */
+/*                LEGEND                  */
+/* ====================================== */
 .legend{
-  background:#f1f5fb;color:#0A74D0;
-  text-align:center;font-size:.95rem;font-weight:600;
+  background:#f1f5fb;
+  color:#0A74D0;
+  text-align:center;
+  font-size:.95rem;
+  font-weight:600;
   padding:12px 8px;
   border-bottom:1px solid #d7e7ff;
-  line-height:1.6
+  line-height:1.6;
 }
 .legend span{display:block;margin:4px 0}
 
-/* FILTERS */
+/* ====================================== */
+/*               FILTERS                  */
+/* ====================================== */
 .view-filters{
   background:#eef2ff;
   border-bottom:2px solid #d7e7ff;
@@ -148,32 +163,43 @@ header p{
   display:flex;
   justify-content:center;
   flex-wrap:wrap;
-  gap:10px
+  gap:10px;
 }
 .view-label{font-size:.9rem;font-weight:600;color:#0A74D0}
 .view-pill{
-  border:none;border-radius:999px;padding:4px 12px;
-  font-size:.85rem;cursor:pointer;background:#e5e7eb;
-  color:#111827;font-weight:600;
-  transition:background .15s ease,transform .15s ease
+  border:none;
+  border-radius:999px;
+  padding:4px 12px;
+  font-size:.85rem;
+  cursor:pointer;
+  background:#e5e7eb;
+  color:#111827;
+  font-weight:600;
+  transition:background .15s ease,transform .15s ease;
 }
 .view-pill:hover{background:#d4d4d8;transform:translateY(-1px)}
 .view-pill.active{background:#0A74D0;color:#f9fafb}
 
+/* ====================================== */
+/*              LEDGER LIST               */
+/* ====================================== */
 main{
   max-width:860px;
   margin:30px auto;
-  padding:0 14px
+  padding:0 14px;
 }
 h2{
   color:#0A74D0;
   border-bottom:1px solid #cbd5e1;
   padding-bottom:4px;
   font-size:1.3rem;
-  margin-bottom:14px
+  margin-bottom:14px;
 }
-h3{color:#0A74D0;font-size:1.1rem;margin:10px 0}
-
+h3{
+  color:#0A74D0;
+  font-size:1.1rem;
+  margin:10px 0;
+}
 ul{list-style:none;padding:0;margin:0}
 
 li.entry{
@@ -186,58 +212,64 @@ li.entry{
   align-items:center;
   cursor:pointer;
   border-radius:6px;
-  transition:background .15s ease
+  transition:background .15s ease;
 }
 li.entry:hover{background:#f1f7ff}
 li span{color:#475569;font-size:.85rem}
 
+/* ====================================== */
+/*                 FOOTER                 */
+/* ====================================== */
 footer{
   text-align:center;
   padding:20px;
   border-top:2px solid #d7e7ff;
   color:#475569;
-  font-size:.9rem
+  font-size:.9rem;
 }
 
-/* Modal */
+/* ====================================== */
+/*              PROJECT MODAL             */
+/* ====================================== */
 .modal{
-  display:none;position:fixed;z-index:999;
-  left:0;top:0;width:100%;height:100%;
-  background:rgba(0,0,0,.55)
+  display:none;
+  position:fixed;
+  z-index:999;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.55);
 }
-
 .modal-content{
-  background:#fff;color:#0f172a;
-  margin:5% auto;padding:20px;
-  border:2px solid #d0e3ff;border-radius:10px;
-  width:90%;max-width:500px;
-  max-height:82vh;overflow-y:auto;
-  box-shadow:0 10px 30px rgba(0,0,0,.25)
+  background:#fff;
+  color:#0f172a;
+  margin:5% auto;
+  padding:20px;
+  border:2px solid #d0e3ff;
+  border-radius:10px;
+  width:90%;
+  max-width:500px;
+  max-height:82vh;
+  overflow-y:auto;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
 }
-
 .close{
-  float:right;font-size:1.5rem;cursor:pointer;color:#0A74D0
+  float:right;
+  font-size:1.5rem;
+  cursor:pointer;
+  color:#0A74D0;
 }
 .close:hover{color:#083c80}
-
-.modal-content a{
-  color:#0A74D0;text-decoration:none;font-weight:bold
-}
-
-.checkmark{color:#0A74D0;font-weight:bold}
 </style>
 </head>
 
 <body>
 
-<!-- TOP BUTTON BAR ABOVE BANNER -->
+<!-- TOP ACTIONS -->
 <div class="top-actions">
-  <a href="/" class="rad-btn">
-    <span>← Back</span>
-  </a>
-  <a href="index.html" class="rad-btn">
-    <span>$BUY RAD</span>
-  </a>
+  <a href="/" class="rad-btn"><span>← Back</span></a>
+  <a href="index.html" class="rad-btn"><span>$BUY RAD</span></a>
 </div>
 
 <div class="banner">
@@ -251,30 +283,33 @@ footer{
   <p>The meme coin with a ledger — certifying XRPL projects.</p>
 </header>
 
-<!-- EDUCATION HUB BUTTON IN ITS OWN BOX UNDER HEADER -->
+<!-- EDUCATION -->
 <div class="rad-actions" style="padding:20px 10px 6px;">
   <a href="education.html" class="rad-btn">
     <span>🎓 Ledger Education Hub — Learn the System</span>
   </a>
 </div>
 
-<!-- ENFORCEMENT BOX DIRECTLY UNDER EDUCATION HUB -->
+<!-- ENFORCEMENT -->
 <div class="rad-actions" style="background:#f3f0ff;border-bottom:2px solid #d6c9ff;">
-  <a href="rugreport.html" class="rad-btn">
-    <span>🧨 Rug Report</span>
-  </a>
-  <a href="blacklist.html" class="rad-btn">
-    <span>🚫 Blacklist</span>
-  </a>
-  <a href="threat-actors.html" class="rad-btn">
-    <span>🚫 Threat Actors Directory</span>
-  </a>
-  <a href="shills.html" class="rad-btn">
-    <span>📢 Shills</span>
-  </a>
+  <a href="rugreport.html" class="rad-btn"><span>🧨 Rug Report</span></a>
+  <a href="blacklist.html" class="rad-btn"><span>🚫 Blacklist</span></a>
+  <a href="threat-actors.html" class="rad-btn"><span>🚫 Threat Actors Directory</span></a>
+  <a href="shills.html" class="rad-btn"><span>📢 Shills</span></a>
 </div>
 
-<!-- LISTINGS / CERTIFICATION BOX -->
+<!-- ================================= -->
+<!--   NFT LISTINGS + TERMINAL BUTTON  -->
+<!-- ================================= -->
+<div class="rad-actions" style="padding:22px 10px 18px;background:#eef6ff;border-bottom:2px solid #d7e7ff;">
+  <a href="nfts.html" class="rad-btn rad-gold-btn"><span>🃏 NFT Listings</span></a>
+
+  <button id="openRadTerminal" class="rad-btn rad-terminal-btn rad-malfunction" style="cursor:pointer;">
+    <span>🖥️ Launch RAD Terminal</span>
+  </button>
+</div>
+
+<!-- LISTING POLICY -->
 <section class="annual">
   <strong>Listings, Certification & Renewals</strong>
   <p style="margin:8px 0 4px">
@@ -289,18 +324,14 @@ footer{
   <p style="margin:8px 0 0;">
     <strong>Certification Policy.</strong>
     Certified projects are backed by a vault-locked Seal NFT held in the RAD certification wallet.
-    If a project violates trust, the seal is revoked on the Ledger and may be burned on-chain.
+    If a project violates trust, the seal is revoked and may be burned on-chain.
   </p>
 </section>
 
-<!-- SUBMIT / RENEW UNDER THE LISTINGS BOX -->
+<!-- SUBMIT / RENEW -->
 <div class="rad-actions" style="background:#f8fbff;border-top:0;border-bottom:2px solid #d7e7ff;">
-  <a href="submit.html" class="rad-btn">
-    <span>➕ Submit Token</span>
-  </a>
-  <a href="submit.html" class="rad-btn">
-    <span>🔄 Renew Listing</span>
-  </a>
+  <a href="submit.html" class="rad-btn"><span>➕ Submit Token</span></a>
+  <a href="submit.html" class="rad-btn"><span>🔄 Renew Listing</span></a>
 </div>
 
 <div class="legend">
@@ -320,13 +351,6 @@ footer{
   <button class="view-pill" data-filter="expired">Expired</button>
 </div>
 
-<!-- NFT LISTINGS IN ITS OWN BOX BELOW FILTERS -->
-<div class="rad-actions" style="padding:22px 10px 18px;background:#f8fbff;border-bottom:2px solid #d7e7ff;">
-  <a href="nfts.html" class="rad-btn">
-    <span>✨ NFT Listings</span>
-  </a>
-</div>
-
 <main>
   <section id="ledger">
     <h2>📜 All Projects on The Ledger</h2>
@@ -338,19 +362,16 @@ footer{
   © 2025 The RAD Ledger | Verified by Rad Garlington
 </footer>
 
-<!-- MODAL -->
+<!-- ============= MODAL ============= -->
 <div id="tokenModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
 
     <div id="modalLogoWrap" style="text-align:center;margin-bottom:8px;display:none;">
-      <img id="modalLogo" src="" alt="Project Logo"
-           style="max-width:80px;max-height:80px;border-radius:12px;
-           box-shadow:0 2px 6px rgba(0,0,0,.25);object-fit:contain;">
+      <img id="modalLogo" src="" style="max-width:80px;border-radius:12px;">
     </div>
 
     <h2 id="modalToken">$RAD</h2>
-
     <p><strong>Certificate:</strong> <span id="modalCert"></span></p>
     <p><strong>Tier:</strong> <span id="modalTier"></span></p>
     <p><strong>Developer:</strong> <span id="modalDev"></span></p>
@@ -369,28 +390,565 @@ footer{
     <p><strong>Seal Image:</strong> <span id="modalNFTImage"></span></p>
 
     <div id="modalNFTPreviewWrap" style="display:none;text-align:center;margin-top:10px;">
-      <img id="modalNFTPreview" src="" alt="Seal NFT Image"
-           style="max-width:100%;width:260px;border-radius:10px;
-           box-shadow:0 4px 14px rgba(0,0,0,.25);">
+      <img id="modalNFTPreview" src="" style="max-width:100%;width:260px;">
     </div>
   </div>
 </div>
 
+<!-- ====================================== -->
+<!--           RAD TERMINAL OVERLAY         -->
+<!-- ====================================== -->
+
+<style>
+
+  /* Prevent iOS zoom on input focus */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
+  
+/* FULLSCREEN OVERLAY */
+#radTerminalOverlay {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.90);
+  z-index:99999;
+  padding:40px 20px;
+}
+
+/* SMALLER TERMINAL WINDOW (80%) */
+#radTerminalWindow {
+  width:80%;
+  max-width:940px;
+  margin:0 auto;
+  background:#0b0f1a;
+  border:2px solid #1e3a8a;
+  padding:0;
+  height:48vh; /* SHRUNK – 40% reduction */
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 0 40px rgba(0,80,255,0.35);
+  position:relative;
+}
+
+@media (max-width: 780px) {
+  #radTerminalOverlay {
+    padding:20px 10px;
+  }
+
+  #radTerminalWindow {
+    width:95%;
+    height:55vh; /* Slightly larger for mobile usability */
+  }
+
+  #radHelpModal .modal-content {
+    width:90%;
+    margin:20% auto !important;
+  }
+}
+  
+
+/* TERMINAL HEADER */
+#radTerminalHeader {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#0d1220;
+  padding:12px 16px;
+  border-bottom:2px solid #1e3a8a;
+  color:#77b0ff;
+  font-family:"Courier New",monospace;
+  font-size:15px;
+}
+
+/* CLOSE BUTTON */
+#closeRadTerminal {
+  background:none;
+  border:none;
+  color:#77b0ff;
+  font-size:20px;
+  cursor:pointer;
+}
+
+/* HELP ICON */
+#openRadHelp {
+  background:none;
+  border:none;
+  color:#77b0ff;
+  font-size:17px;
+  margin-left:12px;
+  cursor:pointer;
+}
+
+#openRadHelp:hover,
+#closeRadTerminal:hover {
+  color:#a8ceff;
+}
+
+/* TERMINAL OUTPUT */
+#rad-terminal {
+  flex:1;
+  overflow-y:auto;
+  padding:14px;
+  color:#a8ceff;
+  font-family:"Courier New",monospace;
+  font-size:15px;
+  white-space:pre-wrap;
+  border-bottom:2px solid #1e3a8a;
+}
+
+/* INPUT LINE */
+.rad-input-line {
+  display:flex;
+  align-items:center;
+  background:#0d1220;
+  padding:10px;
+  border-top:2px solid #1e3a8a;
+}
+.prompt {
+  color:#77b0ff;
+  margin-right:8px;
+  font-family:"Courier New",monospace;
+}
+#rad-terminal-input {
+  flex:1;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:#a8ceff;
+  font-family:"Courier New",monospace;
+  font-size:15px;
+}
+
+/* PRINT LINE FX */
+.rad-line {
+  animation:flicker .12s linear 1
+}
+@keyframes flicker { 
+  0%{opacity:.25} 
+  100%{opacity:1}
+}
+
+/* ====================================== */
+/*              SIDE DRAWER               */
+/* ====================================== */
+
+#radHelpDrawer {
+  position:absolute;
+  top:0;
+  right:-100%;  /* 100% guarantees fully hidden */
+  width:340px;
+  max-width:85%;
+  height:100%;
+  background:#10172b;
+  border-left:2px solid #1e3a8a;
+  padding:20px;
+  color:#a8ceff;
+  font-family:"Courier New",monospace;
+  font-size:14px;
+  overflow-y:auto;
+  transition:right .28s ease;
+  z-index:999999;
+}
+
+#radHelpDrawer.open {
+  right:0; /* Slide fully into view */
+}
+
+/* Phone layout — keeps it perfectly inside screen */
+@media(max-width:480px){
+  #radHelpDrawer {
+    width:85vw;
+    max-width:85vw;
+    right:-100%;
+  }
+}
+
+
+
+#closeHelpDrawer {
+  background:none;
+  border:none;
+  color:#77b0ff;
+  font-size:18px;
+  cursor:pointer;
+  float:right;
+}
+#closeHelpDrawer:hover { 
+  color:#a8ceff; 
+}
+
+.rad-help-title {
+  font-weight:bold;
+  color:#77b0ff;
+  margin-top:12px;
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+/* ====================================== */
+/*      TERMINAL MALFUNCTION EFFECT       */
+/* ====================================== */
+
+
+  
+/* ===================================================== */
+/*   RAD TERMINAL BUTTON — REDUCED BLACKOUT FLICKER +    */
+/*        STRONGER + MORE FREQUENT ANIMATED SHEEN        */
+/* ===================================================== */
+
+/* ORIGINAL STATIC SHEEN (KEEPING IT) */
+.rad-terminal-btn::before {
+  content:"";
+  position:absolute;
+  top:-60%;
+  left:-10%;
+  width:130%;
+  height:80%;
+  background:linear-gradient(120deg,rgba(255,255,255,.55),rgba(255,255,255,0));
+  opacity:.22;
+  transform:skewY(-12deg);
+  transition:transform .25s ease, opacity .2s ease;
+  z-index:1;
+}
+
+/* STRONGER + MORE FREQUENT ANIMATED SHEEN */
+.rad-terminal-btn::after {
+  content:"";
+  position:absolute;
+  top:0;
+  left:-150%;
+  width:130%;
+  height:100%;
+  background:linear-gradient(
+    115deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.28) 45%,
+    rgba(255,255,255,0.45) 50%,
+    rgba(255,255,255,0.28) 55%,
+    rgba(255,255,255,0) 100%
+  );
+  transform:skewX(-25deg);
+  animation: radAnimatedSheen 3.2s ease-in-out infinite;
+  pointer-events:none;
+  z-index:2;
+}
+
+@keyframes radAnimatedSheen {
+  0%   { left:-150%; opacity:0; }
+  40%  { left:-150%; opacity:0; }
+  46%  { left:90%;  opacity:1; }
+  53%  { left:140%; opacity:0; }
+  100% { left:140%; opacity:0; }
+}
+
+/* REDUCED BLACKOUT + MORE NATURAL GLITCH */
+.rad-terminal-btn {
+  position:relative;
+  overflow:hidden;
+  animation: radGlitch 4.2s infinite steps(2,end);
+}
+
+/* REDUCED BLACKOUT + 25% WHITE FLICKER */
+@keyframes radGlitch {
+  0%   { filter:none; }
+
+  /* small dark flicker */
+  8%   { filter:brightness(0.55); }
+  9.5% { filter:none; }
+
+  /* white tech flicker (replacing blackout #1) */
+  18%  { filter:brightness(1.45); }
+  19.5%{ filter:none; }
+
+  /* remaining blackout flicker — reduced strength */
+  34%  { filter:brightness(0.40); }
+  35.5%{ filter:none; }
+
+  /* white flicker #2 —  quick micro-flash */
+  52%  { filter:brightness(1.35); }
+  53.2%{ filter:none; }
+
+  /* small dim flicker */
+  69%  { filter:brightness(0.50); }
+  70.5%{ filter:none; }
+
+  /* white flicker #3 — soft spark */
+  86%  { filter:brightness(1.30); }
+  87.3%{ filter:none; }
+
+  100% { filter:none; }
+}
+
+
+
+
+
+/* ====================================== */
+/*       NFT BUTTON — GOLD SHEEN SWEEP    */
+/* ====================================== */
+
+.rad-btn.rad-gold-btn {
+  background: linear-gradient(145deg,#eac058,#a87c1f);
+  border: 1px solid #d1a84a;
+  color:#121113 !important;
+  position:relative;
+  overflow:hidden;
+  box-shadow:none !important;
+  animation:none !important;
+}
+
+/* Sheen */
+.rad-btn.rad-gold-btn::after {
+  content:"";
+  position:absolute;
+  top:0;
+  left:-150%;
+  width:130%;
+  height:100%;
+  background:linear-gradient(120deg,
+    rgba(255,255,255,0.4),
+    rgba(255,255,255,0)
+  );
+  transform:skewX(-20deg);
+  animation:goldSheen 2.8s infinite;
+}
+
+@keyframes goldSheen {
+  0%   { left:-150%; }
+  55%  { left:-150%; }
+  75%  { left:120%; }
+  100% { left:120%; }
+}
+
+</style>
+
+
+<!-- ================================ -->
+<!--     TERMINAL HTML STRUCTURE      -->
+<!-- ================================ -->
+<div id="radTerminalOverlay">
+  <div id="radTerminalWindow">
+
+    <div id="radTerminalHeader">
+      <span>RAD TERMINAL — XRPL QUERY INTERFACE</span>
+
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="openRadHelp">?</button>
+        <button id="closeRadTerminal">✕</button>
+      </div>
+    </div>
+
+    <div id="rad-terminal"></div>
+
+    <div class="rad-input-line">
+      <span class="prompt">rad@ledger:~$</span>
+      <input id="rad-terminal-input" autocomplete="off">
+    </div>
+
+    <!-- SIDE DRAWER -->
+    <div id="radHelpDrawer">
+      <button id="closeHelpDrawer">✕</button>
+
+      <div class="rad-help-title">RAD TERMINAL — OPS MANUAL</div>
+      <p>Welcome to the XRPL Query Interface. This console queries token metadata from the RAD Ledger.</p>
+
+      <div class="rad-help-title">COMMANDS</div>
+      <p>check &lt;token&gt; — Query a token<br>
+         clear — Reset terminal<br>
+         help — Show basic command list</p>
+
+      <div class="rad-help-title">USAGE</div>
+      <p>check RAD<br>
+         check BAG<br>
+         check XRP</p>
+
+      <div class="rad-help-title">OUTPUT FIELDS</div>
+      <p>Status<br>
+         Certificate<br>
+         Issuer<br>
+         Website<br>
+         Holders<br>
+         AMM Pool<br>
+         Rug Score</p>
+
+      <div class="rad-help-title">NOTES</div>
+      <p>• Use tickers with or without $ sign.<br>
+         • Certified and Verified tokens return enhanced metadata.<br>
+         • Unverified entries reflect raw XRPL issuer data.</p>
+
+    </div>
+
+  </div>
+</div>
+
 <script>
+
+/* ========================================= */
+/*               GLOBALS                     */
+/* ========================================= */
+
 let allProjects = [];
 let currentFilter = "all";
-
-/* DEFAULT LOGO */
 const defaultUnverifiedLogo = "assets/RAD_ledger.png";
 
-/* EXPIRATION CHECK */
+/* ========================================= */
+/*             TERMINAL LEDGER LOAD          */
+/* ========================================= */
+let LEDGER_DB = {};
+
+async function loadTerminalLedger() {
+  try {
+    const res = await fetch("ledger.json", { cache:"no-store" });
+    const data = await res.json();
+
+    data.forEach(e => {
+      const key = e.token.toUpperCase().replace("$","");
+      LEDGER_DB[key] = {
+        status: e.tier ? e.tier.toUpperCase() : "UNVERIFIED",
+        issuer: e.issuer || "—",
+        website: e.website || "—",
+        cert: e.cert || "—",
+        holders: e.holders || "—",
+        amm: e.amm || "—",
+        rug: e.rug || "—"
+      };
+    });
+  } catch(err){
+    console.error("Terminal ledger load failed", err);
+  }
+}
+
+/* ========================================= */
+/*             TERMINAL INTERFACE            */
+/* ========================================= */
+
+const overlay = document.getElementById("radTerminalOverlay");
+const openBtn = document.getElementById("openRadTerminal");
+const closeBtn = document.getElementById("closeRadTerminal");
+const terminal = document.getElementById("rad-terminal");
+const input = document.getElementById("rad-terminal-input");
+
+openBtn.onclick = async () => {
+  overlay.style.display = "block";
+  await loadTerminalLedger();
+  bootTerminal();
+  input.focus();
+};
+closeBtn.onclick = () => overlay.style.display = "none";
+
+/* TERMINAL BOOT SEQUENCE */
+function bootTerminal(){
+  terminal.innerHTML = "";
+  printLine("[BOOT] Initializing RAD Terminal...");
+  printLine("[BOOT] Accessing XRPL Ledger...");
+  printLine("[BOOT] Certification Matrix Loaded.");
+  printLine("");
+  printLine("rad@ledger:~$ Type 'help' for commands");
+  printLine("");
+}
+
+/* PRINT LINE */
+function printLine(t){
+  const div = document.createElement("div");
+  div.classList.add("rad-line");
+  div.textContent = t;
+  terminal.appendChild(div);
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+/* COMMAND HANDLER */
+input.addEventListener("keydown", e => {
+  if(e.key === "Enter"){
+    runCommand(input.value);
+    input.value = "";
+  }
+});
+
+function runCommand(cmdRaw){
+  const cmd = cmdRaw.trim();
+  if(!cmd) return;
+  printLine("rad@ledger:~$ " + cmd);
+
+  const parts = cmd.split(" ");
+  const action = parts[0].toLowerCase();
+  const arg = parts.slice(1).join(" ");
+
+  if(action === "help")  return showHelp();
+  if(action === "clear") return bootTerminal();
+  if(action === "check") return checkToken(arg);
+
+  printLine("Unknown command. Type 'help'");
+}
+
+function showHelp(){
+  printLine("");
+  printLine("Commands:");
+  printLine("check <token>  — Query XRPL token");
+  printLine("clear          — Reset terminal");
+  printLine("help           — Show help");
+  printLine("");
+}
+
+/* TOKEN CHECK */
+function checkToken(raw){
+  if(!raw){
+    printLine("Usage: check <token>");
+    return;
+  }
+
+  const key = raw.toUpperCase().replace("$","").trim();
+  const t = LEDGER_DB[key];
+
+  if(!t){
+    printLine("");
+    printLine("Token not found in RAD Ledger.");
+    printLine("");
+    return;
+  }
+
+  printLine("");
+  printLine("Token: " + key);
+  printLine("Status: " + t.status);
+  printLine("Issuer: " + t.issuer);
+  printLine("Website: " + t.website);
+  printLine("Certificate: " + t.cert);
+  printLine("Holders: " + t.holders);
+  printLine("AMM Pool: " + t.amm);
+  printLine("Rug Score: " + t.rug);
+  printLine("");
+}
+
+/* ========================================= */
+/*         SIDE DRAWER — HELP MANUAL         */
+/* ========================================= */
+
+const drawer = document.getElementById("radHelpDrawer");
+const openHelp = document.getElementById("openRadHelp");
+const closeHelp = document.getElementById("closeHelpDrawer");
+
+openHelp.onclick = () => drawer.classList.add("open");
+closeHelp.onclick = () => drawer.classList.remove("open");
+
+/* Close drawer when clicking outside */
+document.addEventListener("click", e => {
+  const insideDrawer = drawer.contains(e.target);
+  const insideButton = openHelp.contains(e.target);
+  if(!insideDrawer && !insideButton && drawer.classList.contains("open")){
+const drawer = document.getElementById("radHelpDrawer");  }
+});
+
+/* ========================================= */
+/*             LEDGER DISPLAY LOGIC          */
+/* ========================================= */
+
 function isExpired(entry){
   if(!entry.expires_at) return false;
   const today = new Date().toISOString().slice(0,10);
   return entry.expires_at < today;
 }
 
-/* CATEGORY */
 function getCategory(entry){
   const t = (entry.tier || "").toLowerCase();
   if(t === "certified") return "certified";
@@ -398,80 +956,74 @@ function getCategory(entry){
   return "unverified";
 }
 
-/* META */
 function getMeta(entry){
-  const t = (entry.tier || "").toLowerCase();
+  const t = (entry.tier||"").toLowerCase();
   const issuers = entry.issuers || [];
 
-  if(t === "certified") return "Certified · Unlimited";
-  if(t === "verified") return isExpired(entry) ? "Expired" : "Verified";
+  if(t==="certified") return "Certified · Unlimited";
+  if(t==="verified") return isExpired(entry) ? "Expired" : "Verified";
 
-  if(t === "unverified"){
-    if(issuers.length === 0) return "Issuer: undefined";
-    if(issuers.length === 1) return `Issuer: ${issuers[0].issuer}`;
+  if(t==="unverified"){
+    if(issuers.length===0) return "Issuer: undefined";
+    if(issuers.length===1) return `Issuer: ${issuers[0].issuer}`;
     return `Issuers: ${issuers.length}`;
   }
-
   return "";
 }
 
-/* ICON */
 function getIcon(cat){
-  if(cat === "certified") return "🟡";
-  if(cat === "verified") return "🔷";
-  if(cat === "expired") return "⬛";
+  if(cat==="certified") return "🟡";
+  if(cat==="verified") return "🔷";
+  if(cat==="expired") return "⬛";
   return "⚫";
 }
 
-/* RENDER LEDGER */
 function renderLedger(){
   const ledger = document.getElementById("ledgerList");
   ledger.innerHTML = "";
 
   const grouped = {};
 
-  allProjects.forEach(p => {
-    if(currentFilter !== "all" && p.category !== currentFilter) return;
+  allProjects.forEach(p=>{
+    if(currentFilter!=="all" && p.category!==currentFilter) return;
 
-    const letter = (p.token.replace("$","")[0] || "#").toUpperCase();
-    if(!grouped[letter]) grouped[letter] = [];
+    const letter = (p.token.replace("$","")[0]||"#").toUpperCase();
+    if(!grouped[letter]) grouped[letter]=[];
     grouped[letter].push(p);
   });
 
-  const letters = Object.keys(grouped).sort();
-
-  letters.forEach(letter => {
+  Object.keys(grouped).sort().forEach(letter=>{
     const wrap = document.createElement("div");
     wrap.innerHTML = `<h3>${letter}</h3>`;
     const ul = document.createElement("ul");
 
-    grouped[letter].forEach(entry => {
+    grouped[letter].forEach(entry=>{
       const li = document.createElement("li");
-      li.className = "entry";
+      li.className="entry";
 
-      const tier = (entry.tier || "").toLowerCase();
-      const icon = getIcon(entry.category);
-      const meta = getMeta(entry);
-      const isCertified = tier === "certified";
+      const tier=(entry.tier||"").toLowerCase();
+      const icon=getIcon(entry.category);
+      const meta=getMeta(entry);
+      const isCertified=tier==="certified";
 
       li.innerHTML = `
-        <span class="${isCertified ? "certified-bold" : ""}">
+        <span class="${isCertified?"certified-bold":""}">
           ${icon} ${entry.token}
         </span>
         <span>${meta}</span>
       `;
 
-      const issuers = entry.issuers || [];
+      const issuers=entry.issuers||[];
 
-      if(tier === "certified" || tier === "verified"){
-        li.onclick = () => openVerifiedCard(entry);
+      if(tier==="certified"||tier==="verified"){
+        li.onclick=()=>openVerifiedCard(entry);
       } else {
-        if(issuers.length === 0){
-          li.onclick = () => openUndefinedIssuer(entry);
-        } else if(issuers.length === 1){
-          li.onclick = () => openIssuerModal(issuers[0], entry.token);
+        if(issuers.length===0){
+          li.onclick=()=>openUndefinedIssuer(entry);
+        } else if(issuers.length===1){
+          li.onclick=()=>openIssuerModal(issuers[0],entry.token);
         } else {
-          li.onclick = () => toggleIssuerGroup(entry);
+          li.onclick=()=>toggleIssuerGroup(entry);
         }
       }
 
@@ -483,45 +1035,38 @@ function renderLedger(){
   });
 }
 
-/* MULTI-ISSUER GROUP */
+/* ========================================= */
+/*                ISSUER MODALS             */
+/* ========================================= */
+
 function toggleIssuerGroup(entry){
-  const id = "issuer-group-" + entry.token;
-  const exist = document.getElementById(id);
+  const id="issuer-group-"+entry.token;
+  const exist=document.getElementById(id);
+  if(exist){exist.remove();return;}
 
-  if(exist){
-    exist.remove();
-    return;
-  }
+  const div=document.createElement("div");
+  div.id=id;
+  div.style.padding="10px 20px 14px";
 
-  const div = document.createElement("div");
-  div.id = id;
-  div.style.padding = "10px 20px 14px";
+  let html=`<div style="margin-top:6px;">`;
 
-  let html = `<div style="margin-top:6px;">`;
-
-  entry.issuers.forEach(iss => {
-    const encoded = JSON.stringify(iss).replace(/'/g,"&#39;");
-
-    html += `
-      <div style="padding:10px;margin-top:8px;
-      border:1px solid #d3dced;border-radius:8px;
-      background:#f9fbff;">
+  entry.issuers.forEach(iss=>{
+    const encoded=JSON.stringify(iss).replace(/'/g,"&#39;");
+    html+=`
+      <div style="padding:10px;margin-top:8px;border:1px solid #d3dced;border-radius:8px;background:#f9fbff;">
         <div><strong>Issuer:</strong> ${iss.issuer}</div>
-        <div><strong>Domain:</strong> ${iss.domain || "—"}</div>
-
+        <div><strong>Domain:</strong> ${iss.domain||"—"}</div>
         <button onclick='openIssuerModal(${encoded},"${entry.token}")'
-          style="margin-top:6px;padding:6px 10px;border-radius:6px;
-          background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
+          style="margin-top:6px;padding:6px 10px;border-radius:6px;background:#0A74D0;color:#fff;font-size:.8rem;cursor:pointer;">
           View Card
         </button>
-      </div>
-    `;
+      </div>`;
   });
 
-  html += `</div>`;
-  div.innerHTML = html;
+  html+=`</div>`;
+  div.innerHTML=html;
 
-  const rows = Array.from(document.querySelectorAll("li.entry"));
+  const rows=Array.from(document.querySelectorAll("li.entry"));
   for(const li of rows){
     if(li.innerText.includes(entry.token)){
       li.after(div);
@@ -530,154 +1075,141 @@ function toggleIssuerGroup(entry){
   }
 }
 
-/* ZERO-ISSUER CARD */
 function openUndefinedIssuer(entry){
-  const modal = document.getElementById("tokenModal");
-  modal.style.display = "block";
+  const modal=document.getElementById("tokenModal");
+  modal.style.display="block";
 
-  document.getElementById("modalLogoWrap").style.display = "block";
-  document.getElementById("modalLogo").src = defaultUnverifiedLogo;
+  document.getElementById("modalLogoWrap").style.display="block";
+  document.getElementById("modalLogo").src=defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${entry.token} — Issuer: undefined`;
-  document.getElementById("modalCert").textContent = "XRPL-AUTO";
-  document.getElementById("modalTier").textContent = "Unverified";
-  document.getElementById("modalDev").textContent = "—";
+  document.getElementById("modalToken").textContent=`${entry.token} — Issuer: undefined`;
+  document.getElementById("modalCert").textContent="XRPL-AUTO";
+  document.getElementById("modalTier").textContent="Unverified";
+  document.getElementById("modalDev").textContent="—";
+  document.getElementById("modalDevX").textContent="";
+  document.getElementById("modalDevX").href="#";
 
-  const dx = document.getElementById("modalDevX");
-  dx.textContent = "";
-  dx.href = "#";
+  document.getElementById("modalDoxxed").innerHTML="❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent="undefined";
+  document.getElementById("modalWebsite").textContent="—";
+  document.getElementById("modalWebsite").href="#";
+  document.getElementById("modalEmail").textContent="—";
+  document.getElementById("modalX").href="#";
+  document.getElementById("modalTG").href="#";
+  document.getElementById("modalNFT").textContent="—";
+  document.getElementById("modalNFTImage").textContent="—";
 
-  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
-  document.getElementById("modalIssuer").textContent = "undefined";
-
-  const w = document.getElementById("modalWebsite");
-  w.textContent = "—";
-  w.href = "#";
-
-  document.getElementById("modalEmail").textContent = "—";
-  document.getElementById("modalX").href = "#";
-  document.getElementById("modalTG").href = "#";
-
-  document.getElementById("modalNFT").textContent = "—";
-  document.getElementById("modalNFTImage").textContent = "—";
-
-  document.getElementById("modalNFTPreviewWrap").style.display = "none";
-  document.getElementById("modalNFTPreview").src = "";
+  document.getElementById("modalNFTPreviewWrap").style.display="none";
+  document.getElementById("modalNFTPreview").src="";
 }
 
-/* VERIFIED / CERTIFIED CARD */
 function openVerifiedCard(data){
-  const modal = document.getElementById("tokenModal");
-  modal.style.display = "block";
+  const modal=document.getElementById("tokenModal");
+  modal.style.display="block";
 
-  const wrap = document.getElementById("modalLogoWrap");
-  const img = document.getElementById("modalLogo");
+  const wrap=document.getElementById("modalLogoWrap");
+  const img=document.getElementById("modalLogo");
 
   if(data.logo_url){
-    wrap.style.display = "block";
-    img.src = data.logo_url;
+    wrap.style.display="block";
+    img.src=data.logo_url;
   } else {
-    wrap.style.display = "block";
-    img.src = defaultUnverifiedLogo;
+    wrap.style.display="block";
+    img.src=defaultUnverifiedLogo;
   }
 
-  document.getElementById("modalToken").textContent = data.token;
-  document.getElementById("modalCert").textContent = data.cert || "—";
-  document.getElementById("modalTier").textContent = data.tier || "—";
-  document.getElementById("modalDev").textContent = data.dev || "—";
+  document.getElementById("modalToken").textContent=data.token;
+  document.getElementById("modalCert").textContent=data.cert||"—";
+  document.getElementById("modalTier").textContent=data.tier||"—";
+  document.getElementById("modalDev").textContent=data.dev||"—";
 
-  const dx = document.getElementById("modalDevX");
-  dx.href = data.devx || "#";
-  dx.textContent = data.devx ? data.devx.replace("https://x.com/","@") : "";
+  const dx=document.getElementById("modalDevX");
+  dx.href=data.devx||"#";
+  dx.textContent=data.devx?data.devx.replace("https://x.com/","@"):"";
 
-  document.getElementById("modalDoxxed").innerHTML =
-    data.doxxed ? "✅ Doxxed" : "❌ Undoxxed";
+  document.getElementById("modalDoxxed").innerHTML=data.doxxed?"✅ Doxxed":"❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent=data.issuer||"—";
 
-  document.getElementById("modalIssuer").textContent = data.issuer || "—";
+  const web=document.getElementById("modalWebsite");
+  web.textContent=data.website||"—";
+  web.href=data.website||"#";
 
-  const web = document.getElementById("modalWebsite");
-  web.textContent = data.website || "—";
-  web.href = data.website || "#";
+  document.getElementById("modalEmail").textContent=data.email||"—";
+  document.getElementById("modalX").href=data.x||"#";
+  document.getElementById("modalTG").href=data.tg||"#";
 
-  document.getElementById("modalEmail").textContent = data.email || "—";
-  document.getElementById("modalX").href = data.x || "#";
-  document.getElementById("modalTG").href = data.tg || "#";
-
-  const nft = document.getElementById("modalNFT");
-  const nftImgSpan = document.getElementById("modalNFTImage");
-  const nftPrevWrap = document.getElementById("modalNFTPreviewWrap");
-  const nftPrev = document.getElementById("modalNFTPreview");
+  const nft=document.getElementById("modalNFT");
+  const nftImgSpan=document.getElementById("modalNFTImage");
+  const nftPrevWrap=document.getElementById("modalNFTPreviewWrap");
+  const nftPrev=document.getElementById("modalNFTPreview");
 
   if(data.nft){
-    nft.innerHTML = `<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
-  } else {
-    nft.textContent = "—";
-  }
+    nft.innerHTML=`<a href="${data.nft}" target="_blank">View on XRPSCAN</a>`;
+  } else { nft.textContent="—"; }
 
   if(data.nft_image){
-    nftImgSpan.innerHTML = `<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
-    nftPrevWrap.style.display = "block";
-    nftPrev.src = data.nft_image;
+    nftImgSpan.innerHTML=`<a href="${data.nft_image}" target="_blank">View NFT Image</a>`;
+    nftPrevWrap.style.display="block";
+    nftPrev.src=data.nft_image;
   } else {
-    nftImgSpan.textContent = "—";
-    nftPrevWrap.style.display = "none";
-    nftPrev.src = "";
+    nftImgSpan.textContent="—";
+    nftPrevWrap.style.display="none";
+    nftPrev.src="";
   }
 }
 
-/* SINGLE ISSUER CARD */
-function openIssuerModal(issuer, token){
-  const modal = document.getElementById("tokenModal");
-  modal.style.display = "block";
+function openIssuerModal(issuer,token){
+  const modal=document.getElementById("tokenModal");
+  modal.style.display="block";
 
-  document.getElementById("modalLogoWrap").style.display = "block";
-  document.getElementById("modalLogo").src = defaultUnverifiedLogo;
+  document.getElementById("modalLogoWrap").style.display="block";
+  document.getElementById("modalLogo").src=defaultUnverifiedLogo;
 
-  document.getElementById("modalToken").textContent = `${token} — ${issuer.issuer}`;
-  document.getElementById("modalCert").textContent = "XRPL-AUTO";
-  document.getElementById("modalTier").textContent = "Unverified";
-  document.getElementById("modalDev").textContent = "—";
+  document.getElementById("modalToken").textContent=`${token} — ${issuer.issuer}`;
+  document.getElementById("modalCert").textContent="XRPL-AUTO";
+  document.getElementById("modalTier").textContent="Unverified";
+  document.getElementById("modalDev").textContent="—";
 
-  const dx = document.getElementById("modalDevX");
-  dx.href = "#";
-  dx.textContent = "";
+  const dx=document.getElementById("modalDevX");
+  dx.href="#";
+  dx.textContent="";
 
-  document.getElementById("modalDoxxed").innerHTML = "❌ Undoxxed";
-  document.getElementById("modalIssuer").textContent = issuer.issuer;
+  document.getElementById("modalDoxxed").innerHTML="❌ Undoxxed";
+  document.getElementById("modalIssuer").textContent=issuer.issuer;
 
-  const w = document.getElementById("modalWebsite");
-  w.textContent = issuer.domain || "—";
-  w.href = issuer.domain ? "https://"+issuer.domain : "#";
+  const w=document.getElementById("modalWebsite");
+  w.textContent=issuer.domain||"—";
+  w.href=issuer.domain?"https://"+issuer.domain:"#";
 
-  document.getElementById("modalEmail").textContent = "—";
-  document.getElementById("modalX").href = "#";
-  document.getElementById("modalTG").href = "#";
+  document.getElementById("modalEmail").textContent="—";
+  document.getElementById("modalX").href="#";
+  document.getElementById("modalTG").href="#";
+  document.getElementById("modalNFT").textContent="—";
+  document.getElementById("modalNFTImage").textContent="—";
 
-  document.getElementById("modalNFT").textContent = "—";
-  document.getElementById("modalNFTImage").textContent = "—";
-
-  document.getElementById("modalNFTPreviewWrap").style.display = "none";
-  document.getElementById("modalNFTPreview").src = "";
+  document.getElementById("modalNFTPreviewWrap").style.display="none";
+  document.getElementById("modalNFTPreview").src="";
 }
 
-/* INIT */
-document.addEventListener("DOMContentLoaded", () => {
-  modal = document.getElementById("tokenModal");
+/* ========================================= */
+/*                 INIT LOAD                */
+/* ========================================= */
 
-  document.querySelector(".close").onclick = () => {
-    modal.style.display = "none";
+document.addEventListener("DOMContentLoaded",()=>{
+
+  modal=document.getElementById("tokenModal");
+
+  document.querySelector(".close").onclick=()=>modal.style.display="none";
+
+  window.onclick=e=>{
+    if(e.target===modal) modal.style.display="none";
+    if(e.target===overlay) overlay.style.display="none";
   };
 
-  window.onclick = e => {
-    if(e.target === modal){
-      modal.style.display = "none";
-    }
-  };
-
-  document.querySelectorAll(".view-pill").forEach(pill => {
-    pill.onclick = () => {
-      currentFilter = pill.dataset.filter;
-      document.querySelectorAll(".view-pill").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".view-pill").forEach(pill=>{
+    pill.onclick=()=>{
+      currentFilter=pill.dataset.filter;
+      document.querySelectorAll(".view-pill").forEach(p=>p.classList.remove("active"));
       pill.classList.add("active");
       renderLedger();
     };
@@ -686,19 +1218,12 @@ document.addEventListener("DOMContentLoaded", () => {
   loadLedger();
 });
 
-/* LOAD JSON */
 async function loadLedger(){
   const res = await fetch("ledger.json",{cache:"no-store"});
   const data = await res.json();
 
-  allProjects = data.map(e => ({
-    ...e,
-    category: getCategory(e)
-  }));
-
+  allProjects = data.map(e=>({...e, category:getCategory(e)}));
   renderLedger();
 }
-</script>
 
-</body>
-</html>
+</script>
