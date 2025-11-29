@@ -418,12 +418,29 @@ footer{
   background:#0b0f1a;
   border:2px solid #1e3a8a;
   padding:0;
-  height:82vh;
+  height:48vh; /* SHRUNK – 40% reduction */
   display:flex;
   flex-direction:column;
   box-shadow:0 0 40px rgba(0,80,255,0.35);
   position:relative;
 }
+
+@media (max-width: 780px) {
+  #radTerminalOverlay {
+    padding:20px 10px;
+  }
+
+  #radTerminalWindow {
+    width:95%;
+    height:55vh; /* Slightly larger for mobile usability */
+  }
+
+  #radHelpModal .modal-content {
+    width:90%;
+    margin:20% auto !important;
+  }
+}
+  
 
 /* TERMINAL HEADER */
 #radTerminalHeader {
