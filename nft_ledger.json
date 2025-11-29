@@ -1,17 +1,15 @@
 {
-  "certified": [],
-  "verified": [],
-  "unverified": [
+  "collections": [
     {
-      "id": "wck-collection",
-      "collection_name": "CONTINENTAL WICK — SERIES 1",
-      "artist_name": "GRIT CITY STUDIO",
+      "id": "continental-wick",
+      "collection_name": "CONTINENTAL WICK",
+      "artist_name": "@mrcauliman",
       "issuer": "rpFVEydkZrUjf4tcbLeDeVqXm5zYQGtXWm",
-      "category": "Protocol Agents",
-      "description": "GPK chaos meets protocol enforcement. A cinematic misfit universe built on XRPL. Every card is a moment of controlled disaster: vault breaches, botched escapes, blown operations, and agents who enforce with style. CONTINENTAL WICK is the collectible armory of the $WCK protocol — where order fights back against the noise.",
+      "category": "Collector Cards",
+      "description": "A rogue catalog of protocol operatives, vault ghosts, and order-breaking enforcers — each one captured mid-chaos like a GPK card forged inside a digital underworld. CONTINENTAL WICK is a collector’s vault of cinematic-grade vectors, glitch-world personalities, and protocol anomalies that refuse to be domesticated. Every card is a snapshot of disorder wearing a badge of precision. This is where the protocol stores its legends — and its mistakes.",
       "logo": "/assets/wck_logo.png",
-      "banner": "/assets/vault_chaos_bg.png",
-      "collection_link": "https://wicktoken.net/nft/series_1.html",
+      "banner": "/assets/vault_chaos_bg.webp",
+      "collection_link": "https://wicktoken.net/vault",
       "website": "https://wicktoken.net",
       "social_x": "https://x.com/wcktoken",
       "submitted_at": "2025-11-30T05:00:00Z",
