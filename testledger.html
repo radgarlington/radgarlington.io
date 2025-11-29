@@ -509,11 +509,13 @@ footer{
 /* ====================================== */
 /*              SIDE DRAWER               */
 /* ====================================== */
+
 #radHelpDrawer {
   position:absolute;
   top:0;
-  right:-100%; /* FULLY off-screen on all devices */
-  width:320px;
+  right:-100%;  /* 100% guarantees fully hidden */
+  width:340px;
+  max-width:85%;
   height:100%;
   background:#10172b;
   border-left:2px solid #1e3a8a;
@@ -522,20 +524,23 @@ footer{
   font-family:"Courier New",monospace;
   font-size:14px;
   overflow-y:auto;
-  transition:right .25s ease;
+  transition:right .28s ease;
   z-index:999999;
 }
 
 #radHelpDrawer.open {
-  right:0;
+  right:0; /* Slide fully into view */
 }
 
-/* Make drawer width adaptive for small screens */
+/* Phone layout — keeps it perfectly inside screen */
 @media(max-width:480px){
   #radHelpDrawer {
     width:85vw;
+    max-width:85vw;
+    right:-100%;
   }
 }
+
 
 
 #closeHelpDrawer {
@@ -907,8 +912,7 @@ document.addEventListener("click", e => {
   const insideDrawer = drawer.contains(e.target);
   const insideButton = openHelp.contains(e.target);
   if(!insideDrawer && !insideButton && drawer.classList.contains("open")){
-    drawer.classList.remove("open");
-  }
+const drawer = document.getElementById("radHelpDrawer");  }
 });
 
 /* ========================================= */
