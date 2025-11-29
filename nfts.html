@@ -87,7 +87,7 @@ body{
   padding:0;
 }
 
-/* BACKGROUND IMAGE FULL COVER */
+/* BACKGROUND IMAGE */
 .featured-bg{
   position:absolute;
   inset:0;
@@ -96,26 +96,27 @@ body{
   opacity:.45;
 }
 
+/* INFO CONTAINER */
 .featured-info{
   position:relative;
-  padding:30px 20px 32px;
+  padding:60px 20px 38px; /* increased padding-top to pull logo down */
   text-align:center;
 }
 
-/* WCK LOGO */
+/* WCK LOGO — LOWERED */
 .featured-info img{
-  width:140px;
-  height:140px;
+  width:160px;
+  height:160px;
   object-fit:contain;
-  margin-top:-60px;
-  margin-bottom:12px;
+  margin-top:0; /* removed negative pull */
+  margin-bottom:16px;
   filter:drop-shadow(0 6px 10px rgba(0,0,0,.55));
 }
 
-/* GOLD TEXT */
+/* GOLD TITLE */
 .featured-info h3{
-  font-size:1.6rem;
-  margin:10px 0 6px;
+  font-size:1.65rem;
+  margin:10px 0 10px;
   color:#dba32b;
   font-weight:800;
   text-shadow:0 0 8px rgba(0,0,0,.45);
@@ -123,22 +124,22 @@ body{
 
 /* DESCRIPTION */
 .featured-info p{
-  font-size:.95rem;
+  font-size:.98rem;
   color:#fff;
-  opacity:.95;
-  line-height:1.45;
-  max-width:600px;
-  margin:0 auto 12px;
+  opacity:.96;
+  line-height:1.5;
+  max-width:620px;
+  margin:0 auto 16px;
 }
 
 /* LINKS */
 .card-links {
-  margin-top:14px;
+  margin-top:16px;
 }
 .card-links a{
   display:inline-block;
-  margin:4px 8px;
-  padding:8px 16px;
+  margin:4px 10px;
+  padding:8px 18px;
   background:#0A74D0;
   color:#fff;
   border-radius:10px;
@@ -191,7 +192,7 @@ body{
   min-height:42px;
 }
 
-/* LINKS in grid */
+/* LINKS IN GRID */
 .card-links a{
   display:inline-block;
   margin:3px 6px;
@@ -239,7 +240,7 @@ body{
 <!-- GRID -->
 <div id="nftGrid" class="grid"></div>
 
-<footer class="rad-footer">
+<footer class="rad-footer" style="text-align:center;padding:18px 12px 26px;font-size:.85rem;color:#475569;border-top:1px solid #d7e7ff;background:#f8fbff;">
   THE RAD NFT REGISTRY — Source of Truth on XRPL. © 2025 radgarlington.io
 </footer>
 
@@ -250,7 +251,7 @@ body{
 
 const nftData = [
 
-  /* WCK FEATURED — ALWAYS TOP */
+  /* WCK FEATURED */
   {
     token: "$WCK",
     name: "CONTINENTAL WICK",
@@ -263,18 +264,14 @@ const nftData = [
     showInGrid: false
   },
 
-  /* SIX EMPTY PLACEHOLDERS */
-  ...Array.from({length:6}).map(() => ({
+  /* 6 placeholders */
+  ...Array.from({length:6}).map(()=>({
     token:"",
     name:"Coming Soon",
     image:"assets/RAD_ledger.png",
     desc:"Awaiting submission.",
-    website:"",
-    collection:"",
-    twitter:"",
     showInGrid:true
   }))
-
 ];
 
 /* =========================================================
@@ -309,15 +306,15 @@ function renderFeatured(){
    GRID RENDER
    ========================================================= */
 function renderGrid(){
-  const grid = document.getElementById("nftGrid");
+  const grid=document.getElementById("nftGrid");
   grid.innerHTML="";
 
   nftData
     .filter(n=>n.showInGrid)
     .forEach(n=>{
-      const card = document.createElement("div");
+      const card=document.createElement("div");
       card.className="card";
-      card.innerHTML = `
+      card.innerHTML=`
         <img src="${n.image}">
         <h3>${n.name}</h3>
         <p>${n.desc}</p>
