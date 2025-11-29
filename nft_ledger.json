@@ -3,17 +3,18 @@
   "verified": [],
   "unverified": [
     {
-      "id": "radnft-placeholder",
-      "collection_name": "Sample XRPL Collection",
-      "artist_name": "Placeholder Artist",
-      "issuer": "rEXAMPLEPLACEHOLDER123456789",
-      "category": "Art",
-      "description": "This is a placeholder listing automatically added for visual layout testing.",
-      "logo": "/assets/RAD_ledger.png",
-      "collection_link": "https://bithomp.com/nft/placeholder",
-      "website": "https://example.com",
-      "social_x": "",
-      "submitted_at": "2025-11-18T05:00:00Z",
+      "id": "wck-collection",
+      "collection_name": "CONTINENTAL WICK — SERIES 1",
+      "artist_name": "GRIT CITY STUDIO",
+      "issuer": "rpFVEydkZrUjf4tcbLeDeVqXm5zYQGtXWm",
+      "category": "Protocol Agents",
+      "description": "GPK chaos meets protocol enforcement. A cinematic misfit universe built on XRPL. Every card is a moment of controlled disaster: vault breaches, botched escapes, blown operations, and agents who enforce with style. CONTINENTAL WICK is the collectible armory of the $WCK protocol — where order fights back against the noise.",
+      "logo": "/assets/wck_logo.png",
+      "banner": "/assets/vault_chaos_bg.png",
+      "collection_link": "https://wicktoken.net/nft/series_1.html",
+      "website": "https://wicktoken.net",
+      "social_x": "https://x.com/wcktoken",
+      "submitted_at": "2025-11-30T05:00:00Z",
       "tx_hash": ""
     }
   ]
